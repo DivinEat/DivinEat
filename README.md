@@ -4,8 +4,6 @@
 
 > Site destiné aux restaurateurs qui souhaitent moderniser et digitaliser leur système de réservation et de commande.
 
-Site destiné aux restaurateurs qui souhaitent moderniser et digitaliser leur système de réservation et de commande.
-
 Le restaurateur peut saisir son menu ainsi que le plan de son restaurant (tables et chaises).
 
 Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qu'il attendra.
@@ -36,8 +34,11 @@ Si le client n'a pas réserver et qu'il occupe une place, il peut commander son 
 ## Maintainers
 
 [Tao BERQUER](https://github.com/taoberquer)
+
 [Rémi BRAT](https://github.com/remibrat)
+
 [Ludovic COLLIGNON](https://github.com/LudovicCollignon)
+
 [Thibault DARGENT](https://github.com/tdargent1)
 
 ## Contributing
