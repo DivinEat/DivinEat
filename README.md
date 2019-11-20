@@ -10,6 +10,8 @@ Le client peut réserver une table depuis le site et si il le souhaite choisir u
 
 Si le client n'a pas réserver et qu'il occupe une place, il peut commander son menu en indiquant la référence de sa table.
 
+lien GlooMaps: https://www.gloomaps.com/4oFFNziilw
+
 ## Table of Contents
 
 - [Background](#background)
