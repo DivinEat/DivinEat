@@ -1,0 +1,28 @@
+.image-banner{
+	padding-top: 42%;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: relative;
+	&--text{
+		& > div{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: $black-transparent;
+			display: flex;
+
+			& p{
+				color: $white;
+				font-weight: 700;
+				font-size: rem(48);
+				margin: auto;
+				max-width: 70%;
+				text-align: center;
+			}
+		}
+		
+	}
+}
