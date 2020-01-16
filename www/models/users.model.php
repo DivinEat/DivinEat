@@ -87,8 +87,7 @@ class users extends DB
                                 "placeholder"=>"Votre mot de passe",
                                 "class"=>"form-control form-control-user",
                                 "id"=>"",
-                                "required"=>true,
-                                "errorMsg"=>"Votre mot de passe doit faire entre 6 et 20 caractères avec une minuscule et une majuscule"
+                                "required"=>true
                             ],
                         "pwdConfirm"=>[
                                 "type"=>"password",
