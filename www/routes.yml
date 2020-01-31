@@ -15,9 +15,6 @@
   controller: "user"
   action: "default"
 
-
-
-
 /se-connecter:
   controller: "user"
   action: "login"
@@ -31,6 +28,10 @@
 /mot-de-passe-oublie:
   controller: "user"
   action: "forgotPwd"
+
+/test:
+  controller: "test"
+  action: "default"
 
 
 

@@ -19,7 +19,7 @@ RUN docker-php-ext-configure gd \
 
 RUN apt-get update -y && apt-get install npm -y
 
-CMD ["npm", "run", "watch"]
+# CMD ["npm", "run", "watch"]
 
 
 # Workaround for write permission on write to MacOS X volumes
