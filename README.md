@@ -6,7 +6,7 @@
 
 Le restaurateur peut saisir son menu ainsi que le plan de son restaurant (tables et chaises).
 
-Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qu'il attendra.
+Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qui l'attendra.
 
 Si le client n'a pas réserver et qu'il occupe une place, il peut commander son menu en indiquant la référence de sa table.
 
