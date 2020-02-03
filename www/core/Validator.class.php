@@ -55,7 +55,7 @@ class Validator{
 		}else{
 			return ["Tentative de hack !!!"];
 		}
-
+		$_SESSION['register_data'] = $data;
 		return $listOfErrors;
 	}
 

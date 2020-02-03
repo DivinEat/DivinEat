@@ -35,19 +35,20 @@ class UserController
             $errors = Validator::checkForm($configFormUser ,$_POST);
             //Insertion ou erreurs
             print_r($errors);
-        }
 
-        //Insertion d'un user
-        /*
-        $user = new users();
-        $user->setId(1);
-        $user->setFirstname("Toto");
-        $user->setLastname("Skrzypczyk");
-        $user->setEmail("Y.Skrzypczyk@GMAIL.com");
-        $user->setPwd("Test1234");
-        $user->setStatus(0);
-        $user->save();
-        */
+            if empty($errors){
+                $data = $_SESSION['register_data'];
+                $user = new users();
+                
+                $user->setId(1);
+                $user->setFirstname("Toto");
+                $user->setLastname("Skrzypczyk");
+                $user->setEmail("Y.Skrzypczyk@GMAIL.com");
+                $user->setPwd("Test1234");
+                $user->setStatus(0);
+                $user->save();
+            }
+        }
 
 
         $myView = new View("register", "account");
