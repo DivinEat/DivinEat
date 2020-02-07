@@ -1,5 +1,3 @@
-/* New code */
-
 .row {
     display: flex;
     flex-direction: row;
@@ -18,9 +16,9 @@
 /* Déclaration des styles md */
 @for $i from 1 through $nb-column-grid {
   .col-md-#{$i} {
-    flex-basis: 100%;
-    width: 100%;
-    padding: rem(0) rem($gouttiere);
+        flex-basis: 100%;
+        width: 100%;
+        padding: rem(0) rem($gouttiere);
   }
 }
 /* Fin déclaration des styles md */
@@ -28,13 +26,12 @@
 /* Déclaration des styles lg */
 @for $i from 1 through $nb-column-grid {
     .col-lg-#{$i} {
-      flex-basis: 100%;
-      width: 100%;
-      padding: rem(0) rem($gouttiere);
+        flex-basis: 100%;
+        width: 100%;
+        padding: rem(0) rem($gouttiere);
     }
   }
 /* Fin déclaration des styles lg */
-
 
 /* Déclaration des styles sm */
 @for $i from 1 through $nb-column-grid {
@@ -45,7 +42,6 @@
     }
 }
 /* Fin déclaration des styles md */
-
 
 @media screen and (min-width: 960px) {
     @for $i from 1 through $nb-column-grid {
