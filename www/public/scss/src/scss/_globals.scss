@@ -6,6 +6,7 @@ body {
     font-family: $font1;
     color: $text-color;
     background-color: $light-grey;
+    margin: 0;
 }
 
 p {
@@ -28,7 +29,7 @@ h2 {
 /* ------------------------------------------------------------------------------------------------- */
 
 .container {
-    max-width: $container-width;
-    margin: $container-margin;
+    // max-width: $container-width;
+    // margin: $container-margin;
     overflow: hidden;
 }
