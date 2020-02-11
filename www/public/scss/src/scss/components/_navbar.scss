@@ -1,0 +1,25 @@
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between; 
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    height: 4rem;
+}
+
+.navbar .navbar-back{
+    display: flex;
+    align-items: center;
+}
+
+.navbar .navbar-back .computer {
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+    text-decoration: none;
+    color: $black;
+}
+
+.navbar .navbar-back .computer span {
+    margin-left: 10px;
+}

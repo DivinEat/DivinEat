@@ -2,11 +2,6 @@
   controller: default
   action: default
 
-/test/yves:
-  controller: default
-  action: default
-
-
 /ajout-utilisateur:
   controller: "user"
   action: "add"
@@ -19,11 +14,9 @@
   controller: "user"
   action: "login"
 
-
 /s-inscrire:
   controller: "user"
   action: "register"
-
 
 /mot-de-passe-oublie:
   controller: "user"
@@ -32,12 +25,3 @@
 /test:
   controller: "test"
   action: "default"
-
-
-
-
-
-
-
-
-

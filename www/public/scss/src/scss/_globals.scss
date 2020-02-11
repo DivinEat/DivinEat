@@ -33,3 +33,9 @@ h2 {
     // margin: $container-margin;
     overflow: hidden;
 }
+
+.vertically-centered {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);   /* permet de déplacer à une hauteur de -50% de l'élément */
+}
