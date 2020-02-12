@@ -220,14 +220,32 @@ h2 {
 }
 
 .sidebar {
+  min-height: 100vh;
+  background-color: #9142be;
+}
+
+.sidebar .sidebar-nav {
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
           flex-direction: column;
+  -webkit-box-align: start;
+          align-items: flex-start;
   list-style: none;
-  min-height: 100vh;
-  background-color: #9142be;
+}
+
+.sidebar .sidebar-nav .sidebar-link {
+  color: #fff;
+}
+
+.sidebar .sidebar-nav .sidebar-link::after {
+  content: "";
+  background-image: url("/www/public/img/arrow.svg");
+  background-position: center;
+  background-size: contain;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
 .navbar {

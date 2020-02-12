@@ -1,8 +1,23 @@
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
     min-height: 100vh;
     background-color: $sidebar-color;
 }
 
+.sidebar .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    list-style: none;
+}
+
+.sidebar .sidebar-nav .sidebar-link {
+    color: $white;
+}
+
+.sidebar  .sidebar-nav .sidebar-link::after {
+	content: '';
+	background-image: url('/www/public/img/arrow.svg');
+	background-position: center;
+    background-size: contain;
+	transform: rotate(180deg);
+}
