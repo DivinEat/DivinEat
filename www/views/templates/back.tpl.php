@@ -9,13 +9,13 @@
         <div class="col-sm-2 padding-0">
             <div class="col-inner sidebar">
                 <nav class="sidebar-nav">
-                    <a href="" class="sidebar-link">Dashboard</a>
-                    <a href="" class="sidebar-link">Articles</a>
-                    <a href="" class="sidebar-link">Menus</a>
-                    <a href="" class="sidebar-link">Réservations</a>
-                    <a href="" class="sidebar-link">Plans</a>
-                    <a href="" class="sidebar-link">Utilisateurs</a>
-                    <a href="" class="sidebar-link">Paramètres</a>
+                    <a href="" class="sidebar-link">Dashboard<img src='public/img/arrow.svg'></a>
+                    <a href="" class="sidebar-link">Articles<img src='public/img/arrow.svg'></a>
+                    <a href="" class="sidebar-link">Menus<img src='public/img/arrow.svg'></a>
+                    <a href="" class="sidebar-link">Réservations<img src='public/img/arrow.svg'></a>
+                    <a href="" class="sidebar-link">Plans<img src='public/img/arrow.svg'></a>
+                    <a href="" class="sidebar-link">Utilisateurs<img src='public/img/arrow.svg'></a>
+                    <a href="" class="sidebar-link">Paramètres<img src='public/img/arrow.svg'></a>
                 <nav>
             </div>
         </div>
@@ -26,8 +26,10 @@
                     <div class="col-inner navbar bg-white">
                         <div class="navbar-back">
                             <form class="navbar-search">
-                                <input type="text" class="form-control" placeholder="Recherche">
+                                <span class="search-icon"><img src="public/img/icones/search.png"></span>
+                                <input class="form-control" type="text" placeholder="Recherche">
                             </form>
+
                             <a class="computer" href="#">
                                 <img src="public/img/icones/computer.png">
                                 <span>DivinEat</span>

@@ -1,6 +1,15 @@
 .navbar-search {
+    display: flex;
+    align-items: center;
     width: 20rem;
-    display: inline-block;
+    position: relative;
+}
+
+.search-icon{
+    position: absolute;
+    top: rem(3);
+    left: rem(280);
+    filter: invert(80%);
 }
 
 .form-control {
