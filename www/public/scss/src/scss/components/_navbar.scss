@@ -23,3 +23,12 @@
 .navbar .navbar-back .computer span {
     margin-left: 10px;
 }
+
+
+/* Front */
+.navbar .navbar-front a {
+    text-decoration: none;
+    letter-spacing: rem(2);
+    color: $black;
+    padding: rem(10);
+}

@@ -3,6 +3,6 @@
 class TestController 
 {
     public function defaultAction() {
-        $view = new View("dashboard", "back");
+        $view = new View("dashboard", "front");
     }
 }

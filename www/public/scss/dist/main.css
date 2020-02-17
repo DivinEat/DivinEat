@@ -309,6 +309,15 @@ h2 {
   margin-left: 10px;
 }
 
+/* Front */
+
+.navbar .navbar-front a {
+  text-decoration: none;
+  letter-spacing: 0.125rem;
+  color: #000;
+  padding: 0.625rem;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
