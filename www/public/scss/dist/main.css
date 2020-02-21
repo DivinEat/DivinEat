@@ -318,6 +318,79 @@ h2 {
   padding: 0.625rem;
 }
 
+.navbar .burger {
+  padding-right: 0.9375rem;
+  font-size: 2.1875rem;
+  cursor: pointer;
+}
+
+.navbar .dropdown-front {
+  display: none;
+}
+
+.navbar-front {
+  display: none;
+}
+
+.sidenav {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+          justify-content: flex-start;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow-x: hidden;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (min-width: 960px) {
+  .navbar .dropdown-front {
+    display: block;
+  }
+
+  .navbar .burger {
+    display: none;
+  }
+
+  .navbar-front {
+    display: block;
+  }
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
