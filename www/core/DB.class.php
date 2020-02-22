@@ -40,8 +40,6 @@ class DB
             $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
 
-        echo $sql;
-        
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($columnsData);
     }
