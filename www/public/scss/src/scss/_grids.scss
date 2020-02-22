@@ -3,14 +3,12 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
-    background-color: green;
     padding: rem($gouttiere) rem(0);
     margin: rem(0) rem(-$gouttiere);
 }
 
 .col-inner {
     padding: 15px;
-    background-color: $red;
 }
 
 /* Déclaration des styles md */

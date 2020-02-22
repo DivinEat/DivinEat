@@ -1,0 +1,28 @@
+.navbar-search {
+    display: flex;
+    align-items: center;
+    width: 20rem;
+    position: relative;
+}
+
+.search-icon{
+    position: absolute;
+    top: rem(3);
+    left: rem(280);
+    filter: invert(80%);
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6e707e;
+    background-color: $light;
+    background-clip: padding-box;
+    border: 1px solid #d1d3e2;
+    border-radius: 0.35rem;
+}
