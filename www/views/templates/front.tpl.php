@@ -36,13 +36,7 @@
 		<span class="burger" onclick="openNav()">&#9776;</span>
 	</header>
 
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="col-inner">
-				<?php include "views/".$this->view.".view.php";?>
-			</div>
-		</div>
-	</div>
+	<?php include "views/".$this->view.".view.php";?>
 
 	<footer>
 		<div class="left">

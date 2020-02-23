@@ -46,3 +46,12 @@ h2 {
     border: 1px solid #d1d3e2;
     border-radius: 0.35rem;
 }
+
+.small-menu {
+    background-color: $grey;
+    padding: 22px 22px!important;
+    margin: 22px 22px!important;    
+}
+.small-menu span {
+    margin: auto;
+}
