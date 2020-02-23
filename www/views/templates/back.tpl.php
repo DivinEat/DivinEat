@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Dashboard</title>
+    <title>Dashboard</title>
     <link href="public/scss/dist/main.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+    <script src="public/js/dashboard/dashboard-graphs.js"></script>
 </head>
 <body>
     <div class="row padding-0">

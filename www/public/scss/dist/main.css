@@ -7,7 +7,7 @@
 body {
   font-family: "Montserrat", sans-serif;
   color: #444;
-  background-color: #f2f2f2;
+  background-color: #F9F9F9;
   margin: 0;
 }
 
@@ -238,7 +238,7 @@ h2 {
 
 .sidebar {
   min-height: 100vh;
-  background-color: #9142be;
+  background-color: #402082;
 }
 
 .sidebar .sidebar-nav {
@@ -461,20 +461,68 @@ article .stats h2 {
   font-weight: normal;
 }
 
+.dashboard-item {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.dashboard-item:hover {
+  -webkit-transform: scale(1.08);
+          transform: scale(1.08);
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+}
+
+#graph-CA {
+  background-color: #E7E0F4;
+}
+
+#graph-visiteurs {
+  background-color: #FFFFFF;
+}
+
+#graph-new-clients {
+  background-color: #F0F0F0;
+}
+
+#container {
+  width: calc(90%);
+}
+
+.graph-container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+.graph-container > * {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
 .bg-white {
-  background-color: #fff;
+  background-color: #FFFFFF;
 }
 
 .bg-light {
   background-color: #f8f9fc !important;
 }
 
-.bg-light_purple {
-  background-color: #E7C9F3;
+.bg-grey {
+  background-color: #F0F0F0;
 }
 
 .bg-purple {
-  background-color: #D9B2E8;
+  background-color: #E7E0F4;
 }
 
 .padding-0 {
