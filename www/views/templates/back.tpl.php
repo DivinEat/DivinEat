@@ -24,7 +24,7 @@
 
         <div class="col-sm-10 padding-0">
             <div class="row padding-0">
-                <div class="col-sm-12 padding-right-0">
+                <div class="col-sm-12 padding-right-0 padding-left-0">
                     <div class="col-inner navbar bg-white">
                         <div class="navbar-back">
                             <form class="navbar-search">
