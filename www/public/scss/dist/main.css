@@ -541,6 +541,66 @@ article .stats h2 {
   padding-left: 0 !important;
 }
 
+footer {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  height: 8em;
+  background: #1f1f1f;
+}
+
+footer .left {
+  margin-left: 1.5625rem;
+}
+
+footer .right {
+  margin-right: 1.5625rem;
+}
+
+footer a {
+  text-decoration: none;
+  color: #818181;
+}
+
+footer a img {
+  -webkit-filter: invert(45%);
+          filter: invert(45%);
+}
+
+footer .circle {
+  margin-top: 0.9375rem;
+  width: 4.0625rem;
+  height: 4.0625rem;
+  border: 0.125rem solid #818181;
+  border-radius: 5rem;
+}
+
+footer button {
+  color: #818181;
+  border: none;
+  background: none;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+footer .circle span {
+  border: solid #818181;
+  border-width: 0 0.1875rem 0.1875rem 0;
+  display: inline-block;
+  padding: 0.3125rem;
+  margin-top: 0.9em;
+}
+
+footer .circle .up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
 .row {
   display: -webkit-box;
   display: flex;

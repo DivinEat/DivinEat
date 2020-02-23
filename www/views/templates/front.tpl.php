@@ -5,6 +5,7 @@
 	<link href="public/scss/dist/main.css" rel="stylesheet">
 	<script src="public/vendor/jquery/jquery.min.js"></script>
 	<script src="public/js/navbar.js"></script>
+	<script src="public/js/top.js"></script>
 </head>
 <body>
 	<header id="navbar" class="navbar bg-white">
@@ -44,8 +45,23 @@
 	</div>
 
 	<footer>
-		
+		<div class="left">
+			<div>
+				<p><a href="#" target="_blank">Nous contacter</a></p>
+				<a href="#" target="_blank"><img src="public/img/icones/linkedin.png"></a>
+				<a href="#" target="_blank"><img src="public/img/icones/facebook.png"></a>
+				<a href="#" target="_blank"><img src="public/img/icones/instagram.png"></a>
+			</div>
+		</div>
+		<div class="right">
+			<button onclick="scrollTo('navbar');">
+				<div class="circle">
+					<span class="arrow up"></span><br>
+					Top
+				</div>
+			</button>
+		</div>
+		</div>
 	</footer>
-
 </body>
 </html>
