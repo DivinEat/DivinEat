@@ -17,7 +17,7 @@
 			</a>
 		</nav>
 
-		<div id="mySidenav" class="sidenav">
+		<div id="navbar-front-mobile" class="navbar-front-mobile">
 			<a href="" class="closebtn" onclick="closeNav()">&times;</a>
 			<a href="#">Menus</a>
 			<a href="#">Réservations</a>
@@ -34,6 +34,18 @@
 		</div>
 		<span class="burger" onclick="openNav()">&#9776;</span>
 	</header>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="col-inner">
+				<?php include "views/".$this->view.".view.php";?>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		
+	</footer>
 
 </body>
 </html>

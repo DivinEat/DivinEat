@@ -332,7 +332,7 @@ h2 {
   display: none;
 }
 
-.sidenav {
+.navbar-front-mobile {
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
@@ -355,7 +355,7 @@ h2 {
   padding-top: 60px;
 }
 
-.sidenav a {
+.navbar-front-mobile a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
@@ -365,11 +365,11 @@ h2 {
   transition: 0.3s;
 }
 
-.sidenav a:hover {
+.navbar-front-mobile a:hover {
   color: #f1f1f1;
 }
 
-.sidenav .closebtn {
+.navbar-front-mobile .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
@@ -388,6 +388,10 @@ h2 {
 
   .navbar-front {
     display: block;
+  }
+
+  .navbar-front a:hover {
+    color: #818181;
   }
 }
 
@@ -485,6 +489,10 @@ article .stats h2 {
   padding-right: 0 !important;
 }
 
+.padding-left-0 {
+  padding-left: 0 !important;
+}
+
 .row {
   display: -webkit-box;
   display: flex;
@@ -495,7 +503,6 @@ article .stats h2 {
   -webkit-box-align: start;
           align-items: flex-start;
   padding: 0.625rem 0rem;
-  margin: 0rem -0.625rem;
 }
 
 .col-inner {
