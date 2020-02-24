@@ -1,31 +1,15 @@
-function scrollTo(id) {
-    var e = document.getElementById(id);
-    var menu = document.querySelector("nav");
-    var box = e.getBoundingClientRect();
-    var k, inc, z, s;
-    var delta = menu.getBoundingClientRect().bottom;
-    z = box.top - delta;
-    inc = (z >= 0) ? 1 : -1;
-    for (k = 0; k < 49; k++) {
-        s = "window.scrollBy(0," + Math.floor(z / 50) + ")";
-        setTimeout(s, 10 * k);
+$(document).ready(function() {
+    function scroll_to_top(div) {
+        $(div).click(function() {
+            $('html,body').animate({scrollTop: 0}, 'slow');
+        });
+        $(window).scroll(function(){
+            if($(window).scrollTop()<500){
+                $(div).fadeOut();
+            } else{
+                $(div).fadeIn();
+            }
+        });
     }
-    s = "myLastScrollTo('" + id + "'," + delta + ")";
-    setTimeout(s, 500);
-}
-
-function myLastScrollTo(id, delta) {
-    var e = document.getElementById(id);
-    var box = e.getBoundingClientRect();
-    if ($(window).width() <= 980){
-        window.scrollBy(0, box.top - 150);
-    } else {
-        if($('#header2').css('display') == 'none')
-        {
-            window.scrollBy(0, box.top - delta);
-        }
-        else {
-            window.scrollBy(0, box.top - 70);
-        }
-    }
-  }
+    scroll_to_top("#scroll_to_top");
+});

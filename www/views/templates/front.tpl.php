@@ -48,7 +48,7 @@
 			</div>
 		</div>
 		<div class="right">
-			<button onclick="scrollTo('navbar');">
+			<button id="scroll_to_top">
 				<div class="circle">
 					<span class="arrow up"></span><br>
 					Top
