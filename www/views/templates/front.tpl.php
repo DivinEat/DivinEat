@@ -5,9 +5,10 @@
 	<link href="public/scss/dist/main.css" rel="stylesheet">
 	<script src="public/vendor/jquery/jquery.min.js"></script>
 	<script src="public/js/navbar.js"></script>
+	<script src="public/js/top.js"></script>
 </head>
 <body>
-	<header id="navbar" class="navbar bg-white">
+	<header id="navbar" class="navbar navbar--fixed bg-white">
 		<img src="https://image.freepik.com/vecteurs-libre/restaurant-logo-modele_1236-155.jpg" style="height:100%"></img>
 		
 		<nav class="navbar-front">
@@ -35,17 +36,26 @@
 		<span class="burger" onclick="openNav()">&#9776;</span>
 	</header>
 
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="col-inner">
-				<?php include "views/".$this->view.".view.php";?>
-			</div>
-		</div>
-	</div>
+	<?php include "views/".$this->view.".view.php";?>
 
 	<footer>
-		
+		<div class="left">
+			<div>
+				<p><a href="#" target="_blank">Nous contacter</a></p>
+				<a href="#" target="_blank"><img src="public/img/icones/linkedin.png"></a>
+				<a href="#" target="_blank"><img src="public/img/icones/facebook.png"></a>
+				<a href="#" target="_blank"><img src="public/img/icones/instagram.png"></a>
+			</div>
+		</div>
+		<div class="right">
+			<button id="scroll_to_top">
+				<div class="circle">
+					<span class="arrow up"></span><br>
+					Top
+				</div>
+			</button>
+		</div>
+		</div>
 	</footer>
-
 </body>
 </html>
