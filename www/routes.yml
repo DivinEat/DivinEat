@@ -25,3 +25,7 @@
 /test:
   controller: "Test"
   action: "default"
+
+/menus:
+  controller: "Menu"
+  action: "index"
