@@ -8,7 +8,7 @@
 	<script src="public/js/top.js"></script>
 </head>
 <body>
-	<header id="navbar" class="navbar bg-white">
+	<header id="navbar" class="navbar navbar--fixed bg-white">
 		<img src="https://image.freepik.com/vecteurs-libre/restaurant-logo-modele_1236-155.jpg" style="height:100%"></img>
 		
 		<nav class="navbar-front">

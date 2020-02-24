@@ -283,10 +283,6 @@ div.ligne {
 }
 
 .navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 10;
   display: -webkit-box;
   display: flex;
   flex-wrap: wrap;
@@ -296,6 +292,13 @@ div.ligne {
           justify-content: space-between;
   box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
   height: 4rem;
+}
+
+.navbar--fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
 }
 
 .navbar .navbar-back {
