@@ -284,7 +284,7 @@ h2 {
           align-items: center;
   -webkit-box-pack: justify;
           justify-content: space-between;
-  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  box-shadow: 0px 4px 4px rgba(236, 236, 236, 0.5);
   height: 4rem;
 }
 
@@ -438,8 +438,6 @@ article {
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
-  min-height: 6.25rem;
-  border-radius: 5px;
 }
 
 article .stats {
@@ -468,6 +466,9 @@ article .stats h2 {
 .dashboard-item {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
+  min-height: 6.25rem;
+  box-shadow: 1px 1px 1px #F1F1F1, -1px -1px 1px #F1F1F1;
+  border-radius: 3px;
 }
 
 .dashboard-item:hover {
@@ -487,30 +488,6 @@ article .stats h2 {
 
 #graph-new-clients {
   background-color: #F0F0F0;
-}
-
-#container {
-  width: calc(90%);
-}
-
-.graph-container {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-align: center;
-          align-items: center;
-}
-
-.graph-container > * {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-align: center;
-          align-items: center;
 }
 
 .bg-white {
