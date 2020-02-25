@@ -52,3 +52,17 @@ div.ligne {
     width: 65%;
     border-bottom:1px solid black;
 }
+
+@for $i from 1 through 5 {
+    .mt-#{$i} {
+        margin-top: #{$i}rem;
+    }
+  }
+
+.text-center {
+    text-align: center;
+}
+
+.width-50 {
+    width: 50%;
+}

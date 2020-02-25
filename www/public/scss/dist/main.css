@@ -55,6 +55,34 @@ div.ligne {
   border-bottom: 1px solid black;
 }
 
+.mt-1 {
+  margin-top: 1rem;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.mt-3 {
+  margin-top: 3rem;
+}
+
+.mt-4 {
+  margin-top: 4rem;
+}
+
+.mt-5 {
+  margin-top: 5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.width-50 {
+  width: 50%;
+}
+
 .button {
   text-decoration: none;
   background-color: #444;
@@ -591,18 +619,19 @@ footer .circle .up {
   -webkit-transform: rotate(-135deg);
 }
 
+.frame-menus,
 .frame {
-  background-color: #E3E3EB;
   padding: 22px 22px !important;
-  margin: 22px 22px !important;
   color: #000;
 }
 
+.frame-menus span,
 .frame span {
   margin: auto;
   font-size: 1.5625rem;
 }
 
+.frame-menus .menu,
 .frame .menu {
   display: -webkit-box;
   display: flex;
@@ -611,6 +640,7 @@ footer .circle .up {
   padding-bottom: 0.9375rem;
 }
 
+.frame-menus .more,
 .frame .more {
   display: -webkit-box;
   display: flex;
@@ -618,11 +648,22 @@ footer .circle .up {
           justify-content: flex-end;
 }
 
+.frame-menus .more a,
 .frame .more a {
   padding: 0.625rem 1.5625rem;
   background-color: #D6D6E1;
   text-decoration: none;
   color: #000;
+}
+
+.frame {
+  margin: 22px 22px !important;
+  background-color: #E3E3EB;
+}
+
+.frame-menus > div {
+  background-color: #E3E3EB;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .row {
