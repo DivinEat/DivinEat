@@ -75,6 +75,14 @@ div.ligne {
   margin-top: 5rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.width-50 {
+  width: 50%;
+}
+
 .button {
   text-decoration: none;
   background-color: #444;
