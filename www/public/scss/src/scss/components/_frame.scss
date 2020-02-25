@@ -1,5 +1,5 @@
 .frame-menus, .frame {
-    padding: 22px 22px!important;
+    padding: rem(22) rem(22)!important;
     color: $black;
 
     span {
@@ -27,11 +27,11 @@
 }
 
 .frame {
-    margin: 22px 22px!important;
+    margin: rem(22) rem(22)!important;
     background-color: $frame;
 }
 
 .frame-menus > div {
     background-color: $frame;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: rem(0) rem(4) rem(4) rgba(0, 0, 0, 0.25);
 }

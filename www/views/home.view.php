@@ -51,7 +51,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-12 col-md-7">
+    <div class="col-md-7">
         <div class="col-inner">
             <div id="slider">
                 <img src="public/img/banner.jpg">
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <div class="col-sm-12 col-md-5">
+    <div class="col-md-5">
         <div class="col-inner">
             
         </div>

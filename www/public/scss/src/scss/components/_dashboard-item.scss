@@ -1,8 +1,8 @@
 .dashboard-item {
     transition: all 0.5s;
     min-height: rem(100);
-    box-shadow: 1px 1px 1px $dashboard-item-border-color, -1px -1px 1px $dashboard-item-border-color;
-    border-radius: 3px;
+    box-shadow: rem(1) rem(1) rem(1) $dashboard-item-border-color, rem(-1) rem(-1) rem(1) $dashboard-item-border-color;
+    border-radius: rem(3);
     
     &:hover {
         transform: scale(1.08);
