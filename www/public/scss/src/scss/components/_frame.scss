@@ -1,0 +1,29 @@
+.frame {
+    background-color: $frame;
+    padding: 22px 22px!important;
+    margin: 22px 22px!important;  
+    color: $black;
+
+    span {
+        margin: auto;
+        font-size: rem(25);
+    }
+
+    .menu {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: rem(15);
+    }
+
+    .more {
+        display: flex;
+        justify-content: flex-end;
+
+        a {
+            padding: rem(10) rem(25);
+            background-color: $btn-more;
+            text-decoration: none;
+            color: $black;
+        }
+    }
+}
