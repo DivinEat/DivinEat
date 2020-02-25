@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-2">
         <div class="col-inner padding-0">
             <select class="form-select" name="stats-date">
                 <option value="today">Aujourd'hui</option>
@@ -9,6 +9,11 @@
                 <option value="year">Cette année</option>
                 <option value="allTime">Toujours</option>
             </select>
+        </div>
+    </div>
+    <div class="col-sm-10">
+        <div class="col-inner padding-0">
+            <h1 class="margin-0">Les commandes</h1>
         </div>
     </div>
 </div>
