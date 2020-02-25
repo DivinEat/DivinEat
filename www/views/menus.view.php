@@ -106,6 +106,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-4 row text-center">
+                    <div class="col-12"><img class="width-50" src="/public/img/menus/entrees.jpg"></div>
+                    <div class="col-12"><img class="width-50" src="/public/img/menus/entrees.jpg"></div>
+                    <div class="col-12"><img class="width-50" src="/public/img/menus/entrees.jpg"></div>
+                    <div class="col-12"><img class="width-50" src="/public/img/menus/entrees.jpg"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -166,8 +172,6 @@
                             <div>Moelleux au chocolat et Schocko-bon aison</div>
                             <div>8€</div>
                         </div>
-                        <div><img src="public/img/menus/buche.jpg" style="width:50px"></div>
-                        <div><img src="public/img/menus/buche.jpg" style="width:50px"></div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
@@ -181,6 +185,21 @@
                             <div>9€</div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-2 row text-center">
+                    <div><img class="width-50" src="/public/img/menus/buche.jpg"></div>
+                </div>
+                <div class="col-sm-2 row text-center">
+                    <div><img class="width-50" src="/public/img/menus/buche.jpg"></div>
+                </div>
+                <div class="col-sm-2 row text-center">
+                    <div><img class="width-50" src="/public/img/menus/buche.jpg"></div>
+                </div>
+                <div class="col-sm-3 row text-center">
+                    <div><img class="width-50" src="/public/img/menus/buche.jpg"></div>
+                </div>
+                <div class="col-sm-3 row text-center">
+                    <div><img class="width-50" src="/public/img/menus/buche.jpg"></div>
                 </div>
             </div>
         </div>
