@@ -5,42 +5,45 @@ footer {
     width: 100%;
     height: 8em;
     background: #1f1f1f;
-}
-footer .left {
-    margin-left: rem(25);
-}
-footer .right {
-    margin-right: rem(25);
-}
-footer a {
-    text-decoration: none;
-    color: $grey;
-}
-footer a img {
-    filter: invert(45%); 
-}
-footer .circle {
-    margin-top: rem(15);
-    width: rem(65);
-    height: rem(65);
-    border: rem(2) solid $grey;
-    border-radius: rem(80);
-}
-footer button {
-    color: $grey;
-    border: none;
-    background: none;
-    font-size: 1.1em;
-    cursor: pointer;
-}
-footer .circle span {
-    border: solid $grey;
-    border-width: 0 rem(3) rem(3) 0;
-    display: inline-block;
-    padding: rem(5);
-    margin-top: 0.9em;
-}
-footer .circle .up {
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
+
+    & .left {
+        margin-left: rem(25);
+    }
+    & .right {
+        margin-right: rem(25);
+    }
+    a {
+        text-decoration: none;
+        color: $grey;
+        img {
+            filter: invert(45%); 
+        }
+    }
+    .circle {
+        margin-top: rem(15);
+        width: rem(65);
+        height: rem(65);
+        border: rem(2) solid $grey;
+        border-radius: rem(80);
+        
+        span {
+            border: solid $grey;
+            border-width: 0 rem(3) rem(3) 0;
+            display: inline-block;
+            padding: rem(5);
+            margin-top: 0.9em;
+        }
+        .up {
+            transform: rotate(-135deg);
+            -webkit-transform: rotate(-135deg);
+        }
+    }
+    button {
+        color: $grey;
+        border: none;
+        background: none;
+        font-size: 1.1em;
+        cursor: pointer;
+    }
+
 }
