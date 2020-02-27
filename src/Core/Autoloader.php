@@ -14,7 +14,7 @@ class Autoloader
         $path = implode(DS, $parts);
         $file = $className.'.php';
 
-        $filepath = dirname(ROOT).DS.$path.DS.$file;
+        $filepath = ROOT.DS.$path.DS.$file;
 
         require $filepath;
     }

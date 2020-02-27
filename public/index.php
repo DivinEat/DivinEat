@@ -5,8 +5,8 @@ use Src\Core\Router;
 
 session_start();
 
-define('DS', DIRECTORY_SEPARATOR); // meilleur portabilité sur les différents systeme.
-define('ROOT', dirname(__FILE__).DS); // pour se simplifier la vie
+define('DS', DIRECTORY_SEPARATOR);
+define('ROOT', dirname(dirname(__FILE__)).DS);
 
 require "../src/Core/Autoloader.php";
 Autoloader::register();
