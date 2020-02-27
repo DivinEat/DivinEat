@@ -2,6 +2,6 @@
 
 namespace Src\Core;
 
-class Router
+class ConstantLoader
 {
 }
