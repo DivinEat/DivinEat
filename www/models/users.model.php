@@ -9,10 +9,32 @@ class users extends DB
     protected $pwd;
     protected $status;
 
+    protected $fillable = [
+        'id',
+        'firstname',
+        'lastname',
+        'status',
+        'email',
+        'pwd'
+    ];
+
 
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public function hydrate(array $data)
+    {
+        foreach ($data as $key => $value)
+        {
+            if (in_array($key, $this->fillable))
+            {
+                $method = 'set' . ucfirst(strtolower($key));
+                if (method_exists($this, $method))
+                    $this->$method = $value;
+            }
+        }
     }
 
     public function setId($id)
