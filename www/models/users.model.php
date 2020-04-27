@@ -16,6 +16,7 @@ class users extends DB
             if (method_exists($this, $method)){
                 $this->$method($value);
             }
+        }
     }
 
 
