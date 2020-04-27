@@ -16,6 +16,15 @@ class DB
         $this->table =  DB_PREFIXE.get_called_class();
     }
 
+    public function hydrate(array $donnees){
+        foreach($donnees as $key => $value){
+            $method = 'set'.ucfirst(strtolower($key));
+        
+            if (method_exists($this, $method)){
+                $this->$method($value);
+            }
+        }
+    }
 
     public function save()
     {
