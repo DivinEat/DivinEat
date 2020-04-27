@@ -9,16 +9,6 @@ class users extends DB
     protected $pwd;
     protected $status;
 
-    public function hydrate(array $donnees){
-        foreach($donnees as $key => $value){
-            $method = 'set'.ucfirst(strtolower($key));
-        
-            if (method_exists($this, $method)){
-                $this->$method($value);
-            }
-        }
-    }
-
     public function __construct()
     {
         parent::__construct();
