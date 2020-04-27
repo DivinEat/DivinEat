@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+namespace App\core;
+
 class Validator{
 
 	public static function checkForm($configForm, $data){

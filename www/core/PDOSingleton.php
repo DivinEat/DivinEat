@@ -1,6 +1,8 @@
 <?php
 
-class PDOSingleton extends PDO 
+namespace App\core;
+
+class PDOSingleton extends PDO
 {
     private $PDOInstance;
     private static $instance;

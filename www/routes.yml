@@ -1,18 +1,18 @@
 /:
-  controller: default
+  controller: Default
   action: default
 
 /test/yves:
-  controller: default
+  controller: Default
   action: default
 
 
 /ajout-utilisateur:
-  controller: "user"
+  controller: "User"
   action: "add"
 
 /utilisateur:
-  controller: "user"
+  controller: "User"
   action: "default"
 
 

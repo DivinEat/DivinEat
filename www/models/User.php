@@ -1,6 +1,8 @@
 <?php
 
-class users extends DB
+namespace App\models;
+
+class User extends DB
 {
     protected $id;
     protected $firstname;

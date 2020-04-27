@@ -1,5 +1,9 @@
 <?php
 
+namespace App\controllers;
+
+use App\core\View;
+
 class UserController
 {
     public function defaultAction()
@@ -36,7 +40,7 @@ class UserController
             //Insertion ou erreurs
             print_r($errors);
 
-            if empty($errors){
+            if (empty($errors)){
                 $data = $_SESSION['register_data'];
                 $user = new users();
                 
