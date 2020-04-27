@@ -1,16 +1,22 @@
 <?php
+
+use App\core\ConstantLoader;
+
 session_start();
+
+spl_autoload_register("myAutoloader");
 
 function myAutoloader($class)
 {
-    if (file_exists("core/".$class.".class.php")) {
-        include "core/".$class.".class.php";
-    } elseif (file_exists("models/".$class.".model.php")) {
-        include "models/".$class.".model.php";
+    $class = str_replace('App', '', $class);
+    $class = str_replace('\\','/',$class);
+
+    if($class[0]=='/'){
+        include substr($class.'.php',1);
+    } else {
+        include $class . '.php';
     }
 }
-
-spl_autoload_register("myAutoloader");
 
 
 new ConstantLoader();
@@ -27,7 +33,7 @@ $listOfRoutes = yaml_parse_file("routes.yml");
 
 
 if (!empty($listOfRoutes[$uri])) {
-    $c =  $listOfRoutes[$uri]["controller"]."Controller";
+    $c = 'App\controllers\\'.ucfirst($listOfRoutes[$uri]["controller"]."Controller");
     $a =  $listOfRoutes[$uri]["action"]."Action";
 
     $pathController = "controllers/".$c.".class.php";

@@ -1,5 +1,8 @@
 <?php
 
+namespace App\controllers;
+use App\core\View;
+
 class UserController
 {
     public function defaultAction()

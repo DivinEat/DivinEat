@@ -1,5 +1,7 @@
 <?php
 
+namespace App\models;
+
 class users extends DB
 {
     protected $id;

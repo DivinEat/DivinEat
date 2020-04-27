@@ -1,4 +1,7 @@
 <?php
+
+namespace App\core;
+
 class DB
 {
     private $table;
