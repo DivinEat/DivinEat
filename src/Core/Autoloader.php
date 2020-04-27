@@ -7,15 +7,11 @@ class Autoloader
     }
 
     public static function autoload($class){
-        $parts = preg_split('#\\\\#', $class);
-        $parts[0] = strtolower($parts[0]);
-        $className = array_pop($parts);
+        $classPath = str_replace('\\', DIRECTORY_SEPARATOR, str_replace('App', 'src', $class));
 
-        $path = implode(DS, $parts);
-        $file = $className.'.php';
+        if (! file_exists($classPath . '.php'))
+            die ('Impossible d\'inclure la classe suivante: ' . $classPath);
 
-        $filepath = ROOT.DS.$path.DS.$file;
-
-        require $filepath;
+        include $classPath;
     }
 }
