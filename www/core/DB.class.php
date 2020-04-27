@@ -43,4 +43,15 @@ class DB
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($columnsData);
     }
+
+    public function hydrate($array)
+    {
+        foreach ($array as $key => $value) {
+            $setterName = "set" . strtolower(ucfirst($key));
+
+            if (method_exists($this, $setterName)) {
+                $this->$method($value);
+            }
+        }
+    }
 }
