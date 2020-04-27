@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Core;
+
 class ConstantLoader
 {
     public $extend;

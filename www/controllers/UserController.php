@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Controllers;
+use App\Core\View;
+use App\Core\Validator;
+use App\Models\users;
+
 class UserController
 {
     public function defaultAction()
@@ -36,7 +41,7 @@ class UserController
             //Insertion ou erreurs
             print_r($errors);
 
-            if empty($errors){
+            if (empty($errors)) {
                 $data = $_SESSION['register_data'];
                 $user = new users();
                 

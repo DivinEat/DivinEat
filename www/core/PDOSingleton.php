@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Core;
+
 class PDOSingleton extends PDO 
 {
     private $PDOInstance;

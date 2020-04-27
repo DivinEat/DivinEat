@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Models;
+
+use App\Core\DB;
+use App\Core\helpers;
+
 class users extends DB
 {
     protected $id;
