@@ -1,6 +1,7 @@
 <?php
 namespace App\models;
 use App\core\helpers;
+use App\core\DB;
 
 class users extends DB
 {
