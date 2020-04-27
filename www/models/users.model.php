@@ -15,6 +15,17 @@ class users extends DB
         parent::__construct();
     }
 
+    public function hydrate($array)
+    {
+        foreach ($array as $key => $value) {
+            $setterName = "set" . strtolower(ucfirst($key));
+
+            if (method_exists($this, $setterName)) {
+                $this->$method($value);
+            }
+        }
+    }
+
     public function setId($id)
     {
         $this->id=$id;
