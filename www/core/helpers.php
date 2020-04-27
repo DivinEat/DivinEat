@@ -1,4 +1,6 @@
 <?php
+namespace App\core;
+
 class helpers
 {
     public static function getUrl($controller, $action)

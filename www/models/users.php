@@ -1,4 +1,6 @@
 <?php
+namespace App\models;
+use App\core\helpers;
 
 class users extends DB
 {
@@ -38,8 +40,6 @@ class users extends DB
     {
         $this->status=$status;
     }
-
-
 
     public static function getRegisterForm(){
         return [

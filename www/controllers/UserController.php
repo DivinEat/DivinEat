@@ -1,4 +1,8 @@
 <?php
+namespace App\controllers;
+use App\core\View;
+use App\core\Validator;
+use App\models\users;
 
 class UserController
 {
@@ -17,9 +21,6 @@ class UserController
         echo "L'utilisateur va être supprimé";
     }
 
-
-
-
     public function loginAction()
     {
         $myView = new View("login", "account");
@@ -36,7 +37,7 @@ class UserController
             //Insertion ou erreurs
             print_r($errors);
 
-            if empty($errors){
+            if( empty($errors)){
                 $data = $_SESSION['register_data'];
                 $user = new users();
                 

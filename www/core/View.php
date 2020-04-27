@@ -1,4 +1,6 @@
 <?php
+namespace App\core;
+
 class View
 {
     private $template;

@@ -1,4 +1,7 @@
 <?php
+namespace App\core;
+use App\core\PDOSingleton;
+
 class DB
 {
     private $table;
