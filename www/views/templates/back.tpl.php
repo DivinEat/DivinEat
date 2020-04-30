@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="dropdown">
-                            <button class="dropbtn bg-white"><img src="public/img/icones/user.png"></button>
+                            <button class="btn-dropdown bg-white"><img src="public/img/icones/user.png"></button>
                             <div class="dropdown-content">
                                 <a href="#"><img src="public/img/icones/profil.png"> Profil</a>
                                 <a href="#"><img src="public/img/icones/settings.png"> Paramètres</a><hr/>

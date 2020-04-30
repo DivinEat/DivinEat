@@ -29,3 +29,7 @@
 /menus:
   controller: "Menu"
   action: "index"
+
+/add_menu:
+  controller: "Menu"
+  action: "add"

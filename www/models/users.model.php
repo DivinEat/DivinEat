@@ -49,8 +49,10 @@ class users extends DB
                         "action"=>helpers::getUrl("user", "register"),
                         "class"=>"user",
                         "id"=>"formRegisterUser",
-                        "submit"=>"S'inscrire"
-                        ],
+                        "submit"=>[
+                            "btn-primary"=>"S'inscrire"
+                        ]
+                    ],
 
                     "fields"=>[
                         "firstname"=>[

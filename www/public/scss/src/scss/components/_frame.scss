@@ -29,9 +29,9 @@
 .frame {
     margin: rem(22) rem(22)!important;
     background-color: $frame;
-}
-
-.frame-menus > div {
-    background-color: $frame;
-    box-shadow: rem(0) rem(4) rem(4) rgba(0, 0, 0, 0.25);
+    
+    &-menus > div {
+        background-color: $frame;
+        box-shadow: rem(0) rem(4) rem(4) rgba(0, 0, 0, 0.25);
+    }
 }
