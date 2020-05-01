@@ -7,7 +7,11 @@ class Autoloader
     }
 
     public static function autoload($class){
-        $classPath = str_replace('\\', DIRECTORY_SEPARATOR, str_replace('App', 'src', $class));
+        $classPath = str_replace(
+            '\\',
+            DIRECTORY_SEPARATOR,
+            str_replace('App', 'app', $class)
+        );
 
         if (! file_exists($classPath . '.php'))
             die ('Impossible d\'inclure la classe suivante: ' . $classPath);

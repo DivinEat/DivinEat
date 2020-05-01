@@ -1,10 +1,10 @@
 <?php
 
-namespace Src\Core;
+namespace App\Core;
 
 class Router
 {
-    protected array $serverArray;
+    protected   array $serverArray;
 
     public function __construct(array $serverArray)
     {
