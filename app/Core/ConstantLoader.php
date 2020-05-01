@@ -12,7 +12,7 @@ class ConstantLoader
 
     protected function isEnvFileExist(): bool
     {
-        if (!file_exists(ROOT.DS.'.env'))
+        if (!file_exists(ROOT . DIRECTORY_SEPARATOR .'.env'))
             throw new \Exception('Aucun fichier d\'environement détecté.');
 
         return true;
@@ -26,6 +26,6 @@ class ConstantLoader
             if (isset($explodedLine[0], $explodedLine[1])
                 && !defined($explodedLine[0], $explodedLine[1]))
                 define($explodedLine[0], $explodedLine[1]);
-        },explode('\n', file_get_contents(ROOT.DS.'.env')));
+        },explode('\n', file_get_contents(ROOT . DIRECTORY_SEPARATOR . '.env')));
     }
 }

@@ -1,12 +1,11 @@
 <?php
 
-use Src\Core\ConstantLoader;
-use Src\Core\Router;
+use App\Core\ConstantLoader;
+use App\Core\Routing\Router;
+
+define('ROOT', dirname(__DIR__));
 
 session_start();
-
-define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', dirname(dirname(__FILE__)).DS);
 
 require "../app/Core/Autoloader.php";
 Autoloader::register();

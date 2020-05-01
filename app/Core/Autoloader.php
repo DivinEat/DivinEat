@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Core;
-
 class Autoloader
 {
     public static function register(){
@@ -12,12 +10,12 @@ class Autoloader
         $classPath = str_replace(
             '\\',
             DIRECTORY_SEPARATOR,
-            str_replace('App', 'app', $class)
+            str_replace('App', 'app', ROOT. DIRECTORY_SEPARATOR . $class)
         );
 
         if (! file_exists($classPath . '.php'))
-            die ('Impossible d\'inclure la classe suivante: ' . $classPath);
+            die ('Impossible d\'inclure la classe suivante: ' . $class);
 
-        include $classPath;
+        include $classPath . '.php';
     }
 }
