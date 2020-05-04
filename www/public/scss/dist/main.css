@@ -137,6 +137,14 @@ div.ligne {
   margin-left: 0 !important;
 }
 
+.margin-bottom-75 {
+  margin-bottom: 4.6875rem !important;
+}
+
+.margin-top-50 {
+  margin-top: 3.125rem !important;
+}
+
 .color-white {
   color: #fff !important;
 }
@@ -153,6 +161,10 @@ div.ligne {
   color: #402082 !important;
 }
 
+.width-100 {
+  width: 100%;
+}
+
 .flex-column {
   display: -webkit-box;
   display: flex;
@@ -161,6 +173,17 @@ div.ligne {
           flex-direction: column;
   -webkit-box-align: center;
           align-items: center;
+}
+
+.flex-raw {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: raw;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
+  width: 100%;
 }
 
 .title {
@@ -173,6 +196,10 @@ div.ligne {
 .subtitle {
   margin-top: 0;
   color: #818181;
+}
+
+i {
+  margin-right: 10px;
 }
 
 .image-banner {
@@ -691,6 +718,31 @@ footer .circle .up {
   font-weight: 600;
   font-size: 0.9375rem;
   margin-top: 1rem;
+  text-align: left;
+}
+
+.btn-account-blue {
+  background-color: #3c8dbc;
+  color: #fff;
+  width: 100%;
+}
+
+.btn-account-red {
+  background-color: #dd4b39;
+  color: #fff;
+  width: 45%;
+}
+
+.btn-account-green {
+  background-color: #00a65a;
+  color: #fff;
+  width: 45%;
+}
+
+.btn-account:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
 .btn-slider {

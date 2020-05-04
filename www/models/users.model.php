@@ -116,12 +116,10 @@ class users extends DB
             "config"=>[
                 "method"=>"POST", 
                 "action"=>helpers::getUrl("User", "login"),
-                "class"=>"admin-form",
+                "class"=>"admin-form width-100",
                 "id"=>"formLoginUser",
                 "submit"=>[
-                    "btn-primary"=>"Connexion",
-                    "btn-remove"=>"Inscription",
-                    "btn-add"=>"Mot de passe oublié",
+                    "btn btn-account btn-account-blue margin-top-50"=>"<i class='fa fa-cloud'></i>Connexion"
                 ]
             ],
 

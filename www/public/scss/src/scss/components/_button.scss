@@ -58,6 +58,28 @@
         font-weight: 600;
         font-size: rem(15);
         margin-top: 1rem;
+        text-align: left;
+
+        &-blue {
+            background-color: $btn-primary-background-color;
+            color: $white;
+            width: 100%;
+        }
+        &-red {
+            background-color: $btn-remove-background-color;
+            color: $white;
+            width: 45%;
+        }
+        &-green {
+            background-color: $btn-add-background-color;
+            color: $white;
+            width: 45%;
+        }
+
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 7px 14px rgba(50,50,93,.1), 0 3px 6px rgba(0,0,0,.08);
+        }
     }
 
     &-slider{
