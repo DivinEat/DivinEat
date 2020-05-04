@@ -49,6 +49,17 @@
         border: none;
     }
 
+    &-account {
+        background-color: $white;
+        color: $purple;
+        text-transform: uppercase;
+        padding-left: rem(14);
+        padding-right: rem(14);
+        font-weight: 600;
+        font-size: rem(15);
+        margin-top: 1rem;
+    }
+
     &-slider{
         width: 3rem;
         height: 3rem;

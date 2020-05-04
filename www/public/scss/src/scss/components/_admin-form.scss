@@ -23,5 +23,19 @@
         box-shadow: none;
         border-color: #d2d6de;
         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+
+        &-user {
+            border: none;
+            border-bottom: rem(1) solid $grey;
+
+            &:focus {
+                outline: none;
+                border-bottom: rem(2) solid $purple;
+            }
+
+            &::placeholder {
+                color: $grey;
+            }
+        }
     }
 }

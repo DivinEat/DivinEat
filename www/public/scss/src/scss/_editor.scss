@@ -11,6 +11,10 @@
     &-purple {
         background-color: $article-color-purple;
     }
+    &-main {
+        background : linear-gradient(180deg,$light-purple 0, $purple);
+        min-height: 100vh;
+    }
 }
 
 .padding {
@@ -35,4 +39,37 @@
     &-left-0 {
         margin-left: 0!important;
     }
+}
+
+.color {
+    &-white {
+        color: $white!important;
+    }
+    &-light {
+        color: $light!important;
+    }
+    &-grey {
+        color: $grey!important;
+    }
+    &-purple {
+        color: $purple!important;
+    }
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    text-transform: uppercase;
+    color: $white;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+.subtitle {
+    margin-top: 0;
+    color: $grey;
 }

@@ -40,96 +40,110 @@ class users extends DB
         $this->status=$status;
     }
 
-
-
     public static function getRegisterForm(){
         return [
-                    "config"=>[
-                        "method"=>"POST", 
-                        "action"=>helpers::getUrl("user", "register"),
-                        "class"=>"user",
-                        "id"=>"formRegisterUser",
-                        "submit"=>[
-                            "btn-primary"=>"S'inscrire"
-                        ]
-                    ],
+            "config"=>[
+                "method"=>"POST", 
+                "action"=>helpers::getUrl("User", "register"),
+                "class"=>"user",
+                "id"=>"formRegisterUser",
+                "submit"=>[
+                    "btn-primary"=>"S'inscrire"
+                ]
+            ],
 
-                    "fields"=>[
-                        "firstname"=>[
-                                "type"=>"text",
-                                "placeholder"=>"Votre prénom",
-                                "class"=>"form-control form-control-user",
-                                "id"=>"",
-                                "required"=>true,
-                                "min-length"=>2,
-                                "max-length"=>50,
-                                "errorMsg"=>"Votre prénom doit faire entre 2 et 50 caractères"
-                            ],
-                        "lastname"=>[
-                                "type"=>"text",
-                                "placeholder"=>"Votre nom",
-                                "class"=>"form-control form-control-user",
-                                "id"=>"",
-                                "required"=>true,
-                                "min-length"=>2,
-                                "max-length"=>100,
-                                "errorMsg"=>"Votre nom doit faire entre 2 et 100 caractères"
-                            ],
-                        "email"=>[
-                                "type"=>"email",
-                                "placeholder"=>"Votre email",
-                                "class"=>"form-control form-control-user",
-                                "id"=>"",
-                                "required"=>true,
-                                "uniq"=>["table"=>"users","column"=>"email"],
-                                "errorMsg"=>"Le format de votre email ne correspond pas"
-                            ],
-                        "pwd"=>[
-                                "type"=>"password",
-                                "placeholder"=>"Votre mot de passe",
-                                "class"=>"form-control form-control-user",
-                                "id"=>"",
-                                "required"=>true,
-                                "errorMsg"=>"Votre mot de passe doit faire entre 6 et 20 caractères avec une minuscule et une majuscule"
-                            ],
-                        "pwdConfirm"=>[
-                                "type"=>"password",
-                                "placeholder"=>"Confirmation",
-                                "class"=>"form-control form-control-user",
-                                "id"=>"",
-                                "required"=>true,
-                                "confirmWith"=>"pwd",
-                                "errorMsg"=>"Votre mot de passe de confirmation ne correspond pas"
-                            ],
-                        "captcha"=>[
-                                "type"=>"captcha",
-                                "class"=>"form-control form-control-user",
-                                "id"=>"",
-                                "required"=>true,
-                                "placeholder"=>"Veuillez saisir les caractères",
-                                "errorMsg"=>"Captcha incorrect"
-                            ]
+            "fields"=>[
+                "firstname"=>[
+                        "type"=>"text",
+                        "placeholder"=>"Votre prénom",
+                        "class"=>"form-control form-control-user",
+                        "id"=>"",
+                        "required"=>true,
+                        "min-length"=>2,
+                        "max-length"=>50,
+                        "errorMsg"=>"Votre prénom doit faire entre 2 et 50 caractères"
+                    ],
+                "lastname"=>[
+                        "type"=>"text",
+                        "placeholder"=>"Votre nom",
+                        "class"=>"form-control form-control-user",
+                        "id"=>"",
+                        "required"=>true,
+                        "min-length"=>2,
+                        "max-length"=>100,
+                        "errorMsg"=>"Votre nom doit faire entre 2 et 100 caractères"
+                    ],
+                "email"=>[
+                        "type"=>"email",
+                        "placeholder"=>"Votre email",
+                        "class"=>"form-control form-control-user",
+                        "id"=>"",
+                        "required"=>true,
+                        "uniq"=>["table"=>"users","column"=>"email"],
+                        "errorMsg"=>"Le format de votre email ne correspond pas"
+                    ],
+                "pwd"=>[
+                        "type"=>"password",
+                        "placeholder"=>"Votre mot de passe",
+                        "class"=>"form-control form-control-user",
+                        "id"=>"",
+                        "required"=>true,
+                        "errorMsg"=>"Votre mot de passe doit faire entre 6 et 20 caractères avec une minuscule et une majuscule"
+                    ],
+                "pwdConfirm"=>[
+                        "type"=>"password",
+                        "placeholder"=>"Confirmation",
+                        "class"=>"form-control form-control-user",
+                        "id"=>"",
+                        "required"=>true,
+                        "confirmWith"=>"pwd",
+                        "errorMsg"=>"Votre mot de passe de confirmation ne correspond pas"
+                    ],
+                "captcha"=>[
+                        "type"=>"captcha",
+                        "class"=>"form-control form-control-user",
+                        "id"=>"",
+                        "required"=>true,
+                        "placeholder"=>"Veuillez saisir les caractères",
+                        "errorMsg"=>"Captcha incorrect"
                     ]
-                ];
+            ]
+        ];
     }
 
     public static function getLoginForm(){
         return [
+            "config"=>[
+                "method"=>"POST", 
+                "action"=>helpers::getUrl("User", "login"),
+                "class"=>"admin-form",
+                "id"=>"formLoginUser",
+                "submit"=>[
+                    "btn-primary"=>"Connexion",
+                    "btn-remove"=>"Inscription",
+                    "btn-add"=>"Mot de passe oublié",
+                ]
+            ],
 
-                ];
+            "fields"=>[
+                "email"=>[
+                    "type"=>"email",
+                    "placeholder"=>"Adresse Email",
+                    "class"=>"form-control form-control-user",
+                    "id"=>"",
+                    "required"=>true,
+                    "uniq"=>["table"=>"users","column"=>"email"],
+                    "errorMsg"=>"Le format de votre email ne correspond pas"
+                ],
+                "pwd"=>[
+                    "type"=>"password",
+                    "placeholder"=>"Mot de passe",
+                    "class"=>"form-control form-control-user",
+                    "id"=>"",
+                    "required"=>true,
+                    "errorMsg"=>"Votre mot de passe doit faire entre 6 et 20 caractères avec une minuscule et une majuscule"
+                ]
+            ]
+        ];
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

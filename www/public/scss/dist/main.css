@@ -87,6 +87,10 @@ div.ligne {
   width: 50%;
 }
 
+.center {
+  margin: auto;
+}
+
 .bg-white {
   background-color: #FFFFFF;
 }
@@ -101,6 +105,12 @@ div.ligne {
 
 .bg-purple {
   background-color: #E7E0F4;
+}
+
+.bg-main {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #755BAA), to(#402082));
+  background: linear-gradient(180deg, #755BAA 0, #402082);
+  min-height: 100vh;
 }
 
 .padding-0 {
@@ -125,6 +135,44 @@ div.ligne {
 
 .margin-left-0 {
   margin-left: 0 !important;
+}
+
+.color-white {
+  color: #fff !important;
+}
+
+.color-light {
+  color: #f8f9fc !important;
+}
+
+.color-grey {
+  color: #818181 !important;
+}
+
+.color-purple {
+  color: #402082 !important;
+}
+
+.flex-column {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+.title {
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 2.5em;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin-top: 0;
+  color: #818181;
 }
 
 .image-banner {
@@ -634,6 +682,17 @@ footer .circle .up {
   border: none;
 }
 
+.btn-account {
+  background-color: #fff;
+  color: #402082;
+  text-transform: uppercase;
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin-top: 1rem;
+}
+
 .btn-slider {
   width: 3rem;
   height: 3rem;
@@ -772,6 +831,36 @@ footer .circle .up {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
+.admin-form .form-control-user {
+  border: none;
+  border-bottom: 0.0625rem solid #818181;
+}
+
+.admin-form .form-control-user:focus {
+  outline: none;
+  border-bottom: 0.125rem solid #402082;
+}
+
+.admin-form .form-control-user::-webkit-input-placeholder {
+  color: #818181;
+}
+
+.admin-form .form-control-user::-moz-placeholder {
+  color: #818181;
+}
+
+.admin-form .form-control-user:-ms-input-placeholder {
+  color: #818181;
+}
+
+.admin-form .form-control-user::-ms-input-placeholder {
+  color: #818181;
+}
+
+.admin-form .form-control-user::placeholder {
+  color: #818181;
+}
+
 .admin-table {
   width: 100%;
   max-width: 100%;
@@ -791,6 +880,24 @@ footer .circle .up {
   line-height: 1.42857143;
   color: #333;
   text-align: left;
+}
+
+.card {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  border-radius: 4px;
+  box-shadow: rgba(50, 50, 93, 0.11) 0 4px 4px 0, rgba(0, 0, 0, 0.08) 0 1px 3px 0;
+  background-color: #fff;
+  padding: 1.5rem;
+  margin: 0.5rem 0 1rem;
+  width: 100%;
 }
 
 .row {

@@ -22,7 +22,10 @@ class UserController
 
     public function loginAction()
     {
+        $configFormUser = users::getLoginForm();
+
         $myView = new View("login", "account");
+        $myView->assign("configFormUser", $configFormUser);
     }
 
     public function registerAction()

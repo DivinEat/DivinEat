@@ -10,15 +10,15 @@
   controller: "User"
   action: "default"
 
-/se-connecter:
+/login:
   controller: "User"
   action: "login"
 
-/s-inscrire:
+/register:
   controller: "User"
   action: "register"
 
-/mot-de-passe-oublie:
+/forgotPwd:
   controller: "User"
   action: "forgotPwd"
 
