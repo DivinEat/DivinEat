@@ -73,7 +73,8 @@ class menus extends DB
                         "1"=>"Menu",
                         "2"=>"Entrée",
                         "3"=>"Plat",
-                        "4"=>"Dessert"
+                        "4"=>"Dessert",
+                        "5"=>"Boisson"
                     ]
                 ],
                 "nom"=>[
