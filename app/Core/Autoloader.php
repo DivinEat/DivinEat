@@ -10,7 +10,7 @@ class Autoloader
         $classPath = str_replace(
             '\\',
             DIRECTORY_SEPARATOR,
-            str_replace('App', 'app', ROOT. DIRECTORY_SEPARATOR . $class)
+            str_replace('App\\', 'app\\', ROOT . DIRECTORY_SEPARATOR . $class)
         );
 
         if (! file_exists($classPath . '.php'))
