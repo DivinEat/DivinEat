@@ -2,13 +2,13 @@
 
 namespace App\Core;
 
+use App\Core\Http\Request;
+use App\Core\Http\Response;
 use App\Core\Routing\Router;
 
 class Application
 {
     protected array $routeFiles = [];
-
-    protected array $routes = [];
 
     protected Router $router;
 
@@ -24,7 +24,21 @@ class Application
 
     public function run(): void
     {
-        var_dump(Router::getRoutes()->offsetGet(1));die;
+        try {
+            $route = Router::getRouteByUrl($_SERVER['REQUEST_URI']);
+            if ($route === null)
+                Router::redirect('not-found');
+
+            $request = new Request($route);
+            $response = new Response();
+
+            $this->loadMiddleware($request, $response);
+            $this->loadController($request, $response);
+
+            $this->loadView($response);
+        } catch (\Exception|\RuntimeException $exception) {
+            die('Oups something went wrong ! :p');
+        }
     }
 
     protected function addRouteFile(string $fileName): void
@@ -44,5 +58,25 @@ class Application
         $router = $this->router;
 
         include $routeFile;
+    }
+
+    protected function loadMiddleware(Request $request, Response $response): ?Response
+    {
+        return $response;
+    }
+
+    protected function loadController(Request $request, Response $response): ?Response
+    {
+        $controllerName =  'App\\Controllers\\' . $request->getCurrentRoute()->getController();
+        $methodName = $request->getCurrentRoute()->getMethod();
+
+        $controller = new $controllerName;
+
+        return $controller->$methodName();
+    }
+
+    protected function loadView(Response $response)
+    {
+
     }
 }
