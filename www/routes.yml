@@ -45,3 +45,11 @@
 /styleguide:
   controller: "Default"
   action: "styleguide"
+
+/install-bdd:
+  controller: "Test"
+  action: "bdd"
+
+/install-admin:
+  controller: "Test"
+  action: "admin"
