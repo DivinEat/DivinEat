@@ -14,19 +14,48 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 					<label><?=$configField["label"]?></label>
 				<?php endif;?>
 
-				<input 
-					value="<?= (isset($inputData[$name]) && $configField["type"]!="password")?$inputData[$name]:'' ?>"
-					type="<?= $configField["type"]??'' ?>"
-					name="<?= $name??'' ?>"
-					placeholder="<?= $configField["placeholder"]??'' ?>"
-					class="<?= $configField["class"]??'' ?>"
-					id="<?= $configField["id"]??'' ?>"
-					<?=(!empty($configField["required"]))?"required='required'":""?> 
-				>
+				<!-- En fonction du type (input, textarea, select) -->
+				<?php if(!empty($configField["type"]) && $configField["type"] == "textarea"):?>
+					<textarea 
+						id="<?= $configField["id"]??'' ?>"
+						name="<?= $name??'' ?>"
+						class="<?= $configField["class"]??'' ?>"
+						rows="5"
+					></textarea>
+				<?php elseif(!empty($configField["type"]) && $configField["type"] == "select"):?>
+					<select 
+						name="<?= $name??'' ?>"	
+						class="<?= $configField["class"]??'' ?>"
+						id="<?= $configField["id"]??'' ?>"
+					>
+						<?php foreach ($configField["values"] as $value => $text):?>
+							<option value="<?= $value??'' ?>"><?= $text??'' ?></option>	
+						<?php endforeach;?>
+					</select>	
+				<?php else:?>
+					<input 
+						value="<?= (isset($inputData[$name]) && $configField["type"]!="password")?$inputData[$name]:'' ?>"
+						type="<?= $configField["type"]??'' ?>"
+						name="<?= $name??'' ?>"
+						placeholder="<?= $configField["placeholder"]??'' ?>"
+						class="<?= $configField["class"]??'' ?>"
+						id="<?= $configField["id"]??'' ?>"
+						<?=(!empty($configField["required"]))?"required='required'":""?> 
+					>
+				<?php endif;?>
 			</div>
 		</div>
 	<?php endforeach;?>
 	
+	<?php if(!empty($data["config"]["annuler"])):?>
+		<a 
+			href="<?= $data["config"]["annuler"]["action"] ?>" 
+			class="<?= $data["config"]["annuler"]["class"] ?>"
+		>
+			<?= $data["config"]["annuler"]["text"] ?>
+		</a>
+	<?php endif;?>
+
 	<?php foreach ($data["config"]["submit"] as $name => $configBtn):?>
 		<button class="<?= "btn ".$name??'' ?>"><?= $configBtn;?></button>
 	<?php endforeach;?>

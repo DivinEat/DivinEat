@@ -35,7 +35,16 @@
 
             &::placeholder {
                 color: $grey;
+                font-family: $font3;
             }
         }
+
+        &-textarea {
+            height: rem(150);
+        }
     }
+}
+
+.fa {
+    margin-right : 10px;
 }

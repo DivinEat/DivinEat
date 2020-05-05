@@ -198,10 +198,6 @@ div.ligne {
   color: #818181;
 }
 
-i {
-  margin-right: 10px;
-}
-
 .image-banner {
   margin-top: 4rem;
   height: 21.875rem;
@@ -895,22 +891,35 @@ footer .circle .up {
 
 .admin-form .form-control-user::-webkit-input-placeholder {
   color: #818181;
+  font-family: "Arial", FontAwesome;
 }
 
 .admin-form .form-control-user::-moz-placeholder {
   color: #818181;
+  font-family: "Arial", FontAwesome;
 }
 
 .admin-form .form-control-user:-ms-input-placeholder {
   color: #818181;
+  font-family: "Arial", FontAwesome;
 }
 
 .admin-form .form-control-user::-ms-input-placeholder {
   color: #818181;
+  font-family: "Arial", FontAwesome;
 }
 
 .admin-form .form-control-user::placeholder {
   color: #818181;
+  font-family: "Arial", FontAwesome;
+}
+
+.admin-form .form-control-textarea {
+  height: 9.375rem;
+}
+
+.fa {
+  margin-right: 10px;
 }
 
 .admin-table {

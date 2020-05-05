@@ -20,7 +20,7 @@
             <td><?= $fields["description"] ?></td>
             <td><?= $fields["prix"]." Euro(s)" ?></td>
             <td>
-                <a href="" class="btn btn-edit">Modifier</a>
+                <a href="<?= helpers::getUrl("Menu", "edit")?>" class="btn btn-edit">Modifier</a>
                 <a href="" class="btn btn-remove">Supprimer</a>
             </td>
         </tr>

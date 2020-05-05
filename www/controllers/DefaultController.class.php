@@ -12,4 +12,9 @@ class DefaultController
         $myView = new View("dashboard");
         $myView->assign("firstname", $firstname);
     }
+
+    public function styleguideAction()
+    {
+        $myView = new View("styleguide", "back");
+    }
 }

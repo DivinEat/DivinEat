@@ -18,7 +18,7 @@
   controller: "User"
   action: "register"
 
-/forgotPwd:
+/forgotpwd:
   controller: "User"
   action: "forgotPwd"
 
@@ -30,6 +30,18 @@
   controller: "Menu"
   action: "index"
 
-/add_menu:
+/admin_menu_add:
   controller: "Menu"
   action: "add"
+
+/admin_menu:
+  controller: "Menu"
+  action: "show"
+
+/admin_menu_edit:
+  controller: "Menu"
+  action: "edit"
+
+/styleguide:
+  controller: "Default"
+  action: "styleguide"

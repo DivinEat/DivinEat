@@ -52,22 +52,29 @@ class menus extends DB
                 "class"=>"admin-form",
                 "id"=>"formAddMenu",
                 "submit"=>[
-                    "btn-default"=>"Annuler",
                     "btn-primary"=>"Envoyer"
+                ],
+                "annuler"=>[
+                    "action"=>helpers::getUrl("Menu", "show"),
+                    "class"=>"btn btn-default",
+                    "text"=>"Annuler"
                 ]
             ],
 
             "fields"=>[
                 "categorie"=>[
-                    "type"=>"text",
-                    "placeholder"=>"",
+                    "type"=>"select",
                     "label"=>"Catégorie",
                     "class"=>"form-control",
                     "id"=>"",
                     "required"=>true,
-                    "min-length"=>2,
-                    "max-length"=>50,
-                    "errorMsg"=>"Un type doit être renseigné"
+                    "errorMsg"=>"Un type doit être renseigné",
+                    "values"=>[
+                        "1"=>"Menu",
+                        "2"=>"Entrée",
+                        "3"=>"Plat",
+                        "4"=>"Dessert"
+                    ]
                 ],
                 "nom"=>[
                     "type"=>"text",
@@ -81,18 +88,15 @@ class menus extends DB
                     "errorMsg"=>"Un nom doit être renseigné"
                 ],
                 "description"=>[
-                    "type"=>"text",
-                    "placeholder"=>"",
+                    "type"=>"textarea",
                     "label"=>"Description",
-                    "class"=>"form-control",
+                    "class"=>"form-control form-control-textarea",
                     "id"=>"",
                     "required"=>true,
-                    "uniq"=>["table"=>"users","column"=>"email"],
                     "errorMsg"=>"Une description doit être renseignée"
                 ],
                 "prix"=>[
                     "type"=>"number",
-                    "placeholder"=>"",
                     "label"=>"Prix",
                     "class"=>"form-control",
                     "id"=>"",

@@ -12,17 +12,23 @@ class MenuController
         $configFormMenu = menus::getAddMenuForm();
         $configTableMenu = menus::getShowMenuTable();
 
-        $myView = new View("admin_add_menus", "back");
+        $myView = new View("admin_menu_add", "back");
         $myView->assign("configFormMenu", $configFormMenu);
-        $myView->assign("configTableMenu", $configTableMenu);
     }
 
     public function showAction()
     {
         $configTableMenu = menus::getShowMenuTable();
 
-        $myView = new View("admin_add_menus", "back");
+        $myView = new View("admin_menu", "back");
         $myView->assign("configTableMenu", $configTableMenu);
     }
 
+    public function editAction()
+    {
+        $configFormMenu = menus::getAddMenuForm();
+
+        $myView = new View("admin_menu_edit", "back");
+        $myView->assign("configFormMenu", $configFormMenu);
+    }
 }

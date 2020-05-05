@@ -45,17 +45,17 @@ class users extends DB
             "config"=>[
                 "method"=>"POST", 
                 "action"=>helpers::getUrl("User", "register"),
-                "class"=>"user",
+                "class"=>"admin-form width-100",
                 "id"=>"formRegisterUser",
                 "submit"=>[
-                    "btn-primary"=>"S'inscrire"
+                    "btn btn-account btn-account-blue margin-top-50"=>"<i class='fa fa-users'></i>S'inscrire"
                 ]
             ],
 
             "fields"=>[
                 "firstname"=>[
                         "type"=>"text",
-                        "placeholder"=>"Votre prénom",
+                        "placeholder"=>"&#xf007;  Prénom",
                         "class"=>"form-control form-control-user",
                         "id"=>"",
                         "required"=>true,
@@ -65,7 +65,7 @@ class users extends DB
                     ],
                 "lastname"=>[
                         "type"=>"text",
-                        "placeholder"=>"Votre nom",
+                        "placeholder"=>"&#xf007;  Nom",
                         "class"=>"form-control form-control-user",
                         "id"=>"",
                         "required"=>true,
@@ -75,7 +75,7 @@ class users extends DB
                     ],
                 "email"=>[
                         "type"=>"email",
-                        "placeholder"=>"Votre email",
+                        "placeholder"=>"&#xf0e0;  Adresse Email",
                         "class"=>"form-control form-control-user",
                         "id"=>"",
                         "required"=>true,
@@ -84,7 +84,7 @@ class users extends DB
                     ],
                 "pwd"=>[
                         "type"=>"password",
-                        "placeholder"=>"Votre mot de passe",
+                        "placeholder"=>"&#xf023;  Mot de passe",
                         "class"=>"form-control form-control-user",
                         "id"=>"",
                         "required"=>true,
@@ -92,7 +92,7 @@ class users extends DB
                     ],
                 "pwdConfirm"=>[
                         "type"=>"password",
-                        "placeholder"=>"Confirmation",
+                        "placeholder"=>"&#xf023;  Confirmation du mot de passe",
                         "class"=>"form-control form-control-user",
                         "id"=>"",
                         "required"=>true,
@@ -126,7 +126,7 @@ class users extends DB
             "fields"=>[
                 "email"=>[
                     "type"=>"email",
-                    "placeholder"=>"Adresse Email",
+                    "placeholder"=>"&#xf2be;  Adresse Email",
                     "class"=>"form-control form-control-user",
                     "id"=>"",
                     "required"=>true,
@@ -135,11 +135,39 @@ class users extends DB
                 ],
                 "pwd"=>[
                     "type"=>"password",
-                    "placeholder"=>"Mot de passe",
+                    "placeholder"=>"&#xf084;  Mot de passe",
                     "class"=>"form-control form-control-user",
                     "id"=>"",
                     "required"=>true,
                     "errorMsg"=>"Votre mot de passe doit faire entre 6 et 20 caractères avec une minuscule et une majuscule"
+                ]
+            ]
+        ];
+    }
+
+    
+
+    public static function getPwdForm(){
+        return [
+            "config"=>[
+                "method"=>"POST", 
+                "action"=>helpers::getUrl("User", "forgotPwd"),
+                "class"=>"admin-form width-100",
+                "id"=>"formPwdUser",
+                "submit"=>[
+                    "btn btn-account btn-account-blue margin-top-50"=>"<i class='fa fa-paper-plane'></i>Envoyer la demande"
+                ]
+            ],
+
+            "fields"=>[
+                "email"=>[
+                    "type"=>"email",
+                    "placeholder"=>"&#xf2be;  Adresse Email",
+                    "class"=>"form-control form-control-user",
+                    "id"=>"",
+                    "required"=>true,
+                    "uniq"=>["table"=>"users","column"=>"email"],
+                    "errorMsg"=>"Le format de votre email ne correspond pas"
                 ]
             ]
         ];
