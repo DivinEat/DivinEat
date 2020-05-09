@@ -16,7 +16,9 @@ class Route
 
     protected ?string $name;
 
-    public function __construct(string $routeType, string $routePath, string $controllerName, ?string $routeName)
+    protected ?array $middleware;
+
+    public function __construct(string $routeType, string $routePath, string $controllerName, ?string $routeName, ?array $middleware)
     {
         preg_match('/([a-z]{1,})@([a-z]{1,})$/i', $controllerName, $matches);
 
@@ -25,6 +27,7 @@ class Route
         $this->controllerName = $matches[1];
         $this->methodName = $matches[2];
         $this->name = $routeName;
+        $this->middleware = $middleware;
 
         $this->setRegexRoutePath();
     }

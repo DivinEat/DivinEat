@@ -2,10 +2,9 @@
 
 use App\Core\Routing\Router;
 
-
 $router->get('', 'HomeController@index', 'home');
 
-$router->group(['as' => 'auth', 'namespace' => 'Auth', 'middleware' => ['user.not.connected']], function (Router $group) {
+$router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth', 'middleware' => ['user.not.connected']], function (Router $group) {
     $group->get('login', 'LoginController@showLoginForm', 'login');
     $group->post('login', 'LoginController@login');
 });

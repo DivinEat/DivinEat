@@ -4,6 +4,8 @@ namespace App\Core;
 
 use App\Core\Http\Request;
 use App\Core\Http\Response;
+use App\Core\Middleware\Middleware;
+use App\Core\Middleware\MiddlewareDispatcher;
 use App\Core\Routing\Router;
 
 class Application
@@ -11,6 +13,8 @@ class Application
     protected array $routeFiles = [];
 
     protected Router $router;
+
+    protected array $container = [];
 
     public function __construct(array $routeFiles)
     {
@@ -26,16 +30,14 @@ class Application
     {
         try {
             $route = Router::getRouteByUrl($_SERVER['REQUEST_URI']);
+
             if ($route === null)
                 Router::redirect('not-found');
 
             $request = new Request($route);
-            $response = new Response();
 
-            $this->loadMiddleware($request, $response);
-            $this->loadController($request, $response);
+            $response = new MiddlewareDispatcher($this->container, $request);
 
-            $this->loadView($response);
         } catch (\Exception|\RuntimeException $exception) {
             die('Oups something went wrong ! :p');
         }
@@ -60,23 +62,14 @@ class Application
         include $routeFile;
     }
 
-    protected function loadMiddleware(Request $request, Response $response): ?Response
-    {
-        return $response;
-    }
+//    protected function getCurrentRoute(Request $request, Response $response): ?Response
+//    {
+//        $controllerName =  'App\\Controllers\\' . $request->getCurrentRoute()->getController();
+//        $methodName = $request->getCurrentRoute()->getMethod();
+//
+//        $controller = new $controllerName;
+//
+//        return $controller->$methodName();
+//    }
 
-    protected function loadController(Request $request, Response $response): ?Response
-    {
-        $controllerName =  'App\\Controllers\\' . $request->getCurrentRoute()->getController();
-        $methodName = $request->getCurrentRoute()->getMethod();
-
-        $controller = new $controllerName;
-
-        return $controller->$methodName();
-    }
-
-    protected function loadView(Response $response)
-    {
-
-    }
 }

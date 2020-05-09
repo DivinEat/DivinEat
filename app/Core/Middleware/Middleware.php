@@ -2,6 +2,11 @@
 
 namespace App\Core\Middleware;
 
-class Middleware
+use App\Core\Http\Request;
+
+abstract class Middleware
 {
+    protected Middleware $next;
+
+    abstract public function handle(Request $request, Middleware $handler);
 }

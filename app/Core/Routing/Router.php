@@ -44,7 +44,7 @@ class Router
     {
         $params = array_merge($this->params, $params);
         $params['namespace'] = preg_replace('/[\\\]{2,}/', '\\', $params['namespace'] . '\\');
-        $params['prefix'] = preg_replace('/[\/]{2,}/', '/', $params['prefix'] . '/');
+        $params['prefix'] = preg_replace('/[\/]{2,}/', '/', '/' . $params['prefix'] . '/');
 
         return $params;
     }
