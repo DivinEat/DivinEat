@@ -45,7 +45,7 @@ class View
             die("Le modal n'existe pas!!!");
         }
 
-        include "views/modals/".$modal.".mod.php";
+        return include "views/modals/".$modal.".mod.php";
     }
 
 
@@ -54,7 +54,6 @@ class View
         // $this->data = ["firstname"=>"yves"];
         extract($this->data);
         //$firstname = "yves";
-
         include "views/templates/".$this->template.".tpl.php" ;
     }
 }

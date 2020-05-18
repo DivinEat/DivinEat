@@ -1,6 +1,6 @@
 FROM php:7.2-apache
 
-WORKDIR /var/www/html/public/scss/webpack 
+# WORKDIR /var/www/html/public/scss/webpack
 
 # Install PDO MySQL driver
 # See https://github.com/docker-library/php/issues/62

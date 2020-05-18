@@ -26,10 +26,12 @@ $uri = $_SERVER["REQUEST_URI"];
 $listOfRoutes = yaml_parse_file("routes.yml");
 
 
+
 if (!empty($listOfRoutes[$uri])) {
     $c =  $listOfRoutes[$uri]["controller"]."Controller";
     $a =  $listOfRoutes[$uri]["action"]."Action";
 
+    
     $pathController = "controllers/".$c.".class.php";
 
     if (file_exists($pathController)) {

@@ -29,3 +29,11 @@
 /menus:
   controller: "Menu"
   action: "index"
+
+/pageBuilder:
+  controller: "PageBuilder"
+  action: "default"
+
+/pageBuilderAddModal:
+  controller: "PageBuilder"
+  action: "addTextAreaEditor"

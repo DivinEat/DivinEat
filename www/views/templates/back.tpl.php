@@ -5,8 +5,11 @@
     <link href="public/scss/dist/main.css" rel="stylesheet">
     <script src="public/vendor/jquery/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
-    <script src="public/js/dashboard/dashboard-graphs.js"></script>
+    <!-- <script src="public/js/dashboard/dashboard-graphs.js"></script> -->
     <script src="public/js/navbar.js"></script>
+    <script type="module" src="public/js/pageBuilder.js"></script>
+    <!-- <script src="public/js/component/textEditor.js"></script> -->
+    <script src="public/js/utils.js"></script>
 </head>
 <body>
     <div class="row padding-0">

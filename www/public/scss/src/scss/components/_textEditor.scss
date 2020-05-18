@@ -1,0 +1,86 @@
+.txt-editor {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: rem(8);
+    
+    @extend %shadowed;
+
+    &-header {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-items: center;
+        width: 98%;
+        height: 25%;
+        // background-color: rgba($color: #000000, $alpha: 0.2);
+        background-image: url("../../../../img/icones/text-editor/bold-btn.png");
+    }
+
+    &-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: rem(30);
+        height: rem(30);
+        border-radius: rem(3);
+        margin: 0 rem(5) 0 rem(5);
+        background-size: 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+        transition: all 70ms;
+        
+        
+        &:hover {
+            background-size: 60%;
+            cursor: pointer;
+        }
+        
+        &-hidden {
+            @extend .tools-bar-item;
+            display: none;
+        }
+        
+        &-active {
+            box-shadow: inset rem(1) rem(1) rem(1) rem(1) rgba(0, 0, 0, 0.3);
+        }
+
+        &-inactive {
+            box-shadow: rem(1) rem(1) rem(1) rem(1) rgba(0, 0, 0, 0.3);
+        }   
+
+        &-bold {
+            @extend .txt-editor-btn;
+            background-image: url("/public/img/icones/text-editor/bold-btn.png");
+        }
+        
+        &-italic {
+            @extend .txt-editor-btn;
+            background-image: url("/public/img/icones/text-editor/italic-btn.png");
+        }
+        
+        &-underline {
+            @extend .txt-editor-btn;
+            background-image: url("/public/img/icones/text-editor/underline-btn.png");
+        }
+    }
+
+    &-text-area {
+        resize: none;
+        outline: none;
+        border: none;
+        width: 98%;
+        height: 65%;
+        border-radius: rem(8);
+    }
+
+    &-separator {
+        width: 98%;
+        height: rem(1);
+        background-color: rgba($color: #adadad, $alpha: 1.0);
+        margin: 0 0 rem(5) 0;
+    }
+}
