@@ -5,6 +5,7 @@ use App\core\Validator;
 use App\models\User;
 use App\managers\UserManager;
 use App\core\Exception\NotFoundException;
+use App\core\helpers;
 
 class UserController
 {
@@ -19,7 +20,7 @@ class UserController
         if(!$user){
             throw new NotFoundException("Aucun utilisateur", 404);
         }
-        
+
         var_dump($user);
     }
 
@@ -95,7 +96,7 @@ class UserController
         $myView->assign("configFormUser", $configFormUser);
     }
 
-    public function forgotPwdAction()
+    public function forgotpwdAction()
     {
         $myView = new View("forgotPwd", "account");
     }
