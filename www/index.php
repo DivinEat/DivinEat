@@ -41,26 +41,40 @@ $uri = $_SERVER["REQUEST_URI"];
 
 $listOfRoutes = yaml_parse_file("routes.yml");
 
+try {
+    if (!empty($listOfRoutes[$uri])) {
+        $c =  'App\Controllers\\'.ucfirst($listOfRoutes[$uri]["controller"]."Controller");
+        $a =  $listOfRoutes[$uri]["action"]."Action";
 
-if (!empty($listOfRoutes[$uri])) {
-    $c =  'App\Controllers\\'.ucfirst($listOfRoutes[$uri]["controller"]."Controller");
-    $a =  $listOfRoutes[$uri]["action"]."Action";
+        //Vérifier que la class existe, si ce n'est pas le cas faites un die("La class controller n'existe pas")
+        try {
+            if (class_exists($c)) {
+                $controller = new $c();
+                
+                //Vérifier que la méthode existe, si ce n'est pas le cas faites un die("L'action' n'existe pas")
+                try {        
+                    if (method_exists($controller, $a)) {
 
-    //Vérifier que la class existe, si ce n'est pas le cas faites un die("La class controller n'existe pas")
-    if (class_exists($c)) {
-        $controller = new $c();
-        
-        //Vérifier que la méthode existe, si ce n'est pas le cas faites un die("L'action' n'existe pas")
-        if (method_exists($controller, $a)) {
+                        $controller->$a();
 
-            $controller->$a();
-
-        } else {
-            die("L'action' n'existe pas");
+                    } else {
+                        throw new Exception("L'action' n'existe pas");
+                        // die("L'action' n'existe pas");
+                    }
+                } catch(Exception $e) {
+                    echo e.getMessage();
+                }
+            } else {
+                throw new Exception("La class controller n'existe pas");
+                // die("La class controller n'existe pas");
+            }
+        } catch(Exception $e) {
+            echo e.getMessage();
         }
     } else {
-        die("La class controller n'existe pas");
+        throw new Exception("L'url n'existe pas : Erreur 404");
+        // die("L'url n'existe pas : Erreur 404");
     }
-} else {
-    die("L'url n'existe pas : Erreur 404");
+} catch(Exception $e) {
+    echo e.getMessage();
 }

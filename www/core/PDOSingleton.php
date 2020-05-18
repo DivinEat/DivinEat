@@ -13,7 +13,7 @@ class PDOSingleton extends PDO
         try {
             $this->PDOInstance = new PDO($dsn, $user, $pwd);
         } catch(PDOException $e) {
-            die("Erreur SQL : ".$e->getMessage());
+            echo "Erreur SQL : ".$e->getMessage();
         }
     }
 

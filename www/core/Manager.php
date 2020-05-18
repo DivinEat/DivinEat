@@ -16,7 +16,7 @@ class Manager
         try {
             $this->pdo = PDOSingleton::getInstance();
         } catch (Exception $e) {
-            die("Erreur SQL : ".$e->getMessage());
+            echo "Erreur SQL : ".$e->getMessage();
         }
 
         $this->class = $class;

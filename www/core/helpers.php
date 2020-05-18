@@ -13,7 +13,7 @@ class helpers
                 return $url;
             }
         }
-
-        die("Aucune correspondance pour la route");
+        throw new Exception("Aucune correspondance pour la route");
+        // die("Aucune correspondance pour la route");
     }
 }
