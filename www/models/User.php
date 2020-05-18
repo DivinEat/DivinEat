@@ -1,9 +1,9 @@
 <?php
 namespace App\models;
 use App\core\helpers;
-use App\models\model;
+use App\models\Model;
 
-class users extends model
+class User extends Model
 {
     protected $id;
     protected $firstname;
@@ -115,18 +115,4 @@ class users extends model
 
                 ];
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

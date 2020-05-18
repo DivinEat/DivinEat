@@ -2,7 +2,7 @@
 namespace App\controllers;
 use App\core\View;
 use App\core\Validator;
-use App\models\users;
+use App\models\User;
 use App\managers\UserManager;
 
 class UserController
@@ -33,6 +33,11 @@ class UserController
         $myView = new View("login", "account");
     }
 
+    public function jsonAction()
+    {
+        echo "Json";
+    }
+
     public function getAction($params){
         $userManager = new UserManager();
 
@@ -40,9 +45,9 @@ class UserController
 
         $users = $userManager->findAll();
 
-        $partialUser = $userManager->findBy(["firstname" => "Dargent"], ["id" => "desc"]);
+        $partialUser = $userManager->findBy(["firstname" => "Thibault"], ["id" => "desc"]);
 
-        $count = $userManager->count(["firstname" => "Dargent"]);
+        $count = $userManager->count(["firstname" => "Thibault"]);
 
         $userManager->delete(5);
 
@@ -52,7 +57,7 @@ class UserController
     public function registerAction()
     {
 
-        $configFormUser = users::getRegisterForm();
+        $configFormUser = User::getRegisterForm();
 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             //Vérification des champs
@@ -64,7 +69,7 @@ class UserController
 
             //if( empty($errors)){
                 $data = $_SESSION['register_data'];
-                $user = new users();
+                $user = new User();
                 
                 $user->setFirstname("Thibault");
                 $user->setLastname("Dargent");

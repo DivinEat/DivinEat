@@ -1,7 +1,7 @@
 <?php
 namespace App\models;
 
-class model
+class Model
 {
     public function __toArray(): array
     {

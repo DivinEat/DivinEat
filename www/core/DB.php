@@ -46,7 +46,7 @@ class DB
         $this->sql($sql, $params);
     }
 
-    public function find(int $id): ?\App\models\model
+    public function find(int $id): ?\App\models\Model
     {
         $sql = "SELECT * FROM $this->table WHERE id = :id";
 
