@@ -2,8 +2,9 @@
 namespace App\models;
 use App\core\helpers;
 use App\models\Model;
+use JSONSerializable;
 
-class User extends Model
+class User extends Model implements JSONSerializable
 {
     protected $id;
     protected $firstname;
@@ -40,6 +41,17 @@ class User extends Model
     public function getId()
     {
         return $this->id;
+    }
+
+    public function jsonSerialize() {
+        return [
+            'id' => $this->id,
+            'fistname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'email' => $this->email,
+            'pwd' => $this->pwd,
+            'status' => $this->status,
+        ];
     }
 
     public static function getRegisterForm(){

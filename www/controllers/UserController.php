@@ -35,7 +35,13 @@ class UserController
 
     public function jsonAction()
     {
-        echo "Json";
+        $userManager = new UserManager();
+
+        $users = $userManager->findAll();
+        $firstUser = json_encode($users[0], JSON_PRETTY_PRINT);
+
+        echo $firstUser;
+        return $firstUser;
     }
 
     public function getAction($params){

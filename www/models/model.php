@@ -18,7 +18,6 @@ class Model
                 $this->$method($value);
             }
         }
-
         return $this;
     }
 }
