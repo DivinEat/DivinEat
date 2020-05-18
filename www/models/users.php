@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Core\DB;
+use App\Core\Model;
 use App\Core\helpers;
 
-class users extends DB
+class users extends Model
 {
     protected $id;
     protected $firstname;
@@ -23,6 +23,10 @@ class users extends DB
     public function setId($id)
     {
         $this->id=$id;
+    }
+    public function getId()
+    {
+        return $this->id;
     }
     public function setFirstname($firstname)
     {

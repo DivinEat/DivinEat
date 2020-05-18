@@ -2,7 +2,9 @@
 
 namespace App\Core;
 
-class PDOSingleton extends PDO 
+use PDO;
+
+class PDOSingleton extends PDO
 {
     private $PDOInstance;
     private static $instance;

@@ -32,6 +32,10 @@
   controller: "user"
   action: "forgotPwd"
 
+/user:
+  controller: "user"
+  action: "default"
+
 
 
 
