@@ -1,5 +1,6 @@
 <?php
 namespace App\core;
+use PDO;
 
 class PDOSingleton extends PDO 
 {

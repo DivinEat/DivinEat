@@ -1,11 +1,9 @@
 <?php
 namespace App\models;
 use App\core\helpers;
-use App\core\DB;
+use App\models\Model;
 
-namespace App\models;
-
-class users extends DB
+class User extends Model
 {
     protected $id;
     protected $firstname;
@@ -13,11 +11,6 @@ class users extends DB
     protected $email;
     protected $pwd;
     protected $status;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function setId($id)
     {
@@ -44,21 +37,11 @@ class users extends DB
         $this->status=$status;
     }
 
-<<<<<<< HEAD:www/models/users.model.php
-    public function hydrate(array $donnees) {
-        foreach($donnees as $key=>$value){
-            $method = 'set'.ucfirst($key);
-
-            if(method_exists($this,$method)){
-                $this->$method($value);
-            }
-        }
+    public function getId()
+    {
+        return $this->id;
     }
 
-
-
-=======
->>>>>>> origin/tdargent:www/models/users.php
     public static function getRegisterForm(){
         return [
                     "config"=>[
@@ -132,18 +115,4 @@ class users extends DB
 
                 ];
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

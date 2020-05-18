@@ -20,16 +20,9 @@ function myAutoloader($class)
 
 new ConstantLoader();
 
-
-//http://localhost/user/add -> $c = user et $a add
-//http://localhost/user -> $c = user et $a default
-//http://localhost -> $c = default et $a default
-
 $uri = $_SERVER["REQUEST_URI"];
 
-
 $listOfRoutes = yaml_parse_file("routes.yml");
-
 
 if (!empty($listOfRoutes[$uri])) {
     $c = 'App\controllers\\'.ucfirst($listOfRoutes[$uri]["controller"]."Controller");
@@ -41,17 +34,13 @@ if (!empty($listOfRoutes[$uri])) {
 
         //Vérifier que la méthode existeet si ce n'est pas le cas faites un die("L'action' n'existe pas")
         if (method_exists($controller, $a)) {
-
-            //EXEMPLE :
-            //$controller est une instance de la class UserController
-            //$a = userAction est une méthode de la class UserController
             $controller->$a();
         } else {
-            die("L'action' n'existe pas");
+            throw new Exception("L'action' n'existe pas");
         }
     } else {
-        die("La class controller n'existe pas");
+        throw new Exception("La class controller n'existe pas");
     }
 } else {
-    die("Le fichier controller n'existe pas");
+    throw new Exception("Le fichier controller n'existe pas");
 }

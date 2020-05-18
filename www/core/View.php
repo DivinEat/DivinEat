@@ -30,7 +30,7 @@ class View
         $this->view = strtolower(trim($v));
 
         if (!file_exists("views/".$this->view.".view.php")) {
-            die("La vue n'existe pas");
+            throw new Exception("La vue n'existe pas");
         }
     }
 
@@ -44,7 +44,7 @@ class View
     public function addModal($modal, $data)
     {
         if (!file_exists("views/modals/".$modal.".mod.php")) {
-            die("Le modal n'existe pas!!!");
+            throw new Exception("Le modal n'existe pas");
         }
 
         include "views/modals/".$modal.".mod.php";
@@ -53,9 +53,7 @@ class View
 
     public function __destruct()
     {
-        // $this->data = ["firstname"=>"yves"];
         extract($this->data);
-        //$firstname = "yves";
 
         include "views/templates/".$this->template.".tpl.php" ;
     }
