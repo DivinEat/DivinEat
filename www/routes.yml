@@ -32,6 +32,10 @@
   controller: "user"
   action: "forgotPwd"
 
+/phps2:
+  controller: "user"
+  action: "get"
+
 
 
 

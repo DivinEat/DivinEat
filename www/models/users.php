@@ -1,9 +1,9 @@
 <?php
 namespace App\models;
 use App\core\helpers;
-use App\core\DB;
+use App\models\model;
 
-class users extends DB
+class users extends model
 {
     protected $id;
     protected $firstname;
@@ -11,11 +11,6 @@ class users extends DB
     protected $email;
     protected $pwd;
     protected $status;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function setId($id)
     {
@@ -40,6 +35,11 @@ class users extends DB
     public function setStatus($status)
     {
         $this->status=$status;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public static function getRegisterForm(){
