@@ -4,6 +4,7 @@ use App\core\View;
 use App\core\Validator;
 use App\models\User;
 use App\managers\UserManager;
+use App\core\Exception\NotFoundException;
 
 class UserController
 {

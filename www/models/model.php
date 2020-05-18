@@ -1,13 +1,11 @@
 <?php
 namespace App\models;
 
-class Model
+class Model implements \JsonSerializable
 {
     public function __toArray(): array
     {
-        $property = get_object_vars($this);
-
-        return $property;
+        return get_object_vars($this);
     }
 
     public function hydrate(array $donnees){
@@ -19,5 +17,9 @@ class Model
             }
         }
         return $this;
+    }
+
+    public function jsonSerialize() {
+        return $this->__toArray();
     }
 }
