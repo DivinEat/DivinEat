@@ -4,8 +4,9 @@ namespace App\Models;
 
 use App\Core\Model;
 use App\Core\helpers;
+use JSONSerializable;
 
-class users extends Model
+class users extends Model implements JSONSerializable
 {
     protected $id;
     protected $firstname;
@@ -18,6 +19,10 @@ class users extends Model
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public function jsonSerialize() {
+        return $this->__toArray();
     }
 
     public function setId($id)
