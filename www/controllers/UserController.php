@@ -16,6 +16,10 @@ class UserController
 
         $user = $userManager->find(1);
 
+        if(!$user){
+            throw new NotFoundException("Aucun utilisateur", 404);
+        }
+        
         var_dump($user);
     }
 

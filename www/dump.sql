@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 -- Structure de la table `nfoz_users`
 --
 
-CREATE TABLE `nfoz_users` (
+CREATE TABLE `tdd_users` (
   `id` int(11) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(100) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `nfoz_users` (
 --
 -- Index pour la table `nfoz_users`
 --
-ALTER TABLE `nfoz_users`
+ALTER TABLE `tdd_users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -56,7 +56,7 @@ ALTER TABLE `nfoz_users`
 --
 -- AUTO_INCREMENT pour la table `nfoz_users`
 --
-ALTER TABLE `nfoz_users`
+ALTER TABLE `tdd_users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
