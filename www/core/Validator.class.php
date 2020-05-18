@@ -35,9 +35,9 @@ class Validator{
 					
 
 				//Vérifier le captcha
-				if($_SESSION["captcha"] != ?????){
+				//if($_SESSION["captcha"] != ?????){
 
-				}
+				//}
 
 				//Vérifier le password
 					//Vérifier les confirm
@@ -60,4 +60,5 @@ class Validator{
 
 	public static function checkPwd($email){
 
+	}
 }

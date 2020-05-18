@@ -19,6 +19,21 @@ class UserController
         echo "User add";
     }
 
+    public function getAction($params) {
+        $userManager = new UserManager();
+
+        $user = $userManager->find($params['id']);
+        $users = $userManager->findAll();
+
+        $partialUsers = $userManager->findBy(['firstname' => 'Remi%'], ['id' => 'desc']);
+
+        $count = $userManager->count(['firstname' => 'Remi%']);
+
+        $userManager->delete(5);
+
+        echo "get user";
+    }
+
     public function removeAction()
     {
         echo "L'utilisateur va être supprimé";

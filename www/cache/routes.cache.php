@@ -23,5 +23,5 @@
   array (
     'controller' => 'user',
     'action' => 'login',
-  ),
-)
+  )
+  );
