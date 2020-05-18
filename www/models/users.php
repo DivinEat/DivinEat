@@ -1,4 +1,7 @@
 <?php
+namespace App\models;
+use App\core\helpers;
+use App\core\DB;
 
 namespace App\models;
 
@@ -10,7 +13,6 @@ class users extends DB
     protected $email;
     protected $pwd;
     protected $status;
-
 
     public function __construct()
     {
@@ -42,6 +44,7 @@ class users extends DB
         $this->status=$status;
     }
 
+<<<<<<< HEAD:www/models/users.model.php
     public function hydrate(array $donnees) {
         foreach($donnees as $key=>$value){
             $method = 'set'.ucfirst($key);
@@ -54,6 +57,8 @@ class users extends DB
 
 
 
+=======
+>>>>>>> origin/tdargent:www/models/users.php
     public static function getRegisterForm(){
         return [
                     "config"=>[
@@ -99,8 +104,7 @@ class users extends DB
                                 "placeholder"=>"Votre mot de passe",
                                 "class"=>"form-control form-control-user",
                                 "id"=>"",
-                                "required"=>true,
-                                "errorMsg"=>"Votre mot de passe doit faire entre 6 et 20 caractères avec une minuscule et une majuscule"
+                                "required"=>true
                             ],
                         "pwdConfirm"=>[
                                 "type"=>"password",

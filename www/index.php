@@ -4,20 +4,19 @@ use App\core\ConstantLoader;
 
 session_start();
 
-spl_autoload_register("myAutoloader");
+spl_autoload_register('myAutoloader');
 
 function myAutoloader($class)
 {
     $class = str_replace('App', '', $class);
-    $class = str_replace('\\','/',$class);
-
-    if($class[0]=='/'){
+    $class = str_replace('\\', '/', $class);
+    if ($class[0] == '/') {
         include substr($class.'.php',1);
-    } else {
+    }
+    else{
         include $class . '.php';
     }
 }
-
 
 new ConstantLoader();
 
@@ -35,31 +34,24 @@ $listOfRoutes = yaml_parse_file("routes.yml");
 if (!empty($listOfRoutes[$uri])) {
     $c = 'App\controllers\\'.ucfirst($listOfRoutes[$uri]["controller"]."Controller");
     $a =  $listOfRoutes[$uri]["action"]."Action";
+    $pathController = "controllers/".$c.".php";
 
-    $pathController = "controllers/".$c.".class.php";
+  if (class_exists($c)) {
+        $controller = new $c();
 
-    if (file_exists($pathController)) {
-        include $pathController;
-        //Vérifier que la class existe et si ce n'est pas le cas faites un die("La class controller n'existe pas")
-        if (class_exists($c)) {
-            $controller = new $c();
-            
-            //Vérifier que la méthode existeet si ce n'est pas le cas faites un die("L'action' n'existe pas")
-            if (method_exists($controller, $a)) {
-                
-                //EXEMPLE :
-                //$controller est une instance de la class UserController
-                //$a = userAction est une méthode de la class UserController
-                $controller->$a();
-            } else {
-                die("L'action' n'existe pas");
-            }
+        //Vérifier que la méthode existeet si ce n'est pas le cas faites un die("L'action' n'existe pas")
+        if (method_exists($controller, $a)) {
+
+            //EXEMPLE :
+            //$controller est une instance de la class UserController
+            //$a = userAction est une méthode de la class UserController
+            $controller->$a();
         } else {
-            die("La class controller n'existe pas");
+            die("L'action' n'existe pas");
         }
     } else {
-        die("Le fichier controller n'existe pas");
+        die("La class controller n'existe pas");
     }
 } else {
-    die("L'url n'existe pas : Erreur 404");
+    die("Le fichier controller n'existe pas");
 }
