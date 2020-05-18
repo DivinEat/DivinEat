@@ -30,8 +30,6 @@ class UserController
 
         // var_dump($userManager->delete(1));
 
-
-
     }
 
     public function addAction()
@@ -57,9 +55,6 @@ class UserController
         echo "L'utilisateur va être supprimé";
         $userManager->delete($id);
     }
-
-
-
 
     public function loginAction()
     {
@@ -99,5 +94,16 @@ class UserController
     public function forgotPwdAction()
     {
         $myView = new View("forgotPwd", "account");
+    }
+
+    public function getFirstUserAction()
+    {
+        $userManager = new UserManager();
+
+        $users = $userManager->findAll();
+        $firstUser = json_encode($users[0], JSON_PRETTY_PRINT);
+
+        echo $firstUser;
+        return $firstUser;
     }
 }
