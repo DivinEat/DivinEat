@@ -62,19 +62,19 @@ try {
                         // die("L'action' n'existe pas");
                     }
                 } catch(Exception $e) {
-                    echo e.getMessage();
+                    echo $e->getMessage();
                 }
             } else {
                 throw new Exception("La class controller n'existe pas");
                 // die("La class controller n'existe pas");
             }
         } catch(Exception $e) {
-            echo e.getMessage();
+            echo $e->getMessage();
         }
     } else {
         throw new Exception("L'url n'existe pas : Erreur 404");
         // die("L'url n'existe pas : Erreur 404");
     }
 } catch(Exception $e) {
-    echo e.getMessage();
+    echo $e->getMessage();
 }

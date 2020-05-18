@@ -33,10 +33,10 @@ class users extends Model implements JSONSerializable
     {
         return $this->id;
     }
-    public function setFirstname($firstname)
-    {
-        $this->firstname=ucwords(strtolower(trim($firstname)));
-    }
+    // public function setFirstname($firstname)
+    // {
+    //     $this->firstname=ucwords(strtolower(trim($firstname)));
+    // }
     public function setLastname($lastname)
     {
         $this->lastname=strtoupper(trim($lastname));

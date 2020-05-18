@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use Excpetion;
+
 class ConstantLoader
 {
     public $extend;
@@ -24,7 +26,7 @@ class ConstantLoader
                 // die("Le fichier .env n'existe pas");
             }
         } catch(Exception $e) {
-            echo e.getMessage();
+            echo $e->getMessage();
         }
         try { 
             if (!file_exists(".".$this->extend)) {
@@ -32,7 +34,7 @@ class ConstantLoader
                 // die("Le fichier .".$this->extend." n'existe pas");
             }
         } catch(Exception $e) {
-            echo e.getMessage();
+            echo $e->getMessage();
         }
     }
 

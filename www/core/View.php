@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use Exception;
+
 class View
 {
     private $template;
@@ -26,7 +28,7 @@ class View
                 // die("Le template n'existe pas");
             }
         } catch(Exception $e) {
-            echo e.getMessage();
+            echo $e->getMessage();
         }
     }
 
@@ -41,7 +43,7 @@ class View
                 // die("La vue n'existe pas");
             }
         } catch(Exception $e) {
-            echo e.getMessage();
+            echo $e->getMessage();
         }
     }
 
@@ -60,7 +62,7 @@ class View
                 // die("Le modal n'existe pas!!!");
             }
         } catch(Exception $e) {
-            echo e.getMessage();
+            echo $e->getMessage();
         }
 
         include "views/modals/".$modal.".mod.php";

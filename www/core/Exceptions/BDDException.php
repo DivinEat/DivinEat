@@ -1,5 +1,7 @@
 <?php
+namespace App\Core\Exceptions;
 
+use Exception;
 class BDDException extends Exception
 {
     public function __construct($message, $code = 0)

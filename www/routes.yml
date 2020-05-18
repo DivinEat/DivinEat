@@ -40,6 +40,10 @@
   controller: "user"
   action: "getFirstUser"
 
+/error:
+  controller: "error"
+  action: "displayError"
+
 
 
 
