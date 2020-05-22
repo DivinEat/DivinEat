@@ -1,6 +1,7 @@
 <?php
 
 use App\Core\ConstantLoader;
+use App\Core\Exceptions\BDDException;
 
 session_start();
 
@@ -36,8 +37,7 @@ new ConstantLoader();
 //http://localhost/user -> $c = user et $a default
 //http://localhost -> $c = default et $a default
 
-$uri = $_SERVER["REQUEST_URI"];
-
+$uri = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
 
 $listOfRoutes = yaml_parse_file("routes.yml");
 
@@ -54,27 +54,42 @@ try {
                 //Vérifier que la méthode existe, si ce n'est pas le cas faites un die("L'action' n'existe pas")
                 try {        
                     if (method_exists($controller, $a)) {
-
-                        $controller->$a();
-
+                        try {
+                            $controller->$a();
+                        } catch(BDDException $e) {
+                            header('Status: 301 Moved Permanently', false, 301);      
+                            header('Location: /bdd-error?message='.$e->getMessage());      
+                            exit();
+                        }
+                        catch(Exception $e) {
+                            header('Status: 301 Moved Permanently', false, 301);      
+                            header('Location: /error?message='.$e->getMessage());      
+                            exit();
+                        }   
                     } else {
                         throw new Exception("L'action' n'existe pas");
                         // die("L'action' n'existe pas");
                     }
                 } catch(Exception $e) {
-                    echo $e->getMessage();
+                    header('Status: 301 Moved Permanently', false, 301);      
+                    header('Location: /error?message='.$e->getMessage());      
+                    exit();
                 }
             } else {
                 throw new Exception("La class controller n'existe pas");
                 // die("La class controller n'existe pas");
             }
         } catch(Exception $e) {
-            echo $e->getMessage();
+            header('Status: 301 Moved Permanently', false, 301);      
+            header('Location: /error?message='.$e->getMessage());      
+            exit();
         }
     } else {
         throw new Exception("L'url n'existe pas : Erreur 404");
         // die("L'url n'existe pas : Erreur 404");
     }
 } catch(Exception $e) {
-    echo $e->getMessage();
+    header('Status: 301 Moved Permanently', false, 301);      
+    header('Location: /error?message='.$e->getMessage());      
+    exit();
 }

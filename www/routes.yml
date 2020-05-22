@@ -44,6 +44,10 @@
   controller: "error"
   action: "displayError"
 
+/bdd-error:
+  controller: "error"
+  action: "displayError"
+
 
 
 
