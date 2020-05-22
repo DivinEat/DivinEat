@@ -14,6 +14,8 @@ class users extends Model implements JSONSerializable
     protected $email;
     protected $pwd;
     protected $status;
+    protected $date_inserted;
+    protected $date_updated;
 
 
     public function __construct()
@@ -33,10 +35,10 @@ class users extends Model implements JSONSerializable
     {
         return $this->id;
     }
-    // public function setFirstname($firstname)
-    // {
-    //     $this->firstname=ucwords(strtolower(trim($firstname)));
-    // }
+    public function setFirstname($firstname)
+    {
+        $this->firstname=ucwords(strtolower(trim($firstname)));
+    }
     public function setLastname($lastname)
     {
         $this->lastname=strtoupper(trim($lastname));
@@ -52,6 +54,14 @@ class users extends Model implements JSONSerializable
     public function setStatus($status)
     {
         $this->status=$status;
+    }
+    public function setDate_inserted($date_inserted)
+    {
+        $this->date_inserted=$date_inserted;
+    }
+    public function setDate_updated($date_updated)
+    {
+        $this->date_updated=$date_updated;
     }
 
     public static function getRegisterForm(){

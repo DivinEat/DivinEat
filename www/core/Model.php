@@ -23,12 +23,12 @@ class Model
     public function hydrate($array)
     {
         foreach ($array as $key => $value) {
-            $setterName = "set" . strtolower(ucfirst($key));
+            $setterName = "set" . ucfirst(strtolower($key));
             
             if (method_exists($this, $setterName)) {
                 $this->$setterName($value);
             } else {
-                throw new BDDException("Le setter n'existe pas.");
+                throw new BDDException("Le setter <i>". $setterName ."</i> n'existe pas.");
             }
         }
         

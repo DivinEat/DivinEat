@@ -25,7 +25,7 @@ class Manager
 
     public function sql($sql, $parameters = null)
     {
-        if($parameters){
+        if(isset($parameters)){
             $queryPrepared = $this->pdo->prepare($sql);
             $queryPrepared->execute($parameters);
         } else {
@@ -143,7 +143,7 @@ class Manager
 
         $result = $this->sql($sql);
 
-        $rows = $result->fetchAll();
+        $rows = $result->fetchAll($this->pdo::FETCH_ASSOC);
 
         foreach($rows as $row) {
             $object = new $this->class();

@@ -48,6 +48,10 @@
   controller: "error"
   action: "displayError"
 
+/not-found:
+  controller: "error"
+  action: "displayError"
+
 
 
 

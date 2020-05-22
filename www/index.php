@@ -1,95 +1,30 @@
 <?php
 
 use App\Core\ConstantLoader;
-use App\Core\Exceptions\BDDException;
+use App\Core\Router;
 
 session_start();
 
 function myAutoloader($class)
 {
-    // echo $class .'<br>';
     $class = str_replace('App', '', $class);
-    // echo $class .'<br>';
     $class = str_replace('\\', '/', $class);
-
-    // echo $class;
 
     if ($class[0] == '/') {
         include substr($class.'.php', 1);
     } else {
         include $class.'.php';
     }
-    
-    // if (file_exists("core/".$class.".class.php")) {
-    //     include "core/".$class.".class.php";
-    // } elseif (file_exists("models/".$class.".model.php")) {
-    //     include "models/".$class.".model.php";
-    // }
 }
 
 spl_autoload_register("myAutoloader");
 
-
 new ConstantLoader();
+$router = new Router();
 
+$router->executeAction();
 
 //http://localhost/user/add -> $c = user et $a add
 //http://localhost/user -> $c = user et $a default
 //http://localhost -> $c = default et $a default
 
-$uri = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
-
-$listOfRoutes = yaml_parse_file("routes.yml");
-
-try {
-    if (!empty($listOfRoutes[$uri])) {
-        $c =  'App\Controllers\\'.ucfirst($listOfRoutes[$uri]["controller"]."Controller");
-        $a =  $listOfRoutes[$uri]["action"]."Action";
-
-        //Vérifier que la class existe, si ce n'est pas le cas faites un die("La class controller n'existe pas")
-        try {
-            if (class_exists($c)) {
-                $controller = new $c();
-                
-                //Vérifier que la méthode existe, si ce n'est pas le cas faites un die("L'action' n'existe pas")
-                try {        
-                    if (method_exists($controller, $a)) {
-                        try {
-                            $controller->$a();
-                        } catch(BDDException $e) {
-                            header('Status: 301 Moved Permanently', false, 301);      
-                            header('Location: /bdd-error?message='.$e->getMessage());      
-                            exit();
-                        }
-                        catch(Exception $e) {
-                            header('Status: 301 Moved Permanently', false, 301);      
-                            header('Location: /error?message='.$e->getMessage());      
-                            exit();
-                        }   
-                    } else {
-                        throw new Exception("L'action' n'existe pas");
-                        // die("L'action' n'existe pas");
-                    }
-                } catch(Exception $e) {
-                    header('Status: 301 Moved Permanently', false, 301);      
-                    header('Location: /error?message='.$e->getMessage());      
-                    exit();
-                }
-            } else {
-                throw new Exception("La class controller n'existe pas");
-                // die("La class controller n'existe pas");
-            }
-        } catch(Exception $e) {
-            header('Status: 301 Moved Permanently', false, 301);      
-            header('Location: /error?message='.$e->getMessage());      
-            exit();
-        }
-    } else {
-        throw new Exception("L'url n'existe pas : Erreur 404");
-        // die("L'url n'existe pas : Erreur 404");
-    }
-} catch(Exception $e) {
-    header('Status: 301 Moved Permanently', false, 301);      
-    header('Location: /error?message='.$e->getMessage());      
-    exit();
-}
