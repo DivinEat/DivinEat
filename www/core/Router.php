@@ -2,9 +2,9 @@
 
 namespace App\core;
 
-use App\core\Exceptions\BDDException;
-use Exception;
+use Throwable;
 use App\controllers\ErrorController;
+use App\Core\Exceptions\NotFoundException;
 
 class Router 
 {
@@ -41,7 +41,7 @@ class Router
         
                 try {
                     $controller = new $c();
-                } catch( \Throwable $t) {
+                } catch(Throwable $t) {
                     $errorController->controllerNotExist();
                 }
                
@@ -62,12 +62,15 @@ class Router
 
     function getParams($params) {
         $explodedParams = explode('&', $params, 2);
+
         $result = [];
+
         foreach($explodedParams as $param) {
             $data = explode("=", $param);
             if(isset($data[1]))
             $result[$data[0]] =  $data[1];
         }
+
         return $result;
     }
 }

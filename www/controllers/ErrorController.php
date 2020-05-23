@@ -23,7 +23,7 @@ class ErrorController
         $errorView->assign("errorMessage", "Le fichier controller n'existe pas");
     }
 
-    public function otherError($message){
+    public function otherErrors($message){
         $errorView = new View("error", "error");
         $errorView->assign("errorMessage", $message);
     }
