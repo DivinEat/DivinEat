@@ -15,30 +15,21 @@
   controller: "user"
   action: "default"
 
-/se-connecter:
+/login:
   controller: "user"
   action: "login"
 
-/s-inscrire:
+/register:
   controller: "user"
   action: "register"
 
-/mot-de-passe-oublie:
+/forgotpwd:
   controller: "user"
   action: "forgotpwd"
-
-
-/phps2:
-  controller: "user"
-  action: "get"
 
 /phps2-json:
   controller: "user"
   action: "json"
-
-/phps2-error:
-  controller: "error"
-  action: "default"
 
 
 

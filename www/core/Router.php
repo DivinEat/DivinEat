@@ -8,46 +8,66 @@ use App\controllers\ErrorController;
 
 class Router 
 {
-    public function executeAction() 
+    private $params = [];
+    private $routes;
+    private $routeCalled;
+
+    public function __construct()
     {
-        $uri = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
+        $this->getRoutes();
+        $this->manageUrl();
+    }
 
-        $listOfRoutes = yaml_parse_file("routes.yml");
+    public function getRoutes()
+    {
+        $uriParams = explode('?', $_SERVER['REQUEST_URI'], 2);
 
-        try {
-            if (!empty($listOfRoutes[$uri])) {
-                $c =  'App\controllers\\'.ucfirst($listOfRoutes[$uri]["controller"]."Controller");
-                $a =  $listOfRoutes[$uri]["action"]."Action";
+        $this->routeCalled = $uriParams[0];
 
-                //Vérifier que la class existe, si ce n'est pas le cas faites un die("La class controller n'existe pas")
-                if (class_exists($c)) {
+        if(isset($uriParams[1]))
+            $this->params = $this->getParams($uriParams[1]);
+        $this->routes =  yaml_parse_file("routes.yml");
+
+        return;
+    }
+
+    public function manageUrl()
+    {
+        $errorController = new ErrorController();
+
+        if (!empty($this->routes[$this->routeCalled])) {
+            $c =  'App\controllers\\'.ucfirst($this->routes[$this->routeCalled]["controller"]."Controller");
+            $a =  $this->routes[$this->routeCalled]["action"]."Action";
+        
+                try {
                     $controller = new $c();
-                    
-                    //Vérifier que la méthode existe, si ce n'est pas le cas faites un die("L'action' n'existe pas")
-    
-                        if (method_exists($controller, $a)) {
-                                $controller->$a();
-                        } else {
-                            throw new Exception("L'action' n'existe pas");
-                            // die("L'action' n'existe pas");
-                        }
-
-                } else {
-                    throw new Exception("La class controller n'existe pas");
-                    // die("La class controller n'existe pas");
+                } catch( \Throwable $t) {
+                    $errorController->controllerNotExist();
                 }
-
-            } else {
-                throw new Exception("L'url n'existe pas : Erreur 404");
-                // die("L'url n'existe pas : Erreur 404");
-            }
-        } catch(BDDException $e) {
-            $errorController = new ErrorController();
-            $errorController->defaultAction('bdd-error', $e->getMessage());
+               
+                if (method_exists($controller, $a)) {
+                    try {
+                        $controller->$a($this->params);
+                    } catch(NotFoundException $e) {
+                        echo $e->getMessage();
+                    }
+                } else {
+                    $errorController->actionNotExist();
+                }
+        } else {
+            $errorController->urlNotExist();
         }
-        catch(Exception $e) {
-            $errorController = new ErrorController();
-            $errorController->defaultAction('error', $e->getMessage());
-        }   
+        
+    }
+
+    function getParams($params) {
+        $explodedParams = explode('&', $params, 2);
+        $result = [];
+        foreach($explodedParams as $param) {
+            $data = explode("=", $param);
+            if(isset($data[1]))
+            $result[$data[0]] =  $data[1];
+        }
+        return $result;
     }
 }

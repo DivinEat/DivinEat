@@ -22,8 +22,6 @@ function myAutoloader($class)
 new ConstantLoader();
 $router = new Router();
 
-$router->executeAction();
-
 /*$uri = $_SERVER["REQUEST_URI"];
 
 $listOfRoutes = yaml_parse_file("routes.yml");

@@ -1,24 +1,31 @@
 <?php
 namespace App\core;
-use App\core\PDOSingleton;
+//use App\core\PDOSingleton;
+use App\core\Connection\BDDInterface;
+use App\core\Connection\PDOConnection;
 
 class DB
 {
     private $table;
-    private $pdo;
-    private $class;
+    //private $pdo;
+    private $connection;
+    protected $class;
 
-    public function __construct(string $class, string $table)
+    public function __construct(string $class, string $table, BDDInterface $connection = null)
     {
         $this->class = $class;
-        //SINGLETON
-        try {
+        $this->table =  DB_PREFIXE.$table;
+
+        $this->connection = $connection;
+        if(NULL === $connection){
+            $this->connection = new PDOConnection();
+        }
+
+        /*try {
             $this->pdo = PDOSingleton::getInstance();
         } catch (Exception $e) {
             die("Erreur SQL : ".$e->getMessage());
-        }
-
-        $this->table =  DB_PREFIXE.$table;
+        }*/
     }
 
     public function save($objectToSave)
@@ -31,6 +38,8 @@ class DB
         $params = array_combine(array_map(function($k){return ":".$k;},array_keys($objectArray)),$objectArray);
 
         if (!is_numeric($objectToSave->getId())) {
+            array_shift($columns);
+            array_shift($params);
             //INSERT
             $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
         } else {
@@ -41,18 +50,20 @@ class DB
             $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
 
-        echo $sql;
+        $this->connection->query($sql, $params);
 
-        $this->sql($sql, $params);
+        //$this->sql($sql, $params);
     }
 
     public function find(int $id): ?\App\models\Model
     {
         $sql = "SELECT * FROM $this->table WHERE id = :id";
 
-        $result = $this->sql($sql, [':id' => $id]);
+        $result = $this->connection->query($sql, [':id' => $id]);
+        $row = $result->getOneOrNullResult();
 
-        $row = $result->fetch();
+        /*$result = $this->sql($sql, [':id' => $id]);
+        $row = $result->fetch();*/
 
         if($row){
             $object = new $this->class();
@@ -86,8 +97,11 @@ class DB
             $sql .= "ORDER BY ". key($order). " ". $order[key($order)];
         }
 
-        $result = $this->sql($sql, $params);
-        $rows = $result->fetchAll();
+        $result = $this->connection->query($sql, $params);
+        $rows = $result->getArrayResult();
+
+        /*$result = $this->sql($sql, $params);
+        $rows = $result->fetchAll();*/
 
         foreach($rows as $row){
             $object = new $this->class();
@@ -99,13 +113,16 @@ class DB
 
     public function findAll(): array
     {
-        $results = array();
 
         $sql = "select * from $this->table";
 
-        $result = $this->sql($sql);
+        $result = $this->connection->query($sql);
+        $rows = $result->getArrayResult();
 
-        $rows = $result->fetchAll($this->pdo::FETCH_ASSOC);
+        /*$result = $this->sql($sql);
+        $rows = $result->fetchAll($this->pdo::FETCH_ASSOC);*/
+
+        $results = array();
 
         foreach($rows as $row) {
             $object = new $this->class();
@@ -134,15 +151,19 @@ class DB
 
         $sql = rtrim($sql, "and");
 
-        $result = $this->sql($sql, $params);
-        return $result->fetchColumn();
+        $result = $this->connection->query($sql, $params);
+        return $result->getValueResult();
+
+        /*$result = $this->sql($sql, $params);
+        return $result->fetchColumn();*/
     }
 
     public function delete(int $id): bool
     {
         $sql = "DELETE FROM $this->table WHERE id = $id";
 
-        $result = $this->sql($sql, [':id' => $id]);
+        $result = $this->connection->query($sql, [':id' => $id]);
+        //$result = $this->sql($sql, [':id' => $id]);
 
         return true;
     }

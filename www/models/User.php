@@ -1,7 +1,7 @@
 <?php
 namespace App\models;
 use App\core\helpers;
-use App\models\Model;
+use App\core\Model;
 use JSONSerializable;
 
 class User extends Model
