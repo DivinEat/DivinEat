@@ -39,7 +39,11 @@
   /user:
     controller: "user"
     action: "default"
-  
+
+    /first-user:
+      controller: "user"
+      action: "getFirstUser"
+    
 
 
 

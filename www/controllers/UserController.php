@@ -120,4 +120,14 @@ class UserController
     {
         $myView = new View("forgotPwd", "account");
     }
+    public function getFirstUserAction()
+    {
+        $userManager = new UserManager();
+
+        $users = $userManager->findAll();
+        $firstUser = json_encode($users[0], JSON_PRETTY_PRINT);
+
+        echo $firstUser;
+        return $firstUser;
+    }
 }

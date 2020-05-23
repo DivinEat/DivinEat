@@ -2,8 +2,9 @@
 namespace App\models;
 use App\core\helpers;
 use App\Core\Model;
+use JSONSerializable;
 
-class User extends Model
+class User extends Model implements JSONSerializable
 {
     protected $id;
     protected $firstname;
@@ -12,6 +13,9 @@ class User extends Model
     protected $pwd;
     protected $status;
 
+    public function jsonSerialize() {
+        return $this->__toArray();
+    }
     public function setId($id)
     {
         $this->id=$id;
