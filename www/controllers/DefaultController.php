@@ -5,6 +5,10 @@ use App\core\View;
 namespace App\controllers;
 use App\core\View;
 
+namespace App\Controllers;
+
+use App\Core\View;
+
 class DefaultController
 {
     public function defaultAction()

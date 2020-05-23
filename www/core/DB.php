@@ -1,16 +1,16 @@
 <?php
-namespace App\core;
-use App\core\PDOSingleton;
+
+namespace App\Core;
+
+use App\Core\PDOSingleton;
 
 class DB
 {
     private $table;
     private $pdo;
-    protected $class;
 
-    public function __construct(string $class, string $table)
+    public function __construct()
     {
-        $this->class = $class;
         //SINGLETON
         try {
             $this->pdo = PDOSingleton::getInstance();
@@ -18,146 +18,45 @@ class DB
             die("Erreur SQL : ".$e->getMessage());
         }
 
-        $this->table =  DB_PREFIXE.$table;
+        $this->table =  DB_PREFIXE.get_called_class();
     }
 
-    public function save($objectToSave)
+
+    public function save()
     {
-        $objectArray = $objectToSave->__toArray();
+        $propChild = get_object_vars($this);
+        $propDB = get_class_vars(get_class());
 
-        $columnsData = array_values($objectArray);
-        $columns = array_keys($objectArray);
+        $columnsData = array_diff_key($propChild, $propDB);
+        $columns = array_keys($columnsData);
 
-        $params = array_combine(array_map(function($k){return ":".$k;},array_keys($objectArray)),$objectArray);
-
-        if (!is_numeric($objectToSave->getId())) {
+        
+        if (!is_numeric($this->id)) {
+            
             //INSERT
-            $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns)."):";
+            $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
         } else {
+
             //UPDATE
-            foreach($columns as $column){
+            foreach ($columns as $column) {
                 $sqlUpdate[] = $column."=:".$column;
             }
+
             $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
 
-        echo $sql;
-
-        $this->sql($sql, $params);
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute($columnsData);
     }
 
-    public function find(int $id): ?\App\models\Model
+    public function hydrate($array)
     {
-        $sql = "SELECT * FROM $this->table WHERE id = :id";
+        foreach ($array as $key => $value) {
+            $setterName = "set" . strtolower(ucfirst($key));
 
-        $result = $this->sql($sql, [':id' => $id]);
-
-        $row = $result->fetch();
-
-        if($row){
-            $object = new $this->class();
-            return $object->hydrate($row);
-        } else {
-            return null;
-        }
-    }
-
-    public function findBy(array $params, array $order = null): ?array
-    {
-        $results = array();
-
-        $sql = "SELECT * FROM $this->table WHERE ";
-
-        foreach($params as $key => $value){
-            if(is_string($value)){
-                $comparator = 'LIKE';
-            } else {
-                $comparator = "=";
+            if (method_exists($this, $setterName)) {
+                $this->$method($value);
             }
-            $sql .= " $key $comparator :$key and";
-
-            $params[":$key"] = $value;
-            unset($params[$key]);
-        }
-
-        $sql = rtrim($sql, "and");
-
-        if($order){
-            $sql .= "ORDER BY ". key($order). " ". $order[key($order)];
-        }
-
-        $result = $this->sql($sql, $params);
-        $rows = $result->fetchAll();
-
-        foreach($rows as $row){
-            $object = new $this->class();
-            array_push($results, $object->hydrate($row));
-        }
-
-        return $results;
-    }
-
-    public function findAll(){
-        $sql = "SELECT * FROM $this->table";
-
-        $result = $this->sql($sql);
-
-        $rows = $result->fetchAll();
-
-        $results = array();
-
-        foreach($rows as $row){
-            $object = new $this->class();
-            array_push($results, $object->hydrate($row));
-        }
-
-        return $results;
-    }
-
-    public function count(array $params): int
-    {
-        $sql = "SELECT COUNT(*) FROM $this->table where ";
-
-        foreach($params as $key => $value){
-            if(is_string($value)){
-                $comparator = 'LIKE';
-            } else {
-                $comparator = "=";
-            }
-
-            $sql .= " $key $comparator :$key and";
-
-            $params[":$key"] = $value;
-            unset($params[$key]);
-        }
-
-        $sql = rtrim($sql, "and");
-
-        $result = $this->sql($sql, $params);
-        return $result->fetchColumn();
-    }
-
-    public function delete(int $id): bool
-    {
-        $sql = "DELETE FROM $this->table WHERE id = $id";
-
-        $result = $this->sql($sql, [':id' => $id]);
-
-        return true;
-    }
-
-    protected function sql($sql, $parameters = null)
-    {
-        if($parameters){
-            $queryPrepared = $this->pdo->prepare($sql);
-            $queryPrepared->execute($parameters);
-
-            return $queryPrepared;
-        } else {
-            $queryPrepared = $this->pdo->prepare($sql);
-            $queryPrepared->execute();
-
-            return $queryPrepared;
         }
     }
 }

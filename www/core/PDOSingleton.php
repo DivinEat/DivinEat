@@ -2,6 +2,8 @@
 namespace App\core;
 use PDO;
 
+namespace App\Core;
+
 class PDOSingleton extends PDO 
 {
     private $PDOInstance;
