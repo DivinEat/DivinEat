@@ -4,9 +4,17 @@ namespace App\Core\Middleware;
 
 use App\Core\Http\Request;
 
-abstract class Middleware
+abstract class Middleware implements Handler
 {
-    protected Middleware $next;
+    protected ?Handler $next;
 
-    abstract public function handle(Request $request, Middleware $handler);
+    public function __construct(Handler $next = null)
+    {
+        $this->next = $next;
+    }
+
+    public function setNext(Handler $next)
+    {
+        $this->next = $next;
+    }
 }

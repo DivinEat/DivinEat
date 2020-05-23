@@ -7,9 +7,9 @@ use App\Core\Middleware\Middleware;
 
 class CheckConnectedUser extends Middleware
 {
-    public function handle(Request $request, Middleware $handler)
+    public function handle(Request $request, callable $handler)
     {
-        return $handler->handle($request);
+        return $handler($request);
     }
 
 }

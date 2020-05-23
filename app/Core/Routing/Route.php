@@ -20,7 +20,7 @@ class Route
 
     public function __construct(string $routeType, string $routePath, string $controllerName, ?string $routeName, ?array $middleware)
     {
-        preg_match('/([a-z]{1,})@([a-z]{1,})$/i', $controllerName, $matches);
+        preg_match('/([\\a-z]{1,})@([a-z]{1,})$/i', $controllerName, $matches);
 
         $this->type = $routeType;
         $this->path = $routePath;
@@ -63,5 +63,10 @@ class Route
     public function getMethod(): string
     {
         return $this->methodName;
+    }
+
+    public function getMiddleware(): ?array
+    {
+        return $this->middleware;
     }
 }
