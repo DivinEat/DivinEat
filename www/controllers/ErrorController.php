@@ -11,7 +11,6 @@ class ErrorController
 
     }
 
-
     public function displayErrorAction(string $error, string $message)
     {
         $errorView = new View($error, "error");

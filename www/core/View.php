@@ -6,6 +6,8 @@ use Exception;
 
 class View
 {
+    use Traits\UrlTrait;
+
     private $template;
     private $view;
     private $data = [];

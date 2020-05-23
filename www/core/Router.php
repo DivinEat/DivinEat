@@ -8,7 +8,6 @@ use App\Controllers\ErrorController;
 
 class Router 
 {
-    use Traits\UrlTrait;
 
     public function executeAction() 
     {

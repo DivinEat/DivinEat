@@ -3,8 +3,8 @@
 namespace App\Core;
 
 use App\Core\Exceptions\BDDException;
-use App\Controllers\ErrorController;
-use Exception;
+
+
 
 class Model
 {

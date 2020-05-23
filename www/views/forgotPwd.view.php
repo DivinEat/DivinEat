@@ -26,10 +26,10 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="<?= helpers::getUrl("user", "register")?>">Create an Account!</a>
+                    <a class="small" href="<?= $this->getUrl("user", "register")?>">Create an Account!</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="<?= helpers::getUrl("user", "login")?>">Already have an account? Login!</a>
+                    <a class="small" href="<?= $this->getUrl("user", "login")?>">Already have an account? Login!</a>
                   </div>
                 </div>
               </div>
