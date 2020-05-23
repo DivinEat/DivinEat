@@ -1,7 +1,7 @@
 <?php
 namespace App\models;
 use App\core\helpers;
-use App\models\Model;
+use App\Core\Model;
 
 class User extends Model
 {
@@ -41,7 +41,6 @@ class User extends Model
     {
         return $this->id;
     }
-
     public static function getRegisterForm(){
         return [
                     "config"=>[

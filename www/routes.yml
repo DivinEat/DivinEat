@@ -36,7 +36,10 @@
   controller: "user"
   action: "json"
 
-
+  /user:
+    controller: "user"
+    action: "default"
+  
 
 
 

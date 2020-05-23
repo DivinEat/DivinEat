@@ -1,12 +1,15 @@
 <?php
+
 namespace App\Managers;
 
-use App\core\DB;
-use App\models\User;
+use App\Core\Manager;
+use App\Models\users;
 
-class UserManager extends DB {
-    
-    public function __construct(){
-        parent::__construct(User::class, 'users');
+
+class UserManager extends Manager
+{
+    public function __construct()
+    {
+        parent::__construct(users::class, 'users');
     }
-}
+} 

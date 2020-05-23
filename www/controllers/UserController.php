@@ -3,7 +3,8 @@ namespace App\controllers;
 use App\core\View;
 use App\core\Validator;
 use App\models\User;
-use App\managers\UserManager;
+use App\Core\Manager;
+use App\Managers\UserManager;
 
 namespace App\controllers;
 use App\core\View;
@@ -13,37 +14,50 @@ class UserController
     public function defaultAction()
     {
         echo "User default";
-        
         $userManager = new UserManager();
 
-        $user = $userManager->find(1);
+        // find
+        // $userManager->find(1);
 
-        var_dump($user);
+        // findBy
+        // var_dump($userManager->findBy(["firstname" => "Ludo"], ["id" => "desc"]));
+
+        // count
+        // echo $userManager->count(["firstName" => "Ludo"]);
+
+        // findAll
+        // var_dump($userManager->findAll());
+
+        // delete
+
+        // var_dump($userManager->delete(1));
+
+
+
     }
 
     public function addAction()
     {
         echo "User add";
-    }
-
-    public function getAction($params) {
         $userManager = new UserManager();
+        $user = new users();
 
-        $user = $userManager->find($params['id']);
-        $users = $userManager->findAll();
+        $user->setId(2);
+        $user->setFirstname("Joe");
+        $user->setLastname("Skrzypczyk");
+        $user->setEmail("Y.Skrzypczyk@GMAIL.com");
+        $user->setPwd("Test1234");
+        $user->setStatus(0);
 
-        $partialUsers = $userManager->findBy(['firstname' => 'Remi%'], ['id' => 'desc']);
+        $userManager->save($user);
 
-        $count = $userManager->count(['firstname' => 'Remi%']);
-
-        $userManager->delete(5);
-
-        echo "get user";
     }
 
-    public function removeAction()
+    public function removeAction($id)
     {
+        $userManager = new UserManager();
         echo "L'utilisateur va être supprimé";
+        $userManager->delete($id);
     }
 
     public function loginAction()
