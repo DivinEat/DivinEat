@@ -1,6 +1,8 @@
 <?php
 
-namespace App\core;
+namespace App\Core;
+
+use Excpetion;
 
 class ConstantLoader
 {
@@ -18,11 +20,21 @@ class ConstantLoader
 
     public function checkFilesEnv()
     {
-        if (!file_exists(".env")) {
-            die("Le fichier .env n'existe pas");
+        try {
+            if (!file_exists(".env")) {
+                throw new Exception("Le fichier .env n'existe pas");
+                // die("Le fichier .env n'existe pas");
+            }
+        } catch(Exception $e) {
+            echo $e->getMessage();
         }
-        if (!file_exists(".".$this->extend)) {
-            die("Le fichier .".$this->extend." n'existe pas");
+        try { 
+            if (!file_exists(".".$this->extend)) {
+                throw new Exception("Le fichier .".$this->extend." n'existe pas");
+                // die("Le fichier .".$this->extend." n'existe pas");
+            }
+        } catch(Exception $e) {
+            echo $e->getMessage();
         }
     }
 

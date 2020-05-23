@@ -1,8 +1,8 @@
 <?php
 
-namespace App\controllers;
+namespace App\Controllers;
 
-use App\core\View;
+use App\Core\View;
 
 class DefaultController
 {

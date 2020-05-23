@@ -1,8 +1,12 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
-class User extends DB
+use App\Core\Model;
+use App\Core\helpers;
+use JSONSerializable;
+
+class users extends Model implements JSONSerializable
 {
     protected $id;
     protected $firstname;
@@ -10,15 +14,8 @@ class User extends DB
     protected $email;
     protected $pwd;
     protected $status;
-
-    protected $fillable = [
-        'id',
-        'firstname',
-        'lastname',
-        'status',
-        'email',
-        'pwd'
-    ];
+    protected $date_inserted;
+    protected $date_updated;
 
 
     public function __construct()
@@ -26,22 +23,17 @@ class User extends DB
         parent::__construct();
     }
 
-    public function hydrate(array $data)
-    {
-        foreach ($data as $key => $value)
-        {
-            if (in_array($key, $this->fillable))
-            {
-                $method = 'set' . ucfirst(strtolower($key));
-                if (method_exists($this, $method))
-                    $this->$method = $value;
-            }
-        }
+    public function jsonSerialize() {
+        return $this->__toArray();
     }
 
     public function setId($id)
     {
         $this->id=$id;
+    }
+    public function getId()
+    {
+        return $this->id;
     }
     public function setFirstname($firstname)
     {
@@ -63,8 +55,14 @@ class User extends DB
     {
         $this->status=$status;
     }
-
-
+    public function setDate_inserted($date_inserted)
+    {
+        $this->date_inserted=$date_inserted;
+    }
+    public function setDate_updated($date_updated)
+    {
+        $this->date_updated=$date_updated;
+    }
 
     public static function getRegisterForm(){
         return [

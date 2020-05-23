@@ -1,18 +1,18 @@
 /:
-  controller: Default
+  controller: default
   action: default
 
 /test/yves:
-  controller: Default
+  controller: default
   action: default
 
 
 /ajout-utilisateur:
-  controller: "User"
+  controller: "user"
   action: "add"
 
 /utilisateur:
-  controller: "User"
+  controller: "user"
   action: "default"
 
 
@@ -31,6 +31,26 @@
 /mot-de-passe-oublie:
   controller: "user"
   action: "forgotPwd"
+
+/user:
+  controller: "user"
+  action: "default"
+
+/first-user:
+  controller: "user"
+  action: "getFirstUser"
+
+/error:
+  controller: "error"
+  action: "displayError"
+
+/bdd-error:
+  controller: "error"
+  action: "displayError"
+
+/not-found:
+  controller: "error"
+  action: "displayError"
 
 
 

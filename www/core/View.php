@@ -1,6 +1,8 @@
 <?php
 
-namespace App\core;
+namespace App\Core;
+
+use Exception;
 
 class View
 {
@@ -20,8 +22,13 @@ class View
     {
         $this->template = strtolower(trim($t));
 
-        if (!file_exists("views/templates/".$this->template.".tpl.php")) {
-            die("Le template n'existe pas");
+        try {
+            if (!file_exists("views/templates/".$this->template.".tpl.php")) {
+                throw new Exception("Le template n'existe pas");
+                // die("Le template n'existe pas");
+            }
+        } catch(Exception $e) {
+            echo $e->getMessage();
         }
     }
 
@@ -30,8 +37,13 @@ class View
     {
         $this->view = strtolower(trim($v));
 
-        if (!file_exists("views/".$this->view.".view.php")) {
-            die("La vue n'existe pas");
+        try {
+            if (!file_exists("views/".$this->view.".view.php")) {
+                throw new Exception("La vue n'existe pas");
+                // die("La vue n'existe pas");
+            }
+        } catch(Exception $e) {
+            echo $e->getMessage();
         }
     }
 
@@ -44,8 +56,13 @@ class View
     // $this->addModal("carousel", $data);
     public function addModal($modal, $data)
     {
-        if (!file_exists("views/modals/".$modal.".mod.php")) {
-            die("Le modal n'existe pas!!!");
+        try {
+            if (!file_exists("views/modals/".$modal.".mod.php")) {
+                throw new Exception("Le modal n'existe pas!!!");
+                // die("Le modal n'existe pas!!!");
+            }
+        } catch(Exception $e) {
+            echo $e->getMessage();
         }
 
         include "views/modals/".$modal.".mod.php";
