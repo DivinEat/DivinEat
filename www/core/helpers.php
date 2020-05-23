@@ -1,6 +1,8 @@
 <?php
 namespace App\core;
 
+use Exception;
+
 class helpers
 {
     public static function getUrl($controller, $action)
