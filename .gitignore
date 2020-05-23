@@ -1,2 +1,5 @@
 db_data
+/www/public/scss/dist/main.css
+node_modules/
 docker-compose.yml
+.idea

@@ -1,5 +1,7 @@
 FROM php:7.2-apache
 
+WORKDIR /var/www/html/public/scss/webpack 
+
 # Install PDO MySQL driver
 # See https://github.com/docker-library/php/issues/62
 RUN docker-php-ext-install pdo mysqli pdo_mysql 
@@ -8,10 +10,16 @@ RUN apt-get update -y && apt-get install -y libpng-dev libfreetype6-dev libyaml-
 
 RUN pecl install yamL
 
+
 RUN docker-php-ext-configure gd \
         --with-freetype-dir=/usr/include/freetype2 \
     && docker-php-ext-install gd
 
+
+
+RUN apt-get update -y && apt-get install npm -y
+
+# CMD ["npm", "run", "watch"]
 
 
 # Workaround for write permission on write to MacOS X volumes

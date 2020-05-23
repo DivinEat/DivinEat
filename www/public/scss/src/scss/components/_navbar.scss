@@ -1,0 +1,110 @@
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between; 
+    box-shadow: rem(0) rem(4) rem(4) rgba(236, 236, 236, 0.5);
+    height: 4rem;
+    
+    & &-back{
+        display: flex;
+        align-items: center;
+
+        .computer {
+            display: flex;
+            align-items: center;
+            margin-left: rem(25);
+            text-decoration: none;
+            color: $black;
+
+            span {
+                margin-left: rem(10);
+            }            
+        }
+    }
+
+    // front 
+    & &-front a {
+        text-decoration: none;
+        letter-spacing: rem(2);
+        color: $black;
+        padding: rem(10);
+    }
+    .burger {
+        padding-right: rem(15);
+        font-size: rem(35);
+        cursor:pointer
+    }
+    .dropdown-front {
+        display: none;
+    }
+    &-front{
+        display: none;
+    }
+    &-front-mobile {
+        display: flex;
+        flex-direction : column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: rem(60);
+
+        a {
+            padding: rem(8) rem(8) rem(8) rem(32);
+            text-decoration: none;
+            font-size: rem(25);
+            color: $grey;
+            display: block;
+            transition: 0.3s;
+            
+            &:hover {
+                color: #f1f1f1;
+            }
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 0;
+            right: rem(25);
+            font-size: rem(36);
+            margin-left: rem(50);
+        }
+    } 
+
+    // media screen
+    @media screen and (min-width: rem(960)) {
+        & {
+            .dropdown-front {
+                display: block;
+            }
+            .burger {
+                display: none;
+            }
+        }
+    
+        &-front{
+            display: block;
+
+            a:hover{
+                color: $grey;
+            }
+        }
+    
+        
+    }
+}
+
+.navbar--fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}

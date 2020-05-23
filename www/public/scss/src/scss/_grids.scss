@@ -1,0 +1,60 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: rem($gouttiere) rem(0);
+    // margin: rem(0) rem(-$gouttiere);
+}
+
+.col-inner {
+    padding: rem(15);
+}
+
+/* Déclaration des styles md */
+@for $i from 1 through $nb-column-grid {
+  .col-md-#{$i} {
+        flex-basis: 100%;
+        width: 100%;
+        padding: rem(0) rem($gouttiere);
+  }
+}
+/* Fin déclaration des styles md */
+
+/* Déclaration des styles lg */
+@for $i from 1 through $nb-column-grid {
+    .col-lg-#{$i} {
+        flex-basis: 100%;
+        width: 100%;
+        padding: rem(0) rem($gouttiere);
+    }
+  }
+/* Fin déclaration des styles lg */
+
+/* Déclaration des styles sm */
+@for $i from 1 through $nb-column-grid {
+    .col-sm-#{$i} {
+        flex-basis: ((100 / $nb-column-grid) * $i) * 1%;
+        width: ((100 / $nb-column-grid) * $i) * 1%;
+        padding: rem(0) rem($gouttiere);
+    }
+}
+/* Fin déclaration des styles md */
+
+@media screen and (min-width: rem(960)) {
+    @for $i from 1 through $nb-column-grid {
+        .col-md-#{$i} {
+            flex-basis: ((100 / $nb-column-grid) * $i) * 1%;
+            padding: rem(0) rem($gouttiere);
+        }
+    }
+}
+
+@media screen and (min-width: rem(1600)) {
+    @for $i from 1 through $nb-column-grid {
+        .col-lg-#{$i} {
+            flex-basis: ((100 / $nb-column-grid) * $i) * 1%;
+            padding: rem(0) rem($gouttiere);
+        }
+    }
+}

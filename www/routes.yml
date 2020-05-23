@@ -1,42 +1,55 @@
 /:
-  controller: default
+  controller: Default
   action: default
-
-/test/yves:
-  controller: default
-  action: default
-
 
 /ajout-utilisateur:
-  controller: "user"
+  controller: "User"
   action: "add"
 
 /utilisateur:
-  controller: "user"
+  controller: "User"
   action: "default"
 
-
-
-
-/se-connecter:
-  controller: "user"
+/login:
+  controller: "User"
   action: "login"
 
-
-/s-inscrire:
-  controller: "user"
+/register:
+  controller: "User"
   action: "register"
 
-
-/mot-de-passe-oublie:
-  controller: "user"
+/forgotpwd:
+  controller: "User"
   action: "forgotPwd"
 
+/test:
+  controller: "Test"
+  action: "default"
 
+/menus:
+  controller: "Menu"
+  action: "index"
 
+/admin_menu_add:
+  controller: "Menu"
+  action: "add"
 
+/admin_menu:
+  controller: "Menu"
+  action: "show"
 
+/admin_menu_edit:
+  controller: "Menu"
+  action: "edit"
 
+/styleguide:
+  controller: "Default"
+  action: "styleguide"
 
+/install-bdd:
+  controller: "Test"
+  action: "bdd"
 
-
+/install-admin:
+  controller: "Test"
+  action: "admin"

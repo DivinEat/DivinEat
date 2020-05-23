@@ -1,0 +1,25 @@
+.image-banner {
+    margin-top: 4rem;
+    height: rem(350);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    &--text {
+        & > section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            & h1 {
+                margin: auto;
+                color: #fff;
+                font-weight: 700;
+                font-size: rem(36);
+            }
+        }
+        
+    }
+}

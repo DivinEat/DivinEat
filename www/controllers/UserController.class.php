@@ -22,7 +22,10 @@ class UserController
 
     public function loginAction()
     {
+        $configFormUser = users::getLoginForm();
+
         $myView = new View("login", "account");
+        $myView->assign("configFormUser", $configFormUser);
     }
 
     public function registerAction()
@@ -57,6 +60,9 @@ class UserController
 
     public function forgotPwdAction()
     {
-        $myView = new View("forgotPwd", "account");
+        $configFormUser = users::getPwdForm();
+
+        $myView = new View("forgotpwd", "account");
+        $myView->assign("configFormUser", $configFormUser);
     }
 }

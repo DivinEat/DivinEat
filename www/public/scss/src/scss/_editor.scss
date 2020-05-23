@@ -1,0 +1,70 @@
+.bg {
+    &-white {
+        background-color: $article-color-white;
+    }
+    &-light {
+        background-color: $light!important;
+    }
+    &-grey {
+        background-color: $article-color-grey;
+    }
+    &-purple {
+        background-color: $article-color-purple;
+    }
+    &-main {
+        background : linear-gradient(180deg,$light-purple 0, $purple);
+        min-height: 100vh;
+    }
+}
+
+.padding {
+    &-0 {
+        padding: 0!important;
+    }
+    &-right-0 {
+        padding-right: 0!important;
+    }
+    &-left-0 {
+        padding-left: 0!important;
+    }
+}
+
+.margin {
+    &-0 {
+        margin: 0!important;
+    }
+    &-right-0 {
+        margin-right: 0!important;
+    }
+    &-left-0 {
+        margin-left: 0!important;
+    }
+    &-bottom {
+        &-75 {
+            margin-bottom: rem(75)!important;
+        }
+        &-25 {
+            margin-bottom: rem(25)!important;
+        }
+    }
+    &-top {
+        &-50 {
+            margin-top: rem(50)!important;
+        }
+    }
+}
+
+.color {
+    &-white {
+        color: $white!important;
+    }
+    &-light {
+        color: $light!important;
+    }
+    &-grey {
+        color: $grey!important;
+    }
+    &-purple {
+        color: $purple!important;
+    }
+}
