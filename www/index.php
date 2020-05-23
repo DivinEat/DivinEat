@@ -1,6 +1,7 @@
 <?php
 
 use App\core\ConstantLoader;
+use App\core\Router;
 
 session_start();
 
@@ -19,8 +20,11 @@ function myAutoloader($class)
 }
 
 new ConstantLoader();
+$router = new Router();
 
-$uri = $_SERVER["REQUEST_URI"];
+$router->executeAction();
+
+/*$uri = $_SERVER["REQUEST_URI"];
 
 $listOfRoutes = yaml_parse_file("routes.yml");
 
@@ -43,4 +47,4 @@ if (!empty($listOfRoutes[$uri])) {
     }
 } else {
     throw new Exception("Le fichier controller n'existe pas");
-}
+}*/

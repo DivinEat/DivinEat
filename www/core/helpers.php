@@ -8,8 +8,6 @@ class helpers
     {
         $listOfRoutes = yaml_parse_file("routes.yml");
 
-        var_dump($listOfRoutes);
-
         foreach ($listOfRoutes as $url=>$route) {
             if ($route["controller"] == $controller && $route["action"]==$action) {
                 return $url;

@@ -97,16 +97,17 @@ class DB
         return $results;
     }
 
-    public function findAll(){
-        $sql = "SELECT * FROM $this->table";
+    public function findAll(): array
+    {
+        $results = array();
+
+        $sql = "select * from $this->table";
 
         $result = $this->sql($sql);
 
-        $rows = $result->fetchAll();
+        $rows = $result->fetchAll($this->pdo::FETCH_ASSOC);
 
-        $results = array();
-
-        foreach($rows as $row){
+        foreach($rows as $row) {
             $object = new $this->class();
             array_push($results, $object->hydrate($row));
         }

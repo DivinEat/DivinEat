@@ -12,6 +12,8 @@ class User extends Model
     protected $email;
     protected $pwd;
     protected $status;
+    protected $date_inserted;
+    protected $date_updated;
 
     public function setId($id)
     {
@@ -36,6 +38,14 @@ class User extends Model
     public function setStatus($status)
     {
         $this->status=$status;
+    }
+    public function setDate_inserted($date_inserted)
+    {
+        $this->date_inserted=$date_inserted;
+    }
+    public function setDate_updated($date_updated)
+    {
+        $this->date_updated=$date_updated;
     }
 
     public function getId()

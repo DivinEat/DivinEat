@@ -1,6 +1,8 @@
 <?php
 namespace App\models;
 
+use App\core\Exceptions\BDDException;
+
 class Model implements \JsonSerializable
 {
     public function __toArray(): array
@@ -14,7 +16,9 @@ class Model implements \JsonSerializable
         
             if (method_exists($this, $method)){
                 $this->$method($value);
-            }
+            } else {
+                throw new BDDException("Le setter $method n'existe pas.");
+        	}
         }
         return $this;
     }

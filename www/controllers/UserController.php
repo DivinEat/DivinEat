@@ -3,7 +3,7 @@ namespace App\controllers;
 use App\core\View;
 use App\core\Validator;
 use App\models\User;
-use App\managers\UserManager;
+use App\Managers\UserManager;
 use App\core\Exception\NotFoundException;
 use App\core\helpers;
 
@@ -45,6 +45,7 @@ class UserController
 
         $users = $userManager->findAll();
         $firstUser = json_encode($users[0], JSON_PRETTY_PRINT);
+
 
         echo $firstUser;
         return $firstUser;
