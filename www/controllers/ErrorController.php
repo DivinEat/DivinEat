@@ -11,10 +11,10 @@ class ErrorController
 
     }
 
-    public function displayErrorAction()
+
+    public function displayErrorAction(string $error, string $message)
     {
-        $message = $_GET['message'] ?? 'Pas de message d\'erreur';
-        $errorView = new View("error", "error");
+        $errorView = new View($error, "error");
         $errorView->assign("errorMessage", $message);
     }
 }
