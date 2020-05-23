@@ -3,9 +3,6 @@
 namespace App\Core;
 
 use App\Core\Exceptions\BDDException;
-
-
-
 class Model
 {
     public function __construct() 

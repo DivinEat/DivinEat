@@ -3,36 +3,29 @@
 namespace App\Core;
 
 use App\Core\PDOSingleton;
+use App\Core\Connection\PDOConnection;
 
 class Manager
 {
     private $table;
-    private $pdo;
+    private $connection;
     private $class;
 
-    public function __construct(string $class, string $table)
+    public function __construct(string $class, string $table, BDDInterface $connection = null)
     {
         //SINGLETON
         try {
-            $this->pdo = PDOSingleton::getInstance();
+            $this->connection = PDOSingleton::getInstance();
         } catch (Exception $e) {
             echo "Erreur SQL : ".$e->getMessage();
         }
 
         $this->class = $class;
         $this->table = DB_PREFIXE.$table;
-    }
 
-    public function sql($sql, $parameters = null)
-    {
-        if(isset($parameters)){
-            $queryPrepared = $this->pdo->prepare($sql);
-            $queryPrepared->execute($parameters);
-        } else {
-            $queryPrepared = $this->pdo->prepare($sql);
-            $queryPrepared->execute();
-        }
-        return $queryPrepared;
+        $this->connection = $connection;
+        if(NULL === $connection)
+            $this->connection = new PDOConnection();
     }
 
     public function save($objectToSave)
@@ -46,7 +39,7 @@ class Manager
 
         if (!is_numeric($objectToSave->getId())) {
 
-            $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
+            $query = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
 
         } else {
 
@@ -54,19 +47,19 @@ class Manager
                 $sqlUpdate[] = $column."=:".$column;
             }
 
-            $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
+            $query = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
 
-        $this->sql($sql, $params);
+        $this->connection->query($query, $params);
     }
 
     public function find(int $id): ?\App\Core\Model
     {
-        $sql = "select * from  $this->table wherez id = :id";
+        $query = "select * from  $this->table where id = :id";
 
-        $result = $this->sql($sql, [':id' => $id]);
+        $result = $this->connection->query($query, [':id' => $id]);
 
-        $row = $result->fetch();
+        $row = $result->getOneOrNullResult();
 
         if($row){
             $object = new $this->class();
@@ -80,7 +73,7 @@ class Manager
     {
         $results = array();
 
-        $sql = "select * from $this->table where ";
+        $query = "select * from $this->table where ";
 
         foreach($params as $key => $value) {
             if(is_string($value)) {
@@ -89,20 +82,20 @@ class Manager
                 $comparator = '=';
             }
 
-            $sql .= "$key $comparator :$key and";
+            $query .= "$key $comparator :$key and";
             
             $params[":$key"] = $value;
             unset($params[$key]);
         }
 
-        $sql = rtrim($sql, 'and');
+        $query = rtrim($query, 'and');
 
         if($order) {
-            $sql .= "order by " . key($order) . " " . $order[key($order)];
+            $query .= "order by " . key($order) . " " . $order[key($order)];
         }
         
-        $result = $this->sql($sql, $params);
-        $rows = $result->fetchAll();
+        $result = $this->connection->query($query, $params);
+        $rows = $result->getArrayResult();
 
         foreach($rows as $row) {
             $object = new $this->class();
@@ -114,7 +107,7 @@ class Manager
 
     public function count(array $params): int
     {
-        $sql = "SELECT COUNT(*) FROM $this->table where ";
+        $query = "SELECT COUNT(*) FROM $this->table where ";
  
         foreach($params as $key => $value){
             if(is_string($value)){
@@ -123,27 +116,27 @@ class Manager
                 $comparator = "=";
             }
  
-            $sql .= " $key $comparator :$key and";
+            $query .= " $key $comparator :$key and";
  
             $params[":$key"] = $value;
             unset($params[$key]);
         }
  
-        $sql = rtrim($sql, "and");
+        $query = rtrim($query, "and");
  
-        $result = $this->sql($sql, $params);
-        return $result->fetchColumn();
+        $result = $this->connection->query($query, $params);
+        return $result->getValueResult();
     }
 
     public function findAll(): array 
     {
         $results = array();
 
-        $sql = "select * from $this->table";
+        $query = "select * from $this->table";
 
-        $result = $this->sql($sql);
+        $result = $this->connection->query($query);
 
-        $rows = $result->fetchAll($this->pdo::FETCH_ASSOC);
+        $rows = $result->getArrayResult();
 
         foreach($rows as $row) {
             $object = new $this->class();
@@ -155,9 +148,9 @@ class Manager
 
     public function delete(int $id): bool
     {
-        $sql = "delete from $this->table where id = :id";
+        $query = "delete from $this->table where id = :id";
 
-        $result = $this->sql($sql, [':id' => $id]);
+        $result = $this->connection->query($query, [':id' => $id]);
     
         return true;
     }

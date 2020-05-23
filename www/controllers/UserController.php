@@ -15,21 +15,23 @@ class UserController
         $userManager = new UserManager();
 
         // find
-        // $userManager->find(1);
+        echo json_encode($userManager->find(1), JSON_PRETTY_PRINT);
+        echo '<br>';
 
         // findBy
-        // var_dump($userManager->findBy(["firstname" => "Ludo"], ["id" => "desc"]));
+        var_dump($userManager->findBy(["firstname" => "Ludo"], ["id" => "desc"]));
+        echo '<br>';
 
         // count
-        // echo $userManager->count(["firstName" => "Ludo"]);
+        echo $userManager->count(["firstName" => "Joe"]);
+        echo '<br>';
 
         // findAll
-        // var_dump($userManager->findAll());
+        echo json_encode($userManager->findAll(), JSON_PRETTY_PRINT);
+        echo '<br>';
 
         // delete
-
-        // var_dump($userManager->delete(1));
-
+        var_dump($userManager->delete(2));
     }
 
     public function addAction()
