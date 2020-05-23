@@ -8,7 +8,7 @@ class DB
     {
         //SINGLETON
         try {
-            $this->pdo = new PDO(DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
+            $this->pdo = PDOSingleton::getInstance();
         } catch (Exception $e) {
             die("Erreur SQL : ".$e->getMessage());
         }
@@ -39,7 +39,6 @@ class DB
 
             $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
-
 
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute($columnsData);

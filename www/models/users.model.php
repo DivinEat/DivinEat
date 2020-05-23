@@ -43,7 +43,7 @@ class users extends DB
     public static function getRegisterForm(){
         return [
             "config"=>[
-                "method"=>"POST", 
+                "method"=>"POST",
                 "action"=>helpers::getUrl("User", "register"),
                 "class"=>"admin-form width-100",
                 "id"=>"formRegisterUser",
@@ -114,7 +114,7 @@ class users extends DB
     public static function getLoginForm(){
         return [
             "config"=>[
-                "method"=>"POST", 
+                "method"=>"POST",
                 "action"=>helpers::getUrl("User", "login"),
                 "class"=>"admin-form width-100",
                 "id"=>"formLoginUser",
@@ -145,12 +145,12 @@ class users extends DB
         ];
     }
 
-    
+
 
     public static function getPwdForm(){
         return [
             "config"=>[
-                "method"=>"POST", 
+                "method"=>"POST",
                 "action"=>helpers::getUrl("User", "forgotPwd"),
                 "class"=>"admin-form width-100",
                 "id"=>"formPwdUser",
