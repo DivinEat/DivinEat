@@ -1,0 +1,35 @@
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: $white;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+
+    &-header {
+        color: $text-color;
+        display: block;
+        padding: 10px;
+        position: relative;
+        
+        &.with-border {
+            border-bottom: 1px solid #f4f4f4;
+        }
+    }
+
+    &-title {
+        display: inline-block;
+        font-size: 18px;
+        margin: 0;
+        line-height: 1;
+    }
+
+    &-body {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px;
+        padding: 10px;
+    }
+}

@@ -3,12 +3,11 @@
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 TODO: Put more badges here.
 
-> No description for the moment.
+> Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qui l'attendra.
 
-TODO: Fill out this long description.
+
 
 ## Table of Contents
-
 - [Security](#security)
 - [Background](#background)
 - [Install](#install)

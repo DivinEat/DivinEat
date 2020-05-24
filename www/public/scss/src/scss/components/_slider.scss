@@ -1,0 +1,32 @@
+.slider{
+	overflow: hidden;
+	position: relative;
+	background-color: grey;
+	width: 100%;
+	height: rem(360);
+	display: flex;
+	align-items: center;
+	nav{
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		z-index: 10;
+	}
+}
+
+.slides-container{
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	transition: all 1s;
+}
+
+.slide{
+	object-fit: cover;
+}
+
+.disabled{
+	pointer-events: none;
+	opacity: 0.8;
+}
