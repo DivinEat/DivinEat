@@ -3,6 +3,7 @@
 namespace App\Core\Middleware;
 
 use App\Core\Http\Request;
+use App\Core\Http\Response;
 use App\Middleware\CheckConnectedUser;
 use App\Middleware\CheckNotConnectedUser;
 
@@ -24,7 +25,13 @@ class MiddlewareDispatcher
         $this->addMiddlewares();
         $this->addControllerMiddleware();
 
-        return $this->tip->handle($request);
+        if ($this->tip instanceof ControllerMiddleware)
+        {
+            $methodName = $this->tip->getControllerMethod();
+            return $this->tip->$methodName($request, new Response());
+        }
+
+        return $this->tip->run($request, new Response());
     }
 
     protected function addHandler(Handler $handler)
@@ -53,7 +60,7 @@ class MiddlewareDispatcher
 
     protected function addControllerMiddleware(): void
     {
-        $controllerName =  'App\\Controllers\\' . $this->request->getCurrentRoute()->getController();
+        $controllerName =  preg_replace('#[\\\]{2,}#', '\\', 'App\\Controllers\\' . $this->request->getCurrentRoute()->getController());
         $controller = new $controllerName($this->container);
         $this->addHandler($controller);
         $controller->setControllerMethod($this->request->getCurrentRoute()->getMethod());

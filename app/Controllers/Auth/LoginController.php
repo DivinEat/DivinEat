@@ -6,4 +6,8 @@ use App\Core\Controller\Controller;
 
 class LoginController extends Controller
 {
+    public function showLoginForm()
+    {
+
+    }
 }

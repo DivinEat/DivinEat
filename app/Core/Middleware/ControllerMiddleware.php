@@ -3,8 +3,9 @@
 namespace App\Core\Middleware;
 
 use App\Core\Http\Request;
+use App\Core\Http\Response;
 
-abstract class ControllerMiddleware implements Handler
+abstract class ControllerMiddleware extends Middleware
 {
     protected string $controllerMethod;
 
@@ -13,7 +14,12 @@ abstract class ControllerMiddleware implements Handler
         $this->controllerMethod = $controllerMethod;
     }
 
-    public function handle(Request $request, Middleware $handler)
+    public function getControllerMethod(): string
+    {
+        return $this->controllerMethod;
+    }
+
+    public function handle(Request $request, Response $response, callable $handler)
     {
         return $this->$this->controllerMethod($request);
     }

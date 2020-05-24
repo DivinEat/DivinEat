@@ -3,6 +3,7 @@
 namespace App\Core\Middleware;
 
 use App\Core\Http\Request;
+use App\Core\Http\Response;
 
 abstract class Middleware implements Handler
 {
@@ -16,5 +17,16 @@ abstract class Middleware implements Handler
     public function setNext(Handler $next)
     {
         $this->next = $next;
+    }
+
+    public function run(Request $request, Response $response)
+    {
+        if ($this->next instanceof ControllerMiddleware)
+        {
+            $methodName = $this->next->getControllerMethod();
+            return $this->next->$methodName($request, $response);
+        }
+
+        return $this->handle($request, $response, $this->next->run());
     }
 }
