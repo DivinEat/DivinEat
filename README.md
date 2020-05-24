@@ -1,45 +1,50 @@
-# DivinEat
+# divineat
 
-![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)
+[![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+TODO: Put more badges here.
 
-> Site destiné aux restaurateurs qui souhaitent moderniser et digitaliser leur système de réservation et de commande.
+> Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qui l'attendra.
 
-Le restaurateur peut saisir son menu ainsi que le plan de son restaurant (tables et chaises).
 
-Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qui l'attendra.
 
-Si le client n'a pas réserver et qu'il occupe une place, il peut commander son menu en indiquant la référence de sa table.
+## Table of Contents
+- [Security](#security)
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [API](#api)
+- [Maintainers](#maintainers)
+- [Contributing](#contributing)
+- [License](#license)
 
-Lien GlooMaps: https://www.gloomaps.com/4oFFNziilw
+## Security
 
-## Table des matières
+## Background
 
-- [Installation](#Installation)
-- [Contributeurs](#Contributeurs)
-- [Usage](#Usage)
-## Prérequis
+## Install
 
-- [Docker](https://www.docker.com/)
-
-## Installation
-
-A la racine du projet
-```docker-compose up --build -d```
+```
+```
 
 ## Usage
 
-Compilation du SCSS 
-```npm run build``` (à executer dans le dossier www/public/scss/webpack/)
+```
+```
 
-Compilation en continu du SCSS
-```npm run watch```
+## API
 
-## Contributeurs
+## Maintainers
 
-[Tao BERQUER](https://github.com/taoberquer)
+[@Y](https://github.com/Y)
 
-[Rémi BRAT](https://github.com/remibrat)
+## Contributing
 
-[Ludovic COLLIGNON](https://github.com/LudovicCollignon)
+See [the contributing file](contributing.md)!
 
-[Thibault DARGENT](https://github.com/tdargent1)
+PRs accepted.
+
+Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
+
+## License
+
+MIT © 2020 divinEaTeam
