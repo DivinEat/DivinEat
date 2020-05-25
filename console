@@ -1,0 +1,41 @@
+<?php
+
+use App\Core\Command\Receiver;
+use App\Core\Command\Invoker;
+use App\Core\ConstantLoader;
+
+spl_autoload_register('myAutoloader');
+
+function myAutoloader($class)
+{
+    $class = str_replace('App', '', $class);
+    $class = str_replace('\\', '/', $class);
+    if ($class[0] == '/') {
+        include substr($class.'.php',1);
+    }
+    else{
+        include $class . '.php';
+    }
+}
+
+new ConstantLoader();
+
+$firstArg = array_shift($argv);
+
+if("console" !== $firstArg){
+    $out = fopen("php://output", "w");
+    fputs($out, "Ce n'est pas une command");
+    fclose($out);
+}
+
+$commandArg = array_shift($argv);
+
+$commandName = "App\Command\\".$commandArg."Command";
+
+$receiver = new Receiver();
+$invoker = new Invoker();
+$command = new $commandName($receiver);
+$command->setArgs($argv);
+$invoker->setCommand($command);
+
+$invoker->run();
