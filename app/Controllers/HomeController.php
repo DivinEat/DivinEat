@@ -10,6 +10,7 @@ class HomeController extends Controller
 {
     public function index(Request $request, Response $response)
     {
-        return $response;
+        $myView = new View("dashboard");
+        $myView->assign("firstname", $firstname);
     }
 }
