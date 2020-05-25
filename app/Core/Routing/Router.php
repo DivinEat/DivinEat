@@ -55,7 +55,7 @@ class Router
             $routeType,
             $this->params['prefix'] . $routePath,
             $this->params['namespace'] . $controllerName,
-            $this->params['as'] . $routeName,
+            $routeName !== null ? $this->params['as'] . $routeName : '',
             $this->params['middleware']
         );
 
@@ -72,6 +72,24 @@ class Router
         return self::$routes;
     }
 
+    public static function getRouteList(): array
+    {
+        $routeList = [];
+
+        foreach (self::getRoutes()->getIterator() as $route) {
+            array_push($routeList, [
+                'Name' => $route->getName(),
+                'Type' => $route->getType(),
+                'Url' => $route->getUrl(),
+                'Controller' => $route->getController(),
+                'Method' => $route->getMethod(),
+                'Middleware' => $route->getMiddleware(),
+            ]);
+        }
+
+        return $routeList;
+    }
+
     public static function getRouteByName(string $routeName): ?Route
     {
         foreach (self::getRoutes()->getIterator() as $route)
@@ -85,6 +103,15 @@ class Router
     {
         foreach (self::getRoutes()->getIterator() as $route)
             if (preg_match('/^' . $route->regexPath . '$/', $requestUri))
+                return $route;
+
+        return null;
+    }
+
+    public static function getRouteByUrlAndType(string $requestUri, string $type): ?Route
+    {
+        foreach (self::getRoutes()->getIterator() as $route)
+            if (preg_match('/^' . $route->regexPath . '$/', $requestUri) && $route->getType() === $type)
                 return $route;
 
         return null;

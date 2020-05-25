@@ -69,4 +69,14 @@ class Route
     {
         return $this->middleware;
     }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
 }

@@ -29,7 +29,7 @@ class Application
     public function run(): void
     {
         try {
-            $route = Router::getRouteByUrl($_SERVER['REQUEST_URI']) ?? Router::getRouteByName('not.found');
+            $route = Router::getRouteByUrlAndType($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']) ?? Router::getRouteByName('not.found');
 
             $request = new Request($route);
 
