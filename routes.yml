@@ -1,0 +1,55 @@
+/:
+  controller: Default
+  action: default
+
+/ajout-utilisateur:
+  controller: "User"
+  action: "add"
+
+/utilisateur:
+  controller: "User"
+  action: "default"
+
+/login:
+  controller: "User"
+  action: "login"
+
+/register:
+  controller: "User"
+  action: "register"
+
+/forgotpwd:
+  controller: "User"
+  action: "forgotPwd"
+
+/test:
+  controller: "Test"
+  action: "default"
+
+/menus:
+  controller: "Menu"
+  action: "index"
+
+/admin_menu_add:
+  controller: "Menu"
+  action: "add"
+
+/admin_menu:
+  controller: "Menu"
+  action: "show"
+
+/admin_menu_edit:
+  controller: "Menu"
+  action: "edit"
+
+/styleguide:
+  controller: "Default"
+  action: "styleguide"
+
+/install-bdd:
+  controller: "Test"
+  action: "bdd"
+
+/install-admin:
+  controller: "Test"
+  action: "admin"

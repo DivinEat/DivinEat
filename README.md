@@ -1,25 +1,23 @@
-# DivinEat
+# divineat
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+TODO: Put more badges here.
 
-> Site destiné aux restaurateurs qui souhaitent moderniser et digitaliser leur système de réservation et de commande.
+> Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qui l'attendra.
 
-Le restaurateur peut saisir son menu ainsi que le plan de son restaurant (tables et chaises).
 
-Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qui l'attendra.
-
-Si le client n'a pas réserver et qu'il occupe une place, il peut commander son menu en indiquant la référence de sa table.
-
-lien GlooMaps: https://www.gloomaps.com/4oFFNziilw
 
 ## Table of Contents
-
+- [Security](#security)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
+- [API](#api)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Security
 
 ## Background
 
@@ -33,21 +31,20 @@ lien GlooMaps: https://www.gloomaps.com/4oFFNziilw
 ```
 ```
 
+## API
+
 ## Maintainers
 
-[Tao BERQUER](https://github.com/taoberquer)
-
-[Rémi BRAT](https://github.com/remibrat)
-
-[Ludovic COLLIGNON](https://github.com/LudovicCollignon)
-
-[Thibault DARGENT](https://github.com/tdargent1)
+[@Y](https://github.com/Y)
 
 ## Contributing
 
+See [the contributing file](contributing.md)!
+
+PRs accepted.
 
 Small note: If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
 
-MIT © 2019 DivinEat
+MIT © 2020 divinEaTeam
