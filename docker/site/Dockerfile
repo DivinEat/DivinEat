@@ -8,15 +8,15 @@ WORKDIR /app
 
 RUN apt-get update -qy && \
     apt-get install -y --no-install-recommends \
-    git=1:2.20.1\* \
+    git=1:2.20\* \
     libicu-dev=63.1\* \
     unzip=6.0\* \
-    bzip2=1.0.6\* \
-    libpng-dev=1.6.36\* \
-    libbz2-dev=1.0.6\* \
-    libzip-dev=1.5.1\* \
-    nodejs=10.15.2\* \
-    npm=5.8.0\* \
+    bzip2=1.0\* \
+    libpng-dev=1.6\* \
+    libbz2-dev=1.0\* \
+    libzip-dev=1.5\* \
+    nodejs=10\* \
+    npm=5\* \
     libgmp-dev=2:6.1\* \
     zip=3.0\* && \
     apt-get clean && \
