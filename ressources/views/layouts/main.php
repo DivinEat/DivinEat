@@ -2,10 +2,10 @@
 <html>
 <head>
     <title>Front</title>
-    <link href="public/scss/dist/main.css" rel="stylesheet">
-    <script src="public/vendor/jquery/jquery.min.js"></script>
-    <script src="public/js/navbar.js"></script>
-    <script src="public/js/top.js"></script>
+    <link href="scss/dist/main.css" rel="stylesheet">
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/top.js"></script>
 </head>
 <body>
 <header id="navbar" class="navbar navbar--fixed bg-white">
@@ -36,7 +36,7 @@
     <span class="burger" onclick="openNav()">&#9776;</span>
 </header>
 
-<?php include "views/".$this->view.".view.php";?>
+<?php include $this->viewPath;?>
 
 <footer>
     <div class="left">

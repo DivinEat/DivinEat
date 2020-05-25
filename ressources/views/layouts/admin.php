@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>Dashboard</title>
-    <link href="public/scss/dist/main.css" rel="stylesheet">
+    <link href="scss/dist/main.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="public/vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
-    <script src="public/js/dashboard/dashboard-graphs.js"></script>
-    <script src="public/js/navbar.js"></script>
+    <script src="js/dashboard/dashboard-graphs.js"></script>
+    <script src="js/navbar.js"></script>
 </head>
 <body>
 <div class="row padding-0">
@@ -56,7 +56,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="col-inner">
-                    <?php include "views/".$this->view.".view.php";?>
+                    <?php include $this->viewPath;?>
                 </div>
             </div>
         </div>
