@@ -31,6 +31,14 @@
   controller: "user"
   action: "json"
 
+/phps2-getuser:
+  controller: "user"
+  action: "getUserTest"
+
+/phps2-getuserpost:
+  controller: "post"
+  action: "default"
+
 
 
 

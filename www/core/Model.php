@@ -16,9 +16,9 @@ class Model implements \JsonSerializable
         
             if (method_exists($this, $method)){
                 $this->$method($value);
-            }/* else {
+            } else {
                 throw new BDDException("Le setter $method n'existe pas.");
-        	}*/
+        	}
         }
         return $this;
     }

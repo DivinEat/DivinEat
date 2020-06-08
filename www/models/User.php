@@ -15,6 +15,10 @@ class User extends Model
     protected $date_inserted;
     protected $date_updated;
 
+    public function __construct(){
+        parent::__construct();
+    }
+
     public function setId($id)
     {
         $this->id=$id;

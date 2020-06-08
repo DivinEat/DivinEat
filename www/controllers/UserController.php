@@ -6,6 +6,7 @@ use App\models\User;
 use App\Managers\UserManager;
 use App\core\Exception\NotFoundException;
 use App\core\helpers;
+use App\core\QueryBuilder;
 
 class UserController
 {
@@ -100,5 +101,18 @@ class UserController
     public function forgotpwdAction()
     {
         $myView = new View("forgotPwd", "account");
+    }
+
+    public function getUserTestAction(){
+        $result =  (new QueryBuilder())
+            ->select('*')
+            ->from('tdd_users', 'u')
+            ->join('tdd_posts', 'p', 'id', 'id')
+            ->where('u.firstname = :firstname')
+            ->setParameter('firstname', 'Tib')
+            ->getQuery()
+            ->getArrayResult(User::class);
+
+            echo "<pre>", var_dump($result), "</pre>";
     }
 }
