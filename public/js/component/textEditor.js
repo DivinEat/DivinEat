@@ -250,7 +250,7 @@ export var editorHandler = {
                 }
             };
 
-            xmlhttp.open("GET", "pageBuilderAddModal", true);
+            xmlhttp.open("GET", "page-builder-get-editor", true);
             xmlhttp.send();
         });
     },

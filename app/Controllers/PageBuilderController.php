@@ -1,11 +1,20 @@
 <?php 
 
-class PageBuilderController
+namespace App\Controllers;
+
+use App\Core\View;
+
+
+use App\Core\Controller\Controller;
+use App\Core\Http\Request;
+use App\Core\Http\Response;
+
+class PageBuilderController extends Controller
 {
     private $_pageData;
     private $_view;
 
-    public function defaultAction() {
+    public function show(Request $request, Response $response) {
         $this->_view = new View("pageBuilder");
     }
 
@@ -23,7 +32,7 @@ class PageBuilderController
         return $this->_pageData = $pageData;
     }
 
-    public function addTextAreaEditorAction() {
-        echo file_get_contents("views/modals/textEditor.php");
+    public function addTextAreaEditor() {
+        echo file_get_contents("/ressources/views/modals/textEditor.php");
     }
 }

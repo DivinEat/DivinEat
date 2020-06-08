@@ -1,4 +1,5 @@
-import { editorHandler } from './component/textEditor.js';
+// import { editorHandler } from './component/textEditor.js';
+
 $(document).ready(function() {
     
     var pageBuilderHandler = {
@@ -9,13 +10,15 @@ $(document).ready(function() {
         dropperRow: null,
         dropper: null,
         droppers: null,
-        pageContent: [],
         container: null,
         containerToolBar: null,
+        pageData: {},
+        idEditor: 0,
 
         init: function() {
-            this.applyDragEvents();
+            // this.applyDragEvents();
             // this.applyDropEvents();
+            pageBuilderHandler.page = document.querySelector('.page');
             this.addEventsToCreateContainerButton(document.querySelector('.add-container-button'));
         },
 
@@ -63,7 +66,7 @@ $(document).ready(function() {
 
                 switch (draggedElementId) {
                     case 'text-item':
-                        pageBuilderHandler.addTextItem(this);
+                        pageBuilderHandler.addEditor(this, null, null);
                         break;
 
                     case 'image-item':
@@ -103,16 +106,58 @@ $(document).ready(function() {
             return container;
         },
 
+        addPositionButtons: function(container) {
+            var pageBuilderHandler = this;
+            console.log(container);
+            var containerCol = container.parentNode.parentNode.parentNode.parentNode.parentNode;
+            console.log(containerCol);
+            var containerRow = containerCol.parentNode;
+            console.log(containerRow);
+            var page = containerRow.parentNode;
+
+            var isRightContainer = false;
+            var isLeftContainer = false;
+            var isTopContainer = false;
+            var isBottomContainer = false;
+
+            if (containerRow.firstChild == containerCol) {
+                isLeftContainer = true;
+            } else if (containerRow.lastChild == containerCol) {
+                isRightContainer = true;
+            }
+
+            if (containerRow.firstChild == containerCol) {
+                isTopContainer = true;
+            } else if (containerRow.lastChild == containerCol) {
+                isBottomContainer = true;
+            }
+
+            if (!isLeftContainer) {
+
+                var leftBtn = document.createElement('div');
+                leftBtn.className = '.pageBuilder-container-btn-position-left';
+                container.appendChild(leftBtn);
+
+            }
+
+            var leftBtn = document.createElement('div');
+            leftBtn.className = 'pageBuilder-container-btn-position-left';
+            container.appendChild(leftBtn);
+
+
+        },
+
         addToolsBar: function(container) {
             var pageBuilderHandler = this;
+            var pageData = pageBuilderHandler.pageData;
             var toolsBarItemsList = [];
             var toolsBar = document.createElement('div');
-            toolsBar.className = 'tools-bar';
+            toolsBar.className = 'pageBuilder-container-tools-bar';
             
             var toolsBarGear = document.createElement('div');
             var gearIcon = document.createElement('img');
-            toolsBarGear.className = 'tools-bar-item';
-            gearIcon.src = '/public/img/icones/gear.png';
+            toolsBarGear.className = 'pageBuilder-container-tools-bar-item';
+            gearIcon.src = '../img/icones/gear.png';
             gearIcon.style.width = '65%';
 
             toolsBarGear.appendChild(gearIcon);
@@ -120,17 +165,16 @@ $(document).ready(function() {
 
             for (let i = 0; i < 2; i++) {
                 let sizeBtn = document.createElement('div');
-                let nbCol = 2;
+                let nbCol = 2; // the first button is used to divise in 2 columns
+                if (i > 0) nbCol = 3; // the second button is used to divise in 3 columns 
 
                 toolsBarItemsList.push(sizeBtn);
                 
-                if (i > 0) nbCol = 3;
-                
-                sizeBtn.className = 'tools-bar-item-hidden';
+                sizeBtn.className = 'pageBuilder-container-tools-bar-item-hidden';
                 var colIcon = document.createElement('img');
 
-                if (i == 0) colIcon.src = '/public/img/icones/2columns.png';
-                else if (i == 1) colIcon.src = '/public/img/icones/3columns.png';
+                if (i == 0) colIcon.src = '../img/icones/2columns.png';
+                else if (i == 1) colIcon.src = '../img/icones/3columns.png';
                 
                 colIcon.style.width = '50%';
                 sizeBtn.appendChild(colIcon);
@@ -139,11 +183,13 @@ $(document).ready(function() {
                     let mainColInner = pageBuilderHandler.container.parentNode;
                     let mainCol = mainColInner.parentNode;
                     let mainRow = mainCol.parentNode;
+                    let numContainer = 1;
+                    let containerId = container.id;
                     
                     mainColInner.removeChild(container);
                     mainColInner.className = 'col-inner padding-0';
                     mainCol.className = 'col-sm-' + (12 / nbCol) + ' padding-0';
-
+                    
                     for (let i = 0; i < nbCol; i++) {
                         if (i == 0) {
                             let containerRow = document.createElement('div');
@@ -158,30 +204,37 @@ $(document).ready(function() {
                             containerRow.appendChild(containerCol);
                             containerCol.appendChild(containerColInner);
                             containerColInner.appendChild(container);
+                            container.id = containerId + '-' + numContainer;
+                            pageData[containerId + '-' + numContainer] = pageData[containerId];
                         } else {
                             let newCol = document.createElement('div');
                             let newColInner = document.createElement('div');
                             let newContainer = pageBuilderHandler.createContainer(newColInner);
 
-                            pageBuilderHandler.applyDropEvents(newContainer);
+                            // pageBuilderHandler.applyDropEvents(newContainer);
 
                             newCol.className = 'col-sm-' + (12 / nbCol) + ' padding-0';
                             newColInner.className = 'col-inner padding-0';
 
-                            let toolsBar = pageBuilderHandler.addToolsBar(newContainer);
+                            var toolsBar = pageBuilderHandler.addToolsBar(newContainer);
                             newCol.appendChild(newColInner);
                             mainRow.appendChild(newCol);
+                            numContainer = i+1;
+                            newContainer.id = containerId + '-' + numContainer;
+                            pageData[containerId + '-' + numContainer] = null;
                         }                      
                     }
+
+                    delete pageData[containerId];
                 });
                 toolsBar.appendChild(sizeBtn);
             }
 
             var deleteContainerBtn = document.createElement('div');
             toolsBarItemsList.push(deleteContainerBtn);
-            deleteContainerBtn.className = 'tools-bar-item-hidden';
+            deleteContainerBtn.className = 'pageBuilder-container-tools-bar-item-hidden';
             var binIcon = document.createElement('img');
-            binIcon.src = '/public/img/icones/trash.png';
+            binIcon.src = '../img/icones/trash.png';
             binIcon.style.width = '50%';
 
             deleteContainerBtn.addEventListener('click', function(e) {
@@ -193,19 +246,18 @@ $(document).ready(function() {
 
             toolsBar.addEventListener('mouseenter', function (e) {
 
-                toolsBarGear.className = 'tools-bar-item-hidden';
+                toolsBarGear.className = 'pageBuilder-container-tools-bar-item-hidden';
                 
                 toolsBarItemsList.forEach(item => {
-                    item.className = 'tools-bar-item';
+                    item.className = 'pageBuilder-container-tools-bar-item';
                 });
 
             });
 
             toolsBar.addEventListener('mouseleave', function (e) {
-
-                toolsBarGear.className = 'tools-bar-item';
+                toolsBarGear.className = 'pageBuilder-container-tools-bar-item';
                 toolsBarItemsList.forEach(item => {
-                    item.className = 'tools-bar-item-hidden';
+                    item.className = 'pageBuilder-container-tools-bar-item-hidden';
                 });
 
             });
@@ -226,6 +278,7 @@ $(document).ready(function() {
 
         addEventsToCreateContainerButton: function(button) {
             var pageBuilderHandler = this; 
+            var pageData = pageBuilderHandler.pageData;
             var container = button.parentNode;
             var page = pageBuilderHandler.page;
             
@@ -235,11 +288,17 @@ $(document).ready(function() {
                 
                 containerRowParent.removeChild(containerRow);
                 container = pageBuilderHandler.createContainer(containerRowParent);
+                pageBuilderHandler.addPositionButtons(container);
+                
+                var numRow = ++Object.keys(pageData).length;
+                pageData['con-' + numRow + '-1'] = 'you';
+                container.id = 'con-' + numRow + '-1'; 
                 pageBuilderHandler.container = container;
+
                 var toolsBar = pageBuilderHandler.addToolsBar(container);
 
                 container.className = 'pageBuilder-container-displayed';
-                pageBuilderHandler.applyDropEvents(container);
+                // pageBuilderHandler.applyDropEvents(container);
 
                 container.addEventListener('mouseenter', function (e) {
                     toolsBar.style.display = 'flex';
@@ -249,10 +308,11 @@ $(document).ready(function() {
                     toolsBar.style.display = 'none';
                 });
 
+                pageBuilderHandler.addEditor(container, null, null);
+
                 var newAddContainerBtn = document.createElement('div');
                 newAddContainerBtn.className = 'add-container-button';                
                 newAddContainerBtn.innerHTML = '+';
-
 
                 var newRow = document.createElement('div');
                 var newCol = document.createElement('div');
@@ -274,11 +334,14 @@ $(document).ready(function() {
         },
 
         deleteContainer: function(container) {
+            var pageBuilderHandler = this;
+            var pageData = pageBuilderHandler.pageData;
             var containerMainCol = container.parentNode.parentNode.parentNode.parentNode.parentNode;
             var containerMainRow = containerMainCol.parentNode;
             var colSize = null;
             var classNameElement = null;
             var orphanContainerRow = null;
+            var orphanContainer = null;
 
             containerMainCol.classList.forEach(className => {
                 if (className.includes('col-sm-')) {
@@ -289,10 +352,12 @@ $(document).ready(function() {
 
             var newColSize = colSize == 12 ? 0 : 12 / (12 / colSize - 1);
             
+            delete pageData[container.id];
+
             if (newColSize == 0) {
                 
                 containerMainRow.parentNode.removeChild(containerMainRow);
-                
+
             } else {
             
                 var containerMainColInner = containerMainRow.parentNode;
@@ -301,8 +366,16 @@ $(document).ready(function() {
                 if (newColSize == 12) {
 
                     orphanContainerRow = containerMainRow.childNodes[0].childNodes[0].childNodes[0];
+                    orphanContainer = orphanContainerRow.childNodes[0].childNodes[0].childNodes[0]
                     containerMainColInner.removeChild(containerMainRow);
                     containerMainColInner.appendChild(orphanContainerRow);
+
+                    var pageDataOrphanContainer = pageData[orphanContainer.id];
+                    var newId = orphanContainer.id.substring(0, orphanContainer.id.length - 2);
+                    pageData[newId] = pageDataOrphanContainer;
+                    
+                    delete pageData[orphanContainer.id];
+                    orphanContainer.id = newId;
 
                 } else {
                     
@@ -314,10 +387,159 @@ $(document).ready(function() {
             }
         },
 
-        addTextItem: function(container) {
-            
-            editorHandler.addEditBtn(container);
+        addEditor: function(container, editorData = null, button = null) {
+            var pageBuilderHandler = this;
+            var validateButton;
 
+            pageBuilderHandler.idEditor++;
+            var idEditorContainer = 'editorjs' + this.idEditor;
+            
+            if (editorData == null) {
+                validateButton = document.createElement('div');    
+                
+                // checkIcon.src = '../img/icones/check.png';
+                // checkIcon.style.width = '50%';
+                // validateButton.appendChild(checkIcon);   
+                container.appendChild(validateButton);     
+            } else {
+                validateButton = button;
+                // validateButton.firstChild.src = '../img/icones/check.png';
+            }
+
+            var editor = new EditorJS({
+                /**
+                 * Id of Element that should contain Editor instance
+                 */
+                holder: idEditorContainer,
+                placeholder: 'C\'est là qu\'on écrit',
+                minHeight: 4,
+
+                /** 
+                 * Available Tools list. 
+                 * Pass Tool's class or Settings object for each Tool you want to use 
+                 */
+                tools: {
+                    header: {
+                        class: Header,
+                        shortcut: 'CMD+SHIFT+H',
+                        config: {
+                            placeholder: 'Enter a header',
+                            levels: [1, 2, 3, 4],
+                            defaultLevel: 1
+                        }
+                    },
+                    list: {
+                        class: List,
+                        inlineToolbar: true,
+                        shortcut: 'CMD+SHIFT+L',
+                    },
+
+                    embed: {
+                        class: Embed,
+                    },
+
+                    // image: {
+                    //     class: ImageTool,
+                    //     config: {
+                    //         endpoints: {
+                    //             byFile: 'http://localhost:81/uploadFile', // Your backend file uploader endpoint
+                    //             byUrl: 'http://localhost:81/fetchUrl', // Your endpoint that provides uploading by Url
+                    //         }
+                    //     }
+                    // },
+                },
+
+                data: editorData
+            });
+
+            var editorContainer = document.createElement('div');
+            editorContainer.className = 'pageBuilder-editor-container';
+            editorContainer.id = idEditorContainer;
+
+            container.appendChild(editorContainer);
+            
+            validateButton.className = 'pageBuilder-container-btn-validate';
+            validateButton.addEventListener('click', function(e) {
+                pageBuilderHandler.saveEditor(editor, editorContainer, validateButton);
+            });
+
+        },
+
+        saveEditor: function(editor, editorContainer, button) {
+            var pageBuilderHandler = this;
+
+            editor.save().then((outputData) => {
+                var htmlData = pageBuilderHandler.convertEditorTextToHTML(outputData);
+                var container = editorContainer.parentNode;
+
+                pageBuilderHandler.pageData[container.id] = outputData;
+
+                editor.destroy();
+                editorContainer.innerHTML = htmlData;
+
+                button.className = 'pageBuilder-container-btn-edit';
+                // button.firstChild.src = '../../../../../img/icones/edit-tools.png';
+
+                button.addEventListener('click', function(e) {
+
+                    container.removeChild(editorContainer);
+                    pageBuilderHandler.addEditor(container, outputData, button);
+
+                });
+
+            }).catch((error) => {
+                console.log('Saving failed: ', error);
+            });
+        },
+
+        convertEditorTextToHTML: function(data) {
+            var blocks = data.blocks;
+            var htmlData = '';
+            blocks.forEach((block, index) => {
+                var type = block['type'];
+                
+                if(index != 0 && index != blocks.length) {
+                    htmlData += '<br>';
+                }
+
+                switch (type) {
+                    case 'paragraph':
+                        var text = block['data'].text;
+                        htmlData += '<p>' + text + '</p>';
+                        break;
+
+                    case 'list':
+                        var listItems = block['data'].items;
+                        var style = block['data'].style;
+                        
+                        htmlData += '<ul>';
+
+                        listItems.forEach((item, index) => {
+
+                            if (style == 'ordered') {
+                                htmlData += '<li style="list-style: none;">';
+                                htmlData += ++index + '. ';
+                            } else {
+                                htmlData += '<li>';
+                            }
+
+                            htmlData += item + '</li>';
+                        });
+
+                        htmlData += '</ul>';
+                        break;
+
+                    case 'header':
+                        var text = block['data'].text;
+                        var level = block['data'].level;
+                        htmlData += '<h' + level + '>' + text + '</h' + level + '>';
+                        break;
+                
+                    default:
+                        break;
+                }
+            });
+            return htmlData;
         },
 
         addImageItem: function(container) {

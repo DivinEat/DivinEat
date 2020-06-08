@@ -29,3 +29,6 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
 });
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');
+
+$router->get('page-builder', 'PageBuilderController@show', 'page.builder');
+$router->get('page-builder-get-editor', 'PageBuilderController@addTextAreaEditor', 'page.builder.editor');
