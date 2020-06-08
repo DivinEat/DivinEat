@@ -3,11 +3,16 @@
 namespace App\Core;
 
 use App\Core\Exceptions\BDDException;
-class Model
+use JSONSerializable;
+
+class Model implements JSONSerializable
 {
     public function __construct() 
     {
+    }
 
+    public function jsonSerialize() {
+        return $this->__toArray();
     }
 
     public function __toArray(): array
@@ -23,6 +28,12 @@ class Model
             $setterName = "set" . ucfirst(strtolower($key));
             
             if (method_exists($this, $setterName)) {
+                if ( in_array($key, array_keys($this->relation)) ) {
+                    $class = $this->relation[$key];
+
+                    
+                }
+
                 $this->$setterName($value);
             } else {
                 throw new BDDException("Le setter <i>". $setterName ."</i> n'existe pas.");
