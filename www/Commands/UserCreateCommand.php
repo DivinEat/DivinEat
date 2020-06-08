@@ -3,7 +3,7 @@ namespace App\Commands;
 
 use App\Core\Command\CommandInterface;
 use App\Core\Command\Receiver;
-use App\models\User;
+use App\Models\User;
 use App\Managers\UserManager;
 
 class UserCreateCommand implements CommandInterface

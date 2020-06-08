@@ -9,7 +9,7 @@ class Manager
 {
     private $table;
     private $connection;
-    private $class;
+    protected $class;
 
     public function __construct(string $class, string $table, BDDInterface $connection = null)
     {

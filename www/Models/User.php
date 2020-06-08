@@ -6,7 +6,7 @@ use App\Core\Model;
 use App\Core\helpers;
 use JSONSerializable;
 
-class users extends Model implements JSONSerializable
+class User extends Model implements JSONSerializable
 {
     protected $id;
     protected $firstname;

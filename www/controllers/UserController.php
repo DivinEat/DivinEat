@@ -4,9 +4,10 @@ namespace App\Controllers;
 
 use App\Core\View;
 use App\Core\Validator;
-use App\Models\users;
+use App\Models\User;
 use App\Core\Manager;
 use App\Managers\UserManager;
+use App\Core\QueryBuilder;
 
 class UserController
 {
@@ -38,7 +39,7 @@ class UserController
     {
         echo "User add";
         $userManager = new UserManager();
-        $user = new users();
+        $user = new User();
             
         $user->setId(2);
         $user->setFirstname("Joe");
@@ -66,7 +67,7 @@ class UserController
     public function registerAction()
     {
 
-        $configFormUser = users::getRegisterForm();
+        $configFormUser = User::getRegisterForm();
 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             //Vérification des champs
@@ -76,7 +77,7 @@ class UserController
 
             if (empty($errors)) {
                 $data = $_SESSION['register_data'];
-                $user = new users();
+                $user = new User();
                 
                 $user->setId(1);
                 $user->setFirstname("Toto");
@@ -104,8 +105,13 @@ class UserController
 
         $users = $userManager->findAll();
         $firstUser = json_encode($users[0], JSON_PRETTY_PRINT);
-
-        echo $firstUser;
         return $firstUser;
+    }
+
+    public function testQueryAction()
+    {   
+        $user = $this->getFirstUserAction();
+
+        var_dump($this->getUserPost(1));
     }
 }

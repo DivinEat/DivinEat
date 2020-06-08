@@ -53,6 +53,15 @@
   action: "displayError"
 
 
+/test-query-builder:
+  controller: "user"
+  action: "testQuery"
+
+/user-post:
+  controller: "post"
+  action: "default"
+
+
 
 
 
