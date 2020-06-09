@@ -45,16 +45,25 @@ class QueryBuilder
         return $this;
     }
 
-    public function join(string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
+    public function join(string $join = "inner", string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
     {
-        $this->query .= "inner join ".$table." ".$aliasTarget." on ".$this->alias.".".$fieldSource." = ".$aliasTarget.".".$fieldTarget." ";
+        $this->query .= $join." join ".$table." ".$aliasTarget." on ".$this->alias.".".$fieldSource." = ".$aliasTarget.".".$fieldTarget." ";
         return $this;
     }
 
     public function leftJoin(string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
     {
-        $this->query .= "left join ".$table." ".$aliasTarget." on ".$this->alias.".".$fieldSource." = ".$aliasTarget.".".$fieldTarget." ";
-        return $this;
+        join("left", $table, $aliasTarget, $fieldSource, $fieldTarget);
+    }
+
+    public function rightJoin(string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
+    {
+        join("right", $table, $aliasTarget, $fieldSource, $fieldTarget);
+    }
+
+    public function innerJoin(string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
+    {
+        join("inner", $table, $aliasTarget, $fieldSource, $fieldTarget);
     }
 
     public function addToQuery(string $query): QueryBuilder
