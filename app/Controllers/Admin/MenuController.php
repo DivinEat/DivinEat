@@ -2,19 +2,27 @@
 
 namespace App\Controllers\Admin;
 
+use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
+use App\Core\View;
+use App\Models\Menu;
 
-class MenuController
+class MenuController extends Controller
 {
     public function index(Request $request, Response $response)
     {
-        echo 'index';
+        $configTableMenu = Menu::getShowMenuTable();
+        $myView = new View("admin.menu.index", "admin");
+        $myView->assign("configTableMenu", $configTableMenu);
     }
 
     public function create(Request $request, Response $response)
     {
-        echo 'create';
+        $configFormMenu = Menu::getAddMenuForm();
+
+        $myView = new View("admin.menu.create", "admin");
+        $myView->assign("configFormMenu", $configFormMenu);
     }
 
     public function store(Request $request, Response $response)
@@ -29,7 +37,10 @@ class MenuController
 
     public function edit(Request $request, Response $response, array $args)
     {
-        echo 'edit';
+        $configFormMenu = Menu::getAddMenuForm();
+
+        $myView = new View("admin.menu.edit", "admin");
+        $myView->assign("configFormMenu", $configFormMenu);
     }
 
     public function update(Request $request, Response $response, array $args)
