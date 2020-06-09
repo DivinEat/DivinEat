@@ -7,7 +7,7 @@
                     <a href="" class="btn btn-add">Ajouter</a>
                 </div>
                 <div class="box-body">
-                    <?php $this->addModal("table-show", $configTableMenu ); ?>
+                    <?php $this->addModal("table_show", $configTableMenu ); ?>
                 </div>
             </div>
         </div>

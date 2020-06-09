@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 use App\Core\Application;
 use App\Core\Routing\Router;
+use App\Core\ConstantLoader;
 
 define('ROOT', dirname(__DIR__));
 
@@ -13,6 +14,7 @@ require "../app/Core/Autoloader.php";
 require '../app/Core/helpers.php';
 
 Autoloader::register();
+new ConstantLoader();
 
 $app = New Application(['web.php']);
 

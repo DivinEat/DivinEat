@@ -67,4 +67,10 @@ class QueryBuilder
     {
         return $this->connection->query($this->query, $this->parameters);
     }
+    
+    public function delete(string $table): QueryBuilder
+    {
+        $this->query .= "delete from ".$table." ";
+        return $this;
+    }
 }
