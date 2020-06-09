@@ -24,7 +24,7 @@ class ConstantLoader
             $explodedLine = explode('=', $line);
 
             if (isset($explodedLine[0], $explodedLine[1])
-                && !defined($explodedLine[0], $explodedLine[1]))
+                && !defined($explodedLine[0]))
                 define($explodedLine[0], $explodedLine[1]);
         },explode('\n', file_get_contents(ROOT . DIRECTORY_SEPARATOR . '.env')));
     }
