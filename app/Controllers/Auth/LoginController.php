@@ -10,5 +10,6 @@ class LoginController extends Controller
 {
     public function showLoginForm(Request $request, Response $response)
     {
+        echo "test";
     }
 }

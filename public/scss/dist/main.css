@@ -762,7 +762,7 @@ footer .circle .up {
 }
 
 .btn-slider::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 100%;
   height: 100%;
@@ -883,8 +883,8 @@ footer .circle .up {
   border-radius: 0;
   box-shadow: none;
   border-color: #d2d6de;
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
 .admin-form .form-control-user {
@@ -965,7 +965,7 @@ footer .circle .up {
   box-shadow: rgba(50, 50, 93, 0.11) 0 4px 4px 0, rgba(0, 0, 0, 0.08) 0 1px 3px 0;
   background-color: #fff;
   padding: 1.5rem;
-  margin: 0.5rem 0 1rem;
+  margin: .5rem 0 1rem;
   width: 100%;
 }
 
@@ -1180,14 +1180,14 @@ footer .circle .up {
 /* Déclaration des styles sm */
 
 .col-sm-1 {
-  flex-basis: 8.3333333333%;
-  width: 8.3333333333%;
+  flex-basis: 8.33333333%;
+  width: 8.33333333%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-2 {
-  flex-basis: 16.6666666667%;
-  width: 16.6666666667%;
+  flex-basis: 16.66666667%;
+  width: 16.66666667%;
   padding: 0rem 0.625rem;
 }
 
@@ -1198,14 +1198,14 @@ footer .circle .up {
 }
 
 .col-sm-4 {
-  flex-basis: 33.3333333333%;
-  width: 33.3333333333%;
+  flex-basis: 33.33333333%;
+  width: 33.33333333%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-5 {
-  flex-basis: 41.6666666667%;
-  width: 41.6666666667%;
+  flex-basis: 41.66666667%;
+  width: 41.66666667%;
   padding: 0rem 0.625rem;
 }
 
@@ -1216,14 +1216,14 @@ footer .circle .up {
 }
 
 .col-sm-7 {
-  flex-basis: 58.3333333333%;
-  width: 58.3333333333%;
+  flex-basis: 58.33333333%;
+  width: 58.33333333%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-8 {
-  flex-basis: 66.6666666667%;
-  width: 66.6666666667%;
+  flex-basis: 66.66666667%;
+  width: 66.66666667%;
   padding: 0rem 0.625rem;
 }
 
@@ -1234,14 +1234,14 @@ footer .circle .up {
 }
 
 .col-sm-10 {
-  flex-basis: 83.3333333333%;
-  width: 83.3333333333%;
+  flex-basis: 83.33333333%;
+  width: 83.33333333%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-11 {
-  flex-basis: 91.6666666667%;
-  width: 91.6666666667%;
+  flex-basis: 91.66666667%;
+  width: 91.66666667%;
   padding: 0rem 0.625rem;
 }
 
@@ -1255,12 +1255,12 @@ footer .circle .up {
 
 @media screen and (min-width: 60rem) {
   .col-md-1 {
-    flex-basis: 8.3333333333%;
+    flex-basis: 8.33333333%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-2 {
-    flex-basis: 16.6666666667%;
+    flex-basis: 16.66666667%;
     padding: 0rem 0.625rem;
   }
 
@@ -1270,12 +1270,12 @@ footer .circle .up {
   }
 
   .col-md-4 {
-    flex-basis: 33.3333333333%;
+    flex-basis: 33.33333333%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-5 {
-    flex-basis: 41.6666666667%;
+    flex-basis: 41.66666667%;
     padding: 0rem 0.625rem;
   }
 
@@ -1285,12 +1285,12 @@ footer .circle .up {
   }
 
   .col-md-7 {
-    flex-basis: 58.3333333333%;
+    flex-basis: 58.33333333%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-8 {
-    flex-basis: 66.6666666667%;
+    flex-basis: 66.66666667%;
     padding: 0rem 0.625rem;
   }
 
@@ -1300,12 +1300,12 @@ footer .circle .up {
   }
 
   .col-md-10 {
-    flex-basis: 83.3333333333%;
+    flex-basis: 83.33333333%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-11 {
-    flex-basis: 91.6666666667%;
+    flex-basis: 91.66666667%;
     padding: 0rem 0.625rem;
   }
 
@@ -1317,12 +1317,12 @@ footer .circle .up {
 
 @media screen and (min-width: 100rem) {
   .col-lg-1 {
-    flex-basis: 8.3333333333%;
+    flex-basis: 8.33333333%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-2 {
-    flex-basis: 16.6666666667%;
+    flex-basis: 16.66666667%;
     padding: 0rem 0.625rem;
   }
 
@@ -1332,12 +1332,12 @@ footer .circle .up {
   }
 
   .col-lg-4 {
-    flex-basis: 33.3333333333%;
+    flex-basis: 33.33333333%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-5 {
-    flex-basis: 41.6666666667%;
+    flex-basis: 41.66666667%;
     padding: 0rem 0.625rem;
   }
 
@@ -1347,12 +1347,12 @@ footer .circle .up {
   }
 
   .col-lg-7 {
-    flex-basis: 58.3333333333%;
+    flex-basis: 58.33333333%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-8 {
-    flex-basis: 66.6666666667%;
+    flex-basis: 66.66666667%;
     padding: 0rem 0.625rem;
   }
 
@@ -1362,12 +1362,12 @@ footer .circle .up {
   }
 
   .col-lg-10 {
-    flex-basis: 83.3333333333%;
+    flex-basis: 83.33333333%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-11 {
-    flex-basis: 91.6666666667%;
+    flex-basis: 91.66666667%;
     padding: 0rem 0.625rem;
   }
 

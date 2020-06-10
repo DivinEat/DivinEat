@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Front</title>
-    <link href="scss/dist/main.css" rel="stylesheet">
+    <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/top.js"></script>

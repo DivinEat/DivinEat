@@ -1,31 +1,44 @@
 <?php
-
 namespace App\Core;
 
 class ConstantLoader
 {
-    public function __construct()
+    public $extend;
+    public $text;
+    public $path = ROOT."/.";
+
+    public function __construct($extend = "dev")
     {
-        if ($this->isEnvFileExist())
-            $this->createConstantFromEnvFile();
+        $this->extend = $extend;
+        $this->checkFilesEnv();
+        $this->getContentFiles();
+        $this->load();
     }
 
-    protected function isEnvFileExist(): bool
+    public function checkFilesEnv()
     {
-        if (!file_exists(ROOT . DIRECTORY_SEPARATOR .'.env'))
-            throw new \Exception('Aucun fichier d\'environement détecté.');
-
-        return true;
+        if (!file_exists($this->path."env")) {
+            die("Le fichier .env n'existe pas");
+        }
+        if (!file_exists($this->path.$this->extend)) {
+            die("Le fichier .".$this->extend." n'existe pas");
+        }
     }
 
-    protected function createConstantFromEnvFile(): void
+    public function getContentFiles()
     {
-        array_map(function ($line) {
-            $explodedLine = explode('=', $line);
+        $this->text = file_get_contents($this->path.$this->extend);
+        $this->text .= "\n".file_get_contents($this->path."env");
+    }
 
-            if (isset($explodedLine[0], $explodedLine[1])
-                && !defined($explodedLine[0], $explodedLine[1]))
-                define($explodedLine[0], $explodedLine[1]);
-        },explode('\n', file_get_contents(ROOT . DIRECTORY_SEPARATOR . '.env')));
+    public function load()
+    {
+        $lines = explode("\n", $this->text);
+        foreach ($lines as $line) {
+            $data = explode("=", $line);
+            if (!defined($data[0]) && isset($data[1])) {
+                define($data[0], trim($data[1]));
+            }
+        }
     }
 }
