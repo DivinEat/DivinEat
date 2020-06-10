@@ -2,7 +2,7 @@
 namespace App\Managers;
 
 use App\Core\Manager;
-use App\Models\User;
+use App\Models\Menu;
 
 class MenuManager extends Manager {
     
