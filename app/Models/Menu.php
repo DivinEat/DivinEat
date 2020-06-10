@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model\Model;
+use App\Core\Routing\Router;
 use App\Core\helpers;
 
 class Menu extends Model
@@ -43,7 +44,7 @@ class Menu extends Model
         return [
             "config"=>[
                 "method"=>"POST", 
-                "action"=>"",
+                "action"=> Router::getRouteByName('admin.writeCreate'),
                 "class"=>"admin-form",
                 "id"=>"formAddMenu",
                 "submit"=>[

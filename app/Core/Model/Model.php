@@ -14,7 +14,7 @@ class Model implements \JsonSerializable
     public function hydrate(array $donnees){
         foreach($donnees as $key => $value){
             $method = 'set'.ucfirst(strtolower($key));
-        
+            
             if (method_exists($this, $method)){
                 $this->$method($value);
             }

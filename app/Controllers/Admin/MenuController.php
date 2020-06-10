@@ -5,9 +5,11 @@ namespace App\Controllers\Admin;
 use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
+use App\Core\Routing\Router;
 use App\Core\View;
 use App\Core\QueryBuilder;
 use App\Models\Menu;
+use App\Models\ElementMenu;
 use App\Managers\ElementMenuManager;
 
 class MenuController extends Controller
@@ -49,9 +51,15 @@ class MenuController extends Controller
         $myView->assign("desserts", $desserts);
     }
 
-    public function store(Request $request, Response $response)
+    public function store(Request $request, Response $response, array $args)
     {
-        echo 'store';
+        $data = $_POST;
+        if($data["categories"] == 1){
+            $objet = new Menu();
+        } else {
+            $objet = new ElementMenu();
+        }
+        var_dump($objet);
     }
 
     public function show(Request $request, Response $response, array $args)

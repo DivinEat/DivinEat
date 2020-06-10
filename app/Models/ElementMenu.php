@@ -27,15 +27,15 @@ class ElementMenu extends Model
     }
     public function setNom($nom)
     {
-        $this->nom=ucwords(strtolower($nom));
+        $this->nom= $nom;
     }
     public function setDescription($description)
     {
-        $this->nom=ucwords(strtolower($description));
+        $this->description= $description;
     }
     public function setPrix($prix)
     {
-        $this->prix=$prix;
+        $this->prix= $prix;
     }
 
     public function getId()

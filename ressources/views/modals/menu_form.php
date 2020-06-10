@@ -1,12 +1,20 @@
-<?php $inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; ?>
 
-<form method="<?= $data["config"]["method"]?>" action="<?= $data["config"]["action"]?>"
+<?php
+
+$route = $data["config"]["action"];
+$action = $route->getUrl();
+
+$inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; 
+
+?>
+
+<form method="<?= $data["config"]["method"]?>" action="<?= $action ?>"
 id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 
 	<div class="form-group row">
 		<div class="col-sm-12">
 			<label>Catégories</label>
-			<select name="entrees" class="form-control" onchange="showCategories(this.value)">
+			<select name="categories" class="form-control" onchange="showCategories(this.value)">
 				<option value="1">Menu</option>
 				<option value="2">Entrée</option>
 				<option value="3">Plat</option>
@@ -16,14 +24,13 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 		</div>
 	</div>	
 
-	<?php var_dump($desserts); ?>
-	<div id="select" style="display: none;">
+	<div id="select">
 		<div class="form-group row">
 			<div class="col-sm-12">
 				<label>Entrées</label>
 				<select name="entrees" class="form-control">
-					<?php foreach ($entrees as $entree):?>
-						<option value="<?= $entree->id??'' ?>"><?= $entree->nom??'' ?></option>	
+					<?php foreach ($infos["entrees"] as $entree):?>
+						<option value="<?= $entree->getId()??'' ?>"><?= $entree->getNom()??'' ?></option>	
 					<?php endforeach;?>
 				</select>
 			</div>
@@ -32,8 +39,8 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 			<div class="col-sm-12">
 				<label>Plats</label>
 				<select name="plats" class="form-control">
-					<?php foreach ($plats as $plat):?>
-						<option value="<?= $plat->id??'' ?>"><?= $plat->nom??'' ?></option>	
+					<?php foreach ($infos["plats"] as $plat):?>
+						<option value="<?= $plat->getId()??'' ?>"><?= $plat->getNom()??'' ?></option>	
 					<?php endforeach;?>
 				</select>
 			</div>
@@ -42,22 +49,18 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 			<div class="col-sm-12">
 				<label>Desserts</label>
 				<select name="desserts" class="form-control">
-					<?php foreach ($desserts as $dessert):?>
-						<option value="<?= $dessert->id??'' ?>"><?= $dessert->nom??'' ?></option>	
+					<?php foreach ($infos["desserts"] as $dessert):?>
+						<option value="<?= $dessert->getId()??'' ?>"><?= $dessert->getNom()??'' ?></option>	
 					<?php endforeach;?>
 				</select>
 			</div>
 		</div>	
 	</div>
 
-	<div id="input">
+	<div id="input" style="display: none;">
 		<?php foreach ($data["fields"] as $name => $configField):?>
 			<div class="form-group row">
 				<div class="col-sm-12">
-					<?php if($configField["type"] == "captcha"):?>
-						<img src="script/captcha.php" width="300px">
-					<?php endif;?>
-
 					<?php if(!empty($configField["label"])):?>
 						<label><?=$configField["label"]?></label>
 					<?php endif;?>
@@ -88,7 +91,7 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 							placeholder="<?= $configField["placeholder"]??'' ?>"
 							class="<?= $configField["class"]??'' ?>"
 							id="<?= $configField["id"]??'' ?>"
-							<?=(!empty($configField["required"]))?"required='required'":""?> 
+							 
 						>
 					<?php endif;?>
 				</div>
