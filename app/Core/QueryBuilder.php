@@ -39,6 +39,24 @@ class QueryBuilder
         return $this;
     }
 
+    public function orderBy(string $orderby): QueryBuilder
+    {
+        $this->query = $this->query."order by ".$orderby;
+        return $this;
+    }
+
+    public function limit(string $limit): QueryBuilder
+    {
+        $this->query = $this->query."limit ".$limit;
+        return $this;
+    }
+
+    public function like(string $like): QueryBuilder
+    {
+        $this->query = $this->query."like '%".$like."%' ";
+        return $this;
+    }
+
     public function setParameter(string $key, string $value): QueryBuilder
     {
         $this->parameters[$key] = $value;
