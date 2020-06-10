@@ -145,19 +145,4 @@ class Manager
 
         return true;
     }
-
-    protected function sql($sql, $parameters = null)
-    {
-        if($parameters){
-            $queryPrepared = $this->pdo->prepare($sql);
-            $queryPrepared->execute($parameters);
-
-            return $queryPrepared;
-        } else {
-            $queryPrepared = $this->pdo->prepare($sql);
-            $queryPrepared->execute();
-
-            return $queryPrepared;
-        }
-    }
 }
