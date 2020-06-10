@@ -8,8 +8,6 @@ use App\Core\Http\Response;
 use App\Core\View;
 use App\Core\QueryBuilder;
 use App\Models\Menu;
-use App\Models\User;
-use App\Managers\UserManager;
 
 class MenuController extends Controller
 {

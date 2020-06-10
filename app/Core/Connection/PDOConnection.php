@@ -1,6 +1,8 @@
 <?php
 namespace App\Core\Connection;
 
+use App\Core\Connection\PDOSingleton;
+
 class PDOConnection implements BDDInterface
 {
     protected $pdo;
@@ -13,7 +15,7 @@ class PDOConnection implements BDDInterface
     public function connect() 
     {
         try {
-            $this->pdo = new \PDO(DB_DRIVER.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD);
+            $this->pdo = PDOSingleton::getInstance();
         } catch (\Throwable $e) {
             die("Erreur SQL : ".$e->getMessage());
         }
