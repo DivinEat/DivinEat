@@ -28,7 +28,7 @@ class QueryBuilder
 
     public function from(string $table, string $alias): QueryBuilder
     {
-        $this->query .= "from ".$table." as ".$alias." ";
+        $this->query .= "from ".DB_PREFIXE.$table." as ".$alias." ";
         $this->alias = $alias;
         return $this;
     }
@@ -47,7 +47,7 @@ class QueryBuilder
 
     public function join(string $join = "inner", string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
     {
-        $this->query .= $join." join ".$table." ".$aliasTarget." on ".$this->alias.".".$fieldSource." = ".$aliasTarget.".".$fieldTarget." ";
+        $this->query .= $join." join ".DB_PREFIXE.$table." ".$aliasTarget." on ".$this->alias.".".$fieldSource." = ".$aliasTarget.".".$fieldTarget." ";
         return $this;
     }
 
@@ -79,7 +79,7 @@ class QueryBuilder
     
     public function delete(string $table): QueryBuilder
     {
-        $this->query .= "delete from ".$table." ";
+        $this->query .= "delete from ".DB_PREFIXE.$table." ";
         return $this;
     }
 }

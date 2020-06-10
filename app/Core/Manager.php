@@ -2,6 +2,7 @@
 namespace App\Core;
 use App\Core\Connection\BDDInterface;
 use App\Core\Connection\PDOConnection;
+use App\Core\Model\Model;
 
 class Manager
 {

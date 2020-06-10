@@ -6,7 +6,9 @@ use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\View;
+use App\Core\QueryBuilder;
 use App\Models\Menu;
+use App\Models\User;
 use App\Managers\UserManager;
 
 class MenuController extends Controller
@@ -52,16 +54,5 @@ class MenuController extends Controller
     public function destroy(Request $request, Response $response, array $args)
     {
         echo 'destroy';
-    }
-
-    public function test(Request $request, Response $response, array $args)
-    {
-        echo "User default";
-        
-        $userManager = new UserManager();
-
-        $user = $userManager->find(1);
-
-        var_dump($user);
     }
 }

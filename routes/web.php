@@ -29,8 +29,3 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
 });
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');
-
-$router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected']], function (Router $group) {
-    $group->get('test', 'MenuController@index', 'index');
-    $group->get('test2', 'MenuController@test', 'test');
-});

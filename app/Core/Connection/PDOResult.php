@@ -17,14 +17,13 @@ class PDOResult implements ResultInterface
         return $this->statement->fetchAll();
     }
 
-    public function getOneOrNullResult(): ?array
+    public function getOneOrNullResult()
     {
         try {
             return  $this->statement->fetch();
         } catch(Throwable $t) {
             echo $t->getMessage();
         }
-        
     }
 
     public function getValueResult()

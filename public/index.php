@@ -14,7 +14,7 @@ require "../app/Core/Autoloader.php";
 require '../app/Core/helpers.php';
 
 Autoloader::register();
-new ConstantLoader();
+new ConstantLoader("env");
 
 $app = New Application(['web.php']);
 

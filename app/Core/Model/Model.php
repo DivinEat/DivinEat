@@ -4,6 +4,8 @@ namespace App\Core\Model;
 
 class Model implements \JsonSerializable
 {
+    public function __construct() {}
+
     public function __toArray(): array
     {
         return get_object_vars($this);
