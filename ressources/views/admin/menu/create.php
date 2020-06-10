@@ -6,7 +6,7 @@
                     <h3 class="box-title">Ajouter un article</h3>
                 </div>
                 <div class="box-body">
-                    <?php $this->addModal("form", $configFormMenu );?>
+                    <?php $this->addModal("menu_form", $configFormMenu );?>
                 </div>
             </div>
         </div>

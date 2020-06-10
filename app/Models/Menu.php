@@ -8,9 +8,9 @@ use App\Core\helpers;
 class Menu extends Model
 {
     protected $id;
-    protected $categorie;
-    protected $nom;
-    protected $description;
+    protected $id_elementmenu_entree;
+    protected $id_elementmenu_plat;
+    protected $id_elementmenu_dessert;
     protected $prix;
 
     public function __construct()
@@ -22,17 +22,17 @@ class Menu extends Model
     {
         $this->id=$id;
     }
-    public function setCategorie($categorie)
+    public function setEntree($id_elementmenu_entree)
     {
-        $this->categorie=strtolower(trim($categorie));
+        $this->id_elementmenu_entree=$id_elementmenu_entree;
     }
-    public function setNom($nom)
+    public function setPlat($id_elementmenu_plat)
     {
-        $this->nom=ucwords(strtolower($nom));
+        $this->id_elementmenu_plat=$id_elementmenu_plat;
     }
-    public function setDescription($description)
+    public function setDessert($id_elementmenu_dessert)
     {
-        $this->nom=ucwords(strtolower($description));
+        $this->id_elementmenu_dessert=$id_elementmenu_dessert;
     }
     public function setPrix($prix)
     {
@@ -57,21 +57,6 @@ class Menu extends Model
             ],
 
             "fields"=>[
-                "categorie"=>[
-                    "type"=>"select",
-                    "label"=>"Catégorie",
-                    "class"=>"form-control",
-                    "id"=>"",
-                    "required"=>true,
-                    "errorMsg"=>"Un type doit être renseigné",
-                    "values"=>[
-                        "1"=>"Menu",
-                        "2"=>"Entrée",
-                        "3"=>"Plat",
-                        "4"=>"Dessert",
-                        "5"=>"Boisson"
-                    ]
-                ],
                 "nom"=>[
                     "type"=>"text",
                     "placeholder"=>"",

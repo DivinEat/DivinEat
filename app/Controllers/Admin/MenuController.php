@@ -8,6 +8,7 @@ use App\Core\Http\Response;
 use App\Core\View;
 use App\Core\QueryBuilder;
 use App\Models\Menu;
+use App\Managers\ElementMenuManager;
 
 class MenuController extends Controller
 {
@@ -21,9 +22,31 @@ class MenuController extends Controller
     public function create(Request $request, Response $response)
     {
         $configFormMenu = Menu::getAddMenuForm();
+        $elementMenuManager = new ElementMenuManager();
+        $elementsMenu = $elementMenuManager->findAll();
+
+        $entrees = [];
+        $plats = [];
+        $desserts = [];
+        foreach($elementsMenu as $elementMenu){
+            switch($elementMenu->getCategorie()){
+                case "entree":
+                    $entrees[] = $elementMenu;
+                    break;
+                case "plat":
+                    $plats[] = $elementMenu;
+                    break;
+                case "dessert":
+                    $desserts[] = $elementMenu;
+                    break;
+            }
+        }
 
         $myView = new View("admin.menu.create", "admin");
         $myView->assign("configFormMenu", $configFormMenu);
+        $myView->assign("entrees", $entrees);
+        $myView->assign("plats", $plats);
+        $myView->assign("desserts", $desserts);
     }
 
     public function store(Request $request, Response $response)
