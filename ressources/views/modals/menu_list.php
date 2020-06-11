@@ -10,43 +10,43 @@ $elementMenuManager = new ElementMenuManager();
         <?php endforeach;?>
     </tr>
 
-    <?php foreach ($data["fields"] as $categorie => $elements):?>
+    <?php foreach ($data["fields"] as $categorie => $elements): ?>
         <tr>
             <th><?= $categorie ?></th>
-            <?php foreach ($elements as $key => $fields): ?>
+            <?php for($i = 0; $i < sizeof($data["colonnes"]) - 1;$i++):?>
                 <th></th>
-            <?php endforeach;?>
-            <th></th>
+            <?php endfor;?>
         </tr>
-        <?php foreach ($elements as $key => $fields):
-            if(strtolower($categorie) == "menu"):    
-        ?>
-                <tr>
-                    <td></td>
-                    <td><?= $fields["id"] ?></td>
-                    <td><?= $fields["nom"] ?></td>
-                    <td><?= $elementMenuManager->find($fields["entree"])->getNom() ?></td>
-                    <td><?= $elementMenuManager->find($fields["plat"])->getNom() ?></td>
-                    <td><?= $elementMenuManager->find($fields["dessert"])->getNom() ?></td>
-                    <td><?= $fields["prix"]." Euro(s)" ?></td>
-                    <td>
-                        <a href="<?= $data["config"]["edit"]?>" class="btn btn-edit">Modifier</a>
-                        <a href="<?= $data["config"]["cancel"]?>" class="btn btn-remove">Supprimer</a>
-                    </td>
-                </tr>
-            <?php else:?>
-                <tr>
-                    <td></td>
-                    <td><?= $fields["id"] ?></td>
-                    <td><?= $fields["nom"] ?></td>
-                    <td><?= $fields["description"] ?></td>
-                    <td><?= $fields["prix"]." Euro(s)" ?></td>
-                    <td>
-                        <a href="<?= $data["config"]["edit"]?>" class="btn btn-edit">Modifier</a>
-                        <a href="<?= $data["config"]["cancel"]?>" class="btn btn-remove">Supprimer</a>
-                    </td>
-                </tr>
-            <?php endif;
-        endforeach;?>
+        <?php foreach ($elements as $key => $fields): ?>
+            <form method="POST" action="<?= $fields["destroy"]->getUrl() ?>">
+                <?php if(strtolower($categorie) == "menu"): ?>
+                        <tr>
+                            <td><input type="hidden" name="categorie" value="<?= $categorie ?>"/></td>
+                            <td><input type="text" name="id" readonly="true" value="<?= $fields["id"] ?>"/></td>
+                            <td><?= $fields["nom"] ?></td>
+                            <td><?= (isset($fields["entree"]))?$elementMenuManager->find($fields["entree"])->getNom():'' ?></td>
+                            <td><?=(isset($fields["plat"]))?$elementMenuManager->find($fields["plat"])->getNom():'' ?></td>
+                            <td><?= (isset($fields["dessert"]))?$elementMenuManager->find($fields["dessert"])->getNom():'' ?></td>
+                            <td><?= $fields["prix"]." Euro(s)" ?></td>
+                            <td>
+                                <a href="<?= $fields["edit"]->getUrl() ?>" class="btn btn-edit">Modifier</a>
+                                <input type="submit" name="destroy" class="btn btn-remove" value="Supprimer"/>
+                            </td>
+                        </tr>
+                <?php else:?>
+                    <tr>
+                        <td><input type="hidden" name="categorie" value="<?= $categorie ?>"/></td>
+                        <td><input type="text" name="id" readonly="true" value="<?= $fields["id"] ?>"/></td>
+                        <td><?= $fields["nom"] ?></td>
+                        <td><?= $fields["description"] ?></td>
+                        <td><?= $fields["prix"]." Euro(s)" ?></td>
+                        <td>
+                            <a href="<?= $fields["edit"]->getUrl() ?>" class="btn btn-edit">Modifier</a>
+                            <input type="submit" name="destroy" class="btn btn-remove" value="Supprimer"/>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+            </form>
+        <?php endforeach;?>
     <?php endforeach;?>
 </table>

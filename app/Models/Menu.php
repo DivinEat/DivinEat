@@ -128,15 +128,15 @@ class Menu extends Model
                 "entree" => $menu->getEntree(),
                 "plat" => $menu->getPlat(),
                 "dessert" => $menu->getDessert(),
-                "prix" => $menu->getPrix()
+                "prix" => $menu->getPrix(),
+                "edit"=> Router::getRouteByName('admin.menuindex'),
+                "destroy"=> Router::getRouteByName('admin.menudestroy')
             ];
         }
 
         $tab = [
             "config"=>[
-                "class"=>"admin-table",
-                "edit"=>"edit",
-                "cancel"=>"cancel"
+                "class"=>"admin-table"
             ],
 
             "colonnes"=>[
@@ -175,7 +175,9 @@ class Menu extends Model
                         "id" => $elementMenu->getId(),
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
-                        "prix" => $elementMenu->getPrix()
+                        "prix" => $elementMenu->getPrix(),
+                        "edit"=> Router::getRouteByName('admin.menuindex'),
+                        "destroy"=> Router::getRouteByName('admin.menudestroy')
                     ];
                     break;
                 case "plat":
@@ -183,7 +185,9 @@ class Menu extends Model
                         "id" => $elementMenu->getId(),
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
-                        "prix" => $elementMenu->getPrix()
+                        "prix" => $elementMenu->getPrix(),
+                        "edit"=> Router::getRouteByName('admin.menuindex'),
+                        "destroy"=> Router::getRouteByName('admin.menudestroy')
                     ];
                     break;
                 case "dessert":
@@ -191,7 +195,9 @@ class Menu extends Model
                         "id" => $elementMenu->getId(),
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
-                        "prix" => $elementMenu->getPrix()
+                        "prix" => $elementMenu->getPrix(),
+                        "edit"=> Router::getRouteByName('admin.menuindex'),
+                        "destroy"=> Router::getRouteByName('admin.menudestroy')
                     ];
                     break;
                 case "boisson":
@@ -199,7 +205,9 @@ class Menu extends Model
                         "id" => $elementMenu->getId(),
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
-                        "prix" => $elementMenu->getPrix()
+                        "prix" => $elementMenu->getPrix(),
+                        "edit"=> Router::getRouteByName('admin.menuindex'),
+                        "destroy"=> Router::getRouteByName('admin.menudestroy')
                     ];
                     break;
             }
@@ -207,9 +215,7 @@ class Menu extends Model
 
         $tab = [
             "config"=>[
-                "class"=>"admin-table",
-                "edit"=>"edit",
-                "cancel"=>"cancel"
+                "class"=>"admin-table"
             ],
 
             "colonnes"=>[

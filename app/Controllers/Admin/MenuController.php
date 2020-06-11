@@ -24,6 +24,7 @@ class MenuController extends Controller
         $menus = $menuManager->findAll();
 
         $configTableMenu = Menu::getShowMenuTable($menus);
+
         $configTableElementMenu = Menu::getShowElementMenuTable($elementsMenus);
 
         $myView = new View("admin.menu.index", "admin");
@@ -109,7 +110,32 @@ class MenuController extends Controller
 
     public function destroy(Request $request, Response $response, array $args)
     {
-        echo 'destroy';
+        $data = $_POST;
+        $categorie = strtolower($data["categorie"]);
+        if($categorie == "entrée"){
+            $categorie = "entree";
+        }
+
+        if($categorie == "menu"){
+            $manager = new MenuManager();
+        } else {
+            $manager = new MenuManager();
+            $menus = $manager->findBy([
+                $categorie => $data["id"]
+            ]);
+
+            foreach($menus as $menu){
+                $method = "set".ucfirst($categorie);
+                $menu->$method(NULL);
+
+                $manager->save($menu);
+            }
+
+            $manager = new ElementMenuManager();
+        }
+        $manager->delete($data["id"]);
+
+        Router::redirect('admin.menuindex');
     }
 
     public function calculPrixMenu($data){

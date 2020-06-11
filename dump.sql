@@ -45,9 +45,9 @@ ALTER TABLE `dve_elementmenus`
 CREATE TABLE `dve_menus` (
   `id` int(11) NOT NULL,
   `nom` varchar(45) NOT NULL,
-  `entree` int(11) NOT NULL,
-  `plat` int(11) NOT NULL,
-  `dessert` int(11) NOT NULL,
+  `entree` int(11),
+  `plat` int(11),
+  `dessert` int(11),
   `prix` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
