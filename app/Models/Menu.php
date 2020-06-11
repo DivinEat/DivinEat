@@ -40,6 +40,11 @@ class Menu extends Model
         $this->prix=$prix;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public static function getAddMenuForm(){
         return [
             "config"=>[

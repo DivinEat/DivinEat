@@ -10,6 +10,7 @@ use App\Core\View;
 use App\Core\QueryBuilder;
 use App\Models\Menu;
 use App\Models\ElementMenu;
+use App\Managers\MenuManager;
 use App\Managers\ElementMenuManager;
 
 class MenuController extends Controller
@@ -55,11 +56,25 @@ class MenuController extends Controller
     {
         $data = $_POST;
         if($data["categories"] == 1){
-            $objet = new Menu();
+            $object = new Menu();
+            $object->setEntree($data['entrees']);
+            $object->setPlat($data['plats']);
+            $object->setDessert($data['desserts']);
+            $object->setPrix($this->calculPrixMenu($data));
+
+            $manager = new MenuManager();
         } else {
-            $objet = new ElementMenu();
+            $object = new ElementMenu();
+            $object->setCategorie($this->getCategorie($data['categories']));
+            $object->setNom($data['nom']);
+            $object->setDescription($data['description']);
+            $object->setPrix($data['prix']);
+
+            $manager = new ElementMenuManager();
         }
-        var_dump($objet);
+
+        $manager->save($object);
+
     }
 
     public function show(Request $request, Response $response, array $args)
@@ -83,5 +98,34 @@ class MenuController extends Controller
     public function destroy(Request $request, Response $response, array $args)
     {
         echo 'destroy';
+    }
+
+    public function calculPrixMenu($data){
+        
+        $elementMenuManager = new ElementMenuManager();
+
+        $entree = $elementMenuManager->find($data['entrees']);
+        $plat = $elementMenuManager->find($data['plats']);
+        $dessert = $elementMenuManager->find($data['desserts']);
+        
+        return $entree->getPrix() + $plat->getPrix() + $dessert->getPrix();
+    }
+
+    public function getCategorie($categorie){
+        switch($categorie){
+            case 2:
+                $nomCategorie = "entree";
+                break;
+            case 3:
+                $nomCategorie = "plat";
+                break;
+            case 4:
+                $nomCategorie = "dessert";
+                break;
+            case 5:
+                $nomCategorie = "boisson";
+                break;
+        }
+        return $nomCategorie;
     }
 }

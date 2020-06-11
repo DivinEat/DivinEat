@@ -3,7 +3,7 @@
         <div class="col-inner">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Liste des article</h3>
+                    <h3 class="box-title">Liste des menus</h3>
                     <a href="" class="btn btn-add">Ajouter</a>
                 </div>
                 <div class="box-body">
