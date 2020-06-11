@@ -1,14 +1,9 @@
 
 <?php
-
-$route = $data["config"]["action"];
-$action = $route->getUrl();
-
 $inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; 
-
 ?>
 
-<form method="<?= $data["config"]["method"]?>" action="<?= $action ?>"
+<form method="<?= $data["config"]["method"]?>" action="<?= $data["config"]["action"]->getUrl() ?>"
 id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 
 	<div class="form-group row">
@@ -25,6 +20,12 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 	</div>	
 
 	<div id="select">
+		<div class="form-group row">
+				<div class="col-sm-12">
+					<label>Nom</label>
+					<input type="text" name="nomMenu" class="form-control">
+			</div>
+		</div>	
 		<div class="form-group row">
 			<div class="col-sm-12">
 				<label>Entrées</label>
@@ -101,7 +102,7 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 	
 	<?php if(!empty($data["config"]["annuler"])):?>
 		<a 
-			href="<?= $data["config"]["annuler"]["action"] ?>" 
+			href="<?= $data["config"]["annuler"]["action"]->getUrl() ?>" 
 			class="<?= $data["config"]["annuler"]["class"] ?>"
 		>
 			<?= $data["config"]["annuler"]["text"] ?>

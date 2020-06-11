@@ -44,22 +44,23 @@ ALTER TABLE `dve_elementmenus`
 --
 CREATE TABLE `dve_menus` (
   `id` int(11) NOT NULL,
-  `id_elementmenu_entree` int(11) NOT NULL,
-  `id_elementmenu_plat` int(11) NOT NULL,
-  `id_elementmenu_dessert` int(11) NOT NULL,
+  `nom` varchar(45) NOT NULL,
+  `entree` int(11) NOT NULL,
+  `plat` int(11) NOT NULL,
+  `dessert` int(11) NOT NULL,
   `prix` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `dve_menus`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_elementmenu_entree` (`id_elementmenu_entree`),
-  ADD KEY `id_elementmenu_plat` (`id_elementmenu_plat`),
-  ADD KEY `id_elementmenu_dessert` (`id_elementmenu_dessert`);
+  ADD KEY `entree` (`entree`),
+  ADD KEY `plat` (`plat`),
+  ADD KEY `dessert` (`dessert`);
 
 ALTER TABLE `dve_menus`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `dve_menus`
-  ADD CONSTRAINT `dve_menus_ibfk_1` FOREIGN KEY (`id_elementmenu_entree`) REFERENCES `dve_elementmenus` (`id`),
-  ADD CONSTRAINT `dve_menus_ibfk_2` FOREIGN KEY (`id_elementmenu_plat`) REFERENCES `dve_elementmenus` (`id`),
-  ADD CONSTRAINT `dve_menus_ibfk_3` FOREIGN KEY (`id_elementmenu_dessert`) REFERENCES `dve_elementmenus` (`id`);
+  ADD CONSTRAINT `dve_menus_ibfk_1` FOREIGN KEY (`entree`) REFERENCES `dve_elementmenus` (`id`),
+  ADD CONSTRAINT `dve_menus_ibfk_2` FOREIGN KEY (`plat`) REFERENCES `dve_elementmenus` (`id`),
+  ADD CONSTRAINT `dve_menus_ibfk_3` FOREIGN KEY (`dessert`) REFERENCES `dve_elementmenus` (`id`);

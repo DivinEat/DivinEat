@@ -17,9 +17,18 @@ class MenuController extends Controller
 {
     public function index(Request $request, Response $response)
     {
-        $configTableMenu = Menu::getShowMenuTable();
+        $elementMenuManager = new ElementMenuManager();
+        $elementsMenus = $elementMenuManager->findAll();
+
+        $menuManager = new MenuManager();
+        $menus = $menuManager->findAll();
+
+        $configTableMenu = Menu::getShowMenuTable($menus);
+        $configTableElementMenu = Menu::getShowElementMenuTable($elementsMenus);
+
         $myView = new View("admin.menu.index", "admin");
         $myView->assign("configTableMenu", $configTableMenu);
+        $myView->assign("configTableElementMenu", $configTableElementMenu);
     }
 
     public function create(Request $request, Response $response)
@@ -57,6 +66,7 @@ class MenuController extends Controller
         $data = $_POST;
         if($data["categories"] == 1){
             $object = new Menu();
+            $object->setNom($data['nomMenu']);
             $object->setEntree($data['entrees']);
             $object->setPlat($data['plats']);
             $object->setDessert($data['desserts']);
@@ -74,6 +84,8 @@ class MenuController extends Controller
         }
 
         $manager->save($object);
+
+        Router::redirect('admin.menucreate');
 
     }
 

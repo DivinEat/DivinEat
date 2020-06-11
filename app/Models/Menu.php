@@ -9,9 +9,10 @@ use App\Core\helpers;
 class Menu extends Model
 {
     protected $id;
-    protected $id_elementmenu_entree;
-    protected $id_elementmenu_plat;
-    protected $id_elementmenu_dessert;
+    protected $nom;
+    protected $entree;
+    protected $plat;
+    protected $dessert;
     protected $prix;
 
     public function __construct()
@@ -23,17 +24,21 @@ class Menu extends Model
     {
         $this->id=$id;
     }
-    public function setEntree($id_elementmenu_entree)
+    public function setNom($nom)
     {
-        $this->id_elementmenu_entree=$id_elementmenu_entree;
+        $this->nom=$nom;
     }
-    public function setPlat($id_elementmenu_plat)
+    public function setEntree($entree)
     {
-        $this->id_elementmenu_plat=$id_elementmenu_plat;
+        $this->entree=$entree;
     }
-    public function setDessert($id_elementmenu_dessert)
+    public function setPlat($plat)
     {
-        $this->id_elementmenu_dessert=$id_elementmenu_dessert;
+        $this->plat=$plat;
+    }
+    public function setDessert($dessert)
+    {
+        $this->dessert=$dessert;
     }
     public function setPrix($prix)
     {
@@ -43,6 +48,26 @@ class Menu extends Model
     public function getId()
     {
         return $this->id;
+    }
+    public function getNom()
+    {
+        return $this->nom;
+    }
+    public function getEntree()
+    {
+        return $this->entree;
+    }
+    public function getPlat()
+    {
+        return $this->plat;
+    }
+    public function getDessert()
+    {
+        return $this->dessert;
+    }
+    public function getPrix()
+    {
+        return $this->prix;
     }
 
     public static function getAddMenuForm(){
@@ -56,9 +81,9 @@ class Menu extends Model
                     "btn-primary"=>"Envoyer"
                 ],
                 "annuler"=>[
-                    "action"=>"",
+                    "action"=> Router::getRouteByName('admin.menuindex'),
                     "class"=>"btn btn-default",
-                    "text"=>"Annuler"
+                    "text"=>"Retour"
                 ]
             ],
 
@@ -94,70 +119,113 @@ class Menu extends Model
         ];
     }
 
-    public static function getShowMenuTable(){
-        return [
+    public static function getShowMenuTable($menus){
+        $tabMenus = [];
+        foreach($menus as $menu){
+            $tabMenus[] = [
+                "id" => $menu->getId(),
+                "nom" => $menu->getNom(),
+                "entree" => $menu->getEntree(),
+                "plat" => $menu->getPlat(),
+                "dessert" => $menu->getDessert(),
+                "prix" => $menu->getPrix()
+            ];
+        }
+
+        $tab = [
             "config"=>[
-                "class"=>"admin-table"
+                "class"=>"admin-table",
+                "edit"=>"edit",
+                "cancel"=>"cancel"
             ],
 
             "colonnes"=>[
                 "Catégorie",
-                "Articles en ventes",
-                "Description",
+                "Id",
+                "Nom",
+                "Entrée",
+                "Plat",
+                "Dessert",
                 "Prix",
                 "Actions"
             ],
 
             "fields"=>[
-                "Boissons"=>[
-                    [
-                        "name" => "Coca",
-                        "description" => "Super bon",
-                        "prix" => "1"
-                    ],
-                    [
-                        "name" => "Sprite",
-                        "description" => "Super bon",
-                        "prix" => "1"
-                    ]
-                ],
-                "Entrées"=>[
-                    [
-                        "name" => "Huitre",
-                        "description" => "Super bon",
-                        "prix" => "1"
-                    ],
-                    [
-                        "name" => "Melon",
-                        "description" => "Super bon",
-                        "prix" => "1"
-                    ]
-                ],
-                "Plats"=>[
-                    [
-                        "name" => "Bolognaise",
-                        "description" => "Super bon",
-                        "prix" => "1"
-                    ],
-                    [
-                        "name" => "Steak",
-                        "description" => "Super bon",
-                        "prix" => "1"
-                    ]
-                ],
-                "Desserts"=>[
-                    [
-                        "name" => "Tarte",
-                        "description" => "Super bon",
-                        "prix" => "1"
-                    ],
-                    [
-                        "name" => "Glace",
-                        "description" => "Super bon",
-                        "prix" => "1"
-                    ]
-                ]
+                "Menu"=>[]
             ]
         ];
+
+        $tab["fields"]["Menu"] = $tabMenus;
+
+        return $tab;
+    }
+
+    public static function getShowElementMenuTable($elementMenus){
+        $tabElementMenus = [
+            "Entrée" => [],
+            "Plat" => [],
+            "Dessert" => [],
+            "Boisson" => []
+        ];
+
+        foreach($elementMenus as $elementMenu){
+            switch($elementMenu->getCategorie()){
+                case "entree":
+                    $tabElementMenus["Entrée"][] = [
+                        "id" => $elementMenu->getId(),
+                        "nom" => $elementMenu->getNom(),
+                        "description" => $elementMenu->getDescription(),
+                        "prix" => $elementMenu->getPrix()
+                    ];
+                    break;
+                case "plat":
+                    $tabElementMenus["Plat"][] = [
+                        "id" => $elementMenu->getId(),
+                        "nom" => $elementMenu->getNom(),
+                        "description" => $elementMenu->getDescription(),
+                        "prix" => $elementMenu->getPrix()
+                    ];
+                    break;
+                case "dessert":
+                    $tabElementMenus["Dessert"][] = [
+                        "id" => $elementMenu->getId(),
+                        "nom" => $elementMenu->getNom(),
+                        "description" => $elementMenu->getDescription(),
+                        "prix" => $elementMenu->getPrix()
+                    ];
+                    break;
+                case "boisson":
+                    $tabElementMenus["Boisson"][] = [
+                        "id" => $elementMenu->getId(),
+                        "nom" => $elementMenu->getNom(),
+                        "description" => $elementMenu->getDescription(),
+                        "prix" => $elementMenu->getPrix()
+                    ];
+                    break;
+            }
+        }
+
+        $tab = [
+            "config"=>[
+                "class"=>"admin-table",
+                "edit"=>"edit",
+                "cancel"=>"cancel"
+            ],
+
+            "colonnes"=>[
+                "Catégorie",
+                "Id",
+                "Nom",
+                "Description",
+                "Prix",
+                "Actions"
+            ],
+
+            "fields"=>[]
+        ];
+
+        $tab["fields"] = $tabElementMenus;
+
+        return $tab;
     }
 }
