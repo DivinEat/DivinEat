@@ -3,10 +3,19 @@
         <div class="col-inner">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Modifier un me,u</h3>
+                    <h3 class="box-title">Modifier un menu</h3>
                 </div>
                 <div class="box-body">
-                    <?php $this->addModal("form", $configFormMenu );?>
+                    <?php 
+                        $infos = [
+                            "entrees" => $entrees,
+                            "plats" => $plats,
+                            "desserts" => $desserts,
+                            "categorie" => $categorie,
+                            "object" => $object
+                        ];
+                        $this->addModal("menu_form", $configFormMenu, $infos);
+                    ?>
                 </div>
             </div>
         </div>

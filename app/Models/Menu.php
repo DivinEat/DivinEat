@@ -74,7 +74,75 @@ class Menu extends Model
         return [
             "config"=>[
                 "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.writeCreate'),
+                "action"=> Router::getRouteByName('admin.menustore'),
+                "class"=>"admin-form",
+                "id"=>"formAddMenu",
+                "submit"=>[
+                    "btn-primary"=>"Envoyer"
+                ],
+                "annuler"=>[
+                    "action"=> Router::getRouteByName('admin.menuindex'),
+                    "class"=>"btn btn-default",
+                    "text"=>"Retour"
+                ]
+            ],
+
+            "fields"=>[
+                "nom"=>[
+                    "type"=>"text",
+                    "placeholder"=>"",
+                    "label"=>"Nom",
+                    "class"=>"form-control",
+                    "id"=>"",
+                    "required"=>true,
+                    "min-length"=>2,
+                    "max-length"=>100,
+                    "errorMsg"=>"Un nom doit être renseigné"
+                ],
+                "description"=>[
+                    "type"=>"textarea",
+                    "label"=>"Description",
+                    "class"=>"form-control form-control-textarea",
+                    "id"=>"",
+                    "required"=>true,
+                    "errorMsg"=>"Une description doit être renseignée"
+                ],
+                "prix"=>[
+                    "type"=>"number",
+                    "label"=>"Prix",
+                    "class"=>"form-control",
+                    "id"=>"",
+                    "required"=>true,
+                    "errorMsg"=>"Un prix doit être renseigné"
+                ]
+            ]
+        ];
+    }
+
+    public static function getEditMenuForm(){
+        return [
+            "config"=>[
+                "method"=>"POST", 
+                "action"=> Router::getRouteByName('admin.menudupdate'),
+                "class"=>"admin-form",
+                "id"=>"formAddMenu",
+                "submit"=>[
+                    "btn-primary"=>"Envoyer"
+                ],
+                "annuler"=>[
+                    "action"=> Router::getRouteByName('admin.menuindex'),
+                    "class"=>"btn btn-default",
+                    "text"=>"Retour"
+                ]
+            ]
+        ];
+    }
+
+    public static function getEditElementMenuForm(){
+        return [
+            "config"=>[
+                "method"=>"POST", 
+                "action"=> Router::getRouteByName('admin.menudupdate'),
                 "class"=>"admin-form",
                 "id"=>"formAddMenu",
                 "submit"=>[
@@ -129,7 +197,7 @@ class Menu extends Model
                 "plat" => $menu->getPlat(),
                 "dessert" => $menu->getDessert(),
                 "prix" => $menu->getPrix(),
-                "edit"=> Router::getRouteByName('admin.menuindex'),
+                "edit"=> Router::getRouteByName('admin.menuedit'),
                 "destroy"=> Router::getRouteByName('admin.menudestroy')
             ];
         }

@@ -68,8 +68,14 @@ class MenuController extends Controller
         if($data["categories"] == 1){
             $object = new Menu();
             $object->setNom($data['nomMenu']);
+
+            if($data['entrees'] == 0) $data['entrees'] = NULL;
             $object->setEntree($data['entrees']);
+
+            if($data['plats'] == 0) $data['plats'] = NULL;
             $object->setPlat($data['plats']);
+            
+            if($data['desserts'] == 0) $data['desserts'] = NULL;
             $object->setDessert($data['desserts']);
             $object->setPrix($this->calculPrixMenu($data));
 
@@ -92,15 +98,89 @@ class MenuController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $configFormMenu = Menu::getAddMenuForm();
+        $categorie = 5;
+        $id = 15;
+
+        $elementMenuManager = new ElementMenuManager();
+        $elementsMenu = $elementMenuManager->findAll();
+
+        $entrees = [];
+        $plats = [];
+        $desserts = [];
+        foreach($elementsMenu as $elementMenu){
+            switch($elementMenu->getCategorie()){
+                case "entree":
+                    $entrees[] = $elementMenu;
+                    break;
+                case "plat":
+                    $plats[] = $elementMenu;
+                    break;
+                case "dessert":
+                    $desserts[] = $elementMenu;
+                    break;
+            }
+        }
+
+        if(isset($id)){
+            if($categorie == 1){
+                $manager= new MenuManager();
+                $configFormMenu = Menu::getEditMenuForm();
+            } else {
+                $manager = new ElementMenuManager();
+                $configFormMenu = Menu::getEditElementMenuForm();
+            }
+
+            $object = $manager->find($id);
+        }
 
         $myView = new View("admin.menu.edit", "admin");
         $myView->assign("configFormMenu", $configFormMenu);
+        $myView->assign("entrees", $entrees);
+        $myView->assign("plats", $plats);
+        $myView->assign("desserts", $desserts);
+        $myView->assign("categorie", $this->getCategorie($categorie));
+        $myView->assign("object", $object);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
-        echo 'update';
+        $data = $_POST;
+        $categorie = strtolower($data["categorie"]);
+        if($categorie == "entrée"){
+            $categorie = "entree";
+        }
+
+        if($categorie == "menu"){
+            $manager = new MenuManager();
+
+            $object = new Menu();
+            $object->setId($_POST["id"]);
+
+            $object->setNom($data['nomMenu']);
+
+            if($data['entrees'] == 0) $data['entrees'] = NULL;
+            $object->setEntree($data['entrees']);
+
+            if($data['plats'] == 0) $data['plats'] = NULL;
+            $object->setPlat($data['plats']);
+            
+            if($data['desserts'] == 0) $data['desserts'] = NULL;
+            $object->setDessert($data['desserts']);
+            $object->setPrix($this->calculPrixMenu($data));
+        } else {
+            $manager = new ElementMenuManager();
+
+            $object = new ElementMenu();
+            $object->setId($_POST["id"]);
+            $object->setCategorie($categorie);
+            $object->setNom($data['nom']);
+            $object->setDescription($data['description']);
+            $object->setPrix($data['prix']);
+        }
+
+        $manager->save($object);
+
+        Router::redirect('admin.menuindex');
     }
 
     public function destroy(Request $request, Response $response, array $args)
@@ -137,15 +217,33 @@ class MenuController extends Controller
         
         $elementMenuManager = new ElementMenuManager();
 
-        $entree = $elementMenuManager->find($data['entrees']);
-        $plat = $elementMenuManager->find($data['plats']);
-        $dessert = $elementMenuManager->find($data['desserts']);
+        if($data['entrees'] != 0){
+            $entree = $elementMenuManager->find($data['entrees']);
+            $prixEntree = $entree->getPrix();
+        } else {
+            $prixEntree = 0;
+        }
+        if($data['plats'] != 0){
+            $plat = $elementMenuManager->find($data['plats']);
+            $prixPlat = $plat->getPrix();
+        } else {
+            $prixPlat = 0;
+        }
+        if($data['desserts'] != 0){
+            $dessert = $elementMenuManager->find($data['desserts']);
+            $prixDessert = $dessert->getPrix();
+        } else {
+            $prixDessert = 0;
+        }
         
-        return $entree->getPrix() + $plat->getPrix() + $dessert->getPrix();
+        return $prixEntree + $prixPlat + $prixDessert;
     }
 
     public function getCategorie($categorie){
         switch($categorie){
+            case 1:
+                $nomCategorie = "menu";
+                break;
             case 2:
                 $nomCategorie = "entree";
                 break;
