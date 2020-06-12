@@ -6,7 +6,7 @@ use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\View;
-use App\Core\QueryBuilder;
+use App\Core\Builder\QueryBuilder;
 use App\Models\Menu;
 
 class MenuController extends Controller
