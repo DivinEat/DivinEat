@@ -39,11 +39,6 @@
   controller: "post"
   action: "default"
 
-
-
-
-
-
-
-
-
+/testForm:
+  controller: "default"
+  action: "testForm"

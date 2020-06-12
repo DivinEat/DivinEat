@@ -1,5 +1,5 @@
 <?php 
-namespace App\Core\Connection;
+namespace App\core\Connection;
 
 interface ResultInterface 
 {

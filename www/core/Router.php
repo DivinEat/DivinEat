@@ -4,7 +4,7 @@ namespace App\core;
 
 use Throwable;
 use App\controllers\ErrorController;
-use App\Core\Exceptions\NotFoundException;
+use App\core\Exceptions\NotFoundException;
 
 class Router 
 {

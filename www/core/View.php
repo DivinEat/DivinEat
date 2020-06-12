@@ -30,7 +30,7 @@ class View
         $this->view = strtolower(trim($v));
 
         if (!file_exists("views/".$this->view.".view.php")) {
-            throw new Exception("La vue n'existe pas");
+            throw new \Exception("La vue views/".$this->view.".view.php n'existe pas");
         }
     }
 
@@ -40,7 +40,17 @@ class View
         $this->data[$key] = $value;
     }
 
-    // $this->addModal("carousel", $data);
+    public function formView(string $formName, string $formTemplate = "base")
+    {
+        if (!file_exists("views/forms/".$formTemplate.".view.php")) {
+            die("Le template views/forms/".$formTemplate.".view.php de formulaire n'existe pas!!!");
+        }
+
+        $form = $this->data[$formName];// Objet Form
+
+        include "views/forms/".$formTemplate.".view.php";
+    }
+
     public function addModal($modal, $data)
     {
         if (!file_exists("views/modals/".$modal.".mod.php")) {
