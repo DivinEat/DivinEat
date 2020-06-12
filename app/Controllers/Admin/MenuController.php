@@ -90,11 +90,6 @@ class MenuController extends Controller
 
     }
 
-    public function show(Request $request, Response $response, array $args)
-    {
-        echo 'show';
-    }
-
     public function edit(Request $request, Response $response, array $args)
     {
         $configFormMenu = Menu::getAddMenuForm();
