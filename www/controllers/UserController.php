@@ -106,8 +106,7 @@ class UserController
     public function getUserTestAction(){
         $result =  (new QueryBuilder())
             ->select('*')
-            ->from('tdd_users', 'u')
-            ->join('tdd_posts', 'p', 'id', 'id')
+            ->from('dve_users', 'u')
             ->where('u.firstname = :firstname')
             ->setParameter('firstname', 'Tib')
             ->getQuery()
