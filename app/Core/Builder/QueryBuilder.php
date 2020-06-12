@@ -1,5 +1,5 @@
 <?php
-namespace App\Core;
+namespace App\Core\Builder;
 
 use App\Core\Connection\BDDInterface;
 use App\Core\Connection\ResultInterface;
@@ -25,38 +25,39 @@ class QueryBuilder
 
     public function select(string $values = "*"): QueryBuilder
     {
-        $this->query .= "select ".$values." ";
+        $this->addToQuery("SELECT $values");
         return $this;
     }
 
     public function from(string $table, string $alias): QueryBuilder
     {
-        $this->query .= "from ".DB_PREFIXE.$table." as ".$alias." ";
+        $this->addToQuery("FROM ".DB_PREFIXE."$table $alias");
         $this->alias = $alias;
+
         return $this;
     }
 
     public function where(string $conditions): QueryBuilder
     {
-        $this->query = $this->query."where ".$conditions;
+        $this->addToQuery("WHERE $conditions");
         return $this;
     }
 
     public function orderBy(string $orderby): QueryBuilder
     {
-        $this->query = $this->query."order by ".$orderby;
+        $this->addToQuery("ORDER BY $orderby");
         return $this;
     }
 
     public function limit(string $limit): QueryBuilder
     {
-        $this->query = $this->query."limit ".$limit;
+        $this->addToQuery("LIMIT $limit");
         return $this;
     }
 
     public function like(string $like): QueryBuilder
     {
-        $this->query = $this->query."like '%".$like."%' ";
+        $this->addToQuery("LIKE '%$like%'");
         return $this;
     }
 
@@ -68,7 +69,9 @@ class QueryBuilder
 
     public function join(string $join = "inner", string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
     {
-        $this->query .= $join." join ".DB_PREFIXE.$table." ".$aliasTarget." on ".$this->alias.".".$fieldSource." = ".$aliasTarget.".".$fieldTarget." ";
+        $aliasSource = $this->alias;
+        $this->addToQuery("$join JOIN ".DB_PREFIXE.".$table $aliasTarget ON $aliasTarget.$fieldTarget = $aliasSource.$fieldSource");
+
         return $this;
     }
 
@@ -89,7 +92,7 @@ class QueryBuilder
 
     public function addToQuery(string $query): QueryBuilder
     {
-        $this->query .= " ".$query." ";
+        $this->query .= $query." ";
         return $this;
     }
 
@@ -100,7 +103,7 @@ class QueryBuilder
     
     public function delete(string $table): QueryBuilder
     {
-        $this->query .= "delete from ".DB_PREFIXE.$table." ";
+        $this->addToQuery("DELETE FROM ".DB_PREFIXE."$table");
         return $this;
     }
 }

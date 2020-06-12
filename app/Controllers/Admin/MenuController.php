@@ -6,7 +6,7 @@ use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\View;
-use App\Core\QueryBuilder;
+use App\Core\Builder\QueryBuilder;
 use App\Models\Menu;
 
 class MenuController extends Controller
@@ -52,18 +52,5 @@ class MenuController extends Controller
     public function destroy(Request $request, Response $response, array $args)
     {
         echo 'destroy';
-    }
-
-    public function test(Request $request, Response $response, array $args)
-    {
-        $result =  (new QueryBuilder())
-            ->select('*')
-            ->from('users', 'u')
-            ->where('u.firstname = :firstname')
-            ->setParameter('firstname', 'Tib')
-            ->getQuery()
-            ->getArrayResult(User::class);
-
-            echo "<pre>", var_dump($result), "</pre>";
     }
 }
