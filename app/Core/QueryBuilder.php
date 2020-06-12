@@ -18,6 +18,9 @@ class QueryBuilder
         if(NULL === $connection){
             $this->connection = new PDOConnection();
         }
+
+        $this->query = "";
+        $this->parameters = [];
     }
 
     public function select(string $values = "*"): QueryBuilder

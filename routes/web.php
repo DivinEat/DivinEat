@@ -15,6 +15,7 @@ $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth', 'mid
 
 $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected']], function (Router $group) {
     $group->get('', 'DashboardController@index', 'index');
+    $group->get('test', 'MenuController@test', 'test');
     $group->group(['prefix' => 'menu', 'as' => 'menu.'], function (Router $group) {
         $group->get('', 'MenuController@index', 'index');
         $group->get('create', 'MenuController@create', 'create');

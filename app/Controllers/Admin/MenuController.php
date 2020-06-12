@@ -53,4 +53,17 @@ class MenuController extends Controller
     {
         echo 'destroy';
     }
+
+    public function test(Request $request, Response $response, array $args)
+    {
+        $result =  (new QueryBuilder())
+            ->select('*')
+            ->from('users', 'u')
+            ->where('u.firstname = :firstname')
+            ->setParameter('firstname', 'Tib')
+            ->getQuery()
+            ->getArrayResult(User::class);
+
+            echo "<pre>", var_dump($result), "</pre>";
+    }
 }
