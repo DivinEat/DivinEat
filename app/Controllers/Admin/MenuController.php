@@ -7,7 +7,7 @@ use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Core\View;
-use App\Core\QueryBuilder;
+use App\Core\Builder\QueryBuilder;
 use App\Models\Menu;
 use App\Models\ElementMenu;
 use App\Managers\MenuManager;

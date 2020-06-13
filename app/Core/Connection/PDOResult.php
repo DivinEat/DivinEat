@@ -12,10 +12,21 @@ class PDOResult implements ResultInterface
         $this->statement = $statement;
     }
 
-    public function getArrayResult(): array
+    public function getArrayResult(string $class = null): array
     {
-        return $this->statement->fetchAll();
+        $result =  $this->statement->fetchAll(\PDO::FETCH_ASSOC);
+       
+        if($class) {
+            $results = [];
+            foreach ($result as $key => $value) {
+               array_push($results, (new $class())->hydrate($value));
+            }
+            return $results;
+        }
+
+        return $result;
     }
+
 
     public function getOneOrNullResult()
     {
