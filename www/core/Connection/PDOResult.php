@@ -18,20 +18,30 @@ class PDOResult implements ResultInterface
         $this->pdo = $pdo;
     }
 
-    public function getArrayResult(): array
+    public function getArrayResult(string $class = null): array
     {
-        return $this->statement->fetchAll($this->pdo::FETCH_ASSOC);
+        $result = $this->statement->fetchAll($this->pdo::FETCH_ASSOC);
+
+        if ($class) {
+            $results = [];
+
+            foreach($result as $value) {
+                array_push($results, (new $class())->hydrate($value));
+            }
+            return $results;
+        }
+
+        return $result;
     }
 
-    public function getOneOrNullResult(): ?array 
+    public function getOneOrNullResult(string $class = null)
     {
         $result = $this->statement->fetch($this->pdo::FETCH_ASSOC);
 
-        if (!$result) {
-            return null;
-        } else {
-            return $result;
-        }
+        if ($class)
+            return (new $class())->hydrate($result);
+        
+        return $result;
     }
 
     public function getValueResult()

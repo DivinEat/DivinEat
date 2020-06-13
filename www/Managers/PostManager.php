@@ -17,16 +17,13 @@ class PostManager extends Manager
     public function getUserPost(int $id){
         $result = (new QueryBuilder())
             ->select('p.*, u.*')
-            ->from('nfoz_posts', 'p')
-            ->join('nfoz_users', 'u')
-            ->where('p.user_id = :user_id')
-            ->setParameter('user_id', $id)
+            ->from(DB_PREFIXE.'posts', 'p')
+            ->join('inner', DB_PREFIXE.'users', 'u', 'author', 'id')
+            ->where('p.author = :author')
+            ->setParameter('author', $id)
             ->getQuery()
             ->getArrayResult(Post::class);
 
-        $object = new $this->class();
-        $object->hydrate($result);
-
-        return $object;
+        return $result;
     }
 }

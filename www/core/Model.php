@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\Exceptions\BDDException;
+use App\Core\Model;
 use JSONSerializable;
 
 class Model implements JSONSerializable
@@ -17,29 +18,50 @@ class Model implements JSONSerializable
 
     public function __toArray(): array
     {
-        $property = get_object_vars($this);
+        $propertyWithObject = get_object_vars($this);
+        $propertiesWithoutObject = [];
+        foreach ($propertyWithObject as $key => $value) {            
+            if (is_object($value))
+                $propertiesWithoutObject[$key] = $value->getId();
+            else
+                $propertiesWithoutObject[$key] = $value;
+        }
 
-        return $property;
+        return $propertiesWithoutObject;
     }
     
-    public function hydrate($array)
+    public function hydrate(array $row)
     {
-        foreach ($array as $key => $value) {
-            $setterName = "set" . ucfirst(strtolower($key));
-            
+        foreach ($row as $key => $value) {
+            $setterName = "set" . ucfirst(strtolower($key));   
             if (method_exists($this, $setterName)) {
-                if ( in_array($key, array_keys($this->relation)) ) {
-                    $class = $this->relation[$key];
-
-                    
+                if ( $relation = $this->getRelation($key) ) {
+                    $tmp = new $relation();
+                    $tmp = $tmp->hydrate($row);
+                    $tmp->setId($value);
+                    $this->$setterName($tmp);
+                } else {
+                    $this->$setterName($value);
                 }
-
-                $this->$setterName($value);
-            } else {
-                throw new BDDException("Le setter <i>". $setterName ."</i> n'existe pas.");
             }
         }
         
         return $this;
+    }
+
+    public function initRelation(): array {
+        return [
+           
+        ];
+    }
+
+    public function getRelation(string $key): ?string
+    {     
+        $relations = $this->initRelation();
+
+        if(isset($relations[$key]))
+            return $relations[$key];
+        
+        return null;
     }
 }

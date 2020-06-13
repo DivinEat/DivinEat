@@ -59,14 +59,7 @@ class Manager
 
         $result = $this->connection->query($query, [':id' => $id]);
 
-        $row = $result->getOneOrNullResult();
-
-        if($row){
-            $object = new $this->class();
-            return $object->hydrate($row);
-        } else {
-            return null;
-        }
+        return $result->getOneOrNullResult($this->class);
     }
 
     public function findBy(array $params, array $order = null): array
@@ -95,14 +88,7 @@ class Manager
         }
         
         $result = $this->connection->query($query, $params);
-        $rows = $result->getArrayResult();
-
-        foreach($rows as $row) {
-            $object = new $this->class();
-            array_push($results, $object->hydrate($row));
-        }
-
-        return $results;
+        return $result->getArrayResult($this->class);
     }
 
     public function count(array $params): int
@@ -136,12 +122,7 @@ class Manager
 
         $result = $this->connection->query($query);
 
-        $rows = $result->getArrayResult();
-
-        foreach($rows as $row) {
-            $object = new $this->class();
-            array_push($results, $object->hydrate($row));
-        }
+        return $result->getArrayResult($this->class);
 
         return $results;
     }

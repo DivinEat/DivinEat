@@ -15,9 +15,6 @@
   controller: "user"
   action: "default"
 
-
-
-
 /se-connecter:
   controller: "user"
   action: "login"

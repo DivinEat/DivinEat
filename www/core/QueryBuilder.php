@@ -22,44 +22,39 @@ class QueryBuilder
 
     public function select(string $values = "*"): QueryBuilder
     {
-        $this->query = 'select ' . $values . ' ';
+        $this->addToQuery("select $values");
         return $this;
     }
 
     public function from(string $table, string $alias): QueryBuilder
     {
-        $this->query .= 'from ' . $table . ' as ' . $alias . ' ';
+        $this->addToQuery("from  $table $alias");
         $this->alias = $alias;
         return $this;
     }
 
     public function where(string $conditions): QueryBuilder
     {
-        $this->query .= 'where ' . $conditions . ' ';
+        $this->addToQuery("where  $conditions");
         return $this;
     }
 
     public function setParameter(string $key, string $value): QueryBuilder
     {
-        $this->parameters[$key] = $value;
+        $this->parameters[":$key"] = $value;
         return $this;
     }
 
-    public function join(string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
+    public function join(string $type = "", string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
     {
-        $this->query .= 'inner join ' . $table . ' ' . $aliasTarget . ' on ' . $this->alias . '.' . $fieldSource . ' = ' . $aliasTarget . '.' . $fieldTarget . ' ';
-        return $this;
-    }
-
-    public function leftJoin(string $table, string $aliasTarget, string $fieldSource = "id", string $fieldTarget = "id"): QueryBuilder
-    {
-        $this->query .= 'left join ' . $table . ' ' . $aliasTarget . ' on ' . $this->alias . '.' . $fieldSource . ' = ' . $aliasTarget . '.' . $fieldTarget . ' ';
+        $aliasSource = $this->alias;
+        $this->addToQuery("$type join $table $aliasTarget on $aliasSource.$fieldSource = $aliasTarget.$fieldTarget");
         return $this;
     }
 
     public function addToQuery(string $query): QueryBuilder
     {
-        $this->query .= ' ' . $query;
+        $this->query .= $query . " ";
         return $this;
     }
 

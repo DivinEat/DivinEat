@@ -9,59 +9,52 @@ use App\Models\User;
 class Post extends Model
 {
     protected $id;
-    protected $content;
-    protected $user_id;
-    protected $date_inserted;
-    protected $date_updated;
-    protected $relation;
-
+    protected $author;
+    protected $title;
 
     public function __construct()
     {
         parent::__construct();
-        $this->initRelation();
     }
 
-    public function initRelation() {
-       $this->relation = [
+    public function initRelation(): array
+    {
+       return [
            'author' => User::class
        ];
-   }
+    }
 
-    public function setId($id)
+    public function setId(int $id): self
     {
         $this->id=$id;
+        return $this;
     }
-    public function getId()
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setContent($content)
+    public function getAuthor(): User
     {
-        $this->content=$content;
-    }
-    public function getContent()
-    {
-        return $this->content;
+        return $this->author;
     }
 
-    public function setUser_id($user_id)
+    public function setAuthor(User $user): self
     {
-        $this->user_id=$user_id;
-    }
-    public function getUser_id()
-    {
-        return $this->user_id;
+        $this->author = $user;
+        return $this;
     }
 
-    public function setDate_inserted($date_inserted)
+    public function getTitle(): string
     {
-        $this->date_inserted=$date_inserted;
+        return $this->title;
     }
-    public function setDate_updated($date_updated)
+
+    public function setTitle(string $title): self
     {
-        $this->date_updated=$date_updated;
+        $this->title = $title;
+        return $this;
     }
 }
 
