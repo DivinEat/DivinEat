@@ -49,6 +49,7 @@ class UserController extends Controller
         $user->setLastname($data["lastname"]);
         $user->setEmail($data["email"]);
         $user->setStatus($data["status"]);
+        $user->setRole($data["role"]);
         $user->setDate_updated(date('Y-m-d H:i:s'));
 
         $userManager->save($user);

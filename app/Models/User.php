@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Core\Model\Model;
 use App\Core\Routing\Router;
+use App\Models\Role;
 
 class User extends Model
 {
@@ -13,6 +14,7 @@ class User extends Model
     protected $email;
     protected $pwd;
     protected $status;
+    protected $role;
     protected $date_inserted;
     protected $date_updated;
 
@@ -21,7 +23,9 @@ class User extends Model
     }
 
     public function initRelation(){
-        return [];
+        return [
+            'role' => Role::class
+        ];
     }
 
     public function setId($id)
@@ -47,6 +51,10 @@ class User extends Model
     public function setStatus($status)
     {
         $this->status=$status;
+    }
+    public function setRole($role)
+    {
+        $this->role=$role;
     }
     public function setDate_inserted($date_inserted)
     {
@@ -82,6 +90,10 @@ class User extends Model
     {
         return $this->status;
     }
+    public function getRole()
+    {
+        return $this->role;
+    }
     public function getDate_inserted()
     {
         return $this->date_inserted;
@@ -91,29 +103,18 @@ class User extends Model
         return $this->date_updated;
     }
 
-    public static function getLibelleStatus($status){
-        switch($status){
-            case 0:
-                $libelleStatus = "Membre";
-                break;
-            case 1:
-                $libelleStatus = "Administrateur";
-                break;
-        }
-
-        return $libelleStatus;
-    }
-
     public static function getShowUserTable($users){
         $tabUsers = [];
         foreach($users as $user){
+            var_dump($user->getRole());
             $tabUsers[] = [
                 "id" => $user->getId(),
                 "nom" => $user->getFirstname(),
                 "prenom" => $user->getLastname(),
                 "email" => $user->getEmail(),
                 "date_inserted" => $user->getDate_inserted(),
-                "status" => User::getLibelleStatus($user->getStatus()),
+                "status" => $user->getStatus(),
+                "role" => $user->getRole()->getLibelle(),
                 "edit"=> Router::getRouteByName('admin.useredit'),
                 "destroy"=> Router::getRouteByName('admin.userdestroy')
             ];
@@ -131,6 +132,7 @@ class User extends Model
                 "Prénom",
                 "Email",
                 "Date de création",
+                "Status",
                 "Rang",
                 "Actions"
             ],
@@ -191,16 +193,33 @@ class User extends Model
                     "values"=> [
                         [
                             "value" => "1",
-                            "text" => "Admin",
+                            "text" => "False",
                             "selected" => ""
                         ],
                         [
                             "value" => "0",
-                            "text" => "Membre",
+                            "text" => "True",
                             "selected" => "selected"
                         ]
                     ],
-                    "label"=>"Rang",
+                    "label"=>"Status",
+                    "class"=>"form-control"
+                ],
+                "role"=>[
+                    "type"=>"select",
+                    "values"=> [
+                        [
+                            "value" => "1",
+                            "text" => "Admin",
+                            "selected" => "selected"
+                        ],
+                        [
+                            "value" => "0",
+                            "text" => "Membre",
+                            "selected" => ""
+                        ]
+                    ],
+                    "label"=>"Rôle",
                     "class"=>"form-control"
                 ],
                 "date_inserted"=>[

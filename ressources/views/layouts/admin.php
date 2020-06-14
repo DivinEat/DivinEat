@@ -21,9 +21,10 @@ use App\Core\Routing\Router;
             <nav class="sidebar-nav">
                 <a href="" class="sidebar-link">Dashboard<img src='<?= url('/img/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Articles<img src='<?= url('img/arrow.svg') ?>'></a>
+                <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/arrow.svg') ?>'></a>
+                <a href="" class="sidebar-link">Pages<img src='<?= url('img/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.menuindex')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Réservations<img src='<?= url('/img/arrow.svg')?>'></a>
-                <a href="" class="sidebar-link">Plans<img src='<?= url('/img/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.userindex')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Paramètres<img src='<?= url('/img/arrow.svg') ?>'></a>
                 <nav>
