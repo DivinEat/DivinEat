@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model\Model;
-use App\Core\helpers;
+use App\Core\Routing\Router;
 
 class User extends Model
 {
@@ -61,19 +61,61 @@ class User extends Model
     {
         return $this->id;
     }
+    
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    public function getPwd()
+    {
+        return $this->pwd;
+    }
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    public function getDate_inserted()
+    {
+        return $this->date_inserted;
+    }
+    public function getDate_updated()
+    {
+        return $this->date_updated;
+    }
+
+    public static function getLibelleStatus($status){
+        switch($status){
+            case 0:
+                $libelleStatus = "Membre";
+                break;
+            case 1:
+                $libelleStatus = "Administrateur";
+                break;
+        }
+
+        return $libelleStatus;
+    }
 
     public static function getShowUserTable($users){
-        $tabMenus = [];
-        foreach($menus as $menu){
-            $tabMenus[] = [
-                "id" => $menu->getId(),
-                "nom" => $menu->getNom(),
-                "entree" => $menu->getEntree(),
-                "plat" => $menu->getPlat(),
-                "dessert" => $menu->getDessert(),
-                "prix" => $menu->getPrix(),
-                "edit"=> Router::getRouteByName('admin.menuedit'),
-                "destroy"=> Router::getRouteByName('admin.menudestroy')
+        $tabUsers = [];
+        foreach($users as $user){
+            $tabUsers[] = [
+                "id" => $user->getId(),
+                "nom" => $user->getFirstname(),
+                "prenom" => $user->getLastname(),
+                "email" => $user->getEmail(),
+                "date_inserted" => $user->getDate_inserted(),
+                "status" => User::getLibelleStatus($user->getStatus()),
+                "edit"=> Router::getRouteByName('admin.useredit'),
+                "destroy"=> Router::getRouteByName('admin.userdestroy')
             ];
         }
 
@@ -86,21 +128,97 @@ class User extends Model
                 "Catégorie",
                 "Id",
                 "Nom",
-                "Entrée",
-                "Plat",
-                "Dessert",
-                "Prix",
+                "Prénom",
+                "Email",
+                "Date de création",
+                "Rang",
                 "Actions"
             ],
 
             "fields"=>[
-                "Menu"=>[]
+                "User"=>[]
             ]
         ];
 
-        $tab["fields"]["Menu"] = $tabMenus;
+        $tab["fields"]["User"] = $tabUsers;
 
         return $tab;
+    }
+
+    public static function getEditUserForm($object){
+        return [
+            "config"=>[
+                "method"=>"POST", 
+                "action"=> Router::getRouteByName('admin.userdupdate'),
+                "class"=>"admin-form",
+                "id"=>"formAddMenu",
+                "submit"=>[
+                    "btn-primary"=>"Envoyer"
+                ],
+                "annuler"=>[
+                    "action"=> Router::getRouteByName('admin.userindex'),
+                    "class"=>"btn btn-default",
+                    "text"=>"Retour"
+                ]
+            ],
+
+            "fields"=>[
+                "id"=>[
+                    "type"=>"text",
+                    "value"=> $object->getId(),
+                    "class"=>"form-control-none"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "value"=> $object->getFirstname(),
+                    "label"=>"Prénom",
+                    "class"=>"form-control"
+                ],
+                "lastname"=>[
+                    "type"=>"text",
+                    "value"=> $object->getLastName(),
+                    "label"=>"Nom",
+                    "class"=>"form-control"
+                ],
+                "email"=>[
+                    "type"=>"text",
+                    "value"=> $object->getEmail(),
+                    "label"=>"Email",
+                    "class"=>"form-control"
+                ],
+                "status"=>[
+                    "type"=>"select",
+                    "values"=> [
+                        [
+                            "value" => "1",
+                            "text" => "Admin",
+                            "selected" => ""
+                        ],
+                        [
+                            "value" => "0",
+                            "text" => "Membre",
+                            "selected" => "selected"
+                        ]
+                    ],
+                    "label"=>"Rang",
+                    "class"=>"form-control"
+                ],
+                "date_inserted"=>[
+                    "type"=>"text",
+                    "value"=> $object->getDate_inserted(),
+                    "label"=>"Date d'inscription",
+                    "class"=>"form-control",
+                    "disabled" => true
+                ],
+                "date_updated"=>[
+                    "type"=>"text",
+                    "value"=> $object->getDate_updated(),
+                    "label"=>"Dernière mise à jour",
+                    "class"=>"form-control",
+                    "disabled" => true
+                ],
+            ]
+        ];
     }
 
     public static function getRegisterForm(){

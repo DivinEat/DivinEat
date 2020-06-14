@@ -1,8 +1,6 @@
-<?php $inputData = $GLOBALS["_".strtoupper($data["config"]["method"])]; ?>
-
-<form method="<?= $data["config"]["method"]?>" action="<?= $data["config"]["action"]?>"
+<form method="<?= $data["config"]["method"]?>" action="<?= $data["config"]["action"]->getUrl() ?>"
 id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
-
+	
 	<?php foreach ($data["fields"] as $name => $configField):?>
 		<div class="form-group row">
 			<div class="col-sm-12">
@@ -28,28 +26,29 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 						class="<?= $configField["class"]??'' ?>"
 						id="<?= $configField["id"]??'' ?>"
 					>
-						<?php foreach ($configField["values"] as $value => $text):?>
-							<option value="<?= $value??'' ?>"><?= $text??'' ?></option>	
+						<?php foreach ($configField["values"] as $value):?>
+							<option value="<?= $value["value"]?>" selected="<?= $value["selected"] ?>"><?= $value["text"] ?></option>	
 						<?php endforeach;?>
 					</select>	
 				<?php else:?>
 					<input 
-						value="<?= (isset($inputData[$name]) && $configField["type"]!="password")?$inputData[$name]:'' ?>"
+						value="<?= (isset($configField["value"]) && $configField["type"]!="password")?$configField["value"]:'' ?>"
 						type="<?= $configField["type"]??'' ?>"
 						name="<?= $name??'' ?>"
 						placeholder="<?= $configField["placeholder"]??'' ?>"
 						class="<?= $configField["class"]??'' ?>"
 						id="<?= $configField["id"]??'' ?>"
-						<?=(!empty($configField["required"]))?"required='required'":""?> 
+						<?=(!empty($configField["required"]))?"required='required'":""?>
+						<?=(!empty($configField["disabled"]))?"disabled":""?>
 					>
 				<?php endif;?>
 			</div>
 		</div>
 	<?php endforeach;?>
-	
+
 	<?php if(!empty($data["config"]["annuler"])):?>
 		<a 
-			href="<?= $data["config"]["annuler"]["action"] ?>" 
+			href="<?= $data["config"]["annuler"]["action"]->getUrl() ?>" 
 			class="<?= $data["config"]["annuler"]["class"] ?>"
 		>
 			<?= $data["config"]["annuler"]["text"] ?>

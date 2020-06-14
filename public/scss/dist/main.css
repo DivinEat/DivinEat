@@ -926,6 +926,10 @@ footer .circle .up {
   height: 9.375rem;
 }
 
+.admin-form .form-control-none {
+  display: none;
+}
+
 .fa {
   margin-right: 10px;
 }

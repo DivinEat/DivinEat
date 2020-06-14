@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Core\Model\Model;
 use App\Core\Routing\Router;
-use App\Core\helpers;
 
 class Menu extends Model
 {
@@ -18,6 +17,10 @@ class Menu extends Model
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public function initRelation(){
+        return [];
     }
 
     public function setId($id)

@@ -20,21 +20,49 @@ class UserController extends Controller
         $configTableUser = User::getShowUserTable($users);
 
         $myView = new View("admin.user.index", "admin");
-        $myView->assign("configTableMenu", $configTableUser);
+        $myView->assign("configTableUser", $configTableUser);
     }
 
     public function edit(Request $request, Response $response, array $args)
     {
-        echo "edit";
+        $id = 2;
+
+        if(isset($id)){
+            $userManager = new UserManager();
+            $object = $userManager->find($id);
+        }
+
+        $configFormUser = User::getEditUserForm($object);
+
+        $myView = new View("admin.user.edit", "admin");
+        $myView->assign("configFormUser", $configFormUser);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
-        echo "update";
+        $data = $_POST;
+
+        $userManager = new UserManager();
+        $user = $userManager->find($data["id"]);
+        
+        $user->setFirstname($data["firstname"]);
+        $user->setLastname($data["lastname"]);
+        $user->setEmail($data["email"]);
+        $user->setStatus($data["status"]);
+        $user->setDate_updated(date('Y-m-d H:i:s'));
+
+        $userManager->save($user);
+
+        Router::redirect('admin.userindex');
     }
 
     public function destroy(Request $request, Response $response, array $args)
     {
-        echo "destroy";
+        $data = $_POST;
+
+        $manager = new UserManager();
+        $manager->delete($data["id"]);
+
+        Router::redirect('admin.userindex');
     }
 }
