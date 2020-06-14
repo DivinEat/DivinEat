@@ -62,6 +62,47 @@ class User extends Model
         return $this->id;
     }
 
+    public static function getShowUserTable($users){
+        $tabMenus = [];
+        foreach($menus as $menu){
+            $tabMenus[] = [
+                "id" => $menu->getId(),
+                "nom" => $menu->getNom(),
+                "entree" => $menu->getEntree(),
+                "plat" => $menu->getPlat(),
+                "dessert" => $menu->getDessert(),
+                "prix" => $menu->getPrix(),
+                "edit"=> Router::getRouteByName('admin.menuedit'),
+                "destroy"=> Router::getRouteByName('admin.menudestroy')
+            ];
+        }
+
+        $tab = [
+            "config"=>[
+                "class"=>"admin-table"
+            ],
+
+            "colonnes"=>[
+                "Catégorie",
+                "Id",
+                "Nom",
+                "Entrée",
+                "Plat",
+                "Dessert",
+                "Prix",
+                "Actions"
+            ],
+
+            "fields"=>[
+                "Menu"=>[]
+            ]
+        ];
+
+        $tab["fields"]["Menu"] = $tabMenus;
+
+        return $tab;
+    }
+
     public static function getRegisterForm(){
         return [
             "config"=>[
@@ -166,8 +207,6 @@ class User extends Model
             ]
         ];
     }
-
-    
 
     public static function getPwdForm(){
         return [
