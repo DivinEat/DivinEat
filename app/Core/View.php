@@ -45,7 +45,7 @@ class View
         $this->data[$key] = $value;
     }
 
-    public function addModal(string $modal, $data): void
+    public function addModal(string $modal, $data, $infos = NULL): void
     {
         $modal =
             ROOT . "/ressources/views/modals/".

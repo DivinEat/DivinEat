@@ -46,5 +46,4 @@ class Model implements \JsonSerializable
 
         return null;
     }
-
 }

@@ -951,6 +951,15 @@ footer .circle .up {
   text-align: left;
 }
 
+.admin-table tr input[type="text"] {
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  text-align: left;
+  width: 100%;
+  border: none;
+}
+
 .card {
   display: -webkit-box;
   display: flex;
