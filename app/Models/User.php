@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use App\Core\Model\Model;
+use App\Core\Model\ModelInterface;
 use App\Core\Routing\Router;
 use App\Models\Role;
+use App\Managers\RoleManager;
 
-class User extends Model
+class User extends Model implements ModelInterface
 {
     protected $id;
     protected $firstname;
@@ -22,50 +24,60 @@ class User extends Model
         parent::__construct();
     }
 
-    public function initRelation(){
+    public function initRelation(): array
+    {
         return [
             'role' => Role::class
         ];
     }
 
-    public function setId($id)
+    public function setId(int $id): self
     {
         $this->id=$id;
+        return $this;
     }
     public function setFirstname($firstname)
     {
         $this->firstname=ucwords(strtolower(trim($firstname)));
+        return $this;
     }
     public function setLastname($lastname)
     {
         $this->lastname=strtoupper(trim($lastname));
+        return $this;
     }
     public function setEmail($email)
     {
         $this->email=strtolower(trim($email));
+        return $this;
     }
     public function setPwd($pwd)
     {
-        $this->pwd=$pwd;
+        $this->pwd = $pwd;
+        return $this;
     }
     public function setStatus($status)
     {
         $this->status=$status;
+        return $this;
     }
-    public function setRole($role)
+    public function setRole(Role $role): User
     {
         $this->role=$role;
+        return $this;
     }
     public function setDate_inserted($date_inserted)
     {
         $this->date_inserted=$date_inserted;
+        return $this;
     }
     public function setDate_updated($date_updated)
     {
         $this->date_updated=$date_updated;
+        return $this;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -90,7 +102,7 @@ class User extends Model
     {
         return $this->status;
     }
-    public function getRole()
+    public function getRole(): Role
     {
         return $this->role;
     }
@@ -104,9 +116,12 @@ class User extends Model
     }
 
     public static function getShowUserTable($users){
+        $roleManager = new RoleManager();
+
         $tabUsers = [];
         foreach($users as $user){
-            var_dump($user->getRole());
+            $role = $roleManager->find($user->getRole()->getId());
+            
             $tabUsers[] = [
                 "id" => $user->getId(),
                 "nom" => $user->getFirstname(),
@@ -114,7 +129,7 @@ class User extends Model
                 "email" => $user->getEmail(),
                 "date_inserted" => $user->getDate_inserted(),
                 "status" => $user->getStatus(),
-                "role" => $user->getRole()->getLibelle(),
+                "role" => $role->getLibelle(),
                 "edit"=> Router::getRouteByName('admin.useredit'),
                 "destroy"=> Router::getRouteByName('admin.userdestroy')
             ];
@@ -147,7 +162,22 @@ class User extends Model
         return $tab;
     }
 
-    public static function getEditUserForm($object){
+    public static function getEditUserForm($object, $roles){ 
+        $roleTab = [
+            "type"=>"select",
+            "values"=> [],
+            "label"=>"Rôle",
+            "class"=>"form-control"
+        ];
+
+        foreach($roles as $role){
+            $roleTab["values"][] = [
+                "value" => $role->getId(),
+                "text" => $role->getLibelle(),
+                "selected" => ($role->getId() == $object->getRole()->getId())?"selected":""
+            ];
+        }
+
         return [
             "config"=>[
                 "method"=>"POST", 
@@ -163,7 +193,6 @@ class User extends Model
                     "text"=>"Retour"
                 ]
             ],
-
             "fields"=>[
                 "id"=>[
                     "type"=>"text",
@@ -193,35 +222,19 @@ class User extends Model
                     "values"=> [
                         [
                             "value" => "1",
-                            "text" => "False",
-                            "selected" => ""
+                            "text" => "Inactif",
+                            "selected" => ($object->getStatus() == 1)?"selected":""
                         ],
                         [
                             "value" => "0",
-                            "text" => "True",
-                            "selected" => "selected"
+                            "text" => "Actif",
+                            "selected" => ($object->getStatus() == 0)?"selected":""
                         ]
                     ],
                     "label"=>"Status",
                     "class"=>"form-control"
                 ],
-                "role"=>[
-                    "type"=>"select",
-                    "values"=> [
-                        [
-                            "value" => "1",
-                            "text" => "Admin",
-                            "selected" => "selected"
-                        ],
-                        [
-                            "value" => "0",
-                            "text" => "Membre",
-                            "selected" => ""
-                        ]
-                    ],
-                    "label"=>"Rôle",
-                    "class"=>"form-control"
-                ],
+                "role"=> $roleTab,
                 "date_inserted"=>[
                     "type"=>"text",
                     "value"=> $object->getDate_inserted(),

@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Core\Model\Model;
+use App\Core\Model\ModelInterface;
 
-class ElementMenu extends Model
+class ElementMenu extends Model implements ModelInterface
 {
     protected $id;
     protected $categorie;
@@ -17,32 +18,38 @@ class ElementMenu extends Model
         parent::__construct();
     }
 
-    public function initRelation(){
+    public function initRelation(): array
+    {
         return [];
     }
 
-    public function setId($id)
+    public function setId(int $id): self
     {
         $this->id=$id;
+        return $this;
     }
     public function setCategorie($categorie)
     {
         $this->categorie=strtolower(trim($categorie));
+        return $this;
     }
     public function setNom($nom)
     {
         $this->nom= $nom;
+        return $this;
     }
     public function setDescription($description)
     {
         $this->description= $description;
+        return $this;
     }
     public function setPrix($prix)
     {
         $this->prix= $prix;
+        return $this;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

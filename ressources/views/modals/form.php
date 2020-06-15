@@ -26,8 +26,8 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 						class="<?= $configField["class"]??'' ?>"
 						id="<?= $configField["id"]??'' ?>"
 					>
-						<?php foreach ($configField["values"] as $value):?>
-							<option value="<?= $value["value"]?>" selected="<?= $value["selected"] ?>"><?= $value["text"] ?></option>	
+						<?php foreach ($configField["values"] as $value): ?>
+							<option value="<?= $value["value"]?>" <?= $value["selected"] ?>><?= $value["text"] ?></option>	
 						<?php endforeach;?>
 					</select>	
 				<?php else:?>

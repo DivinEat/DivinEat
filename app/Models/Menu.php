@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use App\Core\Model\Model;
+use App\Core\Model\ModelInterface;
 use App\Core\Routing\Router;
 
-class Menu extends Model
+class Menu extends Model implements ModelInterface
 {
     protected $id;
     protected $nom;
@@ -19,36 +20,43 @@ class Menu extends Model
         parent::__construct();
     }
 
-    public function initRelation(){
+    public function initRelation(): array
+    {
         return [];
     }
 
-    public function setId($id)
+    public function setId(int $id): self
     {
         $this->id=$id;
+        return $this;
     }
     public function setNom($nom)
     {
         $this->nom=$nom;
+        return $this;
     }
     public function setEntree($entree)
     {
         $this->entree=$entree;
+        return $this;
     }
     public function setPlat($plat)
     {
         $this->plat=$plat;
+        return $this;
     }
     public function setDessert($dessert)
     {
         $this->dessert=$dessert;
+        return $this;
     }
     public function setPrix($prix)
     {
         $this->prix=$prix;
+        return $this;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

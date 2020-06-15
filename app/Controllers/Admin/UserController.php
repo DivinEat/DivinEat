@@ -9,6 +9,7 @@ use App\Core\Routing\Router;
 use App\Core\View;
 use App\Models\User;
 use App\Managers\UserManager;
+use App\Managers\RoleManager;
 
 class UserController extends Controller
 {
@@ -32,7 +33,10 @@ class UserController extends Controller
             $object = $userManager->find($id);
         }
 
-        $configFormUser = User::getEditUserForm($object);
+        $roleManager = new RoleManager();
+        $roles = $roleManager->findAll();
+
+        $configFormUser = User::getEditUserForm($object, $roles);
 
         $myView = new View("admin.user.edit", "admin");
         $myView->assign("configFormUser", $configFormUser);
@@ -44,12 +48,15 @@ class UserController extends Controller
 
         $userManager = new UserManager();
         $user = $userManager->find($data["id"]);
+
+        $roleManager = new RoleManager();
+        $role = $roleManager->find($data["role"]);
         
         $user->setFirstname($data["firstname"]);
         $user->setLastname($data["lastname"]);
         $user->setEmail($data["email"]);
         $user->setStatus($data["status"]);
-        $user->setRole($data["role"]);
+        $user->setRole($role);
         $user->setDate_updated(date('Y-m-d H:i:s'));
 
         $userManager->save($user);
