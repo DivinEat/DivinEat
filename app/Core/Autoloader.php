@@ -10,7 +10,8 @@ class Autoloader
         $classPath = str_replace(
             '\\',
             DIRECTORY_SEPARATOR,
-            str_replace('App\\', 'app\\', ROOT . DIRECTORY_SEPARATOR . $class)
+            str_replace('PHPMailer\\PHPMailer\\', 'vendor\\PHPMailer\\PHPMailer\\src\\',
+            str_replace('App\\', 'app\\', ROOT . DIRECTORY_SEPARATOR . $class))
         );
 
         if (! file_exists($classPath . '.php'))
