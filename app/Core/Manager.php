@@ -28,7 +28,14 @@ class Manager
         $columnsData = array_values($objectArray);
         $columns = array_keys($objectArray);
 
-        $params = array_combine(array_map(function($k){return ":".$k;},array_keys($objectArray)),$objectArray);
+        $params = [];
+        foreach($objectArray as $key => $value){
+            if($value instanceof Model){
+                $params[":$key"] = $value->getId();
+            } else {
+                $params[":$key"] = $value;
+            }
+        }
 
         if (!is_numeric($objectToSave->getId())) {
             array_shift($columns);
