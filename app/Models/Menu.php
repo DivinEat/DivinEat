@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Core\Model\Model;
 use App\Core\Model\ModelInterface;
 use App\Core\Routing\Router;
+use App\Models\ElementMenu;
+use App\Managers\ElementMenuManager;
 
 class Menu extends Model implements ModelInterface
 {
@@ -22,7 +24,11 @@ class Menu extends Model implements ModelInterface
 
     public function initRelation(): array
     {
-        return [];
+        return [
+            'entree' => ElementMenu::class,
+            'plat' => ElementMenu::class,
+            'dessert' => ElementMenu::class,
+        ];
     }
 
     public function setId(int $id): self
@@ -35,17 +41,17 @@ class Menu extends Model implements ModelInterface
         $this->nom=$nom;
         return $this;
     }
-    public function setEntree($entree)
+    public function setEntree(ElementMenu $entree): Menu
     {
         $this->entree=$entree;
         return $this;
     }
-    public function setPlat($plat)
+    public function setPlat(ElementMenu $plat): Menu
     {
         $this->plat=$plat;
         return $this;
     }
-    public function setDessert($dessert)
+    public function setDessert(ElementMenu $dessert): Menu
     {
         $this->dessert=$dessert;
         return $this;
@@ -64,15 +70,15 @@ class Menu extends Model implements ModelInterface
     {
         return $this->nom;
     }
-    public function getEntree()
+    public function getEntree(): ElementMenu
     {
         return $this->entree;
     }
-    public function getPlat()
+    public function getPlat(): ElementMenu
     {
         return $this->plat;
     }
-    public function getDessert()
+    public function getDessert(): ElementMenu
     {
         return $this->dessert;
     }
@@ -199,14 +205,20 @@ class Menu extends Model implements ModelInterface
     }
 
     public static function getShowMenuTable($menus){
+        $elementMenuManager = new ElementMenuManager();
+
         $tabMenus = [];
         foreach($menus as $menu){
+            $entree = $elementMenuManager->find($menu->getEntree()->getId());
+            $plat = $elementMenuManager->find($menu->getPlat()->getId());
+            $dessert = $elementMenuManager->find($menu->getDessert()->getId());
+            
             $tabMenus[] = [
                 "id" => $menu->getId(),
                 "nom" => $menu->getNom(),
-                "entree" => $menu->getEntree(),
-                "plat" => $menu->getPlat(),
-                "dessert" => $menu->getDessert(),
+                "entree" => $entree->getNom(),
+                "plat" => $plat->getNom(),
+                "dessert" => $dessert->getNom(),
                 "prix" => $menu->getPrix(),
                 "edit"=> Router::getRouteByName('admin.menuedit'),
                 "destroy"=> Router::getRouteByName('admin.menudestroy')
@@ -255,7 +267,7 @@ class Menu extends Model implements ModelInterface
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
                         "prix" => $elementMenu->getPrix(),
-                        "edit"=> Router::getRouteByName('admin.menuindex'),
+                        "edit"=> Router::getRouteByName('admin.menuedit'),
                         "destroy"=> Router::getRouteByName('admin.menudestroy')
                     ];
                     break;

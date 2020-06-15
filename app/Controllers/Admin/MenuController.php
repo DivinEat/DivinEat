@@ -66,17 +66,19 @@ class MenuController extends Controller
     {
         $data = $_POST;
         if($data["categories"] == 1){
+            $elementMenuManager = new ElementMenuManager();
+
             $object = new Menu();
             $object->setNom($data['nomMenu']);
 
             if($data['entrees'] == 0) $data['entrees'] = NULL;
-            $object->setEntree($data['entrees']);
+            $object->setEntree($elementMenuManager->find($data['entrees']));
 
             if($data['plats'] == 0) $data['plats'] = NULL;
-            $object->setPlat($data['plats']);
+            $object->setPlat($elementMenuManager->find($data['plats']));
             
             if($data['desserts'] == 0) $data['desserts'] = NULL;
-            $object->setDessert($data['desserts']);
+            $object->setDessert($elementMenuManager->find($data['desserts']));
             $object->setPrix($this->calculPrixMenu($data));
 
             $manager = new MenuManager();
@@ -98,8 +100,8 @@ class MenuController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $categorie = 5;
-        $id = 15;
+        $categorie = 1;
+        $id = 7;
 
         $elementMenuManager = new ElementMenuManager();
         $elementsMenu = $elementMenuManager->findAll();
@@ -151,6 +153,7 @@ class MenuController extends Controller
         }
 
         if($categorie == "menu"){
+            $elementMenuManager = new ElementMenuManager();
             $manager = new MenuManager();
 
             $object = new Menu();
@@ -159,13 +162,14 @@ class MenuController extends Controller
             $object->setNom($data['nomMenu']);
 
             if($data['entrees'] == 0) $data['entrees'] = NULL;
-            $object->setEntree($data['entrees']);
+            $object->setEntree($elementMenuManager->find($data['entrees']));
 
             if($data['plats'] == 0) $data['plats'] = NULL;
-            $object->setPlat($data['plats']);
+            $object->setPlat($elementMenuManager->find($data['plats']));
             
             if($data['desserts'] == 0) $data['desserts'] = NULL;
-            $object->setDessert($data['desserts']);
+            $object->setDessert($elementMenuManager->find($data['desserts']));
+
             $object->setPrix($this->calculPrixMenu($data));
         } else {
             $manager = new ElementMenuManager();
@@ -194,19 +198,24 @@ class MenuController extends Controller
         if($categorie == "menu"){
             $manager = new MenuManager();
         } else {
-            $manager = new MenuManager();
-            $menus = $manager->findBy([
-                $categorie => $data["id"]
-            ]);
-
-            foreach($menus as $menu){
-                $method = "set".ucfirst($categorie);
-                $menu->$method(NULL);
-
-                $manager->save($menu);
-            }
-
             $manager = new ElementMenuManager();
+
+            $menus =  (new QueryBuilder())->select('*')->from('menus', 'm');
+            switch($categorie){
+                case "entree":
+                    $menus->where('m.entree = :id');
+                    break;
+                case "plat":
+                    $menus->where('m.plat = :id');
+                    break;
+                case "dessert":
+                    $menus->where('m.dessert = :id');
+                    break;
+            }
+            $menus->setParameter('id', $data["id"])->getQuery()->getArrayResult(Menu::class);
+            if(empty($menus)){
+                die("Merci de supprimer les menus qui utilisent cet élément de menu");
+            }
         }
         $manager->delete($data["id"]);
 
