@@ -50,11 +50,10 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 			<div class="col-sm-12">
 				<label>Entrées</label>
 				<select name="entrees" class="form-control">
-					<option value="0"></option>
 					<?php foreach ($infos["entrees"] as $entree):?>
 						<option 
 							value="<?= $entree->getId()??'' ?>" 
-							<?= (isset($object) && $object instanceof App\Models\Menu && (!empty($object->getEntree()) && $object->getEntree() == $entree->getId()))?'selected="selected"':'' ?>>
+							<?= (isset($object) && $object instanceof App\Models\Menu && (!empty($object->getEntree()) && $object->getEntree()->getId() == $entree->getId()))?'selected="selected"':'' ?>>
 							<?= $entree->getNom()??'' ?>
 						</option>	
 					<?php endforeach;?>
@@ -65,11 +64,10 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 			<div class="col-sm-12">
 				<label>Plats</label>
 				<select name="plats" class="form-control">
-					<option value="0"></option>
 					<?php foreach ($infos["plats"] as $plat):?>
 						<option 
 							value="<?= $plat->getId()??'' ?>" 
-							<?= (isset($object) && $object instanceof App\Models\Menu && (!empty($object->getPlat()) && $object->getPlat() == $plat->getId()))?'selected="selected"':'' ?>>
+							<?= (isset($object) && $object instanceof App\Models\Menu && (!empty($object->getPlat()) && $object->getPlat()->getId() == $plat->getId()))?'selected="selected"':'' ?>>
 							<?= $plat->getNom()??'' ?>
 						</option>
 					<?php endforeach;?>
@@ -80,11 +78,10 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 			<div class="col-sm-12">
 				<label>Desserts</label>
 				<select name="desserts" class="form-control">
-					<option value="0"></option>
 					<?php foreach ($infos["desserts"] as $dessert): ?>
 						<option 
 							value="<?= $dessert->getId()??'' ?>" 
-							<?= (isset($object) && $object instanceof App\Models\Menu && (!empty($object->getDessert()) && $object->getDessert() == $dessert->getId()))?'selected="selected"':'' ?>>
+							<?= (isset($object) && $object instanceof App\Models\Menu && (!empty($object->getDessert()) && $object->getDessert()->getId() == $dessert->getId()))?'selected="selected"':'' ?>>
 							<?= $dessert->getNom()??'' ?>
 						</option>
 					<?php endforeach;?>

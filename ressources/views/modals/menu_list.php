@@ -24,9 +24,9 @@ $elementMenuManager = new ElementMenuManager();
                             <td><input type="hidden" name="categorie" value="<?= $categorie ?>"/></td>
                             <td><input type="text" name="id" readonly="true" value="<?= $fields["id"] ?>"/></td>
                             <td><?= $fields["nom"] ?></td>
-                            <td><?= (isset($fields["entree"]))?$elementMenuManager->find($fields["entree"])->getNom():'' ?></td>
-                            <td><?=(isset($fields["plat"]))?$elementMenuManager->find($fields["plat"])->getNom():'' ?></td>
-                            <td><?= (isset($fields["dessert"]))?$elementMenuManager->find($fields["dessert"])->getNom():'' ?></td>
+                            <td><?= $fields["entree"] ?></td>
+                            <td><?= $fields["plat"] ?></td>
+                            <td><?= $fields["dessert"] ?></td>
                             <td><?= $fields["prix"]." Euro(s)" ?></td>
                             <td>
                                 <a href="<?= $fields["edit"]->getUrl() ?>" class="btn btn-edit">Modifier</a>
