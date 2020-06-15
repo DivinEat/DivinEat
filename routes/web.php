@@ -34,6 +34,20 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
             $group->delete('', 'MenuController@destroy', 'destroy');
         });
     });
+
+    $group->get('user.index', 'UserController@index', 'userindex');
+    $group->get('user.edit', 'UserController@edit', 'useredit');
+    $group->post('user.update', 'UserController@update', 'userdupdate');
+    $group->post('user.destroy', 'UserController@destroy', 'userdestroy');
+
+    $group->group(['prefix' => 'user', 'as' => 'user.'], function (Router $group) {
+        $group->get('', 'UserController@index', 'index');
+        $group->group(['prefix' => '{user_id}'], function (Router $group) {
+            $group->get('edit', 'UserController@edit', 'edit');
+            $group->post('update', 'UserController@update', 'update');
+            $group->delete('', 'UserController@destroy', 'destroy');
+        });
+    });
 });
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');

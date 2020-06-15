@@ -8,22 +8,28 @@
     <?php foreach ($data["fields"] as $categorie => $elements):?>
         <tr>
             <th><?= $categorie ?></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <?php for($i = 0; $i < sizeof($data["colonnes"]) - 1;$i++):?>
+                <th></th>
+            <?php endfor;?>
         </tr>
-        <?php foreach ($elements as $key => $fields):?>
-        <tr>
-            <td></td>
-            <td><?= $fields["name"] ?></td>
-            <td><?= $fields["description"] ?></td>
-            <td><?= $fields["prix"]." Euro(s)" ?></td>
-            <td>
-                <a href="" class="btn btn-edit">Modifier</a>
-                <a href="" class="btn btn-remove">Supprimer</a>
-            </td>
-        </tr>
+
+        <?php foreach ($elements as $key => $fields): ?>
+            <form method="POST" action="<?= $fields["destroy"]->getUrl() ?>">
+                <tr>
+                    <td></td>
+                    <?php foreach ($fields as $key => $field):
+                        if($key != "edit" && $key != "destroy"): 
+                            if($key == "id") :?>
+                                <td><input type="text" name="id" readonly="true" value="<?= $fields[$key] ?>"/></td>
+                            <?php else: ?>
+                                <td><?= $fields[$key] ?></td>
+                        <?php endif; endif; endforeach; ?>
+                    <td>
+                        <a href="<?= $fields["edit"]->getUrl() ?>" class="btn btn-edit">Modifier</a>
+                        <input type="submit" name="destroy" class="btn btn-remove" value="Supprimer"/>
+                    </td>
+                </tr>
+            </form>
         <?php endforeach;?>
     <?php endforeach;?>
 </table>

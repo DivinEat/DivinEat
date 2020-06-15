@@ -16,7 +16,6 @@ class Model implements \JsonSerializable
         $className = get_class($this);
         $articleObj = new $className();
         foreach ($row as $key => $value) {
-          
             $method = 'set'.ucFirst($key);
             if (method_exists($articleObj, $method)) {
                 if($relation = $articleObj->getRelation($key)) {

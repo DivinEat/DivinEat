@@ -26,6 +26,7 @@ class PDOConnection implements BDDInterface
     {
         if ($parameters) {
             $queryPrepared = $this->pdo->prepare($query);
+
             $queryPrepared->execute($parameters);
 
             return new PDOResult($queryPrepared);
