@@ -39,11 +39,9 @@ class ArticleController extends Controller
         $article->setContent($data["content"]);
         $article->setDate_inserted(date('Y-m-d H:i:s'));
 
-        echo "<pre>", var_dump($article), "</pre>";
+        $articleManager->save($article);
 
-        /*$articleManager->save($article);
-
-        Router::redirect('admin.articleindex');*/
+        Router::redirect('admin.articleindex');
     }
 
     public function edit(Request $request, Response $response, array $args)

@@ -31,12 +31,6 @@ var editor = new EditorJS({
                     byFile: './public/img/uploadedImages' // Your backend file uploader endpoint
                 }
             }
-        },
-        linkTool: {
-            class: LinkTool,
-            config: {
-                endpoint: 'http://localhost:8008/fetchUrl', // Your backend endpoint for url data fetching
-            }
         }
     }
 });

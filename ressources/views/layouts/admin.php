@@ -28,7 +28,7 @@ use App\Core\Routing\Router;
         <div class="col-inner sidebar">
             <nav class="sidebar-nav">
                 <a href="" class="sidebar-link">Dashboard<img src='<?= url('/img/arrow.svg') ?>'></a>
-                <a href="" class="sidebar-link">Articles<img src='<?= url('img/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.articleindex')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Pages<img src='<?= url('img/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.menuindex')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/arrow.svg') ?>'></a>
