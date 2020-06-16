@@ -1,7 +1,5 @@
 <?php
-
 use App\Core\Routing\Router;
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -18,7 +16,7 @@ use App\Core\Routing\Router;
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script>
-    <<script src="<?= url('js/dashboard/dashboard-graphs.js') ?>"></script>
+    <script src="<?= url('js/dashboard/dashboard-graphs.js') ?>"></script>
     <script type="module" src="<?= url('js/article-editor.js') ?>"></script>
     <script src="<?= url('js/navbar.js') ?>"></script>
 </head>
@@ -27,7 +25,7 @@ use App\Core\Routing\Router;
     <div class="col-sm-2 padding-0">
         <div class="col-inner sidebar">
             <nav class="sidebar-nav">
-                <a href="" class="sidebar-link">Dashboard<img src='<?= url('/img/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>" class="sidebar-link">Dashboard<img src='<?= url('/img/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.articleindex')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Pages<img src='<?= url('img/arrow.svg') ?>'></a>
