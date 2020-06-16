@@ -1,3 +1,5 @@
+// import { editorHandler } from './component/textEditor.js';
+
 $(document).ready(function() {
     
     var pageBuilderHandler = {
@@ -17,150 +19,63 @@ $(document).ready(function() {
             // this.applyDragEvents();
             // this.applyDropEvents();
             pageBuilderHandler.page = document.querySelector('.page');
-            this.initCreateContainerBtn(document.querySelector('.pageBuilder-btn-add'), pageBuilderHandler.page);
+            this.addEventsToCreateContainerButton(document.querySelector('.add-container-button'));
         },
 
-        initCreateContainerBtn: function (button, parent) {
-            button.addEventListener('click', function (e) {
-                var container = this.parentNode;
+        applyDragEvents: function() {
+            var pageBuilderHandler = this;
+            pageBuilderHandler.page = document.querySelector('.page');
+            pageBuilderHandler.elements = document.querySelectorAll('.pageBuilder-item');
+
+            pageBuilderHandler.elements.forEach(element => {
+                element.draggable = true;
+
+                element.addEventListener('dragstart', function(e) {
+                    pageBuilderHandler.draggedElement = this;
+                    this.style.cursor = 'grabbing';
+
+                    e.dataTransfer.setData("text/plain", '');
+                    e.dataTransfer.effectAllowed = "copyMove";
+                });
+
+                element.addEventListener('mousedown', function(e) {
+                    this.style.cursor = 'grabbing';
+                });
+
+                element.addEventListener('mouseup', function(e) {
+                    this.style.cursor = 'grab';
+                });
+
+                element.addEventListener('dragend', function(e) {
+                    this.style.cursor = 'grab';
+                });
+            });
+        },
+
+        applyDropEvents: function(container) {
+
+            var pageBuilderHandler = this;
+
+            container.addEventListener('dragover', function (e) {
+                e.preventDefault(); // par défaut, supprime comportement par défaut qui n'autorise pas le drop d'un élément
+            });
+
+            container.addEventListener('drop', function(e) {
+                // pageBuilderHandler.toolsBar = pageBuilderHandler.getToolsBarFromContainer(this);
+                var draggedElementId = pageBuilderHandler.draggedElement.id;
+
+                switch (draggedElementId) {
+                    case 'text-item':
+                        pageBuilderHandler.addEditor(this, null, null);
+                        break;
+
+                    case 'image-item':
+                        pageBuilderHandler.addImageItem(this);
+                        break;
                 
-                pageBuilderHandler.createStructureBtnBar(container, parent);
-            });
-        },
-
-        createStructureBtnBar: function(container, parent) {
-            var pageBuilderHandler = this;
-
-            var containerNodes = [];
-            container.childNodes.forEach(node => {
-                containerNodes.push(node);
-            });
-            containerNodes.forEach(node => {
-                container.removeChild(node);
-            });
-
-            var structureBtnBar = document.createElement('div');
-            var cancelBtn = document.createElement('div');
-            var btn1 = document.createElement('div');
-            var btn2 = document.createElement('div');
-            var btn3 = document.createElement('div');
-            var btn4 = document.createElement('div');
-            var btn5 = document.createElement('div');
-            var btn6 = document.createElement('div');
-            var btn7 = document.createElement('div');
-
-            structureBtnBar.className = 'pageBuilder-container-list-structure-bar';
-            btn1.className = 'pageBuilder-container-structure-btn-12';
-            btn2.className = 'pageBuilder-container-structure-btn-6_6';
-            btn3.className = 'pageBuilder-container-structure-btn-4_4_4';
-            btn4.className = 'pageBuilder-container-structure-btn-3_3_3_3';
-            btn5.className = 'pageBuilder-container-structure-btn-3_6_3';
-            btn6.className = 'pageBuilder-container-structure-btn-6_3_3';
-            btn7.className = 'pageBuilder-container-structure-btn-3_3_6';
-            cancelBtn.className = 'pageBuilder-btn-cancel';
-            cancelBtn.innerHTML = 'x';
-
-            structureBtnBar.appendChild(btn1);
-            structureBtnBar.appendChild(btn2);
-            structureBtnBar.appendChild(btn3);
-            structureBtnBar.appendChild(btn4);
-            structureBtnBar.appendChild(btn5);
-            structureBtnBar.appendChild(btn6);
-            structureBtnBar.appendChild(btn7);
-
-            container.appendChild(structureBtnBar);
-            container.appendChild(cancelBtn);
-
-            cancelBtn.addEventListener('click', function (e) {
-                container.removeChild(structureBtnBar);
-                container.removeChild(cancelBtn);
-                containerNodes.forEach(node => {
-                    container.appendChild(node);
-                });
-            });
-
-            pageBuilderHandler.addEventsToStructureBtn(structureBtnBar, container, parent);
-        },
-
-        addEventsToStructureBtn: function(structureBtnBar, container, parent) {
-            var pageBuilderHandler = this;
-            var containerParent = container.parentNode;
-            structureBtnBar.childNodes.forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    containerParent.removeChild(container);
-
-                    var className = this.className.substring(36);
-                    var colsSize = className.split('_');
-                    
-                    var parentRow = document.createElement('div');
-                    parentRow.className = 'row padding-0';
-
-                    containerParent.appendChild(parentRow);
-
-                    colsSize.forEach(colSize => {
-                        let col = document.createElement('div');
-                        let colInner = document.createElement('div');
-                        let container = document.createElement('div');
-                        let addBtn = document.createElement('div');
-
-                        col.className = 'col-sm-' + colSize + ' padding-0';
-                        colInner.className = 'col-inner';
-                        if (parent == null)
-                            colInner.className += ' padding-top-0';
-                        container.className = 'pageBuilder-container-displayed-empty';
-                        addBtn.className = 'pageBuilder-btn-add';
-                        addBtn.innerHTML = '+';
-
-                        addBtn.addEventListener('click', function(e) { 
-                            var addItemBtn = document.createElement('div');
-                            var newStructureBtn = document.createElement('div');
-
-                            addItemBtn.className = 'pageBuilder-btn-add';
-                            addItemBtn.innerHTML = '+';
-                            newStructureBtn.className = 'pageBuilder-container-structure-btn-small';
-                                
-                            container.appendChild(addItemBtn);
-                            container.appendChild(newStructureBtn);
-                                
-                            newStructureBtn.addEventListener('click', function(e) {
-                                pageBuilderHandler.createStructureBtnBar(container, null);
-                                // container.removeChild(addItemBtn);
-                                // container.removeChild(newStructureBtn);
-                            });
-
-                            container.removeChild(this);
-                        });
-
-                        container.appendChild(addBtn);
-                        colInner.appendChild(container);
-                        col.appendChild(colInner);
-                        parentRow.appendChild(col);
-                    });
-
-                    var newRow = document.createElement('div');
-                    var newCol = document.createElement('div');
-                    var newColInner = document.createElement('div');
-                    var newContainer = document.createElement('div');
-                    var newAddContainerBtn = document.createElement('div');
-
-                    newRow.className = 'row padding-0';
-                    newCol.className = 'col-sm-12 padding-0';
-                    newColInner.className = 'col-inner padding-0';
-                    newContainer.className = 'pageBuilder-container-hidden';
-                    container.className = 'pageBuilder-container-displayed';
-                    newAddContainerBtn.className = 'pageBuilder-btn-add';
-                    newAddContainerBtn.innerHTML = '+';
-
-                    if(parent == null)
-                        parent = parentRow.parentNode;
-
-                    parent.appendChild(newRow);
-                    newRow.appendChild(newCol);
-                    newCol.appendChild(newColInner);
-                    newColInner.appendChild(newContainer);
-                    newContainer.appendChild(newAddContainerBtn);
-                    pageBuilderHandler.initCreateContainerBtn(newAddContainerBtn, null);
-                });
+                    default:
+                        break;
+                }
             });
         },
 
@@ -191,15 +106,6 @@ $(document).ready(function() {
             return container;
         },
 
-
-
-
-
-
-
-
-
-
         addPositionButtons: function(container) {
             var pageBuilderHandler = this;
             var containerCol = container.parentNode.parentNode.parentNode.parentNode.parentNode;
@@ -213,11 +119,13 @@ $(document).ready(function() {
 
             var rowNodesLength = containerRow.childNodes.length;
 
+            console.log(containerRow.childNodes[rowNodesLength - 2]);
 
             if (containerRow.childNodes[1] == containerCol) {
                 isLeftContainer = true;
             }
             if (containerRow.childNodes[rowNodesLength-2] == containerCol) {
+                console.log("to");
                 isRightContainer = true;
             }
 
@@ -384,7 +292,63 @@ $(document).ready(function() {
             return toolsBar;
         },
 
-        
+        addEventsToCreateContainerButton: function(button) {
+            var pageBuilderHandler = this; 
+            var pageData = pageBuilderHandler.pageData;
+            var container = button.parentNode;
+            var page = pageBuilderHandler.page;
+            
+            button.addEventListener('click', function(e) {
+                var containerRow = container.parentNode.parentNode.parentNode;
+                var containerRowParent = containerRow.parentNode;
+                
+                containerRowParent.removeChild(containerRow);
+                container = pageBuilderHandler.createContainer(containerRowParent);
+                // pageBuilderHandler.addPositionButtons(container);
+                
+                var numRow = ++Object.keys(pageData).length;
+                pageData['con-' + numRow + '-1'] = 'you';
+                container.id = 'con-' + numRow + '-1'; 
+                pageBuilderHandler.container = container;
+
+                var toolsBar = pageBuilderHandler.addToolsBar(container);
+
+                container.className = 'pageBuilder-container-displayed';
+                // pageBuilderHandler.applyDropEvents(container);
+
+                container.addEventListener('mouseenter', function (e) {
+                    toolsBar.style.display = 'flex';
+                });
+
+                container.addEventListener('mouseleave', function (e) {
+                    toolsBar.style.display = 'none';
+                });
+
+                // pageBuilderHandler.addEditor(container, null, null);
+
+                var newAddContainerBtn = document.createElement('div');
+                newAddContainerBtn.className = 'add-container-button';                
+                newAddContainerBtn.innerHTML = '+';
+
+                var newRow = document.createElement('div');
+                var newCol = document.createElement('div');
+                var newColInner = document.createElement('div');
+                var newContainer = pageBuilderHandler.createContainer(newColInner);
+
+                newRow.className = 'row padding-0';
+                newCol.className = 'col-sm-12 padding-0';
+                newColInner.className = 'col-inner padding-0';
+                newContainer.className = 'pageBuilder-container-hidden';
+
+                page.appendChild(newRow);
+                newRow.appendChild(newCol);
+                newCol.appendChild(newColInner);
+                newContainer.appendChild(newAddContainerBtn);
+                pageBuilderHandler.addEventsToCreateContainerButton(newAddContainerBtn);
+            });
+
+        },
+
         deleteContainer: function(container) {
             var pageBuilderHandler = this;
             var pageData = pageBuilderHandler.pageData;
@@ -489,6 +453,16 @@ $(document).ready(function() {
                     embed: {
                         class: Embed,
                     },
+
+                    // image: {
+                    //     class: ImageTool,
+                    //     config: {
+                    //         endpoints: {
+                    //             byFile: 'http://localhost:81/uploadFile', // Your backend file uploader endpoint
+                    //             byUrl: 'http://localhost:81/fetchUrl', // Your endpoint that provides uploading by Url
+                    //         }
+                    //     }
+                    // },
                 },
 
                 data: editorData

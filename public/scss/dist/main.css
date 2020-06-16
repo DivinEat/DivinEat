@@ -216,21 +216,22 @@ div.ligne {
 
 .page,
 .pageBuilder-container-displayed,
-.pageBuilder-container-btn:hover,
-.pageBuilder-container-btn-edit:hover,
-.pageBuilder-container-btn-validate:hover,
-.pageBuilder-container-btn-position-left:hover,
-.pageBuilder-container-btn-position-right:hover,
-.pageBuilder-container-btn-position-top:hover,
-.pageBuilder-container-btn-position-bottom:hover,
-.pageBuilder-container-btn-position-left,
-.pageBuilder-container-btn-position-right,
-.pageBuilder-container-btn-position-top,
-.pageBuilder-container-btn-position-bottom,
+.pageBuilder-container-displayed-empty,
+.pageBuilder-container-structure-btn-big,
+.pageBuilder-container-structure-btn-12,
+.pageBuilder-container-structure-btn-6_6,
+.pageBuilder-container-structure-btn-4_4_4,
+.pageBuilder-container-structure-btn-3_3_3_3,
+.pageBuilder-container-structure-btn-3_6_3,
+.pageBuilder-container-structure-btn-3_3_6,
+.pageBuilder-container-structure-btn-6_3_3,
 .pageBuilder-container-tools-bar-item:hover,
 .pageBuilder-container-tools-bar-item-hidden:hover,
+.pageBuilder-btn,
+.pageBuilder-container-structure-btn-small,
+.pageBuilder-btn-add,
+.pageBuilder-btn-cancel,
 .pageBuilder-item,
-.add-container-button,
 .tools-bar-item:hover,
 .tools-bar-item-hidden:hover,
 .txt-editor-btn-hidden:hover,
@@ -1051,6 +1052,7 @@ footer .circle .up {
 
 .pageBuilder-container-hidden,
 .pageBuilder-container-displayed,
+.pageBuilder-container-displayed-empty,
 .pageBuilder-container-hover {
   position: relative;
   display: -webkit-box;
@@ -1063,12 +1065,8 @@ footer .circle .up {
   -webkit-box-align: center;
           align-items: center;
   width: auto;
-  height: auto;
-  min-height: 6.25rem;
-}
-
-.pageBuilder-container-hidden {
-  border: none;
+  height: 100%;
+  min-height: 9.375rem;
 }
 
 .pageBuilder-container-displayed {
@@ -1076,23 +1074,17 @@ footer .circle .up {
   background-color: white;
 }
 
+.pageBuilder-container-displayed-empty {
+  border-radius: 0.5rem;
+}
+
 .pageBuilder-container-hover {
   cursor: pointer;
 }
 
-.pageBuilder-container-btn,
-.pageBuilder-container-btn-edit,
-.pageBuilder-container-btn-validate,
-.pageBuilder-container-btn-position-left,
-.pageBuilder-container-btn-position-right,
-.pageBuilder-container-btn-position-top,
-.pageBuilder-container-btn-position-bottom {
+.pageBuilder-container-list-structure-bar {
   display: -webkit-box;
   display: flex;
-  position: absolute;
-  z-index: 2;
-  bottom: 0.625rem;
-  margin: 0;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
           flex-flow: row wrap;
@@ -1100,119 +1092,82 @@ footer .circle .up {
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
-  width: 2.1875rem;
-  height: 2.1875rem;
+  width: 100%;
+  height: 100%;
   border-radius: 100%;
-  background-size: 50%;
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
-.pageBuilder-container-btn:hover,
-.pageBuilder-container-btn-edit:hover,
-.pageBuilder-container-btn-validate:hover,
-.pageBuilder-container-btn-position-left:hover,
-.pageBuilder-container-btn-position-right:hover,
-.pageBuilder-container-btn-position-top:hover,
-.pageBuilder-container-btn-position-bottom:hover {
+.pageBuilder-container-structure-btn-small {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+  background-image: url("/img/icones/structureBtn.png");
+}
+
+.pageBuilder-container-structure-btn-big,
+.pageBuilder-container-structure-btn-12,
+.pageBuilder-container-structure-btn-6_6,
+.pageBuilder-container-structure-btn-4_4_4,
+.pageBuilder-container-structure-btn-3_3_3_3,
+.pageBuilder-container-structure-btn-3_6_3,
+.pageBuilder-container-structure-btn-3_3_6,
+.pageBuilder-container-structure-btn-6_3_3 {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-flow: row wrap;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 0.625rem 0 0.625rem;
+}
+
+.pageBuilder-container-structure-btn-big:hover,
+.pageBuilder-container-structure-btn-12:hover,
+.pageBuilder-container-structure-btn-6_6:hover,
+.pageBuilder-container-structure-btn-4_4_4:hover,
+.pageBuilder-container-structure-btn-3_3_3_3:hover,
+.pageBuilder-container-structure-btn-3_6_3:hover,
+.pageBuilder-container-structure-btn-3_3_6:hover,
+.pageBuilder-container-structure-btn-6_3_3:hover {
   cursor: pointer;
 }
 
-.pageBuilder-container-btn-edit {
-  background-image: url("/img/icones/edit-tools.png");
-  display: -webkit-box;
-  display: flex;
-  position: absolute;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
-  right: 0.625rem;
+.pageBuilder-container-structure-btn-12 {
+  background-image: url("/img/icones/1col.png");
 }
 
-.pageBuilder-container-btn-validate {
-  background-image: url("/img/icones/check.png");
-  display: -webkit-box;
-  display: flex;
-  position: absolute;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
-  right: 0.625rem;
+.pageBuilder-container-structure-btn-6_6 {
+  background-image: url("/img/icones/2cols.png");
 }
 
-.pageBuilder-container-btn-position-left {
-  background-image: url("/img/icones/right-arrow.png");
-  background-color: white;
-  display: -webkit-box;
-  display: flex;
-  position: absolute;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
-  right: 0;
-  top: 50%;
-  -webkit-transform: translate(50%, -50%);
-          transform: translate(50%, -50%);
+.pageBuilder-container-structure-btn-4_4_4 {
+  background-image: url("/img/icones/3cols.png");
 }
 
-.pageBuilder-container-btn-position-right {
-  background-image: url("/img/icones/right-arrow.png");
-  display: -webkit-box;
-  display: flex;
-  position: absolute;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
-  right: 0;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  -webkit-transform: translateX(50%);
-          transform: translateX(50%);
-  -webkit-transform: rotate(180);
-          transform: rotate(180);
+.pageBuilder-container-structure-btn-3_3_3_3 {
+  background-image: url("/img/icones/4cols.png");
 }
 
-.pageBuilder-container-btn-position-top {
-  display: -webkit-box;
-  display: flex;
-  position: absolute;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
-  right: 0;
-  top: 50%;
-  background-image: url("/img/icones/right-arrow.png");
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  -webkit-transform: translateX(50%);
-          transform: translateX(50%);
-  -webkit-transform: rotate(-90);
-          transform: rotate(-90);
+.pageBuilder-container-structure-btn-3_6_3 {
+  background-image: url("/img/icones/3-6-3cols.png");
 }
 
-.pageBuilder-container-btn-position-bottom {
-  background-image: url("/img/icones/right-arrow.png");
-  display: -webkit-box;
-  display: flex;
-  position: absolute;
-  -webkit-box-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-          justify-content: center;
-  right: 0;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  -webkit-transform: translateX(50%);
-          transform: translateX(50%);
-  -webkit-transform: rotate(90);
-          transform: rotate(90);
+.pageBuilder-container-structure-btn-3_3_6 {
+  background-image: url("/img/icones/3-3-6cols.png");
+}
+
+.pageBuilder-container-structure-btn-6_3_3 {
+  background-image: url("/img/icones/6-3-3cols.png");
 }
 
 .pageBuilder-container-tools-bar {
@@ -1253,6 +1208,56 @@ footer .circle .up {
   display: none;
 }
 
+.pageBuilder-btn,
+.pageBuilder-container-structure-btn-small,
+.pageBuilder-btn-add,
+.pageBuilder-btn-cancel {
+  display: -webkit-box;
+  display: flex;
+  z-index: 2;
+  margin: 0;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-flow: row wrap;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  width: 2.1875rem;
+  height: 2.1875rem;
+  border-radius: 100%;
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 0.625rem 0 0.625rem;
+  background-color: white;
+}
+
+.pageBuilder-btn:hover,
+.pageBuilder-container-structure-btn-small:hover,
+.pageBuilder-btn-add:hover,
+.pageBuilder-btn-cancel:hover {
+  cursor: pointer;
+}
+
+.pageBuilder-btn-add,
+.pageBuilder-btn-cancel {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  border-radius: 100%;
+  width: 2.1875rem;
+  height: 2.1875rem;
+}
+
+.pageBuilder-btn-add:hover,
+.pageBuilder-btn-cancel:hover {
+  cursor: pointer;
+}
+
 .pageBuilder-side-bar {
   display: -webkit-box;
   display: flex;
@@ -1288,23 +1293,6 @@ footer .circle .up {
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(/images/editor-icon.png?efafa8ef641a44e2d2dff97096656a9d);
-}
-
-.add-container-button {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
-  border-radius: 100%;
-  width: 1.875rem;
-  height: 1.875rem;
-  background-color: white;
-}
-
-.add-container-button:hover {
-  cursor: pointer;
 }
 
 .tools-bar {
@@ -1502,15 +1490,15 @@ footer .circle .up {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-          flex-direction: row;
-  flex-wrap: wrap;
-  -webkit-box-align: start;
-          align-items: flex-start;
+          flex-flow: row wrap;
+  -webkit-box-align: stretch;
+          align-items: stretch;
   padding: 0.625rem 0rem;
 }
 
 .col-inner {
   width: 100%;
+  min-height: 100%;
   padding: 0.625rem;
 }
 
@@ -1519,72 +1507,84 @@ footer .circle .up {
 .col-md-1 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-2 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-3 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-4 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-5 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-6 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-7 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-8 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-9 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-10 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-11 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-md-12 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
@@ -1595,72 +1595,84 @@ footer .circle .up {
 .col-lg-1 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-2 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-3 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-4 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-5 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-6 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-7 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-8 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-9 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-10 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-11 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-lg-12 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
@@ -1671,72 +1683,84 @@ footer .circle .up {
 .col-sm-1 {
   flex-basis: 8.33333333%;
   width: 8.33333333%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-2 {
   flex-basis: 16.66666667%;
   width: 16.66666667%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-3 {
   flex-basis: 25%;
   width: 25%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-4 {
   flex-basis: 33.33333333%;
   width: 33.33333333%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-5 {
   flex-basis: 41.66666667%;
   width: 41.66666667%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-6 {
   flex-basis: 50%;
   width: 50%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-7 {
   flex-basis: 58.33333333%;
   width: 58.33333333%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-8 {
   flex-basis: 66.66666667%;
   width: 66.66666667%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-9 {
   flex-basis: 75%;
   width: 75%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-10 {
   flex-basis: 83.33333333%;
   width: 83.33333333%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-11 {
   flex-basis: 91.66666667%;
   width: 91.66666667%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
 .col-sm-12 {
   flex-basis: 100%;
   width: 100%;
+  min-height: 100%;
   padding: 0rem 0.625rem;
 }
 
@@ -1745,61 +1769,73 @@ footer .circle .up {
 @media screen and (min-width: 60rem) {
   .col-md-1 {
     flex-basis: 8.33333333%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-2 {
     flex-basis: 16.66666667%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-3 {
     flex-basis: 25%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-4 {
     flex-basis: 33.33333333%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-5 {
     flex-basis: 41.66666667%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-6 {
     flex-basis: 50%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-7 {
     flex-basis: 58.33333333%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-8 {
     flex-basis: 66.66666667%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-9 {
     flex-basis: 75%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-10 {
     flex-basis: 83.33333333%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-11 {
     flex-basis: 91.66666667%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-md-12 {
     flex-basis: 100%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 }
@@ -1807,61 +1843,73 @@ footer .circle .up {
 @media screen and (min-width: 100rem) {
   .col-lg-1 {
     flex-basis: 8.33333333%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-2 {
     flex-basis: 16.66666667%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-3 {
     flex-basis: 25%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-4 {
     flex-basis: 33.33333333%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-5 {
     flex-basis: 41.66666667%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-6 {
     flex-basis: 50%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-7 {
     flex-basis: 58.33333333%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-8 {
     flex-basis: 66.66666667%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-9 {
     flex-basis: 75%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-10 {
     flex-basis: 83.33333333%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-11 {
     flex-basis: 91.66666667%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 
   .col-lg-12 {
     flex-basis: 100%;
+    min-height: 100%;
     padding: 0rem 0.625rem;
   }
 }

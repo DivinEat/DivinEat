@@ -1,7 +1,6 @@
 .row {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     align-items: flex-start;
     padding: rem($gouttiere) rem(0);
     // margin: rem(0) rem(-$gouttiere);
