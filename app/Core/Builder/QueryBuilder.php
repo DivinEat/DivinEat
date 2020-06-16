@@ -43,9 +43,9 @@ class QueryBuilder
         return $this;
     }
 
-    public function orderBy(string $orderby): QueryBuilder
+    public function orderBy(string $orderby, $tri = ''): QueryBuilder
     {
-        $this->addToQuery("ORDER BY $orderby");
+        $this->addToQuery("ORDER BY $orderby $tri");
         return $this;
     }
 
