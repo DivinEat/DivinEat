@@ -1,4 +1,4 @@
-<?php use App\Core\Routing\Router; ?>
+<?php use App\Core\Routing\Router;?>
 
 <div class="row">
     <div class="col-sm-12">
@@ -12,11 +12,11 @@
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label>Titre</label>
-                                <input type="text" name="title" class="form-control" value="<?= $article->getTitle() ?>"/>
+                                <input type="text" name="title" class="form-control" value="<?= (isset($article))?$article->getTitle():'' ?>"/>
                             </div>
                         </div>
                         
-                        <input type="hidden" id="editor-content" name="content" class="form-control" value="<?= $article->getContent() ?>"/>
+                        <input type="hidden" id="editor-content" name="content" class="form-control" value="<?= (isset($article))?$article->getContent():'' ?>"/>
 
                         <div class="form-group row">
                             <div class="col-sm-12">
