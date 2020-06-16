@@ -85,3 +85,22 @@
     ADD CONSTRAINT `dve_menus_ibfk_1` FOREIGN KEY (`entree`) REFERENCES `dve_elementmenus` (`id`),
     ADD CONSTRAINT `dve_menus_ibfk_2` FOREIGN KEY (`plat`) REFERENCES `dve_elementmenus` (`id`),
     ADD CONSTRAINT `dve_menus_ibfk_3` FOREIGN KEY (`dessert`) REFERENCES `dve_elementmenus` (`id`);
+
+
+
+  --
+  -- Structure de la table `elementmenus`
+  --
+  CREATE TABLE `dve_articles` (
+    `id` int(11) NOT NULL,
+    `title` varchar(15) NOT NULL,
+    `content` text NOT NULL,
+    `date_inserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `date_updated` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+  ALTER TABLE `dve_articles`
+    ADD PRIMARY KEY (`id`);
+
+  ALTER TABLE `dve_articles`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

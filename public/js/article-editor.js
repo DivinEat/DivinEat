@@ -1,19 +1,11 @@
 var editor = new EditorJS({
-    /**
-     * Id of Element that should contain Editor instance
-     */
-    holder: editorjs,
+    holderId: articlejs,
     placeholder: 'Ecrivez ici !',
     minHeight: 4,
 
-    /** 
-     * Available Tools list. 
-     * Pass Tool's class or Settings object for each Tool you want to use 
-     */
     tools: {
         header: {
             class: Header,
-            shortcut: 'CMD+SHIFT+H',
             config: {
                 placeholder: 'Enter a header',
                 levels: [1, 2, 3, 4],
@@ -22,11 +14,15 @@ var editor = new EditorJS({
         },
         list: {
             class: List,
-            inlineToolbar: true,
-            shortcut: 'CMD+SHIFT+L',
+            inlineToolbar: true
         },
         embed: {
             class: Embed,
+            inlineToolbar: false,
+            config: {
+                youtube: true,
+                coub: true
+            }
         },
         image: {
             class: ImageTool,
@@ -43,4 +39,12 @@ var editor = new EditorJS({
             }
         }
     }
+});
+
+$("#article-form").submit(function(event) {
+    editor.save().then((outputData) => {
+        $("input:hidden").val(JSON.stringify(outputData));
+    }).catch((error) => {
+        console.log('Saving failed: ', error)
+    });
 });
