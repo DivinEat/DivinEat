@@ -1,7 +1,5 @@
 <?php
-
 use App\Core\Routing\Router;
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,18 +7,26 @@ use App\Core\Routing\Router;
     <title>Dashboard</title>
     <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script>
     <script src="<?= url('js/dashboard/dashboard-graphs.js') ?>"></script>
-    <script src="js/navbar.js"></script>
+    <script type="module" src="<?= url('js/article-editor.js') ?>"></script>
+    <script src="<?= url('js/navbar.js') ?>"></script>
 </head>
 <body>
 <div class="row padding-0">
     <div class="col-sm-2 padding-0">
         <div class="col-inner sidebar">
             <nav class="sidebar-nav">
-                <a href="" class="sidebar-link">Dashboard<img src='<?= url('/img/arrow.svg') ?>'></a>
-                <a href="" class="sidebar-link">Articles<img src='<?= url('img/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>" class="sidebar-link">Dashboard<img src='<?= url('/img/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.articleindex')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Pages<img src='<?= url('img/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.menuindex')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/arrow.svg') ?>'></a>
