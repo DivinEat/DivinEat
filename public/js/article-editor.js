@@ -1,3 +1,6 @@
+var editorContent = document.querySelector("#editor-content").value;
+editorContent = editorContent.replace(/'/g, "\"");
+
 var editor = new EditorJS({
     holderId: articlejs,
     placeholder: 'Ecrivez ici !',
@@ -23,21 +26,13 @@ var editor = new EditorJS({
                 youtube: true,
                 coub: true
             }
-        },
-        image: {
-            class: ImageTool,
-            config: {
-                endpoints: {
-                    byFile: './public/img/uploadedImages' // Your backend file uploader endpoint
-                }
-            }
         }
     }
 });
 
 $("#article-form").submit(function(event) {
     editor.save().then((outputData) => {
-        $("input:hidden").val(JSON.stringify(outputData));
+        $("#editor-content").val(JSON.stringify(outputData).replace(/"/g, "'"));
     }).catch((error) => {
         console.log('Saving failed: ', error)
     });

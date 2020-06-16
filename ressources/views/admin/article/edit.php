@@ -5,18 +5,18 @@
         <div class="col-inner">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Ajouter un article</h3>
+                    <h3 class="box-title">Modifier un menu</h3>
                 </div>
                 <div class="box-body">
-                    <form method="POST" action="<?= Router::getRouteByName('admin.articlestore')->getUrl() ?>" id="article-form" class="admin-form">
+                    <form method="POST" action="<?= Router::getRouteByName('admin.articleupdate')->getUrl() ?>" id="article-form" class="admin-form">
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label>Titre</label>
-                                <input type="text" name="title" class="form-control"/>
+                                <input type="text" name="title" class="form-control" value="<?= $article->getTitle() ?>"/>
                             </div>
                         </div>
                         
-                        <input type="hidden" id="editor-content" name="content" class="form-control"/>
+                        <input type="hidden" id="editor-content" name="content" class="form-control" value="<?= $article->getContent() ?>"/>
 
                         <div class="form-group row">
                             <div class="col-sm-12">

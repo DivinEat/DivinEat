@@ -53,6 +53,7 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
     $group->get('article.index', 'ArticleController@index', 'articleindex');
     $group->get('article.edit', 'ArticleController@edit', 'articleedit');
     $group->post('article.store', 'ArticleController@store', 'articlestore');
+    $group->post('article.update', 'ArticleController@update', 'articleupdate');
     $group->post('article.destroy', 'ArticleController@destroy', 'articledestroy');
 
     $group->group(['prefix' => 'article', 'as' => 'article.'], function (Router $group) {

@@ -46,12 +46,18 @@ class ArticleController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        echo "<pre>", var_dump($_POST), "</pre>";
+        $id = 15;
+
+        $articleManager = new ArticleManager();
+        $article = $articleManager->find($id);
+
+        $myView = new View("admin.article.edit", "admin");
+        $myView->assign("article", $article);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
-
+        echo "<pre>", var_dump($_POST), "</pre>";
     }
 
     public function destroy(Request $request, Response $response, array $args)
