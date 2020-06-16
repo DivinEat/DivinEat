@@ -1,5 +1,5 @@
-var editorContent = document.querySelector("#editor-content").value;
-editorContent = editorContent.replace(/'/g, "\"");
+/*var editorContent = document.querySelector("#editor-content").value;
+editorContent = editorContent.replace(/'/g, "\"");*/
 
 var editor = new EditorJS({
     holderId: articlejs,

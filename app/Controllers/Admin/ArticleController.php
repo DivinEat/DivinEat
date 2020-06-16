@@ -46,7 +46,7 @@ class ArticleController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = 15;
+        $id = 20;
 
         $articleManager = new ArticleManager();
         $article = $articleManager->find($id);
