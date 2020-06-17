@@ -18,6 +18,7 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 						id="<?= $configField["id"]??'' ?>"
 						name="<?= $name??'' ?>"
 						class="<?= $configField["class"]??'' ?>"
+						placeholder="<?= $configField["placeholder"]??'' ?>"
 						rows="5"
 					></textarea>
 				<?php elseif(!empty($configField["type"]) && $configField["type"] == "select"):?>
