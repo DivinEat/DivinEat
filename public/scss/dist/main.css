@@ -190,6 +190,10 @@ div.ligne {
   margin-top: 3.125rem !important;
 }
 
+.margin-top-75 {
+  margin-top: 4.6875rem !important;
+}
+
 .color-white {
   color: #fff !important;
 }
@@ -204,6 +208,10 @@ div.ligne {
 
 .color-purple {
   color: #402082 !important;
+}
+
+.color-black {
+  color: #000 !important;
 }
 
 .image-banner {
@@ -1020,6 +1028,16 @@ footer .circle .up {
   border-radius: 0.75rem;
   border: none;
   background-color: #402082;
+}
+
+.article {
+  text-align: center;
+  overflow: hidden;
+  height: 6.25rem;
+}
+
+.show-article {
+  text-align: center;
 }
 
 .row {

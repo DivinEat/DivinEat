@@ -73,7 +73,7 @@
         <div class="ligne"></div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="col-inner">
+                <div class="col-inner article">
                     <?php if(isset($articles)){
                         foreach($articles as $article){
                             echo $article->getContent();

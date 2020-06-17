@@ -5,6 +5,20 @@ use App\Core\Routing\Router;
 $router->get('', 'HomeController@index', 'home');
 $router->get('menus', 'HomeController@menus', 'menus');
 
+$router->group(['prefix' => 'contact', 'as' => 'contact.', 'namespace' => '', 'middleware' => ['user.not.connected']], function (Router $group) {
+    $group->get('', 'ContactController@index', 'index');
+    $group->post('store', 'ContactController@store', 'store');
+});
+
+$router->group(['prefix' => 'actualites', 'as' => 'actualites.', 'namespace' => '', 'middleware' => ['user.not.connected']], function (Router $group) {
+    $group->get('', 'ArticleController@index', 'index');
+
+    $group->get('show', 'ArticleController@show', 'show');
+    $group->group(['prefix' => '{article_id}'], function (Router $group) {
+        $group->get('show', 'MenuController@show', 'show');
+    });
+});
+
 $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth', 'middleware' => ['user.not.connected']], function (Router $group) {
     $group->get('login', 'LoginController@showLoginForm', 'login');
     $group->post('login', 'LoginController@login');

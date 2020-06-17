@@ -51,6 +51,9 @@
         &-50 {
             margin-top: rem(50)!important;
         }
+        &-75 {
+            margin-top: rem(75)!important;
+        }
     }
 }
 
@@ -66,5 +69,8 @@
     }
     &-purple {
         color: $purple!important;
+    }
+    &-black {
+        color: $black!important;
     }
 }
