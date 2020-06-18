@@ -89,7 +89,7 @@
 
 
   --
-  -- Structure de la table `elementmenus`
+  -- Structure de la table `articles`
   --
   CREATE TABLE `dve_articles` (
     `id` int(11) NOT NULL,
@@ -104,3 +104,63 @@
 
   ALTER TABLE `dve_articles`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+
+--
+-- Structure de la table `horaires`
+--
+CREATE TABLE `dve_horaires` (
+  `id` int(11) NOT NULL,
+  `horaire` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `dve_horaires`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `dve_horaires`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+
+--
+-- Structure de la table `orders`
+--
+CREATE TABLE `dve_orders` (
+  `id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `horaire` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `prix` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `dve_orders`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `dve_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `dve_orders`
+  ADD CONSTRAINT `dve_orders_ibfk_1` FOREIGN KEY (`user`) REFERENCES `dve_users` (`id`),
+  ADD CONSTRAINT `dve_orders_ibfk_2` FOREIGN KEY (`horaire`) REFERENCES `dve_horaires` (`id`);
+
+
+
+--
+-- Structure de la table `menu_order`
+--
+CREATE TABLE `dve_menu_order` (
+  `id` int(11) NOT NULL,
+  `menu` int(11) NOT NULL,
+  `order` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `dve_menu_order`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `dve_menu_order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `dve_menu_order`
+  ADD CONSTRAINT `dve_menu_order_ibfk_1` FOREIGN KEY (`menu`) REFERENCES `dve_menus` (`id`),
+  ADD CONSTRAINT `dve_menu_order_ibfk_2` FOREIGN KEY (`order`) REFERENCES `dve_orders` (`id`);
