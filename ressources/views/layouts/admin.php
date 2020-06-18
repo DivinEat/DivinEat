@@ -29,9 +29,10 @@ use App\Core\Routing\Router;
                 <a href="<?= Router::getRouteByName('admin.articleindex')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Pages<img src='<?= url('img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.menuindex')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="" class="sidebar-link">Réservations<img src='<?= url('/img/icones/arrow.svg')?>'></a>
                 <a href="<?= Router::getRouteByName('admin.userindex')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.menuindex')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.horaireindex')->getUrl() ?>" class="sidebar-link">Horaires<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.orderindex')->getUrl() ?>" class="sidebar-link">Réservations<img src='<?= url('/img/icones/arrow.svg')?>'></a>
                 <a href="" class="sidebar-link">Paramètres<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                 <nav>
         </div>

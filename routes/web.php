@@ -80,6 +80,38 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
             $group->delete('', 'ArticleController@destroy', 'destroy');
         });
     });
+
+    $group->get('horaire.create', 'HoraireController@create', 'horairecreate');
+    $group->get('horaire.index', 'HoraireController@index', 'horaireindex');
+    $group->get('horaire.edit', 'HoraireController@edit', 'horaireedit');
+    $group->post('horaire.store', 'HoraireController@store', 'horairestore');
+    $group->post('horaire.update', 'HoraireController@update', 'horaireupdate');
+    $group->post('horaire.destroy', 'HoraireController@destroy', 'horairedestroy');
+
+    $group->group(['prefix' => 'horaire', 'as' => 'horaire.'], function (Router $group) {
+        $group->get('', 'HoraireController@index', 'index');
+        $group->group(['prefix' => '{horaire_id}'], function (Router $group) {
+            $group->get('edit', 'HoraireController@edit', 'edit');
+            $group->post('update', 'HoraireController@update', 'update');
+            $group->delete('', 'HoraireController@destroy', 'destroy');
+        });
+    });
+
+    $group->get('order.create', 'OrderController@create', 'ordercreate');
+    $group->get('order.index', 'OrderController@index', 'orderindex');
+    $group->get('order.edit', 'OrderController@edit', 'orderedit');
+    $group->post('order.store', 'OrderController@store', 'orderstore');
+    $group->post('order.update', 'OrderController@update', 'orderupdate');
+    $group->post('order.destroy', 'OrderController@destroy', 'orderdestroy');
+
+    $group->group(['prefix' => 'order', 'as' => 'order.'], function (Router $group) {
+        $group->get('', 'OrderController@index', 'index');
+        $group->group(['prefix' => '{order_id}'], function (Router $group) {
+            $group->get('edit', 'OrderController@edit', 'edit');
+            $group->post('update', 'OrderController@update', 'update');
+            $group->delete('', 'OrderController@destroy', 'destroy');
+        });
+    });
 });
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');
