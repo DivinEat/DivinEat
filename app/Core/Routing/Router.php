@@ -8,7 +8,7 @@ class Router
 {
     private static Collection $routes;
 
-    protected array $params = ['prefix' => '', 'as' => '', 'namespace' => '', 'middleware' => []];
+    protected array $params = ['prefix' => '/', 'as' => '', 'namespace' => '', 'middleware' => []];
 
     public function __construct(array $params = [])
     {
