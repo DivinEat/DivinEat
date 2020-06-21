@@ -1,5 +1,3 @@
-<?php use App\Core\Routing\Router; ?>
-
 <div class="row">
     <div class="col-sm-12">
         <div class="col-inner">
