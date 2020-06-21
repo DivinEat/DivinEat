@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Liste des horaires</h3>
-                    <a href="<?= Router::getRouteByName('admin.horairecreate')->getUrl() ?>" class="btn btn-add">Ajouter</a>
+                    <a href="<?= Router::getRouteByName('admin.horaire.create')->getUrl() ?>" class="btn btn-add">Ajouter</a>
                 </div>
                 <div class="box-body">
                     <?php $this->addModal("table_show", $configTableHoraire); ?>

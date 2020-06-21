@@ -8,7 +8,7 @@
                     <h3 class="box-title">Ajouter un article</h3>
                 </div>
                 <div class="box-body">
-                    <form method="POST" action="<?= Router::getRouteByName('admin.articlestore')->getUrl() ?>" id="article-form" class="admin-form">
+                    <form method="POST" action="<?= Router::getRouteByName('admin.article.store')->getUrl() ?>" id="article-form" class="admin-form">
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label>Titre</label>
@@ -27,7 +27,7 @@
                         
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <a href="<?= Router::getRouteByName('admin.articleindex')->getUrl() ?>" class="btn btn-default">Annuler</a>
+                                <a href="<?= Router::getRouteByName('admin.article.index')->getUrl() ?>" class="btn btn-default">Annuler</a>
                                 <input type="submit" class="btn btn-primary" value="Envoyer"/>
                             </div>
                         </div>

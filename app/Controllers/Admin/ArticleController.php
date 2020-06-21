@@ -46,7 +46,7 @@ class ArticleController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = 20;
+        $id = $args["article_id"];
 
         $articleManager = new ArticleManager();
         $article = $articleManager->find($id);
@@ -62,10 +62,8 @@ class ArticleController extends Controller
 
     public function destroy(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
         $manager = new ArticleManager();
-        $manager->delete($data["id"]);
+        $manager->delete($args["article_id"]);
 
         Router::redirect('admin.articleindex');
     }

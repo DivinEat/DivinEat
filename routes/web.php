@@ -37,23 +37,19 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
     $group->post('menu.update', 'MenuController@update', 'menudupdate');
     $group->post('menu.destroy', 'MenuController@destroy', 'menudestroy');
     $group->post('menu.store', 'MenuController@store', 'menustore');
-
+    
     $group->group(['prefix' => 'menu', 'as' => 'menu.'], function (Router $group) {
         $group->get('', 'MenuController@index', 'index');
         $group->get('create', 'MenuController@create', 'create');
-        $group->post('create', 'MenuController@store');
+        $group->post('store', 'MenuController@store', 'store');
         $group->group(['prefix' => '{menu_id}'], function (Router $group) {
-            $group->get('show', 'MenuController@show', 'show');
-            $group->get('edit', 'MenuController@edit', 'edit');
-            $group->put('edit', 'MenuController@update');
-            $group->delete('', 'MenuController@destroy', 'destroy');
+            $group->group(['prefix' => '{categorie_id}'], function (Router $group) {
+                $group->get('edit', 'MenuController@edit', 'edit');
+                $group->post('update', 'MenuController@update', 'update');
+                $group->delete('', 'MenuController@destroy', 'destroy');
+            });
         });
     });
-
-    $group->get('user.index', 'UserController@index', 'userindex');
-    $group->get('user.edit', 'UserController@edit', 'useredit');
-    $group->post('user.update', 'UserController@update', 'userdupdate');
-    $group->post('user.destroy', 'UserController@destroy', 'userdestroy');
 
     $group->group(['prefix' => 'user', 'as' => 'user.'], function (Router $group) {
         $group->get('', 'UserController@index', 'index');
@@ -64,16 +60,10 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
         });
     });
 
-    $group->get('article.create', 'ArticleController@create', 'articlecreate');
-    $group->get('article.index', 'ArticleController@index', 'articleindex');
-    $group->get('article.edit', 'ArticleController@edit', 'articleedit');
-    $group->post('article.store', 'ArticleController@store', 'articlestore');
-    $group->post('article.update', 'ArticleController@update', 'articleupdate');
-    $group->post('article.destroy', 'ArticleController@destroy', 'articledestroy');
-
     $group->group(['prefix' => 'article', 'as' => 'article.'], function (Router $group) {
         $group->get('', 'ArticleController@index', 'index');
         $group->get('create', 'ArticleController@create', 'create');
+        $group->post('store', 'ArticleController@store', 'store');
         $group->group(['prefix' => '{article_id}'], function (Router $group) {
             $group->get('edit', 'ArticleController@edit', 'edit');
             $group->post('update', 'ArticleController@update', 'update');
@@ -81,15 +71,10 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
         });
     });
 
-    $group->get('horaire.create', 'HoraireController@create', 'horairecreate');
-    $group->get('horaire.index', 'HoraireController@index', 'horaireindex');
-    $group->get('horaire.edit', 'HoraireController@edit', 'horaireedit');
-    $group->post('horaire.store', 'HoraireController@store', 'horairestore');
-    $group->post('horaire.update', 'HoraireController@update', 'horaireupdate');
-    $group->post('horaire.destroy', 'HoraireController@destroy', 'horairedestroy');
-
     $group->group(['prefix' => 'horaire', 'as' => 'horaire.'], function (Router $group) {
         $group->get('', 'HoraireController@index', 'index');
+        $group->get('create', 'HoraireController@create', 'create');
+        $group->post('store', 'HoraireController@store', 'store');
         $group->group(['prefix' => '{horaire_id}'], function (Router $group) {
             $group->get('edit', 'HoraireController@edit', 'edit');
             $group->post('update', 'HoraireController@update', 'update');
@@ -97,15 +82,10 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
         });
     });
 
-    $group->get('order.create', 'OrderController@create', 'ordercreate');
-    $group->get('order.index', 'OrderController@index', 'orderindex');
-    $group->get('order.edit', 'OrderController@edit', 'orderedit');
-    $group->post('order.store', 'OrderController@store', 'orderstore');
-    $group->post('order.update', 'OrderController@update', 'orderupdate');
-    $group->post('order.destroy', 'OrderController@destroy', 'orderdestroy');
-
     $group->group(['prefix' => 'order', 'as' => 'order.'], function (Router $group) {
         $group->get('', 'OrderController@index', 'index');
+        $group->get('create', 'OrderController@create', 'create');
+        $group->post('store', 'OrderController@store', 'store');
         $group->group(['prefix' => '{order_id}'], function (Router $group) {
             $group->get('edit', 'OrderController@edit', 'edit');
             $group->post('update', 'OrderController@update', 'update');

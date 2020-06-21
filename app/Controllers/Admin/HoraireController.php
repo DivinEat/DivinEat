@@ -50,7 +50,7 @@ class HoraireController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = 2;
+        $id = $args["horaire_id"];
 
         if(isset($id)){
             $horaireManager = new HoraireManager();
@@ -68,7 +68,7 @@ class HoraireController extends Controller
         $data = $_POST;
 
         $horaireManager = new HoraireManager();
-        $horaire = $horaireManager->find($data["id"]);
+        $horaire = $horaireManager->find($args["horaire_id"]);
         
         $horaire->setHoraire($data["horaire"]);
 
@@ -79,10 +79,8 @@ class HoraireController extends Controller
 
     public function destroy(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
         $manager = new HoraireManager();
-        $manager->delete($data["id"]);
+        $manager->delete($args["horaire_id"]);
 
         Router::redirect('admin.horaireindex');
     }

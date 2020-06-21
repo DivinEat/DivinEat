@@ -130,8 +130,8 @@ class User extends Model implements ModelInterface
                 "date_inserted" => $user->getDate_inserted(),
                 "status" => $user->getStatus(),
                 "role" => $role->getLibelle(),
-                "edit"=> Router::getRouteByName('admin.useredit'),
-                "destroy"=> Router::getRouteByName('admin.userdestroy')
+                "edit"=> Router::getRouteByName('admin.user.edit', $user->getId()),
+                "destroy"=> Router::getRouteByName('admin.user.destroy', $user->getId())
             ];
         }
 
@@ -181,14 +181,14 @@ class User extends Model implements ModelInterface
         return [
             "config"=>[
                 "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.userdupdate'),
+                "action"=> Router::getRouteByName('admin.user.update', $object->getId()),
                 "class"=>"admin-form",
                 "id"=>"formAddUser",
                 "submit"=>[
                     "btn-primary"=>"Envoyer"
                 ],
                 "annuler"=>[
-                    "action"=> Router::getRouteByName('admin.userindex'),
+                    "action"=> Router::getRouteByName('admin.user.index'),
                     "class"=>"btn btn-default",
                     "text"=>"Retour"
                 ]

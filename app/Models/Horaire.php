@@ -49,8 +49,8 @@ class Horaire extends Model implements ModelInterface
             $tabHoraires[] = [
                 "id" => $horaire->getId(),
                 "horaire" => $horaire->getHoraire(),
-                "edit"=> Router::getRouteByName('admin.horaireedit'),
-                "destroy"=> Router::getRouteByName('admin.horairedestroy')
+                "edit"=> Router::getRouteByName('admin.horaire.edit', $horaire->getId()),
+                "destroy"=> Router::getRouteByName('admin.horaire.destroy', $horaire->getId())
             ];
         }
 
@@ -80,14 +80,14 @@ class Horaire extends Model implements ModelInterface
         return [
             "config"=>[
                 "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.horairestore'),
+                "action"=> Router::getRouteByName('admin.horaire.store'),
                 "class"=>"admin-form",
                 "id"=>"formAddArticle",
                 "submit"=>[
                     "btn-primary"=>"Envoyer"
                 ],
                 "annuler"=>[
-                    "action"=> Router::getRouteByName('admin.horaireindex'),
+                    "action"=> Router::getRouteByName('admin.horaire.index'),
                     "class"=>"btn btn-default",
                     "text"=>"Retour"
                 ]
@@ -108,14 +108,14 @@ class Horaire extends Model implements ModelInterface
         return [
             "config"=>[
                 "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.horaireupdate'),
+                "action"=> Router::getRouteByName('admin.horaire.update', $object->getId()),
                 "class"=>"admin-form",
                 "id"=>"formAddMenu",
                 "submit"=>[
                     "btn-primary"=>"Envoyer"
                 ],
                 "annuler"=>[
-                    "action"=> Router::getRouteByName('admin.horaireindex'),
+                    "action"=> Router::getRouteByName('admin.horaire.index'),
                     "class"=>"btn btn-default",
                     "text"=>"Retour"
                 ]
