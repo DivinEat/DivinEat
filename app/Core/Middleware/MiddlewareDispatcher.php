@@ -28,7 +28,8 @@ class MiddlewareDispatcher
         if ($this->tip instanceof ControllerMiddleware)
         {
             $methodName = $this->tip->getControllerMethod();
-            return $this->tip->$methodName($request, new Response(), $this->tip->getArgs());
+
+            return $this->tip->$methodName($request, new Response(), $request->getRouteArgs());
         }
 
         return $this->tip->run($request, new Response());
@@ -64,8 +65,6 @@ class MiddlewareDispatcher
         $controller = new $controllerName($this->container);
         $this->addHandler($controller);
         $controller->setControllerMethod($this->request->getCurrentRoute()->getMethod());
-        //TODO : Ajouter les arguments.
-        $controller->setArgs([]);
     }
 
     protected function getMiddleware(string $middlewareName): ?string

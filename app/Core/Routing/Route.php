@@ -46,6 +46,27 @@ class Route
         );
     }
 
+    public function getRouteArgs(): array
+    {
+        if ($this->countNecessaryArguments() === 0)
+            return [];
+
+        if (preg_match_all('/' . $this->regexPath . '/', $_SERVER['REQUEST_URI'], $matchedArgs) !== 1)
+            throw new \Exception('Impossible de récupérer les arguments.');
+        array_shift($matchedArgs);
+
+        preg_match_all('/{([a-z_]*)}/', $this->path, $matchedargsName);
+
+        if (count($matchedArgs) !== count($matchedargsName))
+            throw new \Exception('Le nombre d\'arguments et le nombre de nom d\'argmuents ne correspondent pas.');
+
+        $args = [];
+        for ($i = 0; $i < count($matchedArgs); $i++)
+            array_push($args, [$matchedargsName[$i][1] => $matchedArgs[$i][0]]);
+
+        return $args;
+    }
+
     public function setArgs($args = []): Route
     {
         if ($this->countNecessaryArguments() === 0)

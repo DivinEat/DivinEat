@@ -58,15 +58,4 @@ class Application
 
         include $routeFile;
     }
-
-//    protected function getCurrentRoute(Request $request, Response $response): ?Response
-//    {
-//        $controllerName =  'App\\Controllers\\' . $request->getCurrentRoute()->getController();
-//        $methodName = $request->getCurrentRoute()->getMethod();
-//
-//        $controller = new $controllerName;
-//
-//        return $controller->$methodName();
-//    }
-
 }
