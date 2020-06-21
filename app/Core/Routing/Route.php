@@ -126,7 +126,7 @@ class Route
     protected function mergeRouteUrlWithArgs(array $args): Route
     {
         foreach ($args as $arg)
-            $this->path = preg_replace('/\{[a-z]*\}/', $arg, $this->path);
+            $this->path = preg_replace('/\{[_a-z]*\}/', $arg, $this->path);
 
         return $this;
     }
