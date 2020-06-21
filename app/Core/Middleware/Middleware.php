@@ -24,7 +24,7 @@ abstract class Middleware implements Handler
         if ($this->next instanceof ControllerMiddleware)
         {
             $methodName = $this->next->getControllerMethod();
-            return $this->next->$methodName($request, $response,$this->next->getArgs());
+            return $this->next->$methodName($request, $response, $request->getRouteArgs());
         }
 
         return $this->handle($request, $response, $this->next->run());

@@ -18,4 +18,9 @@ class Request
     {
         return $this->route;
     }
+
+    public function getRouteArgs(): array
+    {
+        return $this->route->getRouteArgs();
+    }
 }

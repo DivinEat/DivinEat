@@ -21,16 +21,6 @@ abstract class ControllerMiddleware extends Middleware
         return $this->controllerMethod;
     }
 
-    public function setArgs(array $args)
-    {
-        $this->args = $args;
-    }
-
-    public function getArgs(): array
-    {
-        return $this->args;
-    }
-
     public function handle(Request $request, Response $response, callable $handler)
     {
         return $this->$this->controllerMethod($request);
