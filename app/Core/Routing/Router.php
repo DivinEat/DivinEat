@@ -109,7 +109,7 @@ class Router
     {
         foreach (self::getRoutes()->getIterator() as $route)
             if ($route->name === $routeName)
-                return $route->setArgs($args);
+                return (clone $route)->setArgs($args);
 
         return null;
     }
@@ -118,7 +118,7 @@ class Router
     {
         foreach (self::getRoutes()->getIterator() as $route)
             if (preg_match('/^' . $route->regexPath . '$/', $requestUri))
-                return $route;
+                return clone $route;
 
         return null;
     }
@@ -127,7 +127,7 @@ class Router
     {
         foreach (self::getRoutes()->getIterator() as $route)
             if (preg_match('/^' . $route->regexPath . '$/', $requestUri) && $route->getType() === $type)
-                return $route;
+                return clone $route;
 
         return null;
     }
