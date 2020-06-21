@@ -120,7 +120,7 @@ class Route
 
     protected function countNecessaryArguments(): int
     {
-        return preg_match_all('/\{[a-z]*\}/', $this->path);
+        return preg_match_all('/\{[_a-z]*\}/', $this->path);
     }
 
     protected function mergeRouteUrlWithArgs(array $args): Route
