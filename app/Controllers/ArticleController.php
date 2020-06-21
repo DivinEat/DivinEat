@@ -29,9 +29,9 @@ class ArticleController extends Controller
         $myView->assign("articles", $articles);
     }
 
-    public function show(Request $request, Response $response)
+    public function show(Request $request, Response $response, array $args)
     {
-        $id = 18;
+        $id = $args["article_id"];
 
         $articleManager = new ArticleManager();
         $article = $articleManager->find($id);

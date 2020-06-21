@@ -12,10 +12,8 @@ $router->group(['prefix' => 'contact', 'as' => 'contact.', 'namespace' => '', 'm
 
 $router->group(['prefix' => 'actualites', 'as' => 'actualites.', 'namespace' => '', 'middleware' => ['user.not.connected']], function (Router $group) {
     $group->get('', 'ArticleController@index', 'index');
-
-    $group->get('show', 'ArticleController@show', 'show');
     $group->group(['prefix' => '{article_id}'], function (Router $group) {
-        $group->get('show', 'MenuController@show', 'show');
+        $group->get('show', 'ArticleController@show', 'show');
     });
 });
 
