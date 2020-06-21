@@ -55,14 +55,15 @@ class Route
             throw new \Exception('Impossible de récupérer les arguments.');
         array_shift($matchedArgs);
 
-        preg_match_all('/{([a-z_]*)}/', $this->path, $matchedargsName);
+        preg_match_all('/{([_a-z]*)}/', $this->path, $matchedargsName);
+        array_shift($matchedargsName);
 
-        if (count($matchedArgs) !== count($matchedargsName))
+        if (count($matchedArgs) !== count($matchedargsName[0]))
             throw new \Exception('Le nombre d\'arguments et le nombre de nom d\'argmuents ne correspondent pas.');
 
         $args = [];
         for ($i = 0; $i < count($matchedArgs); $i++)
-            array_push($args, [$matchedargsName[$i][1] => $matchedArgs[$i][0]]);
+           $args = array_merge($args, [$matchedargsName[0][$i] => $matchedArgs[$i][0]]);
 
         return $args;
     }
@@ -119,7 +120,7 @@ class Route
 
     protected function countNecessaryArguments(): int
     {
-        return preg_match('/\{[a-z]*\}/', $this->path);
+        return preg_match_all('/\{[a-z]*\}/', $this->path);
     }
 
     protected function mergeRouteUrlWithArgs(array $args): Route
