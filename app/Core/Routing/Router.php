@@ -44,16 +44,16 @@ class Router
     {
         $params['as'] = isset($params['as']) ? $this->params['as'] . $params['as'] : $this->params['as'];
 
-        $params['namespace'] = isset($params['namespace']) ? $this->params['namespace'] . preg_replace(
+        $params['namespace'] = isset($params['namespace']) ? preg_replace(
             '/[\\\]{2,}/',
             '\\',
-            $params['namespace'] . '\\'
+            $this->params['namespace'] . $params['namespace'] . '\\'
             ) : $this->params['namespace'];
 
-        $params['prefix'] = isset($params['prefix']) ? $this->params['prefix'] . preg_replace(
+        $params['prefix'] = isset($params['prefix']) ? preg_replace(
             '/[\/]{2,}/',
             '/',
-            '/' . $params['prefix'] . '/'
+            $this->params['prefix'] . '/' . $params['prefix'] . '/'
             ) : $this->params['prefix'];
 
         $params['middleware'] = isset($params['middleware']) && is_array($params['middleware']) ? array_merge(
