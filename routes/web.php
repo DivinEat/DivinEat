@@ -112,6 +112,11 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
             $group->delete('', 'OrderController@destroy', 'destroy');
         });
     });
+
+    $group->group(['prefix' => 'configuration', 'as' => 'configuration.'], function (Router $group) {
+        $group->get('configuration', 'ConfigurationController@index', 'index');
+        $group->post('configuration.store', 'ConfigurationController@store', 'store');
+    });
 });
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');

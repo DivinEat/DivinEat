@@ -183,7 +183,7 @@ class User extends Model implements ModelInterface
                 "method"=>"POST", 
                 "action"=> Router::getRouteByName('admin.userdupdate'),
                 "class"=>"admin-form",
-                "id"=>"formAddMenu",
+                "id"=>"formAddUser",
                 "submit"=>[
                     "btn-primary"=>"Envoyer"
                 ],

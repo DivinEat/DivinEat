@@ -82,7 +82,7 @@ class Horaire extends Model implements ModelInterface
                 "method"=>"POST", 
                 "action"=> Router::getRouteByName('admin.horairestore'),
                 "class"=>"admin-form",
-                "id"=>"formAddMenu",
+                "id"=>"formAddArticle",
                 "submit"=>[
                     "btn-primary"=>"Envoyer"
                 ],

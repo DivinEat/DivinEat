@@ -164,3 +164,27 @@ ALTER TABLE `dve_menu_order`
 ALTER TABLE `dve_menu_order`
   ADD CONSTRAINT `dve_menu_order_ibfk_1` FOREIGN KEY (`menu`) REFERENCES `dve_menus` (`id`),
   ADD CONSTRAINT `dve_menu_order_ibfk_2` FOREIGN KEY (`order`) REFERENCES `dve_orders` (`id`);
+
+
+
+--
+-- Structure de la table `menu_order`
+--
+CREATE TABLE `dve_configurations` (
+  `id` int(11) NOT NULL,
+  `libelle` varchar(45) NOT NULL,
+  `infos` varchar(255)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `dve_configurations`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `dve_configurations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+INSERT INTO `dve_configurations` (`libelle`) VALUES
+('nom_du_site'),
+('mail'),
+('facebook'),
+('instagram'),
+('linkedin');
