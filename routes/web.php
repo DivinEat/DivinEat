@@ -114,8 +114,8 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
     });
 
     $group->group(['prefix' => 'configuration', 'as' => 'configuration.'], function (Router $group) {
-        $group->get('configuration', 'ConfigurationController@index', 'index');
-        $group->post('configuration.store', 'ConfigurationController@store', 'store');
+        $group->get('', 'ConfigurationController@index', 'index');
+        $group->post('store', 'ConfigurationController@store', 'store');
     });
 });
 

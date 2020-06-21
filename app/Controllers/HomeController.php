@@ -12,6 +12,7 @@ use App\Models\Article;
 use App\Models\ElementMenu;
 use App\Managers\MenuManager;
 use App\Managers\ElementMenuManager;
+use App\Managers\ConfigurationManager;
 
 class HomeController extends Controller
 {
@@ -32,9 +33,13 @@ class HomeController extends Controller
             ->getQuery()
             ->getArrayResult(Article::class);
 
+        $configManager = new ConfigurationManager();
+        $configs = $configManager->findAll();
+
         $myView = new View("home", "main");
         $myView->assign("menus", $menus);
         $myView->assign("articles", $articles);
+        $myView->assign("configs", $configs);
     }
 
     public function menus(Request $request, Response $response)

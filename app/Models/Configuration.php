@@ -5,13 +5,12 @@ namespace App\Models;
 use App\Core\Model\Model;
 use App\Core\Model\ModelInterface;
 use App\Core\Routing\Router;
-use App\Models\ElementMenu;
 
 class Configuration extends Model implements ModelInterface
 {
     protected $id;
     protected $libelle;
-    protected $option;
+    protected $info;
 
     public function __construct()
     {
@@ -33,9 +32,9 @@ class Configuration extends Model implements ModelInterface
         $this->libelle=$libelle;
         return $this;
     }
-    public function setOption($option)
+    public function setInfo($info)
     {
-        $this->option=$option;
+        $this->info=$info;
         return $this;
     }
 
@@ -47,12 +46,17 @@ class Configuration extends Model implements ModelInterface
     {
         return $this->libelle;
     }
-    public function getOption()
+    public function getInfo()
     {
-        return $this->option;
+        return $this->info;
     }
 
     public static function getAddConfigForm($configs){
+        $tab = [];
+        foreach($configs as $config){
+            $tab[$config->getLibelle()] = $config->getInfo();
+        }
+
         return [
             "config"=>[
                 "method"=>"POST", 
@@ -67,26 +71,31 @@ class Configuration extends Model implements ModelInterface
                 "nom_du_site"=>[
                     "type"=>"text",
                     "label"=>"Nom du site",
+                    "value"=>$tab["nom_du_site"],
                     "class"=>"form-control"
                 ],
                 "email"=>[
                     "type"=>"email",
                     "label"=>"Email du site",
+                    "value"=>$tab["email"],
                     "class"=>"form-control"
                 ],
                 "facebook"=>[
                     "type"=>"text",
                     "label"=>"Facebook",
+                    "value"=>$tab["facebook"],
                     "class"=>"form-control"
                 ],
                 "instagram"=>[
                     "type"=>"text",
                     "label"=>"Instagram",
+                    "value"=>$tab["instagram"],
                     "class"=>"form-control"
                 ],
                 "linkedin"=>[
                     "type"=>"text",
                     "label"=>"Linkedin",
+                    "value"=>$tab["linkedin"],
                     "class"=>"form-control"
                 ]
             ]

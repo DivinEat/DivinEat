@@ -173,7 +173,7 @@ ALTER TABLE `dve_menu_order`
 CREATE TABLE `dve_configurations` (
   `id` int(11) NOT NULL,
   `libelle` varchar(45) NOT NULL,
-  `infos` varchar(255)
+  `info` varchar(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `dve_configurations`
@@ -184,7 +184,7 @@ ALTER TABLE `dve_configurations`
 
 INSERT INTO `dve_configurations` (`libelle`) VALUES
 ('nom_du_site'),
-('mail'),
+('email'),
 ('facebook'),
 ('instagram'),
 ('linkedin');
