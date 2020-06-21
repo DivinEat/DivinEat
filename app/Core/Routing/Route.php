@@ -46,6 +46,22 @@ class Route
         );
     }
 
+    public function setArgs($args = []): Route
+    {
+        if ($this->countNecessaryArguments() === 0)
+            return $this;
+
+        if (! is_array($args))
+            $args = [$args];
+
+        if (count($args) !== $this->countNecessaryArguments())
+            throw new \Exception('Mauvais nombre d\'arguments passé pour la route.');
+
+        $this->mergeRouteUrlWithArgs($args);
+
+        return $this;
+    }
+
     public function getUrl(): string
     {
         $url = $_SERVER['HTTP_HOST'] . $this->path;
@@ -78,5 +94,18 @@ class Route
     public function getType(): string
     {
         return $this->type;
+    }
+
+    protected function countNecessaryArguments(): int
+    {
+        return preg_match('/\{[a-z]*\}/', $this->path);
+    }
+
+    protected function mergeRouteUrlWithArgs(array $args): Route
+    {
+        foreach ($args as $arg)
+            $this->path = preg_replace('/\{[a-z]*\}/', $arg, $this->path);
+
+        return $this;
     }
 }

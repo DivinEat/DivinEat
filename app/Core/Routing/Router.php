@@ -105,11 +105,11 @@ class Router
         return $routeList;
     }
 
-    public static function getRouteByName(string $routeName): ?Route
+    public static function getRouteByName(string $routeName, $args = []): ?Route
     {
         foreach (self::getRoutes()->getIterator() as $route)
             if ($route->name === $routeName)
-                return $route;
+                return $route->setArgs($args);
 
         return null;
     }
@@ -134,11 +134,10 @@ class Router
 
     public static function redirect(string $routeName, array $args = []): void
     {
-        //TODO : Ajouter les redirections pour les routes avec arguments
         $route = self::getRouteByName($routeName);
         if ($route === null)
             throw new \Exception('La redirection est impossible, la route n\'existe pas');
 
-        header('Location: ' . $route->getUrl());
+        header('Location: ' . $route->setArgs($args)->getUrl());
     }
 }
