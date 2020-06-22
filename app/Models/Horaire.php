@@ -82,7 +82,7 @@ class Horaire extends Model implements ModelInterface
                 "method"=>"POST", 
                 "action"=> Router::getRouteByName('admin.horaire.store'),
                 "class"=>"admin-form",
-                "id"=>"formAddArticle",
+                "id"=>"formAddHoraire",
                 "submit"=>[
                     "btn-primary"=>"Envoyer"
                 ],
@@ -110,7 +110,7 @@ class Horaire extends Model implements ModelInterface
                 "method"=>"POST", 
                 "action"=> Router::getRouteByName('admin.horaire.update', $object->getId()),
                 "class"=>"admin-form",
-                "id"=>"formAddMenu",
+                "id"=>"formAddHoraire",
                 "submit"=>[
                     "btn-primary"=>"Envoyer"
                 ],

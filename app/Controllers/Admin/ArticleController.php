@@ -25,7 +25,10 @@ class ArticleController extends Controller
 
     public function create(Request $request, Response $response, array $args)
     {
+        $configFormArticle = Article::getAddArticleForm();
+
         $myView = new View("admin.article.create", "admin");
+        $myView->assign("configFormArticle", $configFormArticle);
     }
 
     public function store(Request $request, Response $response, array $args)
@@ -51,13 +54,23 @@ class ArticleController extends Controller
         $articleManager = new ArticleManager();
         $article = $articleManager->find($id);
 
+        $configFormArticle = Article::getEditArticleForm($article);
+
         $myView = new View("admin.article.edit", "admin");
-        $myView->assign("article", $article);
+        $myView->assign("configFormArticle", $configFormArticle);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
-        echo "<pre>", var_dump($_POST), "</pre>";
+        $data = $_POST;
+
+        $manager = new ArticleManager();
+        $article = $manager->find($args["article_id"]);
+        $article->setTitle($data["title"]);
+        $article->setDate_updated(date('Y-m-d H:i:s'));
+        $manager->save($article);
+
+        Router::redirect('admin.article.index');
     }
 
     public function destroy(Request $request, Response $response, array $args)

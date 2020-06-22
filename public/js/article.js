@@ -30,7 +30,7 @@ var editor = new EditorJS({
     }
 });
 
-$("#article-form").submit(function(event) {
+$("#formAddArticle").submit(function(event) {
     editor.save().then((outputData) => {
         $("#editor-content").val(JSON.stringify(outputData).replace(/"/g, "'"));
     }).catch((error) => {
