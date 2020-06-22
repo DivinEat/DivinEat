@@ -28,13 +28,6 @@ $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth', 'mid
 
 $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected']], function (Router $group) {
     $group->get('', 'DashboardController@index', 'index');
-
-    $group->get('menu.index', 'MenuController@index', 'menuindex');
-    $group->get('menu.create', 'MenuController@create', 'menucreate');
-    $group->get('menu.edit', 'MenuController@edit', 'menuedit');
-    $group->post('menu.update', 'MenuController@update', 'menudupdate');
-    $group->post('menu.destroy', 'MenuController@destroy', 'menudestroy');
-    $group->post('menu.store', 'MenuController@store', 'menustore');
     
     $group->group(['prefix' => 'menu', 'as' => 'menu.'], function (Router $group) {
         $group->get('', 'MenuController@index', 'index');
