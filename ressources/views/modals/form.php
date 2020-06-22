@@ -30,7 +30,10 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 						<?php foreach ($configField["values"] as $value): ?>
 							<option value="<?= $value["value"]?>" <?= $value["selected"] ?>><?= $value["text"] ?></option>	
 						<?php endforeach;?>
-					</select>	
+					</select>
+				<?php elseif(!empty($configField["type"]) && $configField["type"] == "other"):
+					echo (isset($configField["value"]))?$configField["value"]:''
+				?>
 				<?php else:?>
 					<input 
 						value="<?= (isset($configField["value"]) && $configField["type"]!="password")?$configField["value"]:'' ?>"
