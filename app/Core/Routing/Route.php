@@ -129,7 +129,6 @@ class Route
         foreach ($args as $arg)
             $this->path = preg_replace('/\{[_a-z]*\}/', $arg, $this->path, 1);
 
-        var_dump($this->path);die;
         return $this;
     }
 }
