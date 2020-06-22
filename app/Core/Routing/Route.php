@@ -42,7 +42,7 @@ class Route
         $this->regexPath = str_replace(
             '/',
             '\/',
-            preg_replace('/\{[a-z_]{1,}\}/i', '([0-9a-z\-])', $this->path)
+            preg_replace('/\{[a-z_]{1,}\}/i', '([0-9a-z\-]*)', $this->path)
         );
     }
 
