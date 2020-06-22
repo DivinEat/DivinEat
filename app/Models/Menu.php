@@ -159,7 +159,7 @@ class Menu extends Model implements ModelInterface
         return [
             "config"=>[
                 "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.menudupdate'),
+                "action"=> Router::getRouteByName('admin.menu.update'),
                 "class"=>"admin-form",
                 "id"=>"formAddMenu",
                 "submit"=>[

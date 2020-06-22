@@ -1,5 +1,9 @@
 <?php
 use App\Core\Routing\Router;
+use App\Managers\ConfigurationManager;
+
+$configManager = new ConfigurationManager();
+$configs = $configManager->findAll();
 ?>
 <!DOCTYPE html>
 <html>
