@@ -42,9 +42,35 @@ class ArticleController extends Controller
     }
 
     public function setJsonToHtml($content){
+        $content = str_replace("'", "\"", $content);
         $json = json_decode($content);
-        
-        $html = $content; //Traiter le json pour le transformer en HTML
+
+        $html = "";
+        foreach($json->blocks as $block){
+            switch($block->type){
+                case "header":
+                    $html .= "<h".$block->data->level.">".$block->data->text."</h".$block->data->level.">";
+                    break;
+                case "paragraph":
+                    $html .= "<p>".$block->data->text."</p>";
+                    break;
+                case "list":
+                    if($block->data->style == "ordered"){
+                        $html .= "<ol>";
+                    } else {
+                        $html .= "<ul>";
+                    }
+                    foreach($block->data->items as $value){
+                        $html .= "<li>$value</li>";
+                    }
+                    if($block->data->style == "ordered"){
+                        $html .= "</ol>";
+                    } else {
+                        $html .= "</ul>";
+                    }
+                    break;
+            }
+        }
 
         return $html;
     }

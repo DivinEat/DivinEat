@@ -10,7 +10,7 @@ use App\Core\Routing\Router;
             <div class="ligne"></div>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="col-inner show-article">
+                    <div class="col-inner">
                         <?= $article->getContent(); ?>
                     </div>
                 </div>

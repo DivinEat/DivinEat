@@ -1031,13 +1031,8 @@ footer .circle .up {
 }
 
 .article {
-  text-align: center;
   overflow: hidden;
   height: 6.25rem;
-}
-
-.show-article {
-  text-align: center;
 }
 
 .row {
