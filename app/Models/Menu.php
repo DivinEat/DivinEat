@@ -136,11 +136,11 @@ class Menu extends Model implements ModelInterface
         ];
     }
 
-    public static function getEditMenuForm(){
+    public static function getEditMenuForm($id){
         return [
             "config"=>[
                 "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.menu.update', 1),
+                "action"=> Router::getRouteByName('admin.menu.update', [$id, 1]),
                 "class"=>"admin-form",
                 "id"=>"formAddMenu",
                 "submit"=>[
@@ -155,11 +155,11 @@ class Menu extends Model implements ModelInterface
         ];
     }
 
-    public static function getEditElementMenuForm(){
+    public static function getEditElementMenuForm($id, $category){
         return [
             "config"=>[
                 "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.menu.update'),
+                "action"=> Router::getRouteByName('admin.menu.update', [$id, $category]),
                 "class"=>"admin-form",
                 "id"=>"formAddMenu",
                 "submit"=>[
