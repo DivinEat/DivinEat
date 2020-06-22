@@ -1,10 +1,24 @@
 <?php
 use App\Core\Routing\Router;
+use App\Managers\ConfigurationManager;
+
+$configManager = new ConfigurationManager();
+$configs = $configManager->findAll();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Front</title>
+    <title>
+        <?php 
+            foreach($configs as $config) { 
+                if($config->getLibelle() == "nom_du_site"){
+                    if($config->getInfo() != ""){
+                        echo $config->getInfo();
+                    }
+                }
+            } 
+        ?>
+    </title>
     <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     
@@ -48,9 +62,14 @@ use App\Core\Routing\Router;
     <div class="left">
         <div>
             <p><a href="<?= Router::getRouteByName('contact.index')->getUrl() ?>" target="_blank">Nous contacter</a></p>
-            <a href="#" target="_blank"><img src="<?= url('img/icones/linkedin.png') ?>"></a>
-            <a href="#" target="_blank"><img src="<?= url('img/icones/facebook.png') ?>"></a>
-            <a href="#" target="_blank"><img src="<?= url('img/icones/instagram.png') ?>"></a>
+            <?php foreach($configs as $config): 
+                if($config->getLibelle() == "facebook" || $config->getLibelle() == "instagram" || $config->getLibelle() == "linkedin"):
+                    if($config->getInfo() != ""): 
+                        $url = "img/icones/".$config->getLibelle().".png"; ?>
+                        <a href="<?= $config->getInfo() ?>" target="_blank"><img src="<?= url($url) ?>"></a>
+                    <?php endif; 
+                endif; 
+            endforeach ?>
         </div>
     </div>
     <div class="right">

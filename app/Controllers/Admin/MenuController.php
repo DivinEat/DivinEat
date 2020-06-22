@@ -94,14 +94,13 @@ class MenuController extends Controller
 
         $manager->save($object);
 
-        Router::redirect('admin.menucreate');
-
+        Router::redirect('admin.menu.create');
     }
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $categorie = 1;
-        $id = 7;
+        $categorie = $args["categorie_id"];
+        $id = $args["menu_id"];
 
         $elementMenuManager = new ElementMenuManager();
         $elementsMenu = $elementMenuManager->findAll();
@@ -146,18 +145,14 @@ class MenuController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-        $categorie = strtolower($data["categorie"]);
-        if($categorie == "entrée"){
-            $categorie = "entree";
-        }
+        $categorie = getCategorie($args["categorie_id"]);
 
         if($categorie == "menu"){
             $elementMenuManager = new ElementMenuManager();
             $manager = new MenuManager();
 
             $object = new Menu();
-            $object->setId($_POST["id"]);
+            $object->setId($args["menu_id"]);
 
             $object->setNom($data['nomMenu']);
 
@@ -175,7 +170,7 @@ class MenuController extends Controller
             $manager = new ElementMenuManager();
 
             $object = new ElementMenu();
-            $object->setId($_POST["id"]);
+            $object->setId($args["menu_id"]);
             $object->setCategorie($categorie);
             $object->setNom($data['nom']);
             $object->setDescription($data['description']);
@@ -184,16 +179,12 @@ class MenuController extends Controller
 
         $manager->save($object);
 
-        Router::redirect('admin.menuindex');
+        Router::redirect('admin.menu.index');
     }
 
     public function destroy(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-        $categorie = strtolower($data["categorie"]);
-        if($categorie == "entrée"){
-            $categorie = "entree";
-        }
+        $categorie = getCategorie($args["categorie_id"]);
 
         if($categorie == "menu"){
             $manager = new MenuManager();
@@ -212,14 +203,14 @@ class MenuController extends Controller
                     $menus->where('m.dessert = :id');
                     break;
             }
-            $menus->setParameter('id', $data["id"])->getQuery()->getArrayResult(Menu::class);
+            $menus->setParameter('id', $args["menu_id"])->getQuery()->getArrayResult(Menu::class);
             if(empty($menus)){
                 die("Merci de supprimer les menus qui utilisent cet élément de menu");
             }
         }
-        $manager->delete($data["id"]);
+        $manager->delete($args["menu_id"]);
 
-        Router::redirect('admin.menuindex');
+        Router::redirect('admin.menu.index');
     }
 
     public function calculPrixMenu($data){

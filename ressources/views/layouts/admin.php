@@ -1,6 +1,19 @@
 <?php
 use App\Core\Routing\Router;
+use App\Core\Builder\QueryBuilder;
+use App\Models\Configuration;
+
+$config =  (new QueryBuilder())
+    ->select('*')
+    ->from('configurations', 'c')
+    ->where("libelle = :nom")
+    ->setParameter('nom', 'nom_du_site')
+    ->getQuery()
+    ->getArrayResult(Configuration::class);
+
+$nom_du_site = $config[0]->getInfo();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,14 +39,14 @@ use App\Core\Routing\Router;
         <div class="col-inner sidebar">
             <nav class="sidebar-nav">
                 <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>" class="sidebar-link">Dashboard<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.articleindex')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/icones/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.article.index')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Pages<img src='<?= url('img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.userindex')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.menuindex')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.horaireindex')->getUrl() ?>" class="sidebar-link">Horaires<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.orderindex')->getUrl() ?>" class="sidebar-link">Réservations<img src='<?= url('/img/icones/arrow.svg')?>'></a>
-                <a href="" class="sidebar-link">Paramètres<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.user.index')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.menu.index')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.horaire.index')->getUrl() ?>" class="sidebar-link">Horaires<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.order.index')->getUrl() ?>" class="sidebar-link">Réservations<img src='<?= url('/img/icones/arrow.svg')?>'></a>
+                <a href="<?= Router::getRouteByName('admin.configuration.index')->getUrl() ?>" class="sidebar-link">Paramètres<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                 <nav>
         </div>
     </div>
@@ -44,22 +57,22 @@ use App\Core\Routing\Router;
                 <div class="col-inner navbar bg-white">
                     <div class="navbar-back">
                         <form class="navbar-search">
-                            <span class="search-icon"><img src="public/img/icones/search.png"></span>
+                            <span class="search-icon"><img src="<?= url('img/icones/search.png') ?>"></span>
                             <input class="form-control" type="text" placeholder="Recherche">
                         </form>
 
-                        <a class="computer" href="#">
-                            <img src="public/img/icones/computer.png">
-                            <span>DivinEat</span>
+                        <a class="computer" href="<?= Router::getRouteByName('home')->getUrl() ?>">
+                            <img src="<?= url('img/icones/computer.png') ?>">
+                            <span><?= $nom_du_site ?></span>
                         </a>
                     </div>
 
                     <div class="dropdown">
-                        <button class="btn-dropdown bg-white"><img src="public/img/icones/user.png"></button>
+                        <button class="btn-dropdown bg-white"><img src="<?= url('img/icones/user.png') ?>"></button>
                         <div class="dropdown-content">
-                            <a href="#"><img src="public/img/icones/profil.png"> Profil</a>
-                            <a href="#"><img src="public/img/icones/settings.png"> Paramètres</a><hr/>
-                            <a href="#"><img src="public/img/icones/logout.png"> Se déconnecter</a>
+                            <a href="#"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
+                            <a href="#"><img src="<?= url('img/icones/settings.png') ?>"> Paramètres</a><hr/>
+                            <a href="#"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
                         </div>
                     </div>
                 </div>

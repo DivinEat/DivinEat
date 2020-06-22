@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = 2;
+        $id = $args['user_id'];
 
         if(isset($id)){
             $userManager = new UserManager();
@@ -61,16 +61,14 @@ class UserController extends Controller
 
         $userManager->save($user);
 
-        Router::redirect('admin.userindex');
+        Router::redirect('admin.user.index');
     }
 
     public function destroy(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
         $manager = new UserManager();
-        $manager->delete($data["id"]);
+        $manager->delete($args["user_id"]);
 
-        Router::redirect('admin.userindex');
+        Router::redirect('admin.user.index');
     }
 }

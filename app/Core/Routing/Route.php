@@ -42,7 +42,7 @@ class Route
         $this->regexPath = str_replace(
             '/',
             '\/',
-            preg_replace('/\{[a-z_]{1,}\}/i', '([0-9a-z\-])', $this->path)
+            preg_replace('/\{[a-z_]{1,}\}/i', '([0-9a-z\-]*)', $this->path)
         );
     }
 
@@ -125,8 +125,9 @@ class Route
 
     protected function mergeRouteUrlWithArgs(array $args): Route
     {
+
         foreach ($args as $arg)
-            $this->path = preg_replace('/\{[_a-z]*\}/', $arg, $this->path);
+            $this->path = preg_replace('/\{[_a-z]*\}/', $arg, $this->path, 1);
 
         return $this;
     }

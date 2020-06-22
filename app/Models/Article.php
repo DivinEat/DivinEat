@@ -79,8 +79,8 @@ class Article extends Model implements ModelInterface
                 "title" => $article->getTitle(),
                 "date_inserted" => $article->getDate_inserted(),
                 "date_updated" => $article->getDate_updated(),
-                "edit"=> Router::getRouteByName('admin.articleedit'),
-                "destroy"=> Router::getRouteByName('admin.articledestroy')
+                "edit"=> Router::getRouteByName('admin.article.edit', $article->getId()),
+                "destroy"=> Router::getRouteByName('admin.article.destroy', $article->getId())
             ];
         }
 

@@ -2,7 +2,17 @@
 
 <div class="image-banner image-banner--text" style="background-image: url('img/banner.jpg')">
     <section>
-        <h1>Lorem ipsum dolor sit amet</h1>
+        <h1>
+            <?php 
+                foreach($configs as $config) { 
+                    if($config->getLibelle() == "nom_du_site"){
+                        if($config->getInfo() != ""){
+                            echo $config->getInfo();
+                        }
+                    }
+                } 
+            ?>
+        </h1>
     </section>
 </div>
 
