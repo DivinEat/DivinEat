@@ -220,8 +220,8 @@ class Menu extends Model implements ModelInterface
                 "plat" => $plat->getNom(),
                 "dessert" => $dessert->getNom(),
                 "prix" => $menu->getPrix(),
-                "edit"=> Router::getRouteByName('admin.menu.edit', $menu->getId(), 1),
-                "destroy"=> Router::getRouteByName('admin.menu.destroy', $menu->getId(), 1)
+                "edit"=> Router::getRouteByName('admin.menu.edit', [$menu->getId(), 1]),
+                "destroy"=> Router::getRouteByName('admin.menu.destroy', [$menu->getId(), 1])
             ];
         }
 
@@ -267,8 +267,8 @@ class Menu extends Model implements ModelInterface
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
                         "prix" => $elementMenu->getPrix(),
-                        "edit"=> Router::getRouteByName('admin.menu.edit', $elementMenu->getId(), 2),
-                        "destroy"=> Router::getRouteByName('admin.menu.destroy', $elementMenu->getId(), 2)
+                        "edit"=> Router::getRouteByName('admin.menu.edit', [$elementMenu->getId(), 2]),
+                        "destroy"=> Router::getRouteByName('admin.menu.destroy', [$elementMenu->getId(), 2])
                     ];
                     break;
                 case "plat":
@@ -277,8 +277,8 @@ class Menu extends Model implements ModelInterface
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
                         "prix" => $elementMenu->getPrix(),
-                        "edit"=> Router::getRouteByName('admin.menu.index', $elementMenu->getId(), 3),
-                        "destroy"=> Router::getRouteByName('admin.menu.destroy', $elementMenu->getId(), 3)
+                        "edit"=> Router::getRouteByName('admin.menu.index', [$elementMenu->getId(), 3]),
+                        "destroy"=> Router::getRouteByName('admin.menu.destroy', [$elementMenu->getId(), 3])
                     ];
                     break;
                 case "dessert":
@@ -287,8 +287,8 @@ class Menu extends Model implements ModelInterface
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
                         "prix" => $elementMenu->getPrix(),
-                        "edit"=> Router::getRouteByName('admin.menu.index', $elementMenu->getId(), 4),
-                        "destroy"=> Router::getRouteByName('admin.menu.destroy', $elementMenu->getId(), 4)
+                        "edit"=> Router::getRouteByName('admin.menu.index', [$elementMenu->getId(), 4]),
+                        "destroy"=> Router::getRouteByName('admin.menu.destroy', [$elementMenu->getId(), 4])
                     ];
                     break;
                 case "boisson":
@@ -297,8 +297,8 @@ class Menu extends Model implements ModelInterface
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
                         "prix" => $elementMenu->getPrix(),
-                        "edit"=> Router::getRouteByName('admin.menu.index', $elementMenu->getId(), 5),
-                        "destroy"=> Router::getRouteByName('admin.menu.destroy', $elementMenu->getId(), 5)
+                        "edit"=> Router::getRouteByName('admin.menu.index', [$elementMenu->getId(), 5]),
+                        "destroy"=> Router::getRouteByName('admin.menu.destroy', [$elementMenu->getId(), 5])
                     ];
                     break;
             }

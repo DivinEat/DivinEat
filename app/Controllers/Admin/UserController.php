@@ -61,7 +61,7 @@ class UserController extends Controller
 
         $userManager->save($user);
 
-        Router::redirect('admin.userindex');
+        Router::redirect('admin.user.index');
     }
 
     public function destroy(Request $request, Response $response, array $args)
@@ -69,6 +69,6 @@ class UserController extends Controller
         $manager = new UserManager();
         $manager->delete($args["user_id"]);
 
-        Router::redirect('admin.userindex');
+        Router::redirect('admin.user.index');
     }
 }

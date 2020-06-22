@@ -44,7 +44,7 @@ class HoraireController extends Controller
         $manager = new HoraireManager();
         $manager->save($object);
 
-        Router::redirect('admin.horairecreate');
+        Router::redirect('admin.horaire.create');
 
     }
 
@@ -74,7 +74,7 @@ class HoraireController extends Controller
 
         $horaireManager->save($horaire);
 
-        Router::redirect('admin.horaireindex');
+        Router::redirect('admin.horaire.index');
     }
 
     public function destroy(Request $request, Response $response, array $args)
@@ -82,6 +82,6 @@ class HoraireController extends Controller
         $manager = new HoraireManager();
         $manager->delete($args["horaire_id"]);
 
-        Router::redirect('admin.horaireindex');
+        Router::redirect('admin.horaire.index');
     }
 }

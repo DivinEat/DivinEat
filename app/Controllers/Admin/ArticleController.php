@@ -41,7 +41,7 @@ class ArticleController extends Controller
 
         $articleManager->save($article);
 
-        Router::redirect('admin.articleindex');
+        Router::redirect('admin.article.index');
     }
 
     public function edit(Request $request, Response $response, array $args)
@@ -65,6 +65,6 @@ class ArticleController extends Controller
         $manager = new ArticleManager();
         $manager->delete($args["article_id"]);
 
-        Router::redirect('admin.articleindex');
+        Router::redirect('admin.article.index');
     }
 }

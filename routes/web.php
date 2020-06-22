@@ -40,12 +40,10 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
         $group->get('', 'MenuController@index', 'index');
         $group->get('create', 'MenuController@create', 'create');
         $group->post('store', 'MenuController@store', 'store');
-        $group->group(['prefix' => '{menu_id}'], function (Router $group) {
-            $group->group(['prefix' => '{categorie_id}'], function (Router $group) {
-                $group->get('edit', 'MenuController@edit', 'edit');
-                $group->post('update', 'MenuController@update', 'update');
-                $group->delete('', 'MenuController@destroy', 'destroy');
-            });
+        $group->group(['prefix' => '{menu_id}/category/{categorie_id}'], function (Router $group) {
+            $group->get('edit', 'MenuController@edit', 'edit');
+            $group->post('update', 'MenuController@update', 'update');
+            $group->delete('', 'MenuController@destroy', 'destroy');
         });
     });
 
