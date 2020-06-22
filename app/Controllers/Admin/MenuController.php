@@ -120,18 +120,18 @@ class MenuController extends Controller
                     $desserts[] = $elementMenu;
                     break;
             }
-        }
+        }   
 
         if(isset($id)){
             if($categorie == 1){
                 $manager= new MenuManager();
-                $configFormMenu = Menu::getEditMenuForm();
+                $object = $manager->find($id);
+                $configFormMenu = Menu::getEditMenuForm($id);
             } else {
                 $manager = new ElementMenuManager();
-                $configFormMenu = Menu::getEditElementMenuForm();
+                $object = $manager->find($id);
+                $configFormMenu = Menu::getEditElementMenuForm($id, $categorie);
             }
-
-            $object = $manager->find($id);
         }
 
         $myView = new View("admin.menu.edit", "admin");
@@ -145,7 +145,8 @@ class MenuController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $categorie = getCategorie($args["categorie_id"]);
+        $data = $_POST;
+        $categorie = $this->getCategorie($args["categorie_id"]);
 
         if($categorie == "menu"){
             $elementMenuManager = new ElementMenuManager();
@@ -184,7 +185,7 @@ class MenuController extends Controller
 
     public function destroy(Request $request, Response $response, array $args)
     {
-        $categorie = getCategorie($args["categorie_id"]);
+        $categorie = $this->getCategorie($args["categorie_id"]);
 
         if($categorie == "menu"){
             $manager = new MenuManager();
