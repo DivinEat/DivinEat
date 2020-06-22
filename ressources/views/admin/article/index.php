@@ -7,7 +7,7 @@ use App\Core\Routing\Router;
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Liste des articles</h3>
-                    <a href="<?= Router::getRouteByName('admin.articlecreate')->getUrl() ?>" class="btn btn-add">Ajouter</a>
+                    <a href="<?= Router::getRouteByName('admin.article.create')->getUrl() ?>" class="btn btn-add">Ajouter</a>
                 
                 </div>
                 <div class="box-body">
