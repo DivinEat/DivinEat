@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Horaire;
 use App\Core\Model\Model;
 use App\Core\Model\ModelInterface;
-use App\Core\Routing\Router;
-use App\Models\Role;
-use App\Models\Horaire;
 
 class Order extends Model implements ModelInterface
 {

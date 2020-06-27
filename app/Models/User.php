@@ -17,8 +17,8 @@ class User extends Model implements ModelInterface
     protected $pwd;
     protected $status;
     protected $role;
-    protected $date_inserted;
-    protected $date_updated;
+    protected $dateInserted;
+    protected $dateUpdated;
 
     public function __construct(){
         parent::__construct();
@@ -43,7 +43,7 @@ class User extends Model implements ModelInterface
     }
     public function setLastname($lastname)
     {
-        $this->lastname=strtoupper(trim($lastname));
+        $this->lastname=ucwords(trim($lastname));
         return $this;
     }
     public function setEmail($email)
@@ -66,14 +66,14 @@ class User extends Model implements ModelInterface
         $this->role=$role;
         return $this;
     }
-    public function setDate_inserted($date_inserted)
+    public function setDateInserted($dateInserted)
     {
-        $this->date_inserted=$date_inserted;
+        $this->dateInserted=$dateInserted;
         return $this;
     }
-    public function setDate_updated($date_updated)
+    public function setDateUpdated($dateUpdated)
     {
-        $this->date_updated=$date_updated;
+        $this->dateUpdated=$dateUpdated;
         return $this;
     }
 
@@ -106,13 +106,13 @@ class User extends Model implements ModelInterface
     {
         return $this->role;
     }
-    public function getDate_inserted()
+    public function getdateInserted()
     {
-        return $this->date_inserted;
+        return $this->dateInserted;
     }
-    public function getDate_updated()
+    public function getdateUpdated()
     {
-        return $this->date_updated;
+        return $this->dateUpdated;
     }
 
     public static function getShowUserTable($users){
@@ -127,7 +127,7 @@ class User extends Model implements ModelInterface
                 "nom" => $user->getFirstname(),
                 "prenom" => $user->getLastname(),
                 "email" => $user->getEmail(),
-                "date_inserted" => $user->getDate_inserted(),
+                "dateInserted" => $user->getdateInserted(),
                 "status" => $user->getStatus(),
                 "role" => $role->getLibelle(),
                 "edit"=> Router::getRouteByName('admin.user.edit', $user->getId()),
@@ -235,16 +235,16 @@ class User extends Model implements ModelInterface
                     "class"=>"form-control"
                 ],
                 "role"=> $roleTab,
-                "date_inserted"=>[
+                "dateInserted"=>[
                     "type"=>"text",
-                    "value"=> $object->getDate_inserted(),
+                    "value"=> $object->getdateInserted(),
                     "label"=>"Date d'inscription",
                     "class"=>"form-control",
                     "disabled" => true
                 ],
-                "date_updated"=>[
+                "dateUpdated"=>[
                     "type"=>"text",
-                    "value"=> $object->getDate_updated(),
+                    "value"=> $object->getdateUpdated(),
                     "label"=>"Dernière mise à jour",
                     "class"=>"form-control",
                     "disabled" => true
