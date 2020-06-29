@@ -3,7 +3,7 @@
 namespace App\Core\Constraints;
 
 
-class PasswordConstraint implements ConstraintInterface
+class RequiredConstraint implements ConstraintInterface
 {
     protected $errors = [];
 
@@ -11,12 +11,15 @@ class PasswordConstraint implements ConstraintInterface
     {
     }
 
+    /**
+     * $elementName correspond au label du champ s'il est renseigné, sinon à l'attribut name du champ
+     */
     public function isValid(string $value, string $elementName): bool
     {
         $this->errors = [];
 
-        if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@&é\"'(§\\\<>|è!çà)|è_!çà)[\]\-#°^¨$*%ù=+:\/;.,?])([@&é\"'(§\\\<>|è!çà)|è!çà)[\]\-#°^¨$*%ù=+:\/;.,?\w]){8,16}$/", $value) == false)
-            $this->errors[] = "Le format du mot de passe n'est pas bon.";
+        if ($value === null || $value === "")
+            $this->errors[] = "Le champ <b><i>$elementName</i></b> doit être renseingé";
 
         return (0 == count($this->errors));
     }

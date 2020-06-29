@@ -13,7 +13,7 @@ use App\Core\Controller\Controller;
 class UserController extends Controller
 {
     public function index(Request $request, Response $response)
-    {       
+    {
         $userManager = new UserManager();
         $users = $userManager->findAll();
 

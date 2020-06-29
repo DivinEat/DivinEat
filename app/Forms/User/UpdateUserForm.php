@@ -10,6 +10,7 @@ use App\Managers\RoleManager;
 use App\Core\Constraints\EmailConstraint;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\PasswordConstraint;
+use App\Core\Constraints\RequiredConstraint;
 
 class UpdateUserForm extends Form
 {
@@ -43,12 +44,12 @@ class UpdateUserForm extends Form
                 ],
                 "attr" => [
                     "type" => "text",
-                    "placeholder" => "Prénom",
                     "class" => "form-control",
                     "value" => $user->getFirstname()
                 ],
                 "constraints" => [
-                    new LengthConstraint(2, 50, "Votre prénom doit contenir au moins 2 caractères.", "Votre prénom doit contenir au plus 50 caractères.")
+                    new LengthConstraint(2, 50, "Votre prénom doit contenir au moins 2 caractères.", "Votre prénom doit contenir au plus 50 caractères."),
+                    new RequiredConstraint()
                 ]
             ])
             ->add("lastname", "input", [
@@ -63,7 +64,8 @@ class UpdateUserForm extends Form
                     "value" => $user->getLastName()
                 ],
                 "constraints" => [
-                    new LengthConstraint(2, 100, "Votre prénom doit contenir au moins 2 caractères.", "Votre nom doit contenir au plus 100 caractères.")
+                    new LengthConstraint(2, 100, "Votre prénom doit contenir au moins 2 caractères.", "Votre nom doit contenir au plus 100 caractères."),
+                    new RequiredConstraint()
                 ]
             ])
             ->add("email", "input", [
@@ -94,7 +96,8 @@ class UpdateUserForm extends Form
                 ],
                 "constraints" => [
                     new PasswordConstraint(),
-                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre nom doit contenir au plus 16 caractères.")
+                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre nom doit contenir au plus 16 caractères."),
+                    new RequiredConstraint()
                 ]
             ])
             ->add("status", "select", [
@@ -111,6 +114,9 @@ class UpdateUserForm extends Form
                 ],
                 "getter" => "getString",
                 "selected" => $selectedStatus,
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
             ])
             ->add("role", "select", [
                 "attr" => [
@@ -122,7 +128,10 @@ class UpdateUserForm extends Form
                 ],
                 "data" => $roles,
                 "getter" => "getLibelle",
-                "selected" => $selectedRole
+                "selected" => $selectedRole,
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
             ])
             ->add("dateInserted", "input", [
                 "label" => [
@@ -135,6 +144,9 @@ class UpdateUserForm extends Form
                     "type" => "text",
                     "class" => "form-control",
                     "value" => $user->getDateInserted()
+                ],
+                "constraints" => [
+                    new RequiredConstraint()
                 ]
             ])
             ->add("annuler", "link", [
