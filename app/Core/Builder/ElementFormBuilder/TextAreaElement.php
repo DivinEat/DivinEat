@@ -2,6 +2,6 @@
 
 namespace App\Core\Builder\ElementFormBuilder;
 
-class SubmitElement extends ElementFormBuilder 
-{   
+class TextAreaElement extends ElementFormBuilder
+{
 }

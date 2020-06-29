@@ -61,10 +61,8 @@ class Form
     public function handle(): bool
     {
         if($_SERVER['REQUEST_METHOD'] === $this->config["method"]) {
-            if (! $this->checkIsSubmitted())
-                throw new Exception("Une erreur est survenue lors de la soummission du formulaire.");
-                
-            // $this->updateObject();
+            if (false === $this->checkIsSubmitted())
+                return false;
         }
 
         return $this->checkIsValid();
@@ -76,8 +74,10 @@ class Form
      * et si une clé contient le $nomFormulaire alors je sais que c'est le bon formulaire qui est soumis
      * Le nom se trouve dans $name / Elle update isSubmit
      */
-    private function checkIsSubmitted()
+    private function checkIsSubmitted(): bool
     {
+        $this->isSubmit = true;
+
         foreach($_POST as $key => $value)
         {
             $elementName = explode("_", $key);

@@ -7,8 +7,9 @@ use App\Models\User;
 use App\Core\StringValue;
 use App\Core\Routing\Router;
 use App\Managers\RoleManager;
-use App\Core\Builder\FormBuilder;
+use App\Core\Constraints\EmailConstraint;
 use App\Core\Constraints\LengthConstraint;
+use App\Core\Constraints\PasswordConstraint;
 
 class UpdateUserForm extends Form
 {
@@ -16,7 +17,7 @@ class UpdateUserForm extends Form
     {
         $user = $this->model;
 
-        $this->setName('updateFormUser');
+        $this->setName("updateFormUser");
 
         if ($user->getStatus() == true) {
             $selectedStatus = new StringValue("Actif", true);
@@ -32,68 +33,71 @@ class UpdateUserForm extends Form
             ->add("id", "input", [
                 "attr" => [
                     "type" => "hidden",
-                    'value' => $user->getId()
-                ]
-            ])
-            ->add('firstname', 'input', [
-                'label' => [
-                    'value' => 'Prénom',
-                    'class' => '',
+                    "value" => $user->getId()
                 ],
-                'required' => true,
-                'attr' => [
+            ])
+            ->add("firstname", "input", [
+                "label" => [
+                    "value" => "Prénom",
+                    "class" => "",
+                ],
+                "attr" => [
                     "type" => "text",
-                    'placeholder' => "Prénom",
-                    'class' => 'form-control',
-                    'value' => $user->getFirstname()
+                    "placeholder" => "Prénom",
+                    "class" => "form-control",
+                    "value" => $user->getFirstname()
                 ],
-                'constraints' => [
-                    new LengthConstraint(2, 50, 'Votre prénom doit contenir au moins 2 caractères', 'Votre prénom doit contenir au plus 50 caractères')
+                "constraints" => [
+                    new LengthConstraint(2, 50, "Votre prénom doit contenir au moins 2 caractères.", "Votre prénom doit contenir au plus 50 caractères.")
                 ]
             ])
-            ->add('lastname', 'input', [
-                'label' => [
-                    'value' => 'Nom',
-                    'class' => '',
+            ->add("lastname", "input", [
+                "label" => [
+                    "value" => "Nom",
+                    "class" => "",
                 ],
-                'required' => true,
-                'attr' => [
+                "required" => true,
+                "attr" => [
                     "type" => "text",
-                    'class' => 'form-control',
-                    'value' => $user->getLastName()
+                    "class" => "form-control",
+                    "value" => $user->getLastName()
                 ],
-                'constraints' => [
-                    new LengthConstraint(2, 50, 'Votre prénom doit contenir au moins 2 caractères', 'Votre prénom doit contenir au plus 50 caractères')
+                "constraints" => [
+                    new LengthConstraint(2, 100, "Votre prénom doit contenir au moins 2 caractères.", "Votre nom doit contenir au plus 100 caractères.")
                 ]
             ])
-            ->add('email', 'input', [
-                'label' => [
-                    'value' => 'Email',
-                    'class' => '',
+            ->add("email", "input", [
+                "label" => [
+                    "value" => "Email",
+                    "class" => "",
                 ],
-                'required' => true,
-                'attr' => [
+                "required" => true,
+                "attr" => [
                     "type" => "email",
-                    'class' => 'form-control',
-                    'value' => $user->getEmail()
+                    "class" => "form-control",
+                    "value" => $user->getEmail()
                 ],
-                'constraints' => [
-                    new LengthConstraint(2, 50, 'Votre prénom doit contenir au moins 2 caractères', 'Votre prénom doit contenir au plus 50 caractères')
+                "constraints" => [
+                    new EmailConstraint(),
+                    new LengthConstraint(6, 100, "Votre prénom doit contenir au moins 6 caractères.", "Votre nom doit contenir au plus 100 caractères.")
                 ]
             ])
-            ->add('pwd', 'input', [
-                'attr' => [
+            ->add("pwd", "input", [
+                "attr" => [
                     "type" => "password",
-                    'class' => 'form-control',
-                    'value' => $user->getPwd()
+                    "class" => "form-control",
+                    "value" => $user->getPwd()
                     ],
                 "label" => [
                     "value" => "Mot de passe",
                     "class" => "",
                 ],
-                'required' => true,
+                "constraints" => [
+                    new PasswordConstraint(),
+                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre nom doit contenir au plus 16 caractères.")
+                ]
             ])
-            ->add('status', 'select', [
+            ->add("status", "select", [
                 "attr" => [
                     "class" => "form-control"
                 ],
@@ -101,14 +105,14 @@ class UpdateUserForm extends Form
                     "value" => "Statut",
                     "class" => "",
                 ],
-                'data' => [
+                "data" => [
                     new StringValue("Actif", true),
                     new StringValue("Inactif", false)
                 ],
-                'getter' => 'getString',
-                'selected' => $selectedStatus,
+                "getter" => "getString",
+                "selected" => $selectedStatus,
             ])
-            ->add('role', 'select', [
+            ->add("role", "select", [
                 "attr" => [
                     "class" => "form-control"
                 ],
@@ -116,47 +120,61 @@ class UpdateUserForm extends Form
                     "value" => "Role",
                     "class" => "",
                 ],
-                'data' => $roles,
-                'getter' => 'getLibelle',
-                'selected' => $selectedRole
+                "data" => $roles,
+                "getter" => "getLibelle",
+                "selected" => $selectedRole
             ])
             ->add("dateInserted", "input", [
                 "label" => [
                     "value" => "Date d'inscription",
                     "class" => ""
                 ],
-                'required' => true,
-                'readonly' => true,
-                'attr' => [
+                "required" => true,
+                "readonly" => true,
+                "attr" => [
                     "type" => "text",
-                    'class' => 'form-control',
-                    'value' => $user->getDateInserted()
+                    "class" => "form-control",
+                    "value" => $user->getDateInserted()
                 ]
             ])
-            ->add('annuler', 'link', [
-                'attr' => [
-                    'href' => Router::getRouteByName('admin.user.index')->getUrl(),
-                    'class' => 'btn btn-default',
+            ->add("annuler", "link", [
+                "attr" => [
+                    "href" => Router::getRouteByName("admin.user.index")->getUrl(),
+                    "class" => "btn btn-default",
                 ],
-                'text' => 'Annuler',
+                "text" => "Annuler",
             ])
-            ->add('submit', 'submit', [
-                'text' => 'Mettre à jour',
-                'attr' => [
-                    'class' => "btn btn-primary"
+            ->add("submit", "input", [
+                "attr" => [
+                    "type" => "submit",
+                    "value" => "Mettre à jour",
+                    "class" => "btn btn-primary"
                 ]
-            ]);
+            ])
+            // ->add("textarea", "textArea", [
+            //     "label" => [
+            //         "value" => "Text Area",
+            //         "class" => ""
+            //     ],
+            //     "text" => "Contenu du textArea",
+            //     "attr" => [
+            //         "class" => "form-control form-control-textarea",
+            //         "rows" => "5",
+            //         "cols" => "20"
+            //     ]
+            // ])
+            ;
     }
 
     public function configureOptions(): void
     {
         $this
-            ->addConfig('class', User::class)
-            ->addConfig('attr', [
+            ->addConfig("class", User::class)
+            ->addConfig("attr", [
                 "id" => "udpateUserForm",
                 "class" => "admin-form",
                 "name" => "udpateUserForm"
             ])
-            ->addConfig("action", Router::getRouteByName('admin.user.update', $this->model->getId())->getUrl());
+            ->addConfig("action", Router::getRouteByName("admin.user.update", $this->model->getId())->getUrl());
     }
 }

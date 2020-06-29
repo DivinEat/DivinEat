@@ -13,7 +13,7 @@ use App\Core\Controller\Controller;
 class UserController extends Controller
 {
     public function index(Request $request, Response $response)
-    {
+    {       
         $userManager = new UserManager();
         $users = $userManager->findAll();
 
@@ -47,6 +47,11 @@ class UserController extends Controller
             unset($data[$elementName]);
         }
 
+        $response->checkFormData([
+            "id" => intval($data["id"]),
+            "dateInserted" => $data["dateInserted"],
+        ]);
+        
         $data["status"] = intval($data["status"]);
         
         $user = (new User())->hydrate($data);
