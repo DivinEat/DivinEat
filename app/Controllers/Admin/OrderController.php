@@ -28,7 +28,9 @@ class OrderController extends Controller
 
     public function create(Request $request, Response $response, array $args)
     {
-        $myView = new View("admin.order.create", "admin");
+        $configFormOrder = Order::getAddOrderForm();
+
+        $response->render("admin.order.create", "admin", ["configFormOrder" => $configFormOrder]);
     }
 
     public function store(Request $request, Response $response, array $args)
