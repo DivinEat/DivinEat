@@ -64,7 +64,7 @@ class UpdateUserForm extends Form
                     "value" => $user->getLastName()
                 ],
                 "constraints" => [
-                    new LengthConstraint(2, 100, "Votre prénom doit contenir au moins 2 caractères.", "Votre nom doit contenir au plus 100 caractères."),
+                    new LengthConstraint(2, 100, "Votre nom doit contenir au moins 2 caractères.", "Votre nom doit contenir au plus 100 caractères."),
                     new RequiredConstraint()
                 ]
             ])
@@ -81,7 +81,7 @@ class UpdateUserForm extends Form
                 ],
                 "constraints" => [
                     new EmailConstraint(),
-                    new LengthConstraint(6, 100, "Votre prénom doit contenir au moins 6 caractères.", "Votre nom doit contenir au plus 100 caractères.")
+                    new LengthConstraint(6, 100, "Votre adresse mail doit contenir au moins 6 caractères.", "Votre adresse mail doit contenir au plus 100 caractères.")
                 ]
             ])
             ->add("pwd", "input", [
@@ -96,7 +96,7 @@ class UpdateUserForm extends Form
                 ],
                 "constraints" => [
                     new PasswordConstraint(),
-                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre nom doit contenir au plus 16 caractères."),
+                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre mot de passe doit contenir au plus 16 caractères."),
                     new RequiredConstraint()
                 ]
             ])
