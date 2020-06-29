@@ -11,7 +11,7 @@ $config =  (new QueryBuilder())
     ->getQuery()
     ->getArrayResult(Configuration::class);
 
-$nom_du_site = $config[0]->getInfo();
+//$nom_du_site = $config[0]->getInfo();
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +45,7 @@ $nom_du_site = $config[0]->getInfo();
                 <a href="<?= Router::getRouteByName('admin.user.index')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.menu.index')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.horaire.index')->getUrl() ?>" class="sidebar-link">Horaires<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.order.index')->getUrl() ?>" class="sidebar-link">Réservations<img src='<?= url('/img/icones/arrow.svg')?>'></a>
+                <a href="<?= Router::getRouteByName('admin.order.index')->getUrl() ?>" class="sidebar-link">Commandes<img src='<?= url('/img/icones/arrow.svg')?>'></a>
                 <a href="<?= Router::getRouteByName('admin.configuration.index')->getUrl() ?>" class="sidebar-link">Paramètres<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                 <nav>
         </div>
@@ -63,7 +63,7 @@ $nom_du_site = $config[0]->getInfo();
 
                         <a class="computer" href="<?= Router::getRouteByName('home')->getUrl() ?>">
                             <img src="<?= url('img/icones/computer.png') ?>">
-                            <span><?= $nom_du_site ?></span>
+                            <!-- <span><?= $nom_du_site ?></span> -->
                         </a>
                     </div>
 

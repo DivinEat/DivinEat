@@ -2,12 +2,14 @@
 
 namespace App\Controllers\Admin;
 
+use App\Models\Order;
 use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Core\View;
 use App\Managers\UserManager;
+use App\Managers\OrderManager;
 use App\Forms\FormTest;
 
 class OrderController extends Controller
@@ -15,15 +17,12 @@ class OrderController extends Controller
     public function index(Request $request, Response $response)
     {
         // Test form
-        $userManager = new UserManager();
-        $user = $userManager->find(6);
+        $OrderManager = new OrderManager();
+        $orders = $OrderManager->findAll();
 
-        $form = $response->createForm(FormTest::class, $user);
-        $form->addConfig("action", Router::getRouteByName('admin.menu.store')->getUrl());
+        $configTableOrder = Order::getShowOrderTable($orders);
 
-        return $response->render("admin.order.index", "admin", [
-            "formTest" => $form
-        ]);
+        $response->render("admin.order.index", "admin", ["configTableOrder" => $configTableOrder]);
 
     }
 

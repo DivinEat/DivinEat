@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Horaire;
 use App\Core\Model\Model;
 use App\Core\Model\ModelInterface;
+use App\Managers\RoleManager;
 
 class Order extends Model implements ModelInterface
 {
@@ -25,6 +26,43 @@ class Order extends Model implements ModelInterface
             'user' => User::class,
             'horaire' => Horaire::class
         ];
+    }
+    public static function getShowOrderTable($orders){
+        $roleManager = new RoleManager();
+
+        $tabOrders = [];
+        foreach($orders as $order){
+            
+            $tabOrders[] = [
+                "id" => $order->getId(),
+                "user" => $order->getUser()->getId(),
+                "horaire" => $order->getHoraire(),
+                "date" => $order->getDate(),
+                "prix" => $order->getPrix()
+            ];
+        }
+
+        $tab = [
+            "config"=>[
+                "class"=>"admin-table"
+            ],
+
+            "colonnes"=>[
+                "Id",
+                "user id",
+                "horaire",
+                "date",
+                "prix"
+            ],
+
+            "fields"=>[
+                "Order"=>[]
+            ]
+        ];
+
+        $tab["fields"]["Order"] = $tabOrders;
+
+        return $tab;
     }
 
     public function setId(int $id): self
