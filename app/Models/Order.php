@@ -88,7 +88,7 @@ class Order extends Model implements ModelInterface
                 "value" => $menu->getId(),
                 "text" => $menu->getNom()
             ];
-        }
+        };
 
         return [
             "config"=>[

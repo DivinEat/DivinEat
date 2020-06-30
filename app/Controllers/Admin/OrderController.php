@@ -11,6 +11,7 @@ use App\Core\View;
 use App\Managers\UserManager;
 use App\Managers\OrderManager;
 use App\Forms\FormTest;
+use App\Forms\Order\CreateOrderForm;
 
 class OrderController extends Controller
 {
@@ -27,10 +28,10 @@ class OrderController extends Controller
     }
 
     public function create(Request $request, Response $response, array $args)
-    {
-        $configFormOrder = Order::getAddOrderForm();
+    {   
+        $form = $response->createForm(CreateOrderForm::class);
 
-        $response->render("admin.order.create", "admin", ["configFormOrder" => $configFormOrder]);
+        $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
     }
 
     public function store(Request $request, Response $response, array $args)
