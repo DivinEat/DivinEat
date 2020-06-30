@@ -58,6 +58,22 @@ class View
         include $modal;
     }
 
+    //Methode permettant d'afficher un formulaire en lui passant le nom dans data (ici formProfile)
+    //Et affichant la vue
+    public function formView(string $formName, string $formDir, string $formTemplate = "base")
+    {
+        $formPath = ucFirst($formDir) . "/" . $formTemplate;
+        $formPath = ROOT . "/ressources/" . "/views/forms/".$formPath.".php";
+
+        if (!file_exists($formPath)) {
+            die("Le template de formulaire <i>{$formPath}</i> n'existe pas!!!");
+        }
+
+        $form = $this->data[$formName];
+
+        include ROOT . "/ressources/views/layouts/forms/form.php";
+    }
+
 
     public function __destruct()
     {

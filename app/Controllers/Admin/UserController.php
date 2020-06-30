@@ -2,14 +2,13 @@
 
 namespace App\Controllers\Admin;
 
-use App\Core\Controller\Controller;
+use App\Models\User;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
-use App\Core\View;
-use App\Models\User;
 use App\Managers\UserManager;
-use App\Managers\RoleManager;
+use App\Forms\User\UpdateUserForm;
+use App\Core\Controller\Controller;
 
 class UserController extends Controller
 {
@@ -20,8 +19,7 @@ class UserController extends Controller
 
         $configTableUser = User::getShowUserTable($users);
 
-        $myView = new View("admin.user.index", "admin");
-        $myView->assign("configTableUser", $configTableUser);
+        $response->render("admin.user.index", "admin", ["configTableUser" => $configTableUser]);
     }
 
     public function edit(Request $request, Response $response, array $args)
@@ -30,38 +28,41 @@ class UserController extends Controller
 
         if(isset($id)){
             $userManager = new UserManager();
-            $object = $userManager->find($id);
+            $user = $userManager->find($id);
+        } else {
+            throw new \Exception("L'id de l'utilisateur n'existe pas.");
         }
+        
+        $form = $response->createForm(UpdateUserForm::class, $user);
 
-        $roleManager = new RoleManager();
-        $roles = $roleManager->findAll();
-
-        $configFormUser = User::getEditUserForm($object, $roles);
-
-        $myView = new View("admin.user.edit", "admin");
-        $myView->assign("configFormUser", $configFormUser);
+        $response->render("admin.user.edit", "admin", ["updateUserForm" => $form]);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
         $data = $_POST;
 
-        $userManager = new UserManager();
-        $user = $userManager->find($data["id"]);
+        foreach($data as $elementName => $element) {
+            $data[explode("_", $elementName)[1]] = $data[$elementName];
+            unset($data[$elementName]);
+        }
 
-        $roleManager = new RoleManager();
-        $role = $roleManager->find($data["role"]);
+        $response->checkFormData([
+            "id" => intval($data["id"]),
+            "dateInserted" => $data["dateInserted"],
+        ]);
         
-        $user->setFirstname($data["firstname"]);
-        $user->setLastname($data["lastname"]);
-        $user->setEmail($data["email"]);
-        $user->setStatus($data["status"]);
-        $user->setRole($role);
-        $user->setDate_updated(date('Y-m-d H:i:s'));
-
-        $userManager->save($user);
-
-        Router::redirect('admin.user.index');
+        $data["status"] = intval($data["status"]);
+        
+        $user = (new User())->hydrate($data);
+        $form = $response->createForm(UpdateUserForm::class, $user);
+        
+        if (false === $form->handle()) {
+            $response->render("admin.user.edit", "admin", ["updateUserForm" => $form]);
+        } else {
+            (new UserManager())->save($user);       
+            Router::redirect('admin.user.index');
+        }
     }
 
     public function destroy(Request $request, Response $response, array $args)

@@ -32,7 +32,8 @@ class Model implements \JsonSerializable
         return $articleObj;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         return $this->__toArray();
     }
 

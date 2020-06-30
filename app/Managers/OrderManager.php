@@ -2,7 +2,7 @@
 namespace App\Managers;
 
 use App\Core\Manager;
-use App\Models\Menu;
+use App\Models\Order;
 
 class OrderManager extends Manager {
     

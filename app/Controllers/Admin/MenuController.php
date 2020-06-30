@@ -55,11 +55,13 @@ class MenuController extends Controller
             }
         }
 
-        $myView = new View("admin.menu.create", "admin");
-        $myView->assign("configFormMenu", $configFormMenu);
-        $myView->assign("entrees", $entrees);
-        $myView->assign("plats", $plats);
-        $myView->assign("desserts", $desserts);
+        $data = [];
+        $data["configFormMenu"] = $configFormMenu;
+        $data["entrees"] =  $entrees;
+        $data["plats"] =  $plats;
+        $data["desserts"] =  $desserts;
+
+        $response->render("admin.menu.create", "admin", $data);
     }
 
     public function store(Request $request, Response $response, array $args)

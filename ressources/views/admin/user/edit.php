@@ -6,7 +6,7 @@
                     <h3 class="box-title">Modifier un utilisateur</h3>
                 </div>
                 <div class="box-body">
-                    <?php $this->addModal("form", $configFormUser);?>
+                    <?php $this->formView("updateUserForm", "user", "updateUserForm"); ?>
                 </div>
             </div>
         </div>
