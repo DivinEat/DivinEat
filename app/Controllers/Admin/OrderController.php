@@ -10,6 +10,7 @@ use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Managers\MenuManager;
+use App\Managers\RoleManager;
 use App\Managers\UserManager;
 use App\Managers\OrderManager;
 use App\Managers\HoraireManager;
@@ -62,7 +63,7 @@ class OrderController extends Controller
         if (empty($user)) {
             $user = new User();
             $user->setEmail($email);
-            $user->setRole(4);
+            $user->setRole((new RoleManager())->find(4));
             $userManager->save($user);
             $user = $userManager->findBy(["email" => $email]);
         }

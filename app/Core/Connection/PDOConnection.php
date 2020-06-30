@@ -24,10 +24,6 @@ class PDOConnection implements BDDInterface
 
     public function query(string $query, array $parameters = null)
     {
-        echo $query;
-        echo '</br>';
-        var_dump($parameters);
-        echo '<br>';
         if ($parameters) {
             $queryPrepared = $this->pdo->prepare($query);
 
