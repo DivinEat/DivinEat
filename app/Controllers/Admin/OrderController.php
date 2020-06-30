@@ -2,16 +2,22 @@
 
 namespace App\Controllers\Admin;
 
+use App\Core\View;
+use App\Models\User;
 use App\Models\Order;
-use App\Core\Controller\Controller;
+use App\Models\MenuOrder;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
-use App\Core\View;
+use App\Managers\MenuManager;
 use App\Managers\UserManager;
 use App\Managers\OrderManager;
-use App\Forms\FormTest;
+use App\Managers\HoraireManager;
+use App\Managers\MenuOrderManager;
+use App\Core\Controller\Controller;
 use App\Forms\Order\CreateOrderForm;
+
+
 
 class OrderController extends Controller
 {
@@ -36,6 +42,54 @@ class OrderController extends Controller
 
     public function store(Request $request, Response $response, array $args)
     {
+        $data = $_POST;
+
+        foreach($data as $elementName => $element) {
+            $data[explode("_", $elementName)[1]] = $data[$elementName];
+            unset($data[$elementName]);
+        }
+
+        $userManager = new UserManager();
+        $menuManager = new MenuManager();
+        $horaireManager = new HoraireManager();
+
+        $order = new Order();
+        $menuOrder = new MenuOrder();
+
+        $email = $data['email'];
+
+        $user = $userManager->findBy(["email" => $email]);
+        if (empty($user)) {
+            $user = new User();
+            $user->setEmail($email);
+            $user->setRole(4);
+            $userManager->save($user);
+            $user = $userManager->findBy(["email" => $email]);
+        }
+        
+        $user = $user[0];
+        $menu = $menuManager->find($data['menu']);
+
+        $data['user'] = $user->getId();
+        $data['date'] = date('Y-m-d', time());
+        $data['prix'] = $menu->getPrix(); // somme de tt les menus quand y'en aura plusieurs
+
+        $order = (new Order())->hydrate($data);
+
+        $form = $response->createForm(CreateOrderForm::class, $order);
+
+        if (false === $form->handle()) {
+            $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
+        } else {
+            (new OrderManager())->save($order);
+            $order = (new OrderManager())->findBy(["id" => 7]);
+            $order = $order[0];
+            $menuOrder->setMenu($menu);
+            $menuOrder->setOrder($order);
+            (new MenuOrderManager())->save($menuOrder);   
+            die;    
+            Router::redirect('admin.order.index');
+        }
     }
 
     public function edit(Request $request, Response $response, array $args)

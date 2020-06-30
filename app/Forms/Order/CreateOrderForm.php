@@ -8,6 +8,7 @@ use App\Core\StringValue;
 use App\Core\Routing\Router;
 use App\Managers\RoleManager;
 use App\Core\Constraints\EmailConstraint;
+use App\Core\Constraints\LengthConstraint;
 use App\Managers\HoraireManager;
 use App\Managers\MenuManager;
 
@@ -35,9 +36,13 @@ class CreateOrderForm extends Form
                     "placeholder" => "Email",
                     "class" => "form-control",
                     "value" => ""
+                ],
+                "constraints" => [
+                    new EmailConstraint(),
+                    new LengthConstraint(6, 100, "Votre adresse mail doit contenir au moins 6 caractères.", "Votre adresse mail doit contenir au plus 100 caractères.")
                 ]
             ])
-            ->add("horaires", "select", [
+            ->add("horaire", "select", [
                 "attr" => [
                     "class" => "form-control"
                 ],
@@ -48,7 +53,7 @@ class CreateOrderForm extends Form
                 "data" => $horaires,
                 "getter" => "getHoraire",
             ])
-            ->add("menus", "select", [
+            ->add("menu", "select", [
                 "attr" => [
                     "class" => "form-control"
                 ],
@@ -85,6 +90,6 @@ class CreateOrderForm extends Form
                 "class" => "admin-form",
                 "name" => "createOrderForm"
             ])
-            ->addConfig("action", Router::getRouteByName("admin.order.create")->getUrl());
+            ->addConfig("action", Router::getRouteByName("admin.order.store")->getUrl());
     }
 }
