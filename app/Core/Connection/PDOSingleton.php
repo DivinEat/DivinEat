@@ -28,4 +28,9 @@ class PDOSingleton extends PDO
     public function prepare($statement, $driver_options = array()) {
         return $this->PDOInstance->prepare($statement, $driver_options);
     }
+
+    public function lastInsertId($seqname = NULL): ?int
+    {
+        return $this->PDOInstance->lastInsertId();
+    }
 }

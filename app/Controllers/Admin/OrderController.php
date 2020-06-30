@@ -87,8 +87,7 @@ class OrderController extends Controller
             $order = $order[0];
             $menuOrder->setMenu($menu);
             $menuOrder->setOrder($order);
-            (new MenuOrderManager())->save($menuOrder);   
-            die;    
+            (new MenuOrderManager())->save($menuOrder);       
             Router::redirect('admin.order.index');
         }
     }

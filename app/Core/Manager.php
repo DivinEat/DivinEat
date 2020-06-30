@@ -21,7 +21,7 @@ class Manager
         }
     }
 
-    public function save($objectToSave)
+    public function save($objectToSave): ?int
     {
         $objectArray = $objectToSave->__toArray();
 
@@ -49,6 +49,8 @@ class Manager
         }
 
         $this->connection->query($sql, $params);
+
+        return $this->connection->lastInsertId();
     }
 
     public function find(int $id): ?Model
