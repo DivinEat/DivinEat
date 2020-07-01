@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\Horaire;
 use App\Models\Menu;
+use App\Models\User;
+use App\Models\Horaire;
 use App\Core\Model\Model;
 use App\Core\Routing\Router;
-use App\Core\Model\ModelInterface;
+use App\Managers\MenuManager;
 use App\Managers\RoleManager;
 use App\Managers\HoraireManager;
-use App\Managers\MenuManager;
+use App\Core\Model\ModelInterface;
 
 class Order extends Model implements ModelInterface
 {
@@ -36,13 +37,14 @@ class Order extends Model implements ModelInterface
 
         $tabOrders = [];
         foreach($orders as $order){
-            
             $tabOrders[] = [
                 "id" => $order->getId(),
                 "user" => $order->getUser()->getId(),
-                "horaire" => $order->getHoraire(),
+                "horaire" => $order->getHoraire()->getHoraire(),
                 "date" => $order->getDate(),
-                "prix" => $order->getPrix()
+                "prix" => $order->getPrix(),
+                "edit"=> Router::getRouteByName('admin.order.edit', $order->getId()),
+                "destroy"=> Router::getRouteByName('admin.order.destroy', $order->getId())
             ];
         }
 
@@ -52,6 +54,7 @@ class Order extends Model implements ModelInterface
             ],
 
             "colonnes"=>[
+                "",
                 "Id",
                 "user id",
                 "horaire",
@@ -65,7 +68,6 @@ class Order extends Model implements ModelInterface
         ];
 
         $tab["fields"]["Order"] = $tabOrders;
-
         return $tab;
     }
 
