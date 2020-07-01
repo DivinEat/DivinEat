@@ -30,7 +30,7 @@ $nom_du_site = $config[0]->getInfo();
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script>
     <script src="<?= url('js/dashboard/dashboard-graphs.js') ?>"></script>
-    <script type="module" src="<?= url('js/article.js') ?>"></script>
+    <script type="module" src="<?= url('js/article-editor.js') ?>"></script>
     <script src="<?= url('js/navbar.js') ?>"></script>
 </head>
 <body>

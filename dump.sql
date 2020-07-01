@@ -94,7 +94,9 @@
   CREATE TABLE `dve_articles` (
     `id` int(11) NOT NULL,
     `title` varchar(15) NOT NULL,
+    `slug` varchar(15),
     `content` text NOT NULL,
+    `author` int(11) NOT NULL,
     `date_inserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `date_updated` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -104,6 +106,9 @@
 
   ALTER TABLE `dve_articles`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+  ALTER TABLE `dve_articles`
+    ADD CONSTRAINT `dve_articles_ibfk_1` FOREIGN KEY (`author`) REFERENCES `dve_users` (`id`);
 
 
 

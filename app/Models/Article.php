@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Core\Model\Model;
 use App\Core\Model\ModelInterface;
 use App\Core\Routing\Router;
+use App\Models\User;
+use App\Managers\UserManager;
 
 class Article extends Model implements ModelInterface
 {
@@ -13,6 +15,8 @@ class Article extends Model implements ModelInterface
     protected $content;
     protected $date_inserted;
     protected $date_updated;
+    protected $slug;
+    protected $author;
 
     public function __construct(){
         parent::__construct();
@@ -20,7 +24,9 @@ class Article extends Model implements ModelInterface
 
     public function initRelation(): array
     {
-        return [];
+        return [
+            'author' => User::class
+        ];
     }
 
     public function setId(int $id): self
@@ -48,6 +54,16 @@ class Article extends Model implements ModelInterface
         $this->date_updated=$date_updated;
         return $this;
     }
+    public function setSlug($slug)
+    {
+        $this->slug=$slug;
+        return $this;
+    }
+    public function setAuthor(User $author): Article
+    {
+        $this->author=$author;
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -61,6 +77,14 @@ class Article extends Model implements ModelInterface
     {
         return $this->content;
     }
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+    public function getAuthor(): User
+    {
+        return $this->author;
+    }
     public function getDate_inserted()
     {
         return $this->date_inserted;
@@ -70,13 +94,51 @@ class Article extends Model implements ModelInterface
         return $this->date_updated;
     }
 
+    public static function setJsonToHtml($content){
+        $content = str_replace("'", "\"", $content);
+        $json = json_decode($content);
+
+        $html = "";
+        foreach($json->blocks as $block){
+            switch($block->type){
+                case "header":
+                    $html .= "<h".$block->data->level.">".$block->data->text."</h".$block->data->level.">";
+                    break;
+                case "paragraph":
+                    $html .= "<p>".$block->data->text."</p>";
+                    break;
+                case "list":
+                    if($block->data->style == "ordered"){
+                        $html .= "<ol>";
+                    } else {
+                        $html .= "<ul>";
+                    }
+                    foreach($block->data->items as $value){
+                        $html .= "<li>$value</li>";
+                    }
+                    if($block->data->style == "ordered"){
+                        $html .= "</ol>";
+                    } else {
+                        $html .= "</ul>";
+                    }
+                    break;
+            }
+        }
+
+        return $html;
+    }
+
     public static function getShowArticleTable($articles){
         $tabArticles = [];
         foreach($articles as $article){
-            
+
+            $author = (new UserManager)->find($article->getAuthor()->getId());
+        
             $tabArticles[] = [
                 "id" => $article->getId(),
                 "title" => $article->getTitle(),
+                "slug" => $article->getSlug(),
+                "author" => $author->getLastname()." ".$author->getFirstname(),
                 "date_inserted" => $article->getDate_inserted(),
                 "date_updated" => $article->getDate_updated(),
                 "edit"=> Router::getRouteByName('admin.article.edit', $article->getId()),
@@ -93,6 +155,8 @@ class Article extends Model implements ModelInterface
                 "Catégorie",
                 "Id",
                 "Title",
+                "Slug",
+                "Auteur",
                 "Posté le",
                 "Modifié le",
                 "Actions"
@@ -106,41 +170,6 @@ class Article extends Model implements ModelInterface
         $tab["fields"]["Article"] = $tabArticles;
 
         return $tab;
-    }
-
-    public static function getAddArticleForm(){
-        return [
-            "config"=>[
-                "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.article.store'),
-                "class"=>"admin-form",
-                "id"=>"formAddArticle",
-                "submit"=>[
-                    "btn-primary"=>"Envoyer"
-                ],
-                "annuler"=>[
-                    "action"=> Router::getRouteByName('admin.article.index'),
-                    "class"=>"btn btn-default",
-                    "text"=>"Retour"
-                ]
-            ],
-            "fields"=>[
-                "title"=>[
-                    "type"=>"text",
-                    "label"=>"Titre",
-                    "class"=>"form-control",
-                ],
-                "content"=>[
-                    "type"=>"other",
-                    "value"=>"<input type='hidden' id='editor-content' name='content' class='form-control'/>"
-                ],
-                "editorjs"=>[
-                    "type"=>"other",
-                    "label"=>"Contenu",
-                    "value"=>"<div id='articlejs' style='min-height: 15em; border: 1px solid #ccc;'></div>"
-                ]
-            ]
-        ];
     }
 
     public static function getEditArticleForm($article){

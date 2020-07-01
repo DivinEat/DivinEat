@@ -9,6 +9,8 @@ use App\Core\Routing\Router;
 use App\Core\View;
 use App\Models\Article;
 use App\Managers\ArticleManager;
+use App\Managers\UserManager;
+use App\Forms\Article\CreateArticleForm;
 
 class ArticleController extends Controller
 {
@@ -25,26 +27,33 @@ class ArticleController extends Controller
 
     public function create(Request $request, Response $response, array $args)
     {
-        $configFormArticle = Article::getAddArticleForm();
+        $form = $response->createForm(CreateArticleForm::class);
 
-        $myView = new View("admin.article.create", "admin");
-        $myView->assign("configFormArticle", $configFormArticle);
+        $response->render("admin.article.create", "admin", ["createArticleForm" => $form]);
     }
 
     public function store(Request $request, Response $response, array $args)
     {
         $data = $_POST;
 
-        $articleManager = new ArticleManager();
 
-        $article = new Article();
-        $article->setTitle($data["title"]);
-        $article->setContent($data["content"]);
+        foreach($data as $elementName => $element) {
+            $data[explode("_", $elementName)[1]] = $data[$elementName];
+            unset($data[$elementName]);
+        }
+        
+        $article = (new Article())->hydrate($data);
         $article->setDate_inserted(date('Y-m-d H:i:s'));
+        $article->setAuthor((new UserManager())->find(1));
 
-        $articleManager->save($article);
-
-        Router::redirect('admin.article.index');
+        $form = $response->createForm(CreateArticleForm::class, $article);
+        
+        if (false === $form->handle()) {
+            $response->render("admin.article.create", "admin", ["createArticleForm" => $form]);
+        } else {
+            (new ArticleManager())->save($article);       
+            Router::redirect('admin.article.index');
+        }
     }
 
     public function edit(Request $request, Response $response, array $args)

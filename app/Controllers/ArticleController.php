@@ -22,7 +22,7 @@ class ArticleController extends Controller
             ->getArrayResult(Article::class);
 
         foreach($articles as $article){
-            $article->setContent($this->setJsonToHtml($article->getContent()));
+            $article->setContent(Article::setJsonToHtml($article->getContent()));
         }
 
         $myView = new View("article.index", "main");
@@ -35,43 +35,9 @@ class ArticleController extends Controller
 
         $articleManager = new ArticleManager();
         $article = $articleManager->find($id);
-        $article->setContent($this->setJsonToHtml($article->getContent()));
+        $article->setContent(Article::setJsonToHtml($article->getContent()));
 
         $myView = new View("article.show", "main");
         $myView->assign("article", $article);
-    }
-
-    public function setJsonToHtml($content){
-        $content = str_replace("'", "\"", $content);
-        $json = json_decode($content);
-
-        $html = "";
-        foreach($json->blocks as $block){
-            switch($block->type){
-                case "header":
-                    $html .= "<h".$block->data->level.">".$block->data->text."</h".$block->data->level.">";
-                    break;
-                case "paragraph":
-                    $html .= "<p>".$block->data->text."</p>";
-                    break;
-                case "list":
-                    if($block->data->style == "ordered"){
-                        $html .= "<ol>";
-                    } else {
-                        $html .= "<ul>";
-                    }
-                    foreach($block->data->items as $value){
-                        $html .= "<li>$value</li>";
-                    }
-                    if($block->data->style == "ordered"){
-                        $html .= "</ol>";
-                    } else {
-                        $html .= "</ul>";
-                    }
-                    break;
-            }
-        }
-
-        return $html;
     }
 }
