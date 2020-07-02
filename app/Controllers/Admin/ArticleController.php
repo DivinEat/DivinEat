@@ -11,6 +11,7 @@ use App\Models\Article;
 use App\Managers\ArticleManager;
 use App\Managers\UserManager;
 use App\Forms\Article\CreateArticleForm;
+use App\Forms\Article\UpdateArticleForm;
 
 class ArticleController extends Controller
 {
@@ -60,18 +61,21 @@ class ArticleController extends Controller
     {
         $id = $args["article_id"];
 
-        $articleManager = new ArticleManager();
-        $article = $articleManager->find($id);
+        if(isset($id)){
+            $articleManager = new ArticleManager();
+            $article = $articleManager->find($id);
+        } else {
+            throw new \Exception("L'id de l'article n'existe pas.");
+        }
+        
+        $form = $response->createForm(UpdateArticleForm::class, $article);
 
-        $configFormArticle = Article::getEditArticleForm($article);
-
-        $myView = new View("admin.article.edit", "admin");
-        $myView->assign("configFormArticle", $configFormArticle);
+        $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
+        /*$data = $_POST;
 
         $manager = new ArticleManager();
         $article = $manager->find($args["article_id"]);
@@ -79,7 +83,29 @@ class ArticleController extends Controller
         $article->setDate_updated(date('Y-m-d H:i:s'));
         $manager->save($article);
 
-        Router::redirect('admin.article.index');
+        Router::redirect('admin.article.index');*/
+
+        $data = $_POST;
+
+        foreach($data as $elementName => $element) {
+            $data[explode("_", $elementName)[1]] = $data[$elementName];
+            unset($data[$elementName]);
+        }
+        
+        $articleOld = (new ArticleManager())->find($data["id"]);
+        $article = (new Article())->hydrate($data);
+        $article->setDate_updated(date('Y-m-d H:i:s'));
+        $article->setDate_inserted($articleOld->getDate_inserted());
+        $article->setAuthor($articleOld->getAuthor());
+
+        $form = $response->createForm(UpdateArticleForm::class, $article);
+        
+        if (false === $form->handle()) {
+            $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
+        } else {
+            (new ArticleManager())->save($article);       
+            Router::redirect('admin.article.index');
+        }
     }
 
     public function destroy(Request $request, Response $response, array $args)

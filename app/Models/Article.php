@@ -171,40 +171,4 @@ class Article extends Model implements ModelInterface
 
         return $tab;
     }
-
-    public static function getEditArticleForm($article){
-        return [
-            "config"=>[
-                "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.article.update', $article->getId()),
-                "class"=>"admin-form",
-                "id"=>"formAddArticle",
-                "submit"=>[
-                    "btn-primary"=>"Envoyer"
-                ],
-                "annuler"=>[
-                    "action"=> Router::getRouteByName('admin.article.index'),
-                    "class"=>"btn btn-default",
-                    "text"=>"Retour"
-                ]
-            ],
-            "fields"=>[
-                "title"=>[
-                    "type"=>"text",
-                    "label"=>"Titre",
-                    "value" => $article->getTitle(),
-                    "class"=>"form-control",
-                ],
-                "content"=>[
-                    "type"=>"other",
-                    "value"=>"<input type='hidden' id='editor-content' name='content' class='form-control' value='".$article->getContent()."'/>"
-                ],
-                "editorjs"=>[
-                    "type"=>"other",
-                    "label"=>"Contenu",
-                    "value"=>"<div id='articlejs' style='min-height: 15em; border: 1px solid #ccc;'></div>"
-                ]
-            ]
-        ];
-    }
 }
