@@ -18,12 +18,12 @@ $router->group(['prefix' => 'actualites', 'as' => 'actualites.', 'namespace' => 
 });
 
 $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth', 'middleware' => ['user.not.connected']], function (Router $group) {
-    $group->get('login', 'LoginController@showLoginForm', 'login');
-    $group->post('login', 'LoginController@login');
-    $group->get('register', 'RegisterController@showRegisterForm', 'register');
-    $group->post('register', 'RegisterController@register');
-    $group->get('forgot-password', 'ForgotPasswordController@showRegisterForm', 'forgot.password');
-    $group->post('forgot-password', 'ForgotPasswordController@register');
+    $group->get('login', 'LoginController@showLoginForm', 'show-login');
+    $group->post('login', 'LoginController@login', 'login');
+    $group->get('register', 'RegisterController@showRegisterForm', 'show-register');
+    $group->post('register', 'RegisterController@register', 'register');
+    $group->get('forgot-password', 'ForgotPasswordController@showForgotPassword', 'show-forgot-password');
+    $group->post('forgot-password', 'ForgotPasswordController@forgotPassword', 'forgot-password');
 });
 
 $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected']], function (Router $group) {
