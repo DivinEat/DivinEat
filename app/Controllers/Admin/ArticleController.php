@@ -75,16 +75,6 @@ class ArticleController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        /*$data = $_POST;
-
-        $manager = new ArticleManager();
-        $article = $manager->find($args["article_id"]);
-        $article->setTitle($data["title"]);
-        $article->setDate_updated(date('Y-m-d H:i:s'));
-        $manager->save($article);
-
-        Router::redirect('admin.article.index');*/
-
         $data = $_POST;
 
         foreach($data as $elementName => $element) {
