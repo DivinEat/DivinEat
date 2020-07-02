@@ -106,11 +106,11 @@ class User extends Model implements ModelInterface
     {
         return $this->role;
     }
-    public function getdateInserted()
+    public function getDateInserted()
     {
         return $this->dateInserted;
     }
-    public function getdateUpdated()
+    public function getDateUpdated()
     {
         return $this->dateUpdated;
     }
@@ -127,7 +127,7 @@ class User extends Model implements ModelInterface
                 "nom" => $user->getFirstname(),
                 "prenom" => $user->getLastname(),
                 "email" => $user->getEmail(),
-                "dateInserted" => $user->getdateInserted(),
+                "dateInserted" => $user->getDateInserted(),
                 "status" => $user->getStatus(),
                 "role" => $role->getLibelle(),
                 "edit"=> Router::getRouteByName('admin.user.edit', $user->getId()),

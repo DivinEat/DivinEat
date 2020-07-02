@@ -55,6 +55,7 @@ class UserController extends Controller
         $data["status"] = intval($data["status"]);
         
         $user = (new User())->hydrate($data);
+        
         $form = $response->createForm(UpdateUserForm::class, $user);
         
         if (false === $form->handle()) {

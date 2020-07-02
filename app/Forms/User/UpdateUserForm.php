@@ -18,6 +18,7 @@ class UpdateUserForm extends Form
     {
         $user = $this->model;
 
+
         $this->setName("updateFormUser");
 
         if ($user->getStatus() == true) {
@@ -162,20 +163,7 @@ class UpdateUserForm extends Form
                     "value" => "Mettre à jour",
                     "class" => "btn btn-primary"
                 ]
-            ])
-            // ->add("textarea", "textArea", [
-            //     "label" => [
-            //         "value" => "Text Area",
-            //         "class" => ""
-            //     ],
-            //     "text" => "Contenu du textArea",
-            //     "attr" => [
-            //         "class" => "form-control form-control-textarea",
-            //         "rows" => "5",
-            //         "cols" => "20"
-            //     ]
-            // ])
-            ;
+            ]);
     }
 
     public function configureOptions(): void
