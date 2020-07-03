@@ -61,12 +61,13 @@ class OrderController extends Controller
         $email = $data['email'];
 
         $user = $userManager->findBy(["email" => $email]);
-        $user = $user[0];
         if (empty($user)) {
             $user = new User();
             $user->setEmail($email);
             $user->setRole((new RoleManager())->find(4));
             $user = $userManager->find($userManager->save($user));
+        } else {
+            $user = $user[0];
         }
         
         $menu = $menuManager->find($data['menu']);
@@ -120,34 +121,41 @@ class OrderController extends Controller
             unset($data[$elementName]);
         }
 
-        $response->checkFormData([
-            "id" => intval($data["id"]),
-            "dateInserted" => $data["dateInserted"],
-        ]);
-        
-        $oldOrder = $orderManager->find($data['id']);
+        $oldOrder = $orderManager->find($args['order_id']);
         $oldMenuOrders = $menuOrderManager->findBy(["order" => $oldOrder->getId()]);
-
-        foreach ($oldMenuOrders as $key => $menuOrder) {
-            $menuOrderManager->delete($menuOrder->getId());
+        if (!empty($oldMenuOrders)) {
+            foreach ($oldMenuOrders as $key => $menuOrder) {
+                $menuOrderManager->delete($menuOrder->getId());
+            }
+        }
+        
+        $user = $userManager->findBy(["email" => $data['email']]);
+        if (empty($user)) {
+            $user = new User();
+            $user->setEmail($data['email']);
+            $user->setRole((new RoleManager())->find(4));
+            $user = $userManager->find($userManager->save($user));
+        } else {
+            $user = $user[0];
         }
 
-
-        $user = $userManager->findBy(["email" => $data['email']]);
-        $user = $user[0];
         $menu = $menuManager->find($data['menu']);
 
+        $data['id'] = $args['order_id'];
         $data['user'] = $user->getId();
         $data['prix'] = $menu->getPrix();
-        
+        $data['date'] = date('Y-m-d', time());
+
         $order = (new Order())->hydrate($data);
         $form = $response->createForm(UpdateOrderForm::class, $order);
         
         if (false === $form->handle()) {
             $response->render("admin.order.edit", "admin", ["updateOrderForm" => $form]);
         } else {
-            $order = $orderManager->find($orderManager->save($order));  
+            $id_order = $orderManager->save($order);  
+            $order = $orderManager->find($id_order);
 
+            
             $menuOrder = new MenuOrder();
             $menuOrder->setMenu($menu);
             $menuOrder->setOrder($order);

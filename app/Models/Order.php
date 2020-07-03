@@ -11,6 +11,7 @@ use App\Managers\MenuManager;
 use App\Managers\RoleManager;
 use App\Managers\HoraireManager;
 use App\Core\Model\ModelInterface;
+use App\Managers\MenuOrderManager;
 
 class Order extends Model implements ModelInterface
 {
@@ -33,15 +34,27 @@ class Order extends Model implements ModelInterface
         ];
     }
     public static function getShowOrderTable($orders){
-        $roleManager = new RoleManager();
+        $menuOrderManager = new MenuOrderManager();
+        $menuManager = new MenuManager();
+
+        
+
 
         $tabOrders = [];
         foreach($orders as $order){
+            $menuOrders = $menuOrderManager->findBy(["order" => $order->getId()]);
+            $menus = [];
+            
+            foreach ($menuOrders as $menuOrder) {
+                $menus[] = $menuManager->find($menuOrder->getMenu()->getId())->getNom();
+            }
+
             $tabOrders[] = [
                 "id" => $order->getId(),
                 "user" => $order->getUser()->getId(),
                 "horaire" => $order->getHoraire()->getHoraire(),
                 "date" => $order->getDate(),
+                "menus" => implode(", ", $menus),
                 "prix" => $order->getPrix(),
                 "edit"=> Router::getRouteByName('admin.order.edit', $order->getId()),
                 "destroy"=> Router::getRouteByName('admin.order.destroy', $order->getId())
@@ -59,6 +72,7 @@ class Order extends Model implements ModelInterface
                 "user id",
                 "horaire",
                 "date",
+                "menus",
                 "prix"
             ],
 

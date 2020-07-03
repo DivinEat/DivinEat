@@ -23,7 +23,7 @@ class CreateOrderForm extends Form
         $menuManager = new MenuManager();
         $menus = $menuManager->findAll();
 
-        $this->setName("updateFormUser");
+        $this->setName("createFormOrder");
         
         $this->setBuilder()
             ->add("email", "input", [
