@@ -13,90 +13,43 @@ class UpdateConfigurationForm extends Form
 {
     public function buildForm()
     {   
-        $configs = $this->model;
-
-        $tab = [];
-        foreach($configs as $config){
-            $tab[$config->getLibelle()] = $config->getInfo();
-        }
+        $config = $this->model;
 
         $this->setName("updateConfigurationForm");
 
         $this->setBuilder()
-            ->add("nom_du_site", "input", [
+            ->add("id", "input", [
+                "attr" => [
+                    "type" => "hidden",
+                    "value" => $config->getId()
+                ],
+            ])
+            ->add("libelle", "input", [
+                "attr" => [
+                    "type" => "hidden",
+                    "value" => $config->getLibelle()
+                ],
+            ])
+            ->add("info", "input", [
                 "label" => [
-                    "value" => "Nom du site",
+                    "value" => ucwords(str_replace("_", " ", $config->getLibelle())),
                     "class" => "",
                 ],
                 "attr" => [
                     "type" => "text",
-                    "value" => $tab["nom_du_site"],
+                    "value" => $config->getInfo(),
                     "class" => "form-control"
                 ],
                 "constraints" => [
-                    new LengthConstraint(1, 55),
                     new RequiredConstraint()
                 ]
             ])
-            ->add("email", "input", [
-                "label" => [
-                    "value" => "Email du site",
-                    "class" => "",
-                ],
+            ->add("annuler", "link", [
                 "attr" => [
-                    "type" => "email",
-                    "value" => $tab["email"],
-                    "class" => "form-control"
+                    "href" => Router::getRouteByName("admin.configuration.index")->getUrl(),
+                    "class" => "btn btn-default",
                 ],
-                "constraints" => [
-                    new EmailConstraint(),
-                    new RequiredConstraint()
-                ]
-            ])
-            ->add("facebook", "input", [
-                "label" => [
-                    "value" => "Facebook",
-                    "class" => "",
-                ],
-                "attr" => [
-                    "type" => "text",
-                    "value" => $tab["facebook"],
-                    "class" => "form-control"
-                ],
-                "constraints" => [
-                    new LengthConstraint(1, 155),
-                    new RequiredConstraint()
-                ]
-            ])
-            ->add("instagram", "input", [
-                "label" => [
-                    "value" => "Instagram",
-                    "class" => "",
-                ],
-                "attr" => [
-                    "type" => "text",
-                    "value" => $tab["instagram"],
-                    "class" => "form-control"
-                ],
-                "constraints" => [
-                    new LengthConstraint(1, 155),
-                    new RequiredConstraint()
-                ]
-            ])
-            ->add("linkedin", "input", [
-                "label" => [
-                    "value" => "Linkedin",
-                    "class" => "",
-                ],
-                "attr" => [
-                    "type" => "text",
-                    "value" => $tab["linkedin"],
-                    "class" => "form-control"
-                ],
-                "constraints" => [
-                    new LengthConstraint(1, 155),
-                    new RequiredConstraint()
-                ]
+                "text" => "Annuler",
             ])
             ->add("submit", "input", [
                 "attr" => [
@@ -116,6 +69,6 @@ class UpdateConfigurationForm extends Form
                 "class" => "admin-form",
                 "name" => "updateConfigurationForm"
             ])
-            ->addConfig("action", Router::getRouteByName("admin.configuration.store")->getUrl());
+            ->addConfig("action", Router::getRouteByName("admin.configuration.update", $this->model->getId())->getUrl());
     }
 }

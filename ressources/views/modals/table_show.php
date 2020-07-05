@@ -14,7 +14,7 @@
         </tr>
 
         <?php foreach ($elements as $key => $fields): ?>
-            <form method="POST" action="<?= $fields["destroy"]->getUrl() ?>">
+            <form method="POST" action="<?= (isset($fields['destroy']))?$fields['destroy']->getUrl():'' ?>">
                 <tr>
                     <td></td>
                     <?php foreach ($fields as $key => $field):
@@ -26,7 +26,9 @@
                         <?php endif; endif; endforeach; ?>
                     <td>
                         <a href="<?= $fields["edit"]->getUrl() ?>" class="btn btn-edit">Modifier</a>
-                        <input type="submit" name="destroy" class="btn btn-remove" value="Supprimer"/>
+                        <?php if(isset($fields['destroy'])): ?>
+                            <input type="submit" name="destroy" class="btn btn-remove" value="Supprimer"/>
+                        <?php endif; ?>
                     </td>
                 </tr>
             </form>
