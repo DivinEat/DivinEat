@@ -56,7 +56,7 @@ class Configuration extends Model implements ModelInterface
         foreach($configs as $config){
             $tabConfigs[] = [
                 "id" => $config->getId(),
-                "libelle" => $config->getLibelle(),
+                "libelle" => ucwords(str_replace("_", " ", $config->getLibelle())),
                 "info" => $config->getInfo(),
                 "edit"=> Router::getRouteByName('admin.configuration.edit', $config->getId())
             ];
