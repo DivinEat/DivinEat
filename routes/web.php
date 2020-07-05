@@ -85,6 +85,10 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
     $group->group(['prefix' => 'configuration', 'as' => 'configuration.'], function (Router $group) {
         $group->get('', 'ConfigurationController@index', 'index');
         $group->post('store', 'ConfigurationController@store', 'store');
+        $group->group(['prefix' => '{config_id}'], function (Router $group) {
+            $group->get('edit', 'ConfigurationController@edit', 'edit');
+            $group->post('update', 'ConfigurationController@update', 'update');
+        });
     });
 });
 

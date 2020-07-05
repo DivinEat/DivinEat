@@ -51,54 +51,36 @@ class Configuration extends Model implements ModelInterface
         return $this->info;
     }
 
-    public static function getAddConfigForm($configs){
-        $tab = [];
+    public static function getShowConfigurationTable($configs){
+        $tabConfigs = [];
         foreach($configs as $config){
-            $tab[$config->getLibelle()] = $config->getInfo();
+            $tabConfigs[] = [
+                "id" => $config->getId(),
+                "libelle" => ucwords(str_replace("_", " ", $config->getLibelle())),
+                "info" => $config->getInfo(),
+                "edit"=> Router::getRouteByName('admin.configuration.edit', $config->getId())
+            ];
         }
 
-        return [
+        $tab = [
             "config"=>[
-                "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.configuration.store'),
-                "class"=>"admin-form",
-                "id"=>"formAddConfig",
-                "submit"=>[
-                    "btn-primary"=>"Envoyer"
-                ]
+                "class"=>"admin-table"
             ],
+
+            "colonnes"=>[
+                "Catégorie",
+                "Id",
+                "Libelle",
+                "Informations",
+                "Actions"
+            ],
+
             "fields"=>[
-                "nom_du_site"=>[
-                    "type"=>"text",
-                    "label"=>"Nom du site",
-                    "value"=>$tab["nom_du_site"],
-                    "class"=>"form-control"
-                ],
-                "email"=>[
-                    "type"=>"email",
-                    "label"=>"Email du site",
-                    "value"=>$tab["email"],
-                    "class"=>"form-control"
-                ],
-                "facebook"=>[
-                    "type"=>"text",
-                    "label"=>"Facebook",
-                    "value"=>$tab["facebook"],
-                    "class"=>"form-control"
-                ],
-                "instagram"=>[
-                    "type"=>"text",
-                    "label"=>"Instagram",
-                    "value"=>$tab["instagram"],
-                    "class"=>"form-control"
-                ],
-                "linkedin"=>[
-                    "type"=>"text",
-                    "label"=>"Linkedin",
-                    "value"=>$tab["linkedin"],
-                    "class"=>"form-control"
-                ]
+                "Configuration"=>[]
             ]
         ];
+
+        $tab["fields"]["Configuration"] = $tabConfigs;
+        return $tab;
     }
 }
