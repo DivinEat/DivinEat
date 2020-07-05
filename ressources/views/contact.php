@@ -6,8 +6,7 @@
             <div class="card">
                 <h2 class="title color-black margin-0">Contact</h2>
                 <p class="subtitle margin-bottom-75">Formulaire de contact</p>
-                
-                <?php $this->addModal("form", $configFormContact);?>
+                <?php $this->formView("createContactForm", "contact", "createContactForm"); ?>
             </div>
         </div>
     </div>

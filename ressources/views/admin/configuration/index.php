@@ -6,7 +6,7 @@
                     <h3 class="box-title">Préférences générales</h3>
                 </div>
                 <div class="box-body">
-                    <?php $this->addModal("form", $configFormConfig); ?>
+                <?php $this->formView("updateConfigurationForm", "configuration", "updateConfigurationForm"); ?>
                 </div>
             </div>
         </div>

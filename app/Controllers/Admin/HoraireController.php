@@ -9,6 +9,8 @@ use App\Core\Routing\Router;
 use App\Core\View;
 use App\Models\Horaire;
 use App\Managers\HoraireManager;
+use App\Forms\Horaire\CreateHoraireForm;
+use App\Forms\Horaire\UpdateHoraireForm;
 
 class HoraireController extends Controller
 {
@@ -19,62 +21,70 @@ class HoraireController extends Controller
 
         $configTableHoraire = Horaire::getShowHoraireTable($horaires);
 
-        $myView = new View("admin.horaire.index", "admin");
-        $myView->assign("configTableHoraire", $configTableHoraire);
+        $response->render("admin.horaire.index", "admin", ["configTableHoraire" => $configTableHoraire]);
     }
 
     public function create(Request $request, Response $response, array $args)
     {
-        $configFormHoraire = Horaire::getAddHoraireForm();
-        $horaireManager = new HoraireManager();
-        $horaires = $horaireManager->findAll();
+        $form = $response->createForm(CreateHoraireForm::class);
 
-        $myView = new View("admin.horaire.create", "admin");
-        $myView->assign("configFormHoraire", $configFormHoraire);
-        $myView->assign("horaires", $horaires);
+        $response->render("admin.horaire.create", "admin", ["createHoraireForm" => $form]);
     }
 
     public function store(Request $request, Response $response, array $args)
     {
         $data = $_POST;
 
-        $object = new Horaire();
-        $object->setHoraire($data['horaire']);
-
-        $manager = new HoraireManager();
-        $manager->save($object);
-
-        Router::redirect('admin.horaire.create');
-
+        foreach($data as $elementName => $element) {
+            $data[explode("_", $elementName)[1]] = $data[$elementName];
+            unset($data[$elementName]);
+        }
+        
+        $horaire = (new Horaire())->hydrate($data);
+        $form = $response->createForm(CreateHoraireForm::class, $horaire);
+        
+        if (false === $form->handle()) {
+            $response->render("admin.horaire.create", "admin", ["createHoraireForm" => $form]);
+        } else {
+            (new HoraireManager())->save($horaire);       
+            Router::redirect('admin.horaire.index');
+        }
     }
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = $args["horaire_id"];
+        $id = $args['horaire_id'];
 
         if(isset($id)){
             $horaireManager = new HoraireManager();
             $object = $horaireManager->find($id);
+        } else {
+            throw new \Exception("L'id de l'horaire n'existe pas.");
         }
+        
+        $form = $response->createForm(UpdateHoraireForm::class, $object);
 
-        $configFormHoraire = Horaire::getEditHoraireForm($object);
-
-        $myView = new View("admin.horaire.edit", "admin");
-        $myView->assign("configFormHoraire", $configFormHoraire);
+        $response->render("admin.horaire.edit", "admin", ["updateHoraireForm" => $form]);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
         $data = $_POST;
 
-        $horaireManager = new HoraireManager();
-        $horaire = $horaireManager->find($args["horaire_id"]);
+        foreach($data as $elementName => $element) {
+            $data[explode("_", $elementName)[1]] = $data[$elementName];
+            unset($data[$elementName]);
+        }
         
-        $horaire->setHoraire($data["horaire"]);
-
-        $horaireManager->save($horaire);
-
-        Router::redirect('admin.horaire.index');
+        $horaire = (new Horaire())->hydrate($data);
+        $form = $response->createForm(UpdateHoraireForm::class, $horaire);
+        
+        if (false === $form->handle()) {
+            $response->render("admin.horaire.edit", "admin", ["updateHoraireForm" => $form]);
+        } else {
+            (new HoraireManager())->save($horaire);       
+            Router::redirect('admin.horaire.index');
+        }
     }
 
     public function destroy(Request $request, Response $response, array $args)

@@ -6,7 +6,7 @@
                     <h3 class="box-title">Modifier un horaire</h3>
                 </div>
                 <div class="box-body">
-                    <?php $this->addModal("form", $configFormHoraire);?>
+                    <?php $this->formView("updateHoraireForm", "horaire", "updateHoraireForm"); ?>
                 </div>
             </div>
         </div>

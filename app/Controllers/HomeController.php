@@ -31,10 +31,12 @@ class HomeController extends Controller
             ->limit('1')
             ->getQuery()
             ->getArrayResult(Article::class);
+        
+        $articles[0]->setContent(Article::setJsonToHtml($articles[0]->getContent()));
 
         $myView = new View("home", "main");
         $myView->assign("menus", $menus);
-        $myView->assign("articles", $articles);
+        $myView->assign("article", $articles[0]);
     }
 
     public function menus(Request $request, Response $response)

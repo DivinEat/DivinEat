@@ -84,10 +84,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="col-inner article">
-                    <?php if(isset($articles)){
-                        foreach($articles as $article){
+                    <?php if(isset($article)){
                             echo $article->getContent();
-                        }
+                        
                     } ?>
                 </div>
             </div>

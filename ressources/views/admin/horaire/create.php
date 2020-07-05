@@ -3,10 +3,10 @@
         <div class="col-inner">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Ajouter un menu</h3>
+                    <h3 class="box-title">Ajouter un horaire</h3>
                 </div>
                 <div class="box-body">
-                    <?php $this->addModal("form", $configFormHoraire); ?>
+                    <?php $this->formView("createHoraireForm", "horaire", "createHoraireForm"); ?>
                 </div>
             </div>
         </div>
