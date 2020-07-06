@@ -61,7 +61,7 @@ $configs = $configManager->findAll();
 <footer>
     <div class="left">
         <div>
-            <p><a href="<?= Router::getRouteByName('contact.index')->getUrl() ?>" target="_blank">Nous contacter</a></p>
+            <p><a href="<?= Router::getRouteByName('contact.index')->getUrl() ?>">Nous contacter</a></p>
             <?php foreach($configs as $config): 
                 if($config->getLibelle() == "facebook" || $config->getLibelle() == "instagram" || $config->getLibelle() == "linkedin"):
                     if($config->getInfo() != ""): 
