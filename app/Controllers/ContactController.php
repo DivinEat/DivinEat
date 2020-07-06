@@ -22,6 +22,19 @@ class ContactController extends Controller
     {
         $data = $_POST;
 
-        Router::redirect('home');
+        foreach($data as $elementName => $element) {
+            $data[explode("_", $elementName)[1]] = $data[$elementName];
+            unset($data[$elementName]);
+        }
+        
+        $form = $response->createForm(CreateContactForm::class);
+        
+        if (false === $form->handle()) {
+            $response->render("contact", "main", ["createContactForm" => $form]);
+        } else {      
+            //PHP MAILER CODE
+            
+            Router::redirect('home');
+        }
     }
 }
