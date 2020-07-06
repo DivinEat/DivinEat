@@ -3,17 +3,10 @@
         <div class="col-inner">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Ajouter un menu</h3>
+                    <h3 class="box-title">Ajouter un <?= $name ?></h3>
                 </div>
                 <div class="box-body">
-                    <?php 
-                        $infos = [
-                            "entrees" => $entrees,
-                            "plats" => $plats,
-                            "desserts" => $desserts
-                        ];
-                        $this->addModal("menu_form", $configFormMenu, $infos);
-                    ?>
+                    <?php $this->formView("createMenuForm", "menu", "createMenuForm"); ?>
                 </div>
             </div>
         </div>
