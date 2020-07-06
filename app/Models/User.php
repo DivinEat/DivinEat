@@ -115,6 +115,11 @@ class User extends Model implements ModelInterface
         return $this->dateUpdated;
     }
 
+    public function isAdmin(): bool
+    {
+        return (int)$this->getStatus() === 1;
+    }
+
     public static function getShowUserTable($users){
         $roleManager = new RoleManager();
 

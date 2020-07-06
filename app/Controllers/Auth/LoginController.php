@@ -2,10 +2,13 @@
 
 namespace App\Controllers\Auth;
 
+use App\Core\Auth;
 use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Forms\Auth\LoginForm;
+use App\Managers\UserManager;
+use App\Core\Routing\Router;
 
 class LoginController extends Controller
 {
@@ -18,6 +21,15 @@ class LoginController extends Controller
 
     public function login(Request $request, Response $response)
     {
-        echo "login";
+        $userManager = new UserManager();
+        $user = current($userManager->findBy(['email' => $request->get('loginForm_email')]));
+
+        if (false === $user || !password_verify($request->get('loginForm_pwd'), $user->getPwd()))
+            return Router::redirect('auth.login');
+
+        Auth::saveUser($user);
+
+        return Router::redirect('home');
+
     }
 }

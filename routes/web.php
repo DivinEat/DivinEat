@@ -17,16 +17,22 @@ $router->group(['prefix' => 'actualites', 'as' => 'actualites.', 'namespace' => 
     });
 });
 
-$router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth', 'middleware' => ['user.not.connected']], function (Router $group) {
-    $group->get('login', 'LoginController@showLoginForm', 'show-login');
-    $group->post('login', 'LoginController@login', 'login');
-    $group->get('register', 'RegisterController@showRegisterForm', 'show-register');
-    $group->post('register', 'RegisterController@register', 'register');
-    $group->get('forgot-password', 'ForgotPasswordController@showForgotPassword', 'show-forgot-password');
-    $group->post('forgot-password', 'ForgotPasswordController@forgotPassword', 'forgot-password');
+$router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], function (Router $group) {
+    $group->group(['middleware' => ['user.connected']], function (Router $group) {
+        //TODO : transformer en route POST
+        $group->get('logout', 'LogoutController@logout', 'logout');
+    });
+    $group->group(['middleware' => ['user.not.connected']], function (Router $group) {
+        $group->get('login', 'LoginController@showLoginForm', 'show-login');
+        $group->post('login', 'LoginController@login', 'login');
+        $group->get('register', 'RegisterController@showRegisterForm', 'show-register');
+        $group->post('register', 'RegisterController@register', 'register');
+        $group->get('forgot-password', 'ForgotPasswordController@showForgotPassword', 'show-forgot-password');
+        $group->post('forgot-password', 'ForgotPasswordController@forgotPassword', 'forgot-password');
+    });
 });
 
-$router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected']], function (Router $group) {
+$router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected', 'user.is.admin']], function (Router $group) {
     $group->get('', 'DashboardController@index', 'index');
     
     $group->group(['prefix' => 'menu', 'as' => 'menu.'], function (Router $group) {
