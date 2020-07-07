@@ -5,12 +5,12 @@ use App\Core\Routing\Router;
 $router->get('', 'HomeController@index', 'home');
 $router->get('menus', 'HomeController@menus', 'menus');
 
-$router->group(['prefix' => 'contact', 'as' => 'contact.', 'namespace' => '', 'middleware' => ['user.not.connected']], function (Router $group) {
+$router->group(['prefix' => 'contact', 'as' => 'contact.'], function (Router $group) {
     $group->get('', 'ContactController@index', 'index');
     $group->post('store', 'ContactController@store', 'store');
 });
 
-$router->group(['prefix' => 'actualites', 'as' => 'actualites.', 'namespace' => '', 'middleware' => ['user.not.connected']], function (Router $group) {
+$router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Router $group) {
     $group->get('', 'ArticleController@index', 'index');
     $group->group(['prefix' => '{article_id}'], function (Router $group) {
         $group->get('show', 'ArticleController@show', 'show');

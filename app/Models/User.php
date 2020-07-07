@@ -117,7 +117,7 @@ class User extends Model implements ModelInterface
 
     public function isAdmin(): bool
     {
-        return (int)$this->getStatus() === 1;
+        return $this->getRole()->getLibelle() === 'Administrateur';
     }
 
     public static function getShowUserTable($users){
