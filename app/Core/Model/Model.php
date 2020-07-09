@@ -2,7 +2,7 @@
 
 namespace App\Core\Model;
 
-class Model implements \JsonSerializable
+abstract class Model implements \JsonSerializable
 {
     public function __construct() {}
 
