@@ -13,7 +13,7 @@ class CheckConnectedUser extends Middleware
 {
     public function handle(Request $request, Response $response, callable $handler)
     {
-        if (null === Auth::getUser())
+        if (Auth::isAuthenticated())
             return Router::redirect('auth.login');
 
         return $handler($request, $response);
