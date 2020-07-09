@@ -66,12 +66,12 @@ class Manager
         
         $row = $result->getOneOrNullResult();
 
-        if ($row) {
-            $object = new $this->class();
-            return $object->hydrate($row);
-        } else {
+        if (! $row)
             return null;
-        }
+
+        $object = new $this->class();
+
+        return $object->hydrate($row);
     }
 
 
