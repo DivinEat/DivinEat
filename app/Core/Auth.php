@@ -11,7 +11,7 @@ class Auth
 
     public function isAuthenticated(): bool
     {
-        return null === self::$user;
+        return null !== self::$user;
     }
 
     public static function saveUser(User $user): void
