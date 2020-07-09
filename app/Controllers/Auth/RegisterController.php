@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Auth;
 
+use App\Core\Auth;
 use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
@@ -31,13 +32,15 @@ class RegisterController extends Controller
         if ([] !== $user || $request->get('pwd') !== $request->get('pwdConfirm'))
             return Router::redirect('auth.register');
 
-        $userManager->save((new User())->hydrate([
+        $user = $userManager->create([
             'firstname' => $request->get('firstname'),
             'lastname' => $request->get('lastname'),
             'email' => $request->get('email'),
             'pwd' => password_hash($request->get('pwd'), PASSWORD_DEFAULT),
             'role' => current((new RoleManager())->findBy(['libelle' => 'Membre']))->getId(),
-        ]));
+        ]);
+
+        Auth::saveUser($user);
 
         return Router::redirect('home');
     }
