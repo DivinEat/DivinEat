@@ -57,7 +57,7 @@
                     </div>
 
                     <div style="display: flex; flex-direction: row; align-items: center;"> 
-                        <label><?= Auth::getUser()->getFirstname()." ".Auth::getUser()->getLastname() ?></label>
+                        <label><?= (Auth::isAuthenticated())?Auth::getUser()->getFirstname()." ".Auth::getUser()->getLastname():""; ?></label>
                         <div class="dropdown">
                             <button class="btn-dropdown bg-white"><img src="<?= url('img/icones/user.png') ?>"></button>
                             <div class="dropdown-content">
