@@ -57,6 +57,9 @@
         &-50 {
             margin-top: rem(50)!important;
         }
+        &-75 {
+            margin-top: rem(75)!important;
+        }
     }
 }
 
@@ -79,4 +82,7 @@
     -webkit-box-shadow: rem(0) rem(0) rem(3) rem(2) rgba($color: #000000, $alpha: 0.1);
     -moz-box-shadow: rem(0) rem(0) rem(3) rem(2) rgba($color: #000000, $alpha: 0.1);
     box-shadow: rem(0) rem(0) rem(3) rem(2) rgba($color: #000000, $alpha: 0.1);
+    &-black {
+        color: $black!important;
+    }
 }

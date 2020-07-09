@@ -198,6 +198,10 @@ div.ligne {
   margin-top: 3.125rem !important;
 }
 
+.margin-top-75 {
+  margin-top: 4.6875rem !important;
+}
+
 .color-white {
   color: #fff !important;
 }
@@ -237,6 +241,8 @@ div.ligne {
 .txt-editor-btn-hidden:hover,
 .txt-editor {
   box-shadow: 0rem 0rem 0.1875rem 0.125rem rgba(0, 0, 0, 0.1);
+.color-black {
+  color: #000 !important;
 }
 
 .image-banner {
@@ -959,6 +965,10 @@ footer .circle .up {
   height: 9.375rem;
 }
 
+.admin-form .form-control-none {
+  display: none;
+}
+
 .fa {
   margin-right: 10px;
 }
@@ -982,6 +992,15 @@ footer .circle .up {
   line-height: 1.42857143;
   color: #333;
   text-align: left;
+}
+
+.admin-table tr input[type="text"] {
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  text-align: left;
+  width: 100%;
+  border: none;
 }
 
 .card {
@@ -1055,6 +1074,12 @@ footer .circle .up {
 .pageBuilder-container-displayed-empty,
 .pageBuilder-container-hover {
   position: relative;
+.article {
+  overflow: hidden;
+  height: 6.25rem;
+}
+
+.row {
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: horizontal;

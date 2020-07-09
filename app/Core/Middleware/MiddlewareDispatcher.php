@@ -6,6 +6,7 @@ use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Middleware\CheckConnectedUser;
 use App\Middleware\CheckNotConnectedUser;
+use App\Middleware\CheckUserAdmin;
 
 class MiddlewareDispatcher
 {
@@ -25,11 +26,12 @@ class MiddlewareDispatcher
         $this->addMiddlewares();
         $this->addControllerMiddleware();
 
-        if ($this->tip instanceof ControllerMiddleware)
-        {
-            $methodName = $this->tip->getControllerMethod();
-            return $this->tip->$methodName($request, new Response(), $this->tip->getArgs());
-        }
+//        if ($this->tip instanceof ControllerMiddleware)
+//        {
+//            $methodName = $this->tip->getControllerMethod();
+//
+//            return $this->tip->$methodName($request, new Response(), $request->getRouteArgs());
+//        }
 
         return $this->tip->run($request, new Response());
     }
@@ -64,8 +66,6 @@ class MiddlewareDispatcher
         $controller = new $controllerName($this->container);
         $this->addHandler($controller);
         $controller->setControllerMethod($this->request->getCurrentRoute()->getMethod());
-        //TODO : Ajouter les arguments.
-        $controller->setArgs([]);
     }
 
     protected function getMiddleware(string $middlewareName): ?string
@@ -73,6 +73,7 @@ class MiddlewareDispatcher
         $middlewares = [
             'user.not.connected' => CheckNotConnectedUser::class,
             'user.connected' => CheckConnectedUser::class,
+            'user.is.admin' => CheckUserAdmin::class,
         ];
 
         return $middlewares[$middlewareName] ?? null;

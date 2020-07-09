@@ -21,18 +21,13 @@ abstract class ControllerMiddleware extends Middleware
         return $this->controllerMethod;
     }
 
-    public function setArgs(array $args)
+    public function run(Request $request, Response $response)
     {
-        $this->args = $args;
-    }
-
-    public function getArgs(): array
-    {
-        return $this->args;
+        return $this->handle($request, $response, [$this, $this->getControllerMethod()]);
     }
 
     public function handle(Request $request, Response $response, callable $handler)
     {
-        return $this->$this->controllerMethod($request);
+        return $handler($request, $response, $request->getRouteArgs());
     }
 }

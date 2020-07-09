@@ -1,52 +1,58 @@
-<script src="public/js/slider.js"></script>
+<?php use App\Core\Routing\Router; ?>
 
-<div class="image-banner image-banner--text" style="background-image: url('public/img/banner.jpg')">
+<div class="image-banner image-banner--text" style="background-image: url('img/banner.jpg')">
     <section>
-        <h1>Lorem ipsum dolor sit amet</h1>
+        <h1>
+            <?php 
+                foreach($configs as $config) { 
+                    if($config->getLibelle() == "nom_du_site"){
+                        if($config->getInfo() != ""){
+                            echo $config->getInfo();
+                        }
+                    }
+                } 
+            ?>
+        </h1>
     </section>
 </div>
 
 <div class="row frame">
     <div class="col-sm-12">
-        <div class="row"><span>Menu</span></div>
+        <div class="row"><span>Menus</span></div>
         <div class="ligne"></div>
-
         <div class="row">
-            <div class="col-sm-12 col-md-6">
-                <div class="col-inner">
-                    <div class="menu">
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum justo vitae metus</div>
-                        <div>13€</div>
-                    </div>
-                    <div class="menu">
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum justo vitae metus</div>
-                        <div>18€</div>
-                    </div>
-                    <div class="menu">
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum justo vitae metus</div>
-                        <div>15€</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <div class="col-inner">
-                    <div class="menu">
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum justo vitae metus</div>
-                        <div>13€</div>
-                    </div>
-                    <div class="menu">
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum justo vitae metus</div>
-                        <div>18€</div>
-                    </div>
-                    <div class="menu">
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean bibendum justo vitae metus</div>
-                        <div>15€</div>
+            <?php if(isset($menus)):
+                $count = count($menus) / 2; ?>
+                <div class="col-sm-12 col-md-6">
+                    <div class="col-inner">
+                        <?php for($i = 0; $i < $count; $i++): 
+                            if(isset($menus[$i])): ?>
+                                <div class="menu">
+                                    <div><b><?= $menus[$i]->getNom() ?></b> <?= " - <i>".$menus[$i]->getEntree()->getNom()
+                                        .", ".$menus[$i]->getPlat()->getNom().", ".$menus[$i]->getDessert()->getNom() ?></i></div>
+                                    <div><?= $menus[$i]->getPrix() ?></div>
+                                </div>
+                            <?php endif;
+                        endfor; ?>
                     </div>
                 </div>
-            </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="col-inner">
+                        <?php if (count($menus)%2 != 0){ $count++; }
+                        for($i = $count; $i < count($menus); $i++): 
+                            if(isset($menus[$i])): ?>
+                                <div class="menu">
+                                    <div><b><?= $menus[$i]->getNom() ?></b> <?= " - <i>".$menus[$i]->getEntree()->getNom()
+                                        .", ".$menus[$i]->getPlat()->getNom().", ".$menus[$i]->getDessert()->getNom() ?></i></div>
+                                    <div><?= $menus[$i]->getPrix() ?></div>
+                                </div>
+                            <?php endif;
+                        endfor; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
-
-        <div class="row more"><a href="#">Voir plus</a></div>
+        <div class="row more"><a href="<?= Router::getRouteByName('menus')->getUrl() ?>">Voir plus</a></div>
     </div>
 </div>
 
@@ -54,16 +60,19 @@
     <div class="col-md-7">
         <div class="col-inner">
             <div id="slider">
-                <img src="public/img/banner.jpg">
-                <img src="public/img/banner.jpg">
-                <img src="public/img/banner.jpg">
+                <?php 
+                    $files = glob('img/slider/*.{jpg,png,gif}', GLOB_BRACE);
+                    foreach($files as $file) {
+                      echo "<img src='$file'>";
+                    }
+                ?>
             </div>
         </div>
     </div>
 
     <div class="col-md-5">
         <div class="col-inner">
-
+            RESERVATION
         </div>
     </div>
 </div>
@@ -71,21 +80,14 @@
 <div class="row frame">
     <div class="col-sm-12">
         <div class="row"><span>Dernier article</span></div>
-
         <div class="ligne"></div>
-
         <div class="row">
             <div class="col-sm-12">
-                <div class="col-inner">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eleifend pulvinar lectus,
-                    eget aliquam magna. Praesent sit amet justo nunc. Quisque tincidunt nisi in erat venenatis facilisis.
-                    n ultrices vitae lacus nec posuere. Phasellus scelerisque nulla nibh, a lacinia ipsum rhoncus quis.
-                    Etiam id semper sem. Vivamus rutrum mi eget velit ullamcorper vestibulum. Nullam tincidunt lorem sit
-                    amet lorem tempor eleifend. Donec ut aliquet ex. Etiam quam lectus, suscipit ac massa ac, scelerisque
-                    congue libero. Donec et sollicitudin orci. Suspendisse eget turpis mauris. Donec enim lorem,
-                    malesuada tempor tempor vel, malesuada at erat. Donec semper mollis eros, sit amet faucibus
-                    sem ultricies at. Quisque ut purus sit amet urna aliquet bibendum nec id lacus. Vivamus sit
-                    amet purus rutrum, dictum justo quis, dignissim velit...
+                <div class="col-inner article">
+                    <?php if(isset($article)){
+                            echo $article->getContent();
+                        
+                    } ?>
                 </div>
             </div>
         </div>

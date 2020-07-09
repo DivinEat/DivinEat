@@ -8,7 +8,7 @@ class Router
 {
     private static Collection $routes;
 
-    protected array $params = ['prefix' => '', 'as' => '', 'namespace' => '', 'middleware' => []];
+    protected array $params = ['prefix' => '/', 'as' => '', 'namespace' => '', 'middleware' => []];
 
     public function __construct(array $params = [])
     {
@@ -42,9 +42,24 @@ class Router
 
     protected function mergeParams(array $params): array
     {
-        $params = array_merge($this->params, $params);
-        $params['namespace'] = preg_replace('/[\\\]{2,}/', '\\', $params['namespace'] . '\\');
-        $params['prefix'] = preg_replace('/[\/]{2,}/', '/', '/' . $params['prefix'] . '/');
+        $params['as'] = isset($params['as']) ? $this->params['as'] . $params['as'] : $this->params['as'];
+
+        $params['namespace'] = isset($params['namespace']) ? preg_replace(
+            '/[\\\]{2,}/',
+            '\\',
+            $this->params['namespace'] . $params['namespace'] . '\\'
+            ) : $this->params['namespace'];
+
+        $params['prefix'] = isset($params['prefix']) ? preg_replace(
+            '/[\/]{2,}/',
+            '/',
+            $this->params['prefix'] . '/' . $params['prefix'] . '/'
+            ) : $this->params['prefix'];
+
+        $params['middleware'] = isset($params['middleware']) && is_array($params['middleware']) ? array_merge(
+            $this->params['middleware'],
+            $params['middleware']
+        ) : $this->params['middleware'];
 
         return $params;
     }
@@ -90,11 +105,11 @@ class Router
         return $routeList;
     }
 
-    public static function getRouteByName(string $routeName): ?Route
+    public static function getRouteByName(string $routeName, $args = []): ?Route
     {
         foreach (self::getRoutes()->getIterator() as $route)
             if ($route->name === $routeName)
-                return $route;
+                return (clone $route)->setArgs($args);
 
         return null;
     }
@@ -103,7 +118,7 @@ class Router
     {
         foreach (self::getRoutes()->getIterator() as $route)
             if (preg_match('/^' . $route->regexPath . '$/', $requestUri))
-                return $route;
+                return clone $route;
 
         return null;
     }
@@ -112,18 +127,17 @@ class Router
     {
         foreach (self::getRoutes()->getIterator() as $route)
             if (preg_match('/^' . $route->regexPath . '$/', $requestUri) && $route->getType() === $type)
-                return $route;
+                return clone $route;
 
         return null;
     }
 
     public static function redirect(string $routeName, array $args = []): void
     {
-        //TODO : Ajouter les redirections pour les routes avec arguments
         $route = self::getRouteByName($routeName);
         if ($route === null)
             throw new \Exception('La redirection est impossible, la route n\'existe pas');
 
-        header('Location: ' . $route->getUrl());
+        header('Location: ' . $route->setArgs($args)->getUrl());
     }
 }
