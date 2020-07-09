@@ -68,6 +68,23 @@ class Route
         return $args;
     }
 
+    public function addMiddleware(string $middlewareName): Route
+    {
+        if (! in_array($middlewareName, $this->middleware))
+            $this->middleware[] = $middlewareName;
+
+        return $this;
+    }
+
+    public function addMiddlewares(array $middlewaresName): Route
+    {
+        array_map(function ($middlewareName) {
+            $this->addMiddleware($middlewareName);
+        }, $middlewaresName);
+
+        return $this;
+    }
+
     public function setArgs($args = []): Route
     {
         if ($this->countNecessaryArguments() === 0)
