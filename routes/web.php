@@ -4,7 +4,11 @@ use App\Core\Routing\Router;
 
 $router->get('', 'HomeController@index', 'home');
 $router->get('menus', 'HomeController@menus', 'menus');
-$router->get('profile', 'UserController@index', 'profile');
+
+$router->group(['prefix' => 'profile', 'as' => 'profile.'], function (Router $group) {
+    $group->get('', 'UserController@edit', 'edit');
+    $group->post('update', 'UserController@update', 'update');
+});
 
 $router->group(['prefix' => 'contact', 'as' => 'contact.'], function (Router $group) {
     $group->get('', 'ContactController@index', 'index');

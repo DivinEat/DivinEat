@@ -11,10 +11,15 @@ use App\Forms\User\UpdateUserForm;
 
 class UserController extends Controller
 {
-    public function index(Request $request, Response $response, array $args)
+    public function edit(Request $request, Response $response, array $args)
     {
         $form = $response->createForm(UpdateUserForm::class, Auth::getUser());
 
         $response->render("profile", "main", ["updateUserForm" => $form]);
+    }
+
+    public function update(Request $request, Response $response, array $args)
+    {
+        echo "test";
     }
 }

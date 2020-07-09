@@ -4,31 +4,19 @@ namespace App\Forms\User;
 
 use App\Core\Form;
 use App\Models\User;
-use App\Core\StringValue;
 use App\Core\Routing\Router;
-use App\Managers\RoleManager;
 use App\Core\Constraints\EmailConstraint;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\PasswordConstraint;
 use App\Core\Constraints\RequiredConstraint;
 
-class UpdateUserForm extends Form
+class UpdateProfileForm extends Form
 {
     public function buildForm()
     {
         $user = $this->model;
 
-        $this->setName("updateFormUser");
-
-        if ($user->getStatus() == true) {
-            $selectedStatus = new StringValue("Actif", true);
-        } else {
-            $selectedStatus = new StringValue("Inactif", false);
-        }
-
-        $roleManager = new RoleManager();
-        $roles = $roleManager->findAll();
-        $selectedRole = $user->getRole();
+        $this->setName("udpateProfileForm");
         
         $this->setBuilder()
             ->add("id", "input", [
@@ -99,39 +87,6 @@ class UpdateUserForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("status", "select", [
-                "attr" => [
-                    "class" => "form-control"
-                ],
-                "label" => [
-                    "value" => "Statut",
-                    "class" => "",
-                ],
-                "data" => [
-                    new StringValue("Actif", true),
-                    new StringValue("Inactif", false)
-                ],
-                "getter" => "getString",
-                "selected" => $selectedStatus,
-                "constraints" => [
-                    new RequiredConstraint()
-                ]
-            ])
-            ->add("role", "select", [
-                "attr" => [
-                    "class" => "form-control"
-                ],
-                "label" => [
-                    "value" => "Role",
-                    "class" => "",
-                ],
-                "data" => $roles,
-                "getter" => "getLibelle",
-                "selected" => $selectedRole,
-                "constraints" => [
-                    new RequiredConstraint()
-                ]
-            ])
             ->add("dateInserted", "input", [
                 "label" => [
                     "value" => "Date d'inscription",
@@ -169,10 +124,10 @@ class UpdateUserForm extends Form
         $this
             ->addConfig("class", User::class)
             ->addConfig("attr", [
-                "id" => "udpateUserForm",
+                "id" => "udpateProfileForm",
                 "class" => "admin-form",
-                "name" => "udpateUserForm"
+                "name" => "udpateProfileForm"
             ])
-            ->addConfig("action", Router::getRouteByName("admin.user.update", $this->model->getId())->getUrl());
+            ->addConfig("action", Router::getRouteByName("profile.update")->getUrl());
     }
 }
