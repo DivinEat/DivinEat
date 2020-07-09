@@ -1,6 +1,7 @@
 <?php
 use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
+use App\Core\Auth;
 
 $configManager = new ConfigurationManager();
 $configs = $configManager->findAll();
@@ -45,15 +46,25 @@ $configs = $configManager->findAll();
         <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Actualités</a>
     </div>
 
-    <div class="dropdown dropdown-front">
-        <button class="btn-dropdown bg-white"><img src="<?= url('img/icones/user.png') ?>"></button>
-        <div class="dropdown-content">
-            <a href="<?= Router::getRouteByName('profile')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
-            <a href="#"><img src="<?= url('img/icones/settings.png') ?>"> Paramètres</a><hr/>
-            <a href="#"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
+    <div style="display: flex; flex-direction: row; align-items: center;"> 
+        <label><?= Auth::getUser()->getFirstname()." ".Auth::getUser()->getLastname() ?></label>
+        <div class="dropdown dropdown-front">
+            <button class="btn-dropdown bg-white"><img src="<?= url('img/icones/user.png') ?>"></button>
+            <div class="dropdown-content">
+                <?php if(Auth::isAuthenticated()): ?>
+                    <?php if(Auth::getUser()->isAdmin()): ?>
+                        <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Administration</a>
+                    <?php endif; ?>
+                    <a href="<?= Router::getRouteByName('profile')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
+                    <a href="#"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
+                <?php else: ?>
+                    <a href="<?= Router::getRouteByName('auth.show-login')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Connexion</a>
+                    <a href="<?= Router::getRouteByName('auth.show-register')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Inscription</a>
+                <?php endif; ?>
+            </div>
         </div>
+        <span class="burger" onclick="openNav()">&#9776;</span>
     </div>
-    <span class="burger" onclick="openNav()">&#9776;</span>
 </header>
 
 <?php include $this->viewPath;?>
