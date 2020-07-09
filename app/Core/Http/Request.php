@@ -11,7 +11,7 @@ class Request
 
     protected array $parsedBody;
 
-    protected string $inputPrefix;
+    protected string $inputPrefix = '';
 
     public function __construct(Route $route)
     {
