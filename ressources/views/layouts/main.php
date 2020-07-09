@@ -48,7 +48,7 @@ $configs = $configManager->findAll();
     <div class="dropdown dropdown-front">
         <button class="btn-dropdown bg-white"><img src="<?= url('img/icones/user.png') ?>"></button>
         <div class="dropdown-content">
-            <a href="#"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
+            <a href="<?= Router::getRouteByName('profile')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
             <a href="#"><img src="<?= url('img/icones/settings.png') ?>"> Paramètres</a><hr/>
             <a href="#"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
         </div>
