@@ -2,6 +2,7 @@
 namespace App\Core;
 use App\Core\Connection\BDDInterface;
 use App\Core\Connection\PDOConnection;
+use App\Core\Constraints\Validator;
 use App\Core\Model\Model;
 
 class Manager
@@ -30,16 +31,19 @@ class Manager
 
         $params = [];
         foreach($objectArray as $key => $value){
-            if($value instanceof Model){
+            $params[":$key"] = $value;
+
+            if($value instanceof Model)
                 $params[":$key"] = $value->getId();
-            } else {
-                $params[":$key"] = $value;
+
+            if ($value === null)
+            {
+                unset($columns[array_search($key, $columns)]);
+                unset($params[":$key"]);
             }
         }
 
         if (!is_numeric($objectToSave->getId())) {
-            array_shift($columns);
-            array_shift($params);
             $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
         } else {
             foreach ($columns as $column) {
