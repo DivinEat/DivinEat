@@ -1,17 +1,5 @@
 <?php
-use App\Core\Routing\Router;
-use App\Core\Builder\QueryBuilder;
-use App\Models\Configuration;
-
-$config =  (new QueryBuilder())
-    ->select('*')
-    ->from('configurations', 'c')
-    ->where("libelle = :nom")
-    ->setParameter('nom', 'nom_du_site')
-    ->getQuery()
-    ->getArrayResult(Configuration::class);
-
-$nom_du_site = $config[0]->getInfo();
+    use App\Core\Routing\Router;
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +51,7 @@ $nom_du_site = $config[0]->getInfo();
 
                         <a class="computer" href="<?= Router::getRouteByName('home')->getUrl() ?>">
                             <img src="<?= url('img/icones/computer.png') ?>">
-                            <span><?= $nom_du_site ?></span>
+                            <span><?= getConfig("nom_du_site")->getInfo(); ?></span>
                         </a>
                     </div>
 
