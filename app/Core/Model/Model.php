@@ -20,9 +20,9 @@ abstract class Model implements \JsonSerializable
             if (method_exists($articleObj, $method)) {
                 if($relation = $articleObj->getRelation($key)) {
                     $tmp = new $relation();
-                    $tmp = $tmp->hydrate($row);
-                    $tmp->setId($value);
-                    $articleObj->$method($tmp);
+                    preg_match('/.*\\\([a-zA-Z]*)/', get_class($tmp), $modelName);
+                    $managerName = 'App\Managers\\' . $modelName[1] . 'Manager';
+                    $articleObj->$method((new $managerName)->find($value));
                 } else {
                     $articleObj->$method($value);
                 }
