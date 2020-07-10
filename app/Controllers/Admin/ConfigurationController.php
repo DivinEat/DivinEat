@@ -10,37 +10,53 @@ use App\Core\Builder\QueryBuilder;
 use App\Core\View;
 use App\Models\Configuration;
 use App\Managers\ConfigurationManager;
+use App\Forms\Configuration\UpdateConfigurationForm;
 
 class ConfigurationController extends Controller
 {
     public function index(Request $request, Response $response)
     {
         $configurationManager = new ConfigurationManager();
-        $configs = $configurationManager->findAll();
+        $object = $configurationManager->findAll();
 
-        $configFormConfig = Configuration::getAddConfigForm($configs);
+        $configTableConfiguration = Configuration::getShowConfigurationTable($object);
 
-        $myView = new View("admin.configuration.index", "admin");
-        $myView->assign("configFormConfig", $configFormConfig);
+        $response->render("admin.configuration.index", "admin", ["configTableConfiguration" => $configTableConfiguration]);
     }
 
-    public function store(Request $request, Response $response, array $args)
+    public function edit(Request $request, Response $response, array $args)
+    {   
+        $id = $args['config_id'];
+
+        if(isset($id)){
+            $configurationManager = new ConfigurationManager();
+            $object = $configurationManager->find($id);
+        } else {
+            throw new \Exception("L'id de le l'option n'existe pas.");
+        }
+        
+        $form = $response->createForm(UpdateConfigurationForm::class, $object);
+
+        $response->render("admin.configuration.edit", "admin", ["updateConfigurationForm" => $form]);
+    }
+
+    public function update(Request $request, Response $response, array $args)
     {
         $data = $_POST;
-        $manager = new ConfigurationManager();
 
-        foreach($data as $key => $value){
-            $config = (new QueryBuilder())
-            ->select('*')
-            ->from('configurations', 'c')
-            ->where("libelle = '$key'")
-            ->getQuery()
-            ->getArrayResult(Configuration::class);
-
-            $config[0]->setInfo($value);
-            $manager->save($config[0]);
+        foreach($data as $elementName => $element) {
+            $data[explode("_", $elementName)[1]] = $data[$elementName];
+            unset($data[$elementName]);
         }
-
-        Router::redirect('admin.configuration.index');
+        
+        $configuration = (new Configuration())->hydrate($data);
+        $form = $response->createForm(UpdateConfigurationForm::class, $configuration);
+        
+        if (false === $form->handle()) {
+            $response->render("admin.configuration.edit", "admin", ["updateConfigurationForm" => $form]);
+        } else {
+            (new ConfigurationManager())->save($configuration);       
+            Router::redirect('admin.configuration.index');
+        }
     }
 }

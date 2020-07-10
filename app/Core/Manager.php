@@ -2,13 +2,15 @@
 namespace App\Core;
 use App\Core\Connection\BDDInterface;
 use App\Core\Connection\PDOConnection;
+use App\Core\Connection\PDOSingleton;
+use App\Core\Constraints\Validator;
 use App\Core\Model\Model;
 
 class Manager
 {
     private $table;
-    private $connection;
-    protected $class;
+    private ?PDOConnection $connection;
+    protected string $class;
 
     public function __construct(string $class, string $table, BDDInterface $connection = null)
     {
@@ -21,7 +23,7 @@ class Manager
         }
     }
 
-    public function save($objectToSave): ?int
+    public function save($objectToSave): string
     {
         $objectArray = $objectToSave->__toArray();
 
@@ -30,17 +32,20 @@ class Manager
 
         $params = [];
         foreach($objectArray as $key => $value){
-            if($value instanceof Model){
+            $params[":$key"] = $value;
+
+            if($value instanceof Model)
                 $params[":$key"] = $value->getId();
-            } else {
-                $params[":$key"] = $value;
+
+            if ($value === null)
+            {
+                unset($columns[array_search($key, $columns)]);
+                unset($params[":$key"]);
             }
         }
 
         if (!is_numeric($objectToSave->getId())) {
-            array_shift($columns);
-            array_shift($params);
-            $sql = "INSERT INTO ".$this->table." (`".implode("`,`", $columns)."`) VALUES (:".implode(",:", $columns).");";
+            $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
         } else {
             foreach ($columns as $column) {
                 $sqlUpdate[] = "`".$column."`=:".$column;
@@ -61,12 +66,12 @@ class Manager
         
         $row = $result->getOneOrNullResult();
 
-        if ($row) {
-            $object = new $this->class();
-            return $object->hydrate($row);
-        } else {
+        if (! $row)
             return null;
-        }
+
+        $object = new $this->class();
+
+        return $object->hydrate($row);
     }
 
 
@@ -152,5 +157,16 @@ class Manager
         $result = $this->connection->query($sql, [':id' => $id]);
 
         return true;
+    }
+
+    public function create(array $modelProperties): Model
+    {
+        $class = $this->class;
+        $model = (new $class)->hydrate($modelProperties);
+
+        $lastInsertedId = $this->save($model);
+        $model->setId($lastInsertedId);
+
+        return $model;
     }
 }

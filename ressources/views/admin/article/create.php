@@ -8,7 +8,7 @@
                     <h3 class="box-title">Ajouter un article</h3>
                 </div>
                 <div class="box-body">
-                    <?php $this->addModal("form", $configFormArticle); ?>
+                    <?php $this->formView("createArticleForm", "article", "createArticleForm"); ?>
                 </div>
             </div>
         </div>

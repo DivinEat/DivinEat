@@ -11,7 +11,7 @@ class EmailConstraint implements ConstraintInterface
     {
     }
 
-    public function isValid(string $value): bool
+    public function isValid(string $value, string $elementName): bool
     {
         $this->errors = [];
 

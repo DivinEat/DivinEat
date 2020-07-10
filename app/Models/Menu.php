@@ -87,123 +87,6 @@ class Menu extends Model implements ModelInterface
         return $this->prix;
     }
 
-    public static function getAddMenuForm(){
-        return [
-            "config"=>[
-                "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.menu.store'),
-                "class"=>"admin-form",
-                "id"=>"formAddMenu",
-                "submit"=>[
-                    "btn-primary"=>"Envoyer"
-                ],
-                "annuler"=>[
-                    "action"=> Router::getRouteByName('admin.menu.index'),
-                    "class"=>"btn btn-default",
-                    "text"=>"Retour"
-                ]
-            ],
-
-            "fields"=>[
-                "nom"=>[
-                    "type"=>"text",
-                    "placeholder"=>"",
-                    "label"=>"Nom",
-                    "class"=>"form-control",
-                    "id"=>"",
-                    "required"=>true,
-                    "min-length"=>2,
-                    "max-length"=>100,
-                    "errorMsg"=>"Un nom doit être renseigné"
-                ],
-                "description"=>[
-                    "type"=>"textarea",
-                    "label"=>"Description",
-                    "class"=>"form-control form-control-textarea",
-                    "id"=>"",
-                    "required"=>true,
-                    "errorMsg"=>"Une description doit être renseignée"
-                ],
-                "prix"=>[
-                    "type"=>"number",
-                    "label"=>"Prix",
-                    "class"=>"form-control",
-                    "id"=>"",
-                    "required"=>true,
-                    "errorMsg"=>"Un prix doit être renseigné"
-                ]
-            ]
-        ];
-    }
-
-    public static function getEditMenuForm($id){
-        return [
-            "config"=>[
-                "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.menu.update', [$id, 1]),
-                "class"=>"admin-form",
-                "id"=>"formAddMenu",
-                "submit"=>[
-                    "btn-primary"=>"Envoyer"
-                ],
-                "annuler"=>[
-                    "action"=> Router::getRouteByName('admin.menu.index'),
-                    "class"=>"btn btn-default",
-                    "text"=>"Retour"
-                ]
-            ]
-        ];
-    }
-
-    public static function getEditElementMenuForm($id, $category){
-        return [
-            "config"=>[
-                "method"=>"POST", 
-                "action"=> Router::getRouteByName('admin.menu.update', [$id, $category]),
-                "class"=>"admin-form",
-                "id"=>"formAddMenu",
-                "submit"=>[
-                    "btn-primary"=>"Envoyer"
-                ],
-                "annuler"=>[
-                    "action"=> Router::getRouteByName('admin.menu.index'),
-                    "class"=>"btn btn-default",
-                    "text"=>"Retour"
-                ]
-            ],
-
-            "fields"=>[
-                "nom"=>[
-                    "type"=>"text",
-                    "placeholder"=>"",
-                    "label"=>"Nom",
-                    "class"=>"form-control",
-                    "id"=>"",
-                    "required"=>true,
-                    "min-length"=>2,
-                    "max-length"=>100,
-                    "errorMsg"=>"Un nom doit être renseigné"
-                ],
-                "description"=>[
-                    "type"=>"textarea",
-                    "label"=>"Description",
-                    "class"=>"form-control form-control-textarea",
-                    "id"=>"",
-                    "required"=>true,
-                    "errorMsg"=>"Une description doit être renseignée"
-                ],
-                "prix"=>[
-                    "type"=>"number",
-                    "label"=>"Prix",
-                    "class"=>"form-control",
-                    "id"=>"",
-                    "required"=>true,
-                    "errorMsg"=>"Un prix doit être renseigné"
-                ]
-            ]
-        ];
-    }
-
     public static function getShowMenuTable($menus){
         $elementMenuManager = new ElementMenuManager();
 
@@ -220,8 +103,8 @@ class Menu extends Model implements ModelInterface
                 "plat" => $plat->getNom(),
                 "dessert" => $dessert->getNom(),
                 "prix" => $menu->getPrix(),
-                "edit"=> Router::getRouteByName('admin.menu.edit', [$menu->getId(), 1]),
-                "destroy"=> Router::getRouteByName('admin.menu.destroy', [$menu->getId(), 1])
+                "edit"=> Router::getRouteByName('admin.menu.edit', $menu->getId()),
+                "destroy"=> Router::getRouteByName('admin.menu.destroy', $menu->getId())
             ];
         }
 
@@ -267,8 +150,8 @@ class Menu extends Model implements ModelInterface
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
                         "prix" => $elementMenu->getPrix(),
-                        "edit"=> Router::getRouteByName('admin.menu.edit', [$elementMenu->getId(), 2]),
-                        "destroy"=> Router::getRouteByName('admin.menu.destroy', [$elementMenu->getId(), 2])
+                        "edit"=> Router::getRouteByName('admin.elementmenu.edit', [$elementMenu->getId(), 2]),
+                        "destroy"=> Router::getRouteByName('admin.elementmenu.destroy', [$elementMenu->getId(), 2])
                     ];
                     break;
                 case "plat":
@@ -277,8 +160,8 @@ class Menu extends Model implements ModelInterface
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
                         "prix" => $elementMenu->getPrix(),
-                        "edit"=> Router::getRouteByName('admin.menu.index', [$elementMenu->getId(), 3]),
-                        "destroy"=> Router::getRouteByName('admin.menu.destroy', [$elementMenu->getId(), 3])
+                        "edit"=> Router::getRouteByName('admin.elementmenu.edit', [$elementMenu->getId(), 3]),
+                        "destroy"=> Router::getRouteByName('admin.elementmenu.destroy', [$elementMenu->getId(), 3])
                     ];
                     break;
                 case "dessert":
@@ -287,8 +170,8 @@ class Menu extends Model implements ModelInterface
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
                         "prix" => $elementMenu->getPrix(),
-                        "edit"=> Router::getRouteByName('admin.menu.index', [$elementMenu->getId(), 4]),
-                        "destroy"=> Router::getRouteByName('admin.menu.destroy', [$elementMenu->getId(), 4])
+                        "edit"=> Router::getRouteByName('admin.elementmenu.edit', [$elementMenu->getId(), 4]),
+                        "destroy"=> Router::getRouteByName('admin.elementmenu.destroy', [$elementMenu->getId(), 4])
                     ];
                     break;
                 case "boisson":
@@ -297,8 +180,8 @@ class Menu extends Model implements ModelInterface
                         "nom" => $elementMenu->getNom(),
                         "description" => $elementMenu->getDescription(),
                         "prix" => $elementMenu->getPrix(),
-                        "edit"=> Router::getRouteByName('admin.menu.index', [$elementMenu->getId(), 5]),
-                        "destroy"=> Router::getRouteByName('admin.menu.destroy', [$elementMenu->getId(), 5])
+                        "edit"=> Router::getRouteByName('admin.elementmenu.edit', [$elementMenu->getId(), 5]),
+                        "destroy"=> Router::getRouteByName('admin.elementmenu.destroy', [$elementMenu->getId(), 5])
                     ];
                     break;
             }

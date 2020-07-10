@@ -5,38 +5,59 @@ use App\Core\Routing\Router;
 $router->get('', 'HomeController@index', 'home');
 $router->get('menus', 'HomeController@menus', 'menus');
 
-$router->group(['prefix' => 'contact', 'as' => 'contact.', 'namespace' => '', 'middleware' => ['user.not.connected']], function (Router $group) {
+$router->group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['user.connected']], function (Router $group) {
+    $group->get('', 'UserController@edit', 'edit');
+    $group->post('update', 'UserController@update', 'update');
+});
+
+$router->group(['prefix' => 'contact', 'as' => 'contact.'], function (Router $group) {
     $group->get('', 'ContactController@index', 'index');
     $group->post('store', 'ContactController@store', 'store');
 });
 
-$router->group(['prefix' => 'actualites', 'as' => 'actualites.', 'namespace' => '', 'middleware' => ['user.not.connected']], function (Router $group) {
+$router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Router $group) {
     $group->get('', 'ArticleController@index', 'index');
     $group->group(['prefix' => '{article_id}'], function (Router $group) {
         $group->get('show', 'ArticleController@show', 'show');
     });
 });
 
-$router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth', 'middleware' => ['user.not.connected']], function (Router $group) {
-    $group->get('login', 'LoginController@showLoginForm', 'login');
-    $group->post('login', 'LoginController@login');
-    $group->get('register', 'RegisterController@showRegisterForm', 'register');
-    $group->post('register', 'RegisterController@register');
-    $group->get('forgot-password', 'ForgotPasswordController@showRegisterForm', 'forgot.password');
-    $group->post('forgot-password', 'ForgotPasswordController@register');
+$router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], function (Router $group) {
+    $group->group(['middleware' => ['user.connected']], function (Router $group) {
+        //TODO : transformer en route POST
+        $group->get('logout', 'LogoutController@logout', 'logout');
+    });
+    $group->group(['middleware' => ['user.not.connected']], function (Router $group) {
+        $group->get('login', 'LoginController@showLoginForm', 'show-login');
+        $group->post('login', 'LoginController@login', 'login');
+        $group->get('register', 'RegisterController@showRegisterForm', 'show-register');
+        $group->post('register', 'RegisterController@register', 'register');
+        $group->get('forgot-password', 'ForgotPasswordController@showForgotPassword', 'show-forgot-password');
+        $group->post('forgot-password', 'ForgotPasswordController@forgotPassword', 'forgot-password');
+    });
 });
 
-$router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected']], function (Router $group) {
+$router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected', 'user.is.admin']], function (Router $group) {
     $group->get('', 'DashboardController@index', 'index');
     
     $group->group(['prefix' => 'menu', 'as' => 'menu.'], function (Router $group) {
         $group->get('', 'MenuController@index', 'index');
         $group->get('create', 'MenuController@create', 'create');
         $group->post('store', 'MenuController@store', 'store');
-        $group->group(['prefix' => '{menu_id}/category/{categorie_id}'], function (Router $group) {
+        $group->group(['prefix' => '{menu_id}'], function (Router $group) {
             $group->get('edit', 'MenuController@edit', 'edit');
             $group->post('update', 'MenuController@update', 'update');
             $group->delete('', 'MenuController@destroy', 'destroy');
+        });
+    });
+
+    $group->group(['prefix' => 'elementmenu', 'as' => 'elementmenu.'], function (Router $group) {
+        $group->get('create', 'ElementMenuController@create', 'create');
+        $group->post('store', 'ElementMenuController@store', 'store');
+        $group->group(['prefix' => '{elementmenu_id}/category/{categorie_id}'], function (Router $group) {
+            $group->get('edit', 'ElementMenuController@edit', 'edit');
+            $group->post('update', 'ElementMenuController@update', 'update');
+            $group->delete('', 'ElementMenuController@destroy', 'destroy');
         });
     });
 
@@ -85,6 +106,10 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
     $group->group(['prefix' => 'configuration', 'as' => 'configuration.'], function (Router $group) {
         $group->get('', 'ConfigurationController@index', 'index');
         $group->post('store', 'ConfigurationController@store', 'store');
+        $group->group(['prefix' => '{config_id}'], function (Router $group) {
+            $group->get('edit', 'ConfigurationController@edit', 'edit');
+            $group->post('update', 'ConfigurationController@update', 'update');
+        });
     });
 });
 

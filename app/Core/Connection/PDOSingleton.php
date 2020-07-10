@@ -29,7 +29,7 @@ class PDOSingleton extends PDO
         return $this->PDOInstance->prepare($statement, $driver_options);
     }
 
-    public function lastInsertId($seqname = NULL): ?int
+    public function lastInsertId($name = null): string
     {
         return $this->PDOInstance->lastInsertId();
     }

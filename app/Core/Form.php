@@ -104,15 +104,18 @@ class Form
                 continue;
             }
 
+            $name = isset($element->getOptions()["label"]["value"]) ? $element->getOptions()["label"]["value"] : $element->getName();
+
             foreach ($element->getOptions()['constraints'] as $constraint) {
-                $responseValidator = $this->validator->checkConstraint($constraint, $_POST[$element->getName()]);
+                $responseValidator = $this->validator->checkConstraint($constraint, $_POST[$element->getName()], $name);
 
                 if (NULL !== $responseValidator) {
-                    $this->isValid = false;
                     $this->errors[$element->getName()] = $responseValidator;
                 }
             }           
         }
+
+        $this->isValid = empty($this->errors);
 
         return $this->isValid;
     }
@@ -137,6 +140,17 @@ class Form
         }
 
         // $this->associateValue();
+    }
+
+    public function addErrors(array $errors): void
+    {
+        $fieldErrors = [];
+
+        foreach($errors as $key => $value){
+            $fieldErrors[$key] = $value;
+        }
+
+        array_push($this->errors, $fieldErrors);
     }
 
     public function isSubmit(): bool

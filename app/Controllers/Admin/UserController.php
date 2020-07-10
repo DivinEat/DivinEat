@@ -13,7 +13,7 @@ use App\Core\Controller\Controller;
 class UserController extends Controller
 {
     public function index(Request $request, Response $response)
-    {       
+    {
         $userManager = new UserManager();
         $users = $userManager->findAll();
 
@@ -55,6 +55,8 @@ class UserController extends Controller
         $data["status"] = intval($data["status"]);
         
         $user = (new User())->hydrate($data);
+        $user->setPwd(password_hash($user->getPwd(), PASSWORD_DEFAULT));
+        
         $form = $response->createForm(UpdateUserForm::class, $user);
         
         if (false === $form->handle()) {

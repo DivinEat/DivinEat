@@ -21,12 +21,6 @@ abstract class Middleware implements Handler
 
     public function run(Request $request, Response $response)
     {
-        if ($this->next instanceof ControllerMiddleware)
-        {
-            $methodName = $this->next->getControllerMethod();
-            return $this->next->$methodName($request, $response, $request->getRouteArgs());
-        }
-
-        return $this->handle($request, $response, $this->next->run());
+        return $this->handle($request, $response, [$this->next, 'run']);
     }
 }

@@ -1,3 +1,5 @@
+<?php use App\Core\Routing\Router; ?>
+
 <div class="row">
     <div class="col-sm-12">
         <div class="col-inner">
@@ -6,7 +8,7 @@
                     <h3 class="box-title">Préférences générales</h3>
                 </div>
                 <div class="box-body">
-                    <?php $this->addModal("form", $configFormConfig); ?>
+                    <?php $this->addModal("table_show", $configTableConfiguration); ?>
                 </div>
             </div>
         </div>

@@ -36,5 +36,10 @@ services:
             - 8888:80
         environment:
             - PMA_ARBITRARY=1
+    mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+        - 1025:1025 # smtp server
+        - 8025:8025 # web ui
 
 

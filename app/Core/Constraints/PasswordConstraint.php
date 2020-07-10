@@ -11,12 +11,12 @@ class PasswordConstraint implements ConstraintInterface
     {
     }
 
-    public function isValid(string $value): bool
+    public function isValid(string $value, string $elementName): bool
     {
         $this->errors = [];
 
-        // if (preg_match("/^(?=.*\d)(?=.*[-)(!'\"6&§@#:\/;,?.=+*\$€£ù%^¨éèçà])(?=.*[a-z])(?=.*[A-Z])$/", $value) == false)
-        //     $this->errors[] = "Le format du mot de passe n'est pas bon.";
+        if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@&é\"'(§\\\<>|è!çà)|è_!çà)[\]\-#°^¨$*%ù=+:\/;.,?])([@&é\"'(§\\\<>|è!çà)|è!çà)[\]\-#°^¨$*%ù=+:\/;.,?\w]){8,16}$/", $value) == false)
+            $this->errors[] = "Le format du mot de passe n'est pas bon.";
 
         return (0 == count($this->errors));
     }

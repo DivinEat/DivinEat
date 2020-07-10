@@ -1,15 +1,31 @@
-<h1 class="title">DIVINEAT</h1>
+<?php
+use App\Core\Routing\Router;
+use App\Core\Builder\QueryBuilder;
+use App\Models\Configuration;
+
+$config =  (new QueryBuilder())
+    ->select('*')
+    ->from('configurations', 'c')
+    ->where("libelle = :nom")
+    ->setParameter('nom', 'nom_du_site')
+    ->getQuery()
+    ->getArrayResult(Configuration::class);
+
+$nom_du_site = $config[0]->getInfo();
+?>
+
+<h1 class="title"><?= $nom_du_site ?></h1>
 
 <div class="card">
 	<h2 class="title color-purple margin-0">Connexion</h2>
 	<p class="subtitle margin-bottom-75">Connectez-vous à votre espace</p>
 	
-	<?php $this->addModal("form", $configFormUser);?>
+	<?php $this->formView("loginForm", "auth", "loginForm"); ?>
 
 	<div class="flex-raw">	
-		<a class="btn btn-account btn-account-green" href="<?= helpers::getUrl("User", "register")?>"><i class='fa fa-user-plus'></i>Inscription</a>
-		<a class="btn btn-account btn-account-red" href="<?= helpers::getUrl("User", "forgotPwd")?>"><i class='fa fa-lock'></i>Mot de passe</a>
+		<a class="btn btn-account btn-account-green" href="<?= Router::getRouteByName('auth.show-register')->getUrl() ?>"><i class='fa fa-user-plus'></i>Inscription</a>
+		<a class="btn btn-account btn-account-red" href="<?= Router::getRouteByName('auth.show-forgot-password')->getUrl() ?>"><i class='fa fa-lock'></i>Mot de passe</a>
 	</div>
 </div>
 
-<a href="/" class="btn btn-account">Retour au site</a>
+<a href="<?= Router::getRouteByName('home')->getUrl() ?>" class="btn btn-account">Retour au site</a>

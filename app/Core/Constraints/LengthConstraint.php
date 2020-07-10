@@ -28,7 +28,7 @@ class LengthConstraint implements ConstraintInterface
 
     // vérifie que la valeur est entre min et max
     // sinon on ajoute dans errors l'erreur associé
-    public function isValid(string $value): bool
+    public function isValid(string $value, string $elementName): bool
     {
         $this->errors = [];
 
