@@ -2,19 +2,9 @@
 use App\Core\Routing\Router;
 use App\Core\Builder\QueryBuilder;
 use App\Models\Configuration;
-
-$config =  (new QueryBuilder())
-    ->select('*')
-    ->from('configurations', 'c')
-    ->where("libelle = :nom")
-    ->setParameter('nom', 'nom_du_site')
-    ->getQuery()
-    ->getArrayResult(Configuration::class);
-
-$nom_du_site = $config[0]->getInfo();
 ?>
 
-<h1 class="title"><?= $nom_du_site ?></h1>
+<h1 class="title"><?= getConfig("nom_du_site")->getInfo(); ?></h1>
 
 <div class="card">
 	<h2 class="title color-purple margin-0">Connexion</h2>

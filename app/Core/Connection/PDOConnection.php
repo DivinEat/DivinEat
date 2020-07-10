@@ -34,9 +34,4 @@ class PDOConnection implements BDDInterface
     {
         return $this->pdo->lastInsertId($name = null);
     }
-
-    public function lastInsertId(): ?int
-    {
-        return $this->pdo->lastInsertId();
-    }
 }
