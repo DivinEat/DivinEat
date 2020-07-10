@@ -16,6 +16,7 @@
     width: auto;
     height: auto;
     min-height: rem(150);
+    padding: rem(10);
 }
 
 .pageBuilder {
@@ -30,11 +31,13 @@
             border-radius: rem(8);
             background-color: white;
 
-            &-empty {
-                @extend %pageBuilder-container;
-                @extend %shadowed;
-                border-radius: rem(8);
-            }
+            
+        }
+
+        &-hidden:hover, &-empty {
+            @extend %pageBuilder-container;
+            @extend %shadowed;
+            border-radius: rem(8);
         }
 
         &-hover {
@@ -217,7 +220,7 @@
             cursor: pointer;
         }
 
-        &-add, &-cancel {
+        &-add, &-cancel, &-remove, &-new-top, &-new-bottom {
             @extend .pageBuilder-btn;
             display: flex;
             justify-content: center;

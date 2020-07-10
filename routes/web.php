@@ -106,6 +106,16 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
             $group->post('update', 'ConfigurationController@update', 'update');
         });
     });
+
+    $group->group(['prefix' => 'page', 'as' => 'page.'], function (Router $group) {
+        $group->get('', 'PageController@index', 'index');
+        $group->get('create', 'PageController@create', 'create');
+        $group->post('store', 'PageController@store', 'store');
+        $group->group(['prefix' => '{page_id}'], function (Router $group) {
+            $group->get('edit', 'PageController@edit', 'edit');
+            $group->post('update', 'PageController@update', 'update');
+        });
+    });
 });
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');

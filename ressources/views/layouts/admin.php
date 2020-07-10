@@ -1,4 +1,5 @@
 <?php
+
 use App\Core\Routing\Router;
 use App\Core\Builder\QueryBuilder;
 use App\Models\Configuration;
@@ -16,6 +17,7 @@ $nom_du_site = $config[0]->getInfo();
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Dashboard</title>
     <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
@@ -31,61 +33,66 @@ $nom_du_site = $config[0]->getInfo();
     <script src="<?= url('js/dashboard/dashboard-graphs.js') ?>"></script>
     <script type="module" src="<?= url('js/article-editor.js') ?>"></script>
     <script src="<?= url('js/navbar.js') ?>"></script>
+    <script src="<?= url('js/pagebuilder.js') ?>"></script>
+    <script src="https://cdn.tiny.cloud/1/n79jkoiji791pd0z4rvytvbc5kb5v7gzhmxiv3y2dh0dm1w3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
+
 <body>
-<div class="row padding-0">
-    <div class="col-sm-2 padding-0">
-        <div class="col-inner sidebar">
-            <nav class="sidebar-nav">
-                <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>" class="sidebar-link">Dashboard<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.article.index')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/icones/arrow.svg') ?>'></a>
-                <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/icones/arrow.svg') ?>'></a>
-                <a href="" class="sidebar-link">Pages<img src='<?= url('img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.user.index')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.menu.index')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.horaire.index')->getUrl() ?>" class="sidebar-link">Horaires<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.order.index')->getUrl() ?>" class="sidebar-link">Réservations<img src='<?= url('/img/icones/arrow.svg')?>'></a>
-                <a href="<?= Router::getRouteByName('admin.configuration.index')->getUrl() ?>" class="sidebar-link">Paramètres<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <nav>
+    <div class="row padding-0">
+        <div class="col-sm-2 padding-0">
+            <div class="col-inner sidebar">
+                <nav class="sidebar-nav">
+                    <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>" class="sidebar-link">Dashboard<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                    <a href="<?= Router::getRouteByName('admin.article.index')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/icones/arrow.svg') ?>'></a>
+                    <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/icones/arrow.svg') ?>'></a>
+                    <a href="" class="sidebar-link">Pages<img src='<?= url('img/icones/arrow.svg') ?>'></a>
+                    <a href="<?= Router::getRouteByName('admin.user.index')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                    <a href="<?= Router::getRouteByName('admin.menu.index')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                    <a href="<?= Router::getRouteByName('admin.horaire.index')->getUrl() ?>" class="sidebar-link">Horaires<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                    <a href="<?= Router::getRouteByName('admin.order.index')->getUrl() ?>" class="sidebar-link">Réservations<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                    <a href="<?= Router::getRouteByName('admin.configuration.index')->getUrl() ?>" class="sidebar-link">Paramètres<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                    <nav>
+            </div>
         </div>
-    </div>
 
-    <div class="col-sm-10 padding-0">
-        <div class="row padding-0">
-            <div class="col-sm-12 padding-right-0 padding-left-0">
-                <div class="col-inner navbar bg-white">
-                    <div class="navbar-back">
-                        <form class="navbar-search">
-                            <span class="search-icon"><img src="<?= url('img/icones/search.png') ?>"></span>
-                            <input class="form-control" type="text" placeholder="Recherche">
-                        </form>
+        <div class="col-sm-10 padding-0">
+            <div class="row padding-0">
+                <div class="col-sm-12 padding-right-0 padding-left-0">
+                    <div class="col-inner navbar bg-white">
+                        <div class="navbar-back">
+                            <form class="navbar-search">
+                                <span class="search-icon"><img src="<?= url('img/icones/search.png') ?>"></span>
+                                <input class="form-control" type="text" placeholder="Recherche">
+                            </form>
 
-                        <a class="computer" href="<?= Router::getRouteByName('home')->getUrl() ?>">
-                            <img src="<?= url('img/icones/computer.png') ?>">
-                            <span><?= $nom_du_site ?></span>
-                        </a>
-                    </div>
+                            <a class="computer" href="<?= Router::getRouteByName('home')->getUrl() ?>">
+                                <img src="<?= url('img/icones/computer.png') ?>">
+                                <span><?= $nom_du_site ?></span>
+                            </a>
+                        </div>
 
-                    <div class="dropdown">
-                        <button class="btn-dropdown bg-white"><img src="<?= url('img/icones/user.png') ?>"></button>
-                        <div class="dropdown-content">
-                            <a href="#"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
-                            <a href="#"><img src="<?= url('img/icones/settings.png') ?>"> Paramètres</a><hr/>
-                            <a href="#"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
+                        <div class="dropdown">
+                            <button class="btn-dropdown bg-white"><img src="<?= url('img/icones/user.png') ?>"></button>
+                            <div class="dropdown-content">
+                                <a href="#"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
+                                <a href="#"><img src="<?= url('img/icones/settings.png') ?>"> Paramètres</a>
+                                <hr />
+                                <a href="#"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="col-inner">
-                    <?php include $this->viewPath;?>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-inner">
+                        <?php include $this->viewPath; ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
+
 </html>
