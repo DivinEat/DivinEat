@@ -12,6 +12,11 @@
   ALTER TABLE `dve_roles`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
+  INSERT INTO `dve_roles` (`id`, `libelle`) VALUES
+    (0, 'Membre'),
+    (1, 'Administrateur'),
+    (2, 'Moderateur');
+
 
 
   --
