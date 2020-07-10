@@ -13,7 +13,7 @@ class CheckNotConnectedUser extends Middleware
 {
     public function handle(Request $request, Response $response, callable $handler)
     {
-        if (Auth::getUser() instanceof User)
+        if (Auth::isAuthenticated())
             return Router::redirect('home');
 
         return $handler($request, $response);
