@@ -64,6 +64,19 @@ class CreateOrderForm extends Form
                 "data" => $menus,
                 "getter" => "getNom",
             ])
+            ->add("surPlace", "select", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => [
+                    "value" => "Sur place",
+                    "class" => "",
+                ],
+                "data" => [
+                    new StringValue("Oui", 1),
+                    new StringValue("Non", 0)
+                ],
+                "getter" => "getString"])
             ->add("annuler", "link", [
                 "attr" => [
                     "href" => Router::getRouteByName("admin.order.index")->getUrl(),

@@ -64,6 +64,7 @@ class OrderController extends Controller
         if (empty($user)) {
             $user = new User();
             $user->setEmail($email);
+            // à modifier
             $user->setRole((new RoleManager())->find(4));
             $user = $userManager->find($userManager->save($user));
         } else {
@@ -75,7 +76,8 @@ class OrderController extends Controller
         $data['user'] = $user->getId();
         $data['date'] = date('Y-m-d', time());
         $data['prix'] = $menu->getPrix(); // somme de tt les menus quand y'en aura plusieurs
-
+        $data['status'] = "En cours";
+        
         $order = (new Order())->hydrate($data);
 
         $form = $response->createForm(CreateOrderForm::class, $order);
@@ -83,7 +85,10 @@ class OrderController extends Controller
         if (false === $form->handle()) {
             $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
         } else {
-            $order = $orderManager->find($orderManager->save($order));
+            
+            $order_id = $orderManager->save($order);
+            $order = $orderManager->find($order_id);
+
             $menuOrder->setMenu($menu);
             $menuOrder->setOrder($order);
             (new MenuOrderManager())->save($menuOrder);       
@@ -145,16 +150,17 @@ class OrderController extends Controller
         $data['user'] = $user->getId();
         $data['prix'] = $menu->getPrix();
         $data['date'] = date('Y-m-d', time());
+        $data['status'] = $oldOrder->getStatus();
 
         $order = (new Order())->hydrate($data);
+
         $form = $response->createForm(UpdateOrderForm::class, $order);
         
         if (false === $form->handle()) {
             $response->render("admin.order.edit", "admin", ["updateOrderForm" => $form]);
         } else {
-            $id_order = $orderManager->save($order);  
-            $order = $orderManager->find($id_order);
-
+            $orderManager->save($order);  
+            $order = $orderManager->find($args['order_id']);
             
             $menuOrder = new MenuOrder();
             $menuOrder->setMenu($menu);

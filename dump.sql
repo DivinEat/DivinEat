@@ -131,7 +131,9 @@ CREATE TABLE `dve_orders` (
   `user` int(11) NOT NULL,
   `horaire` int(11) NOT NULL,
   `date` date NOT NULL,
-  `prix` double NOT NULL
+  `prix` double NOT NULL,
+  `surPlace` boolean NOT NULL,
+  `status` varchar(45) NOT NULL DEFAULT "En cours"
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `dve_orders`

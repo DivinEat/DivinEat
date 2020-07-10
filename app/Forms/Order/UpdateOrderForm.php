@@ -4,6 +4,7 @@ namespace App\Forms\Order;
 
 use App\Core\Form;
 use App\Models\Order;
+use App\Core\StringValue;
 use App\Core\Routing\Router;
 use App\Managers\MenuManager;
 use App\Managers\HoraireManager;
@@ -61,6 +62,19 @@ class UpdateOrderForm extends Form
                 "data" => $menus,
                 "getter" => "getNom",
             ])
+            ->add("surPlace", "select", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => [
+                    "value" => "Sur place",
+                    "class" => "",
+                ],
+                "data" => [
+                    new StringValue("Oui", 1),
+                    new StringValue("Non", 0)
+                ],
+                "getter" => "getString"])
             ->add("annuler", "link", [
                 "attr" => [
                     "href" => Router::getRouteByName("admin.order.index")->getUrl(),

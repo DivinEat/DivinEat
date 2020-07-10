@@ -9,6 +9,7 @@ use App\Core\Model\Model;
 use App\Core\Routing\Router;
 use App\Managers\MenuManager;
 use App\Managers\RoleManager;
+use App\Managers\UserManager;
 use App\Managers\HoraireManager;
 use App\Core\Model\ModelInterface;
 use App\Managers\MenuOrderManager;
@@ -20,6 +21,8 @@ class Order extends Model implements ModelInterface
     protected $horaire;
     protected $date;
     protected $prix;
+    protected $status;
+    protected $surPlace;
 
     public function __construct()
     {
@@ -36,7 +39,6 @@ class Order extends Model implements ModelInterface
     public static function getShowOrderTable($orders){
         $menuOrderManager = new MenuOrderManager();
         $menuManager = new MenuManager();
-
         
 
 
@@ -48,14 +50,15 @@ class Order extends Model implements ModelInterface
             foreach ($menuOrders as $menuOrder) {
                 $menus[] = $menuManager->find($menuOrder->getMenu()->getId())->getNom();
             }
-
             $tabOrders[] = [
                 "id" => $order->getId(),
-                "user" => $order->getUser()->getId(),
+                "user" =>  $order->getUser()->getEmail(),
                 "horaire" => $order->getHoraire()->getHoraire(),
                 "date" => $order->getDate(),
                 "menus" => implode(", ", $menus),
                 "prix" => $order->getPrix(),
+                "status" => $order->getStatus(),
+                "surPlace" => $order->getSurPlace() == 1 ? "Oui" : "Non",
                 "edit"=> Router::getRouteByName('admin.order.edit', $order->getId()),
                 "destroy"=> Router::getRouteByName('admin.order.destroy', $order->getId())
             ];
@@ -69,11 +72,14 @@ class Order extends Model implements ModelInterface
             "colonnes"=>[
                 "",
                 "Id",
-                "user id",
-                "horaire",
-                "date",
-                "menus",
-                "prix"
+                "Utilisateur",
+                "Horaire",
+                "Date",
+                "Menus",
+                "Prix",
+                "Status",
+                "Sur place",
+                "Actions"
             ],
 
             "fields"=>[
@@ -110,7 +116,16 @@ class Order extends Model implements ModelInterface
         $this->prix = $prix;
         return $this;
     }
-
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+    public function setSurPlace($surPlace)
+    {
+        $this->surPlace = $surPlace;
+        return $this;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -130,5 +145,13 @@ class Order extends Model implements ModelInterface
     public function getPrix()
     {
         return $this->prix;
+    }
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    public function getSurPlace()
+    {
+        return $this->surPlace;
     }
 }
