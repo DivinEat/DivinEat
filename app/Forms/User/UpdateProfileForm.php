@@ -105,21 +105,6 @@ class UpdateProfileForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("dateInserted", "input", [
-                "label" => [
-                    "value" => "Date d'inscription",
-                    "class" => ""
-                ],
-                "readonly" => true,
-                "attr" => [
-                    "type" => "text",
-                    "class" => "form-control form-control-user",
-                    "value" => $user->getDateInserted()
-                ],
-                "constraints" => [
-                    new RequiredConstraint()
-                ]
-            ])
             ->add("annuler", "link", [
                 "attr" => [
                     "href" => Router::getRouteByName("home")->getUrl(),

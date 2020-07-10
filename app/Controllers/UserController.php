@@ -16,7 +16,7 @@ class UserController extends Controller
     public function edit(Request $request, Response $response)
     {
         $user = Auth::getUser();
-        
+
         $form = $response->createForm(UpdateProfileForm::class, $user);
 
         $response->render("profile", "main", ["updateUserForm" => $form]);
@@ -24,38 +24,31 @@ class UserController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
-
-        $response->checkFormData([
-            "dateInserted" => $data["dateInserted"],
-        ]);
+        $request->setInputPrefix('udpateProfileForm_');
         
         $user = (new UserManager())->find(Auth::getUser()->getId());
-        $user->setFirstname($data['firstname']);
-        $user->setLastname($data['lastname']);
-        $user->setEmail($data['email']);
+        $user->setFirstname($request->get('firstname'));
+        $user->setLastname($request->get('lastname'));
+        $user->setEmail($request->get('email'));
         
         $form = $response->createForm(UpdateProfileForm::class, $user);
 
-        if(!password_verify($data['currentPwd'], Auth::getUser()->getPwd()))
+        if(!password_verify($request->get('currentPwd'), Auth::getUser()->getPwd()))
             $form->addErrors(["currentPwd" => "Le mot de passe actuel ne correspond pas"]);
 
-        if($data['pwd'] != $data['confirmPwd']){
+        if($request->get('pwd') != $request->get('confirmPwd')){
             $form->addErrors(["confirmPwd" => "Les mots de passe ne correspondent pas"]);
         } else {
-            $user->setPwd(password_hash($data['pwd'], PASSWORD_DEFAULT));
+            $user->setPwd(password_hash($request->get('pwd'), PASSWORD_DEFAULT));
         }
         
         if (false === $form->handle()) {
-            $response->render("profile", "main", ["updateUserForm" => $form]);
-        } else {
-            (new UserManager())->save($user);       
-            Router::redirect('home');
+            return $response->render("profile", "main", ["updateUserForm" => $form]);
         }
+
+        (new UserManager())->save($user);  
+
+        return Router::redirect('profile.edit');
+        
     }
 }
