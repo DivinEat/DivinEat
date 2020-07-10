@@ -1,7 +1,5 @@
 <?php
 use App\Core\Routing\Router;
-use App\Core\Builder\QueryBuilder;
-use App\Models\Configuration;
 ?>
 
 <h1 class="title"><?= getConfig("nom_du_site")->getInfo(); ?></h1>
