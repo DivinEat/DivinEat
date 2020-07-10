@@ -6,8 +6,10 @@ use App\Core\Auth;
 use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
+use App\Core\Mail;
 use App\Core\Routing\Router;
 use App\Forms\Auth\RegisterForm;
+use App\Mails\RegisterMail;
 use App\Managers\RoleManager;
 use App\Managers\UserManager;
 use App\Models\User;
@@ -23,8 +25,8 @@ class RegisterController extends Controller
 
     public function register(Request $request, Response $response)
     {
-        $request->setInputPrefix('registerForm_');
         $userManager = new UserManager();
+        $request->setInputPrefix('registerForm_');
 
         $user = $userManager->findBy(['email' => $request->get('email')]);
 
@@ -41,7 +43,8 @@ class RegisterController extends Controller
         ]);
 
         Auth::saveUser($user);
+        RegisterMail::sendMail($request->get('email'));
 
         return Router::redirect('home');
-    }
+    }   
 }
