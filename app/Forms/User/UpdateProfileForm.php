@@ -19,12 +19,6 @@ class UpdateProfileForm extends Form
         $this->setName("udpateProfileForm");
         
         $this->setBuilder()
-            ->add("id", "input", [
-                "attr" => [
-                    "type" => "hidden",
-                    "value" => $user->getId()
-                ],
-            ])
             ->add("firstname", "input", [
                 "label" => [
                     "value" => "Prénom",
@@ -32,11 +26,10 @@ class UpdateProfileForm extends Form
                 ],
                 "attr" => [
                     "type" => "text",
-                    "class" => "form-control",
+                    "class" => "form-control form-control-user",
                     "value" => $user->getFirstname()
                 ],
                 "constraints" => [
-                    new LengthConstraint(2, 50, "Votre prénom doit contenir au moins 2 caractères.", "Votre prénom doit contenir au plus 50 caractères."),
                     new RequiredConstraint()
                 ]
             ])
@@ -48,11 +41,10 @@ class UpdateProfileForm extends Form
                 "required" => true,
                 "attr" => [
                     "type" => "text",
-                    "class" => "form-control",
+                    "class" => "form-control form-control-user",
                     "value" => $user->getLastName()
                 ],
                 "constraints" => [
-                    new LengthConstraint(2, 100, "Votre nom doit contenir au moins 2 caractères.", "Votre nom doit contenir au plus 100 caractères."),
                     new RequiredConstraint()
                 ]
             ])
@@ -64,18 +56,17 @@ class UpdateProfileForm extends Form
                 "required" => true,
                 "attr" => [
                     "type" => "email",
-                    "class" => "form-control",
+                    "class" => "form-control form-control-user",
                     "value" => $user->getEmail()
                 ],
                 "constraints" => [
                     new EmailConstraint(),
-                    new LengthConstraint(6, 100, "Votre adresse mail doit contenir au moins 6 caractères.", "Votre adresse mail doit contenir au plus 100 caractères.")
                 ]
             ])
-            ->add("pwd", "input", [
+            ->add("currentPwd", "input", [
                 "attr" => [
                     "type" => "password",
-                    "class" => "form-control",
+                    "class" => "form-control form-control-user",
                     ],
                 "label" => [
                     "value" => "Mot de passe",
@@ -83,7 +74,34 @@ class UpdateProfileForm extends Form
                 ],
                 "constraints" => [
                     new PasswordConstraint(),
-                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre mot de passe doit contenir au plus 16 caractères."),
+                    new RequiredConstraint()
+                ]
+            ])
+            ->add("pwd", "input", [
+                "attr" => [
+                    "type" => "password",
+                    "class" => "form-control form-control-user",
+                    ],
+                "label" => [
+                    "value" => "Nouveau mot de passe",
+                    "class" => "",
+                ],
+                "constraints" => [
+                    new PasswordConstraint(),
+                    new RequiredConstraint()
+                ]
+            ])
+            ->add("confirmPwd", "input", [
+                "attr" => [
+                    "type" => "password",
+                    "class" => "form-control form-control-user",
+                    ],
+                "label" => [
+                    "value" => "Confirmation du mot de passe",
+                    "class" => "",
+                ],
+                "constraints" => [
+                    new PasswordConstraint(),
                     new RequiredConstraint()
                 ]
             ])
@@ -92,11 +110,10 @@ class UpdateProfileForm extends Form
                     "value" => "Date d'inscription",
                     "class" => ""
                 ],
-                "required" => true,
                 "readonly" => true,
                 "attr" => [
                     "type" => "text",
-                    "class" => "form-control",
+                    "class" => "form-control form-control-user",
                     "value" => $user->getDateInserted()
                 ],
                 "constraints" => [
@@ -105,7 +122,7 @@ class UpdateProfileForm extends Form
             ])
             ->add("annuler", "link", [
                 "attr" => [
-                    "href" => Router::getRouteByName("admin.user.index")->getUrl(),
+                    "href" => Router::getRouteByName("home")->getUrl(),
                     "class" => "btn btn-default",
                 ],
                 "text" => "Annuler",
@@ -125,7 +142,7 @@ class UpdateProfileForm extends Form
             ->addConfig("class", User::class)
             ->addConfig("attr", [
                 "id" => "udpateProfileForm",
-                "class" => "admin-form",
+                "class" => "admin-form width-100",
                 "name" => "udpateProfileForm"
             ])
             ->addConfig("action", Router::getRouteByName("profile.update")->getUrl());

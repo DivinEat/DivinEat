@@ -55,6 +55,7 @@ class UserController extends Controller
         $data["status"] = intval($data["status"]);
         
         $user = (new User())->hydrate($data);
+        $user->setPwd(password_hash($user->getPwd(), PASSWORD_DEFAULT));
         
         $form = $response->createForm(UpdateUserForm::class, $user);
         
