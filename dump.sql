@@ -27,7 +27,7 @@
     `firstname` varchar(50) NOT NULL,
     `lastname` varchar(100) NOT NULL,
     `email` varchar(255) NOT NULL,
-    `pwd` varchar(16) NOT NULL,
+    `pwd` varchar(255) NOT NULL,
     `status` tinyint(1) NOT NULL DEFAULT '0',
     `role` int(11) NOT NULL DEFAULT '0',
     `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
