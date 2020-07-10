@@ -5,7 +5,7 @@ use App\Core\Routing\Router;
 $router->get('', 'HomeController@index', 'home');
 $router->get('menus', 'HomeController@menus', 'menus');
 
-$router->group(['prefix' => 'profile', 'as' => 'profile.'], function (Router $group) {
+$router->group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['user.connected']], function (Router $group) {
     $group->get('', 'UserController@edit', 'edit');
     $group->post('update', 'UserController@update', 'update');
 });
