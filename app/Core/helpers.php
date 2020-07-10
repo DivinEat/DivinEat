@@ -1,5 +1,6 @@
 <?php
 use App\Managers\ConfigurationManager;
+use App\Core\Csrf;
 
 function url(string $path): string
 {
@@ -16,4 +17,9 @@ function getConfig(string $libelle)
     $config = $configManager->findBy(["libelle" => $libelle]);
 
     return current($config);
+}
+
+function csrf(): string
+{
+    return Csrf::generateUserCsrfToken();
 }

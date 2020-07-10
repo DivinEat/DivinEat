@@ -1,6 +1,7 @@
 <form 
     method="<?= $form->getConfig()['method'] ?>" 
     action="<?= $form->getConfig()['action'] ?>" 
+
     <?php foreach ($form->getConfig()['attr'] as $attr => $value):
         echo "$attr = '$value' ";
     endforeach; ?>>
@@ -15,6 +16,9 @@
             <?php endforeach;
         endforeach;
     endif; 
+    ?>
 
-    include $formPath; ?>
+    <input type="hidden" name="csrf_token" value="<?= csrf(); ?>">
+
+    <?php include $formPath; ?>
 </form>
