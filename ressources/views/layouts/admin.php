@@ -1,17 +1,6 @@
 <?php
-use App\Core\Routing\Router;
-use App\Core\Builder\QueryBuilder;
-use App\Models\Configuration;
-
-$config =  (new QueryBuilder())
-    ->select('*')
-    ->from('configurations', 'c')
-    ->where("libelle = :nom")
-    ->setParameter('nom', 'nom_du_site')
-    ->getQuery()
-    ->getArrayResult(Configuration::class);
-
-$nom_du_site = $config[0]->getInfo();
+    use App\Core\Routing\Router;
+    use App\Core\Auth;
 ?>
 
 <!DOCTYPE html>
@@ -63,16 +52,26 @@ $nom_du_site = $config[0]->getInfo();
 
                         <a class="computer" href="<?= Router::getRouteByName('home')->getUrl() ?>">
                             <img src="<?= url('img/icones/computer.png') ?>">
-                            <span><?= $nom_du_site ?></span>
+                            <span><?= getConfig("nom_du_site")->getInfo(); ?></span>
                         </a>
                     </div>
 
-                    <div class="dropdown">
-                        <button class="btn-dropdown bg-white"><img src="<?= url('img/icones/user.png') ?>"></button>
-                        <div class="dropdown-content">
-                            <a href="#"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
-                            <a href="#"><img src="<?= url('img/icones/settings.png') ?>"> Paramètres</a><hr/>
-                            <a href="#"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
+                    <div style="display: flex; flex-direction: row; align-items: center;"> 
+                        <label><?= (Auth::isAuthenticated())?Auth::getUser()->getFirstname()." ".Auth::getUser()->getLastname():""; ?></label>
+                        <div class="dropdown">
+                            <button class="btn-dropdown bg-white"><img src="<?= url('img/icones/user.png') ?>"></button>
+                            <div class="dropdown-content">
+                                <?php if(Auth::isAuthenticated()): ?>
+                                    <?php if(Auth::getUser()->isAdmin()): ?>
+                                        <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Administration</a>
+                                    <?php endif; ?>
+                                    <a href="<?= Router::getRouteByName('profile.edit')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a><hr/>
+                                    <a href="<?= Router::getRouteByName('auth.logout')->getUrl() ?>"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
+                                <?php else: ?>
+                                    <a href="<?= Router::getRouteByName('auth.show-login')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Connexion</a>
+                                    <a href="<?= Router::getRouteByName('auth.show-register')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Inscription</a>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 </div>

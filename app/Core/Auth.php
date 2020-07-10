@@ -9,9 +9,9 @@ class Auth
 {
     protected static ?User $user = null;
 
-    public function isAuthenticated(): bool
+    public static function isAuthenticated(): bool
     {
-        return null !== self::$user;
+        return null !== self::getUser();
     }
 
     public static function saveUser(User $user): void
