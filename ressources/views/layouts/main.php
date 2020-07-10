@@ -43,7 +43,7 @@ use App\Core\Auth;
                             <?php if(Auth::getUser()->isAdmin()): ?>
                                 <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Administration</a>
                             <?php endif; ?>
-                            <a href="<?= Router::getRouteByName('profile')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a><hr/>
+                            <a href="<?= Router::getRouteByName('profile.edit')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a><hr/>
                             <a href="<?= Router::getRouteByName('auth.logout')->getUrl() ?>"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
                         <?php else: ?>
                             <a href="<?= Router::getRouteByName('auth.show-login')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Connexion</a>
