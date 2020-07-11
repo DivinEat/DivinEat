@@ -6,6 +6,7 @@ use App\Core\Form;
 use App\Core\Routing\Router;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\UniqueConstraint;
 use App\Models\Article;
 
 class CreateArticleForm extends Form
@@ -25,7 +26,8 @@ class CreateArticleForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
-                    new RequiredConstraint()
+                    new RequiredConstraint(),
+                    new UniqueConstraint("articles.title", "Le nom de l'article est déjà utilisé !")
                 ]
             ])
             ->add("slug", "input", [
@@ -38,7 +40,8 @@ class CreateArticleForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
-                    new RequiredConstraint()
+                    new RequiredConstraint(),
+                    new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !")
                 ]
             ])
             ->add("annuler", "link", [

@@ -31,11 +31,11 @@ class UniqueConstraint implements ConstraintInterface
     public function isExistWithIgnoreId(string $value, string $tableName, string $columnName): bool
     {
         if(substr($tableName, -1) === "s")
-            rtrim($tableName);
+            $tableName = rtrim($tableName, "s");
 
-        $managerName = ucfirst($tableName) . "Manager()";
+        $managerName = "App\\Managers\\" . ucfirst($tableName) . "Manager";
 
-        $results = (new $managerName)->findBy([$columnName => $value]);
+        $results = (new $managerName())->findBy([$columnName => $value]);
 
         foreach($results as $result){
             if(null === $this->ignoreId ||$result->getId() !== $this->ignoreId)

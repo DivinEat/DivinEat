@@ -8,6 +8,7 @@ use App\Core\Routing\Router;
 use App\Models\ElementMenu;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\UniqueConstraint;
 
 class UpdateElementMenuForm extends Form
 {
@@ -65,7 +66,8 @@ class UpdateElementMenuForm extends Form
                     "value" => $elementMenu->getNom()
                 ],
                 "constraints" => [
-                    new RequiredConstraint()
+                    new RequiredConstraint(),
+                    new UniqueConstraint("elementMenus.nom", "L'élément de menu existe déjà !", $elementMenu->getId())
                 ]
             ])
             ->add("description", "input", [

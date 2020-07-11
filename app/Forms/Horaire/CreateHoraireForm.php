@@ -6,6 +6,7 @@ use App\Core\Form;
 use App\Core\Routing\Router;
 use App\Core\Constraints\RequiredConstraint;
 use App\Core\Constraints\HoraireConstraint;
+use App\Core\Constraints\UniqueConstraint;
 use App\Models\Horaire;
 
 class CreateHoraireForm extends Form
@@ -22,11 +23,12 @@ class CreateHoraireForm extends Form
                 ],
                 "attr" => [
                     "type" => "text",
-                    "placeholder"=>"Ex: 11h - 12h",
+                    "placeholder"=>"Ex: 11h15 - 12h00",
                     "class" => "form-control"
                 ],
                 "constraints" => [
                     new HoraireConstraint(),
+                    new UniqueConstraint("horaires.horaire", "L'horaire existe déjà !"),
                     new RequiredConstraint()
                 ]
             ])

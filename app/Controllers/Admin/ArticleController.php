@@ -7,6 +7,7 @@ use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Core\View;
+use App\Core\Auth;
 use App\Models\Article;
 use App\Managers\ArticleManager;
 use App\Managers\UserManager;
@@ -37,7 +38,6 @@ class ArticleController extends Controller
     {
         $data = $_POST;
 
-
         foreach($data as $elementName => $element) {
             $data[explode("_", $elementName)[1]] = $data[$elementName];
             unset($data[$elementName]);
@@ -45,7 +45,7 @@ class ArticleController extends Controller
         
         $article = (new Article())->hydrate($data);
         $article->setDate_inserted(date('Y-m-d H:i:s'));
-        $article->setAuthor((new UserManager())->find(1));
+        $article->setAuthor(Auth::getUser());
 
         $form = $response->createForm(CreateArticleForm::class, $article);
         

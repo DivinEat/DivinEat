@@ -9,6 +9,7 @@ use App\Core\Constraints\EmailConstraint;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\PasswordConstraint;
 use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\UniqueConstraint;
 
 class UpdateProfileForm extends Form
 {
@@ -61,6 +62,7 @@ class UpdateProfileForm extends Form
                 ],
                 "constraints" => [
                     new EmailConstraint(),
+                    new UniqueConstraint("users.email", "L'email est déjà utilisé !", $user->getId()),
                 ]
             ])
             ->add("currentPwd", "input", [
