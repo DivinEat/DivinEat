@@ -5,12 +5,11 @@ namespace App\Core\Constraints;
 
 class UniqueConstraint implements ConstraintInterface
 {
-    protected $select;
-    protected $message;
-    protected $ignoreId;
-    protected $errors = [];
+    protected string $select;
+    protected string $message;
+    protected ?int $ignoreId;
+    protected array $errors = [];
 
-    // mettre un message par défaut si minMessage et maxMessage sont nuls, et setter les valeurs
     public function __construct(string $select, string $message, $ignoreId = null)
     {
         $this->select = $select;
@@ -20,35 +19,30 @@ class UniqueConstraint implements ConstraintInterface
 
     public function isValid(string $value, string $elementName): bool
     {
-        $this->errors = [];
+        $explodedSelect = explode(".", $this->select);
+        if (! $this->isExistWithIgnoreId($value, $explodedSelect[0], $explodedSelect[1]))
+            return true;
 
-        // select = users.email
-        // ignore = Auth::getUser()->getId()
+        $this->errors[] = $this->message;
 
-        $select = explode(".", $this->select);
+        return false;
+    }
 
-        $table = $select[0];
-        if(substr($table, -1) == "s")
-            rtrim($table)
-        
-        $managerName = ucfirst($table) . "Manager()";
+    public function isExistWithIgnoreId(string $value, string $tableName, string $columnName): bool
+    {
+        if(substr($tableName, -1) === "s")
+            rtrim($tableName);
 
-        $results = (new $managerName)->findBy([$select[1] => $value]);
+        $managerName = ucfirst($tableName) . "Manager()";
+
+        $results = (new $managerName)->findBy([$columnName => $value]);
 
         foreach($results as $result){
-            if($result->getId() !== $this->ignoreId){
-                
-            }
+            if(null === $this->ignoreId ||$result->getId() !== $this->ignoreId)
+                return true;
         }
 
-
-
-        
-
-        if(strlen($value) < $this->min)
-            $this->errors[] = $this->minMessage;
-
-        return (0 == count($this->errors));
+        return false;
     }
 
     public function getErrors(): array
