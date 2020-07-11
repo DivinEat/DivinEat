@@ -6,10 +6,10 @@
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Liste des commandes</h3>
-                    <a href="<?= Router::getRouteByName('admin.ordercreate')->getUrl() ?>" class="btn btn-add">Ajouter</a>
+                    <a href="<?= Router::getRouteByName('admin.order.create')->getUrl() ?>" class="btn btn-add">Ajouter</a>
                 </div>
                 <div class="box-body">
-                    <?php //$this->addModal("table_show", $configTableOrder); ?>
+                    <?php $this->addModal("table_show", $configTableOrder); ?>
                 </div>
             </div>
         </div>
