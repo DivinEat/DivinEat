@@ -24,10 +24,10 @@
   --
   CREATE TABLE `dve_users` (
     `id` int(11) NOT NULL,
-    `firstname` varchar(50) NOT NULL,
-    `lastname` varchar(100) NOT NULL,
+    `firstname` varchar(50),
+    `lastname` varchar(100),
     `email` varchar(255) NOT NULL,
-    `pwd` varchar(16) NOT NULL,
+    `pwd` varchar(255),
     `status` tinyint(1) NOT NULL DEFAULT '0',
     `role` int(11) NOT NULL DEFAULT '0',
     `dateInserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -143,7 +143,7 @@ CREATE TABLE `dve_orders` (
   `date` date NOT NULL,
   `prix` double NOT NULL,
   `surPlace` boolean NOT NULL,
-  `status` varchar(45) NOT NULL DEFAULT "En cours"
+  `status` varchar(45) NOT NULL DEFAULT 'En cours'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `dve_orders`

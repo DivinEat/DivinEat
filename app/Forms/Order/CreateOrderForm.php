@@ -55,7 +55,9 @@ class CreateOrderForm extends Form
             ])
             ->add("menu", "select", [
                 "attr" => [
-                    "class" => "form-control"
+                    "class" => "form-control",
+                    "name" => "order_menu",
+                    "id" => "order_menu"
                 ],
                 "label" => [
                     "value" => "Menu",
