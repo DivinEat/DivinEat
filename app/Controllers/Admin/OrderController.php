@@ -149,11 +149,7 @@ class OrderController extends Controller
         if (empty($user)) {
             $user = new User();
             $user->setEmail($data['email']);
-<<<<<<< HEAD
-            $user->setRole((new RoleManager())->find(4));
-=======
             $user->setRole((new RoleManager())->findBy(['libelle' => 'Membre'])[0]);
->>>>>>> develop
             $user = $userManager->find($userManager->save($user));
         } else {
             $user = $user[0];
@@ -175,11 +171,7 @@ class OrderController extends Controller
             $response->render("admin.order.edit", "admin", ["updateOrderForm" => $form]);
         } else {
             $orderManager->save($order);  
-<<<<<<< HEAD
-            $order = $orderManager->find($args['order_id']);
-=======
             $order = $orderManager->find($oldOrder->getId());
->>>>>>> develop
             
             $menuOrder = new MenuOrder();
             $menuOrder->setMenu($menu);
