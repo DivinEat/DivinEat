@@ -66,7 +66,16 @@
                                         <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Administration</a>
                                     <?php endif; ?>
                                     <a href="<?= Router::getRouteByName('profile.edit')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a><hr/>
-                                    <a href="<?= Router::getRouteByName('auth.logout')->getUrl() ?>"><img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter</a>
+                                    
+                                    <a href="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" *
+                                        onclick="event.preventDefault(); 
+                                                document.getElementById('logout-form').submit();">
+                                            <img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter
+                                    </a>
+
+                                    <form id="logout-form" action="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" method="POST" style="display: none;">
+                                        <input type="hidden" name="csrf_token" value="<?= csrf(); ?>">
+                                    </form>
                                 <?php else: ?>
                                     <a href="<?= Router::getRouteByName('auth.show-login')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Connexion</a>
                                     <a href="<?= Router::getRouteByName('auth.show-register')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Inscription</a>

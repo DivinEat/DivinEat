@@ -2,17 +2,20 @@
 
 namespace App\Core;
 
-use PHPMailer\PHPMailer\Exception;
-
 class Csrf
 {
+    protected static ?string $tokenCsrf = null;
+
     public static function generateUserCsrfToken(): string
     {
-        $csrfToken = uniqid();
+        if(null !== self::$tokenCsrf)
+            return self::$tokenCsrf;
 
-        self::saveCsrfTokenInSession($csrfToken);
+        self::$tokenCsrf = uniqid();
 
-        return $csrfToken;
+        self::saveCsrfTokenInSession(self::$tokenCsrf);
+
+        return self::$tokenCsrf;
     }
 
     public static function checkUserCsrfToken(string $csrfToken): bool
