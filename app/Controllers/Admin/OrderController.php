@@ -50,27 +50,33 @@ class OrderController extends Controller
             unset($data[$elementName]);
         }
 
+        $order = (new Order())->hydrate($data);
+
+        $form = $response->createForm(CreateOrderForm::class, $order);
+
+        if (false === $form->handle()) {
+            return $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
+        }
+
         $userManager = new UserManager();
         $menuManager = new MenuManager();
-        $horaireManager = new HoraireManager();
         $orderManager = new OrderManager();
-
-        $order = new Order();
-
+        
         $email = $data['email'];
 
         $user = $userManager->findBy(["email" => $email]);
+        
         if (empty($user)) {
-            $user = new User();
-            $user->setEmail($email);
-            $user->setRole((new RoleManager())->findBy(['libelle' => 'Membre'])->getId());
-            $user = $userManager->find($userManager->save($user));
+            $user = $userManager->create([
+                'email' => $email,
+                'role' => current((new RoleManager())->findBy(['libelle' => 'Membre']))->getId(),
+            ]);
         } else {
-            $user = $user[0];
+            $user = current($user);
         }
 
         $index_menus = 0;
-        $prix = 0;
+        $prix = ($menuManager->find($data['menu']))->getPrix();
         $menus = [$data['menu']];
 
         while(isset($data['menu'.$index_menus])) {
@@ -80,31 +86,32 @@ class OrderController extends Controller
             $index_menus++;
         }
 
-        $data['user'] = $user->getId();
-        $data['date'] = date('Y-m-d', time());
-        $data['prix'] = $prix;
-        $data['status'] = "En cours";
+        $order->setUser($user);
+        $order->setDate(date("Y-m-d", time()));
+        $order->setPrix($prix);
+        $order->setStatus("En cours");
         
-        $order = (new Order())->hydrate($data);
+        $order_id = $orderManager->save($order);
 
-        $form = $response->createForm(CreateOrderForm::class, $order);
+        $order = $orderManager->find($order_id);
 
-        if (false === $form->handle()) {
-            $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
-        } else {
+        foreach ($menus as $menu) {
+            /*$user = $userManager->create([
+                'firstname' => $request->get('firstname'),
+                'lastname' => $request->get('lastname'),
+                'email' => $request->get('email'),
+                'pwd' => password_hash($request->get('pwd'), PASSWORD_DEFAULT),
+                'role' => current((new RoleManager())->findBy(['libelle' => 'Membre']))->getId(),
+            ]);*/
             
-            $order_id = $orderManager->save($order);
-            $order = $orderManager->find($order_id);
-
-            foreach ($menus as $menu) {
-                $menuOrder = new MenuOrder();
-                $menuOrder->setMenu((new MenuOrderManager())->find($menu));
-                $menuOrder->setOrder($order);
-                (new MenuOrderManager())->save($menuOrder); 
-            }
-            
-            Router::redirect('admin.order.index');
+            $menuOrder = new MenuOrder();
+            $menuOrder->setMenu((new MenuOrderManager())->find($menu));
+            $menuOrder->setOrder($order);
+            (new MenuOrderManager())->save($menuOrder); 
         }
+        
+        return Router::redirect('admin.order.index');
+        
     }
 
     public function edit(Request $request, Response $response, array $args)

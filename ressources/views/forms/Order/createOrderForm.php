@@ -43,7 +43,7 @@ var selectionCounter = 0;
 if (addMenuBtn != null) {
     addMenuBtn.addEventListener('click', function(e) {
         
-        var select = document.getElementById("order_menu");
+        var select = document.getElementById("createFormOrder_menu");
         var clone = select.cloneNode(true);
         var name = select.getAttribute("name") + selectionCounter++;
         clone.id = name;
