@@ -6,7 +6,7 @@
                     <h3 class="box-title">Modifier une commande</h3>
                 </div>
                 <div class="box-body">
-                    <?php //$this->addModal("form", $configFormOrder);?>
+                    <?php $this->formView("updateOrderForm", "order", "updateOrderForm"); ?>
                 </div>
             </div>
         </div>

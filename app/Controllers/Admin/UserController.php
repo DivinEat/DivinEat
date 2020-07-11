@@ -62,7 +62,7 @@ class UserController extends Controller
         if (false === $form->handle()) {
             $response->render("admin.user.edit", "admin", ["updateUserForm" => $form]);
         } else {
-            (new UserManager())->save($user);       
+            (new UserManager())->save($user);     
             Router::redirect('admin.user.index');
         }
     }

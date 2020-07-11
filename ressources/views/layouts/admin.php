@@ -34,7 +34,7 @@
                 <a href="<?= Router::getRouteByName('admin.user.index')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.menu.index')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.horaire.index')->getUrl() ?>" class="sidebar-link">Horaires<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
-                <a href="<?= Router::getRouteByName('admin.order.index')->getUrl() ?>" class="sidebar-link">Réservations<img src='<?= url('/img/icones/arrow.svg')?>'></a>
+                <a href="<?= Router::getRouteByName('admin.order.index')->getUrl() ?>" class="sidebar-link">Commandes<img src='<?= url('/img/icones/arrow.svg')?>'></a>
                 <a href="<?= Router::getRouteByName('admin.configuration.index')->getUrl() ?>" class="sidebar-link">Paramètres<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                 <nav>
         </div>

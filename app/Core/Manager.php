@@ -48,7 +48,7 @@ class Manager
             $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
         } else {
             foreach ($columns as $column) {
-                $sqlUpdate[] = $column."=:".$column;
+                $sqlUpdate[] = "`".$column."`=:".$column;
             }
             $sql = "UPDATE ".$this->table." SET ".implode(",", $sqlUpdate)." WHERE id=:id;";
         }
@@ -78,7 +78,6 @@ class Manager
     public function findBy(array $params, array $order = null): ?array
     {
         $results = array();
-
         $sql = "SELECT * FROM $this->table WHERE ";
 
         foreach($params as $key => $value){
@@ -87,7 +86,7 @@ class Manager
             } else {
                 $comparator = "=";
             }
-            $sql .= " $key $comparator :$key and";
+            $sql .= " `$key` $comparator :$key and";
 
             $params[":$key"] = $value;
             unset($params[$key]);

@@ -24,7 +24,6 @@ class Response
     public function createForm(string $class, Model &$model = null): Form
     {
         $form = new $class;
-        
         if($model) {
             $form->setModel($model); 
             if (method_exists($model, "getId"))
