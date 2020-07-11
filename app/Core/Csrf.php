@@ -6,7 +6,7 @@ class Csrf
 {
     protected static ?string $tokenCsrf = null;
 
-    public static function generateUserCsrfToken(): string
+    public static function getCsrfToken(): string
     {
         if(null !== self::$tokenCsrf)
             return self::$tokenCsrf;

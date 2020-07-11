@@ -19,7 +19,7 @@ function getConfig(string $libelle)
     return current($config);
 }
 
-function csrf(): string
+function csrfInput(): void
 {
-    return Csrf::generateUserCsrfToken();
+    echo "<input type='hidden' name='csrf_token' value='" . Csrf::getCsrfToken() . "'>";
 }

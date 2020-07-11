@@ -45,11 +45,6 @@
             <div class="col-sm-12 padding-right-0 padding-left-0">
                 <div class="col-inner navbar bg-white">
                     <div class="navbar-back">
-                        <form class="navbar-search">
-                            <span class="search-icon"><img src="<?= url('img/icones/search.png') ?>"></span>
-                            <input class="form-control" type="text" placeholder="Recherche">
-                        </form>
-
                         <a class="computer" href="<?= Router::getRouteByName('home')->getUrl() ?>">
                             <img src="<?= url('img/icones/computer.png') ?>">
                             <span><?= getConfig("nom_du_site")->getInfo(); ?></span>
@@ -74,7 +69,7 @@
                                     </a>
 
                                     <form id="logout-form" action="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" method="POST" style="display: none;">
-                                        <input type="hidden" name="csrf_token" value="<?= csrf(); ?>">
+                                        <?php csrfInput(); ?>
                                     </form>
                                 <?php else: ?>
                                     <a href="<?= Router::getRouteByName('auth.show-login')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Connexion</a>

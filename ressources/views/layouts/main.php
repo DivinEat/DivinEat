@@ -52,7 +52,7 @@ use App\Core\Auth;
                                     </a>
 
                                     <form id="logout-form" action="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" method="POST" style="display: none;">
-                                        <input type="hidden" name="csrf_token" value="<?= csrf(); ?>">
+                                        <?php csrfInput(); ?>
                                     </form>
                                 <?php else: ?>
                             <a href="<?= Router::getRouteByName('auth.show-login')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Connexion</a>
