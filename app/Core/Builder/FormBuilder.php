@@ -3,6 +3,7 @@
 namespace App\Core\Builder;
 
 use App\Core\Builder\ElementFormBuilder\ElementFormBuilderInterface;
+use App\Core\Constraints\CsrfConstraint;
 
 class FormBuilder implements FormBuilderInterface
 {
@@ -11,22 +12,22 @@ class FormBuilder implements FormBuilderInterface
 
     public function add(string $name, string $type = "input", array $options = []): FormBuilderInterface
     {
-        $elementClass = "App\Core\Builder\ElementFormBuilder\\".ucfirst($type)."Element";
-        
-        $this->elements[$name] = 
-        (new $elementClass())
+        $elementClass = "App\Core\Builder\ElementFormBuilder\\" . ucfirst($type) . "Element";
+
+        $this->elements[$name] =
+            (new $elementClass())
             ->setId($this->formName . "_" . $name)
             ->setName($this->formName . "_" . $name)
             ->setType($type)
             ->setOptions($options);
-     
+
         return $this;
     }
 
     public function remove(string $name): FormBuilderInterface
     {
         unset($this->elements[$name]);
-     
+
         return $this;
     }
 

@@ -18,7 +18,7 @@
     endif; 
     ?>
 
-    <!--<input type="hidden" name="csrf_token" value="<?php //csrf(); ?>">-->
+    <input type="hidden" name="csrf_token" value="<?= csrf() ?>">
 
     <?php include $formPath; ?>
 </form>

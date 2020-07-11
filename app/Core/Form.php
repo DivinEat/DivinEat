@@ -2,11 +2,9 @@
 
 namespace App\Core;
 
-use Exception;
 use App\Core\Model\Model;
 use App\Core\Builder\FormBuilder;
 use App\Core\Constraints\Validator;
-
 
 class Form
 {
@@ -80,9 +78,7 @@ class Form
 
         foreach($_POST as $key => $value)
         {
-            $elementName = explode("_", $key);
-
-            if ($elementName[0] !== $this->name)
+            if ($key !== 'csrf_token' && explode("_", $key)[0] !== $this->name)
                 return false;
         }
 

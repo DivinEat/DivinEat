@@ -114,3 +114,4 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
 });
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');
+$router->get('unauthorized', 'UnauthorizedController@show', 'unauthorized');
