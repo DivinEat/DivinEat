@@ -24,8 +24,8 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>19</h1>
-                        <h2>En cours</h2>
+                        <h1>?</h1>
+                        <h2>?</h2>
                     </figcaption>
                 </figure>
             </article>
@@ -107,9 +107,9 @@
                     </figcaption>
                 </figure>
             </article>
-            <div id="container" class="graph-container">
+            <!-- <div id="container" class="graph-container">
                 <canvas id="graph-CA" class="graph-canvas"></canvas>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="col-sm-4">
@@ -122,9 +122,9 @@
                     </figcaption>
                 </figure>
             </article>
-            <div id="container" class="graph-container">
+            <!-- <div id="container" class="graph-container">
                 <canvas id="graph-visiteurs" class="graph-canvas"></canvas>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="col-sm-4">
@@ -137,9 +137,9 @@
                     </figcaption>
                 </figure>
             </article>
-            <div id="container" class="graph-container">
+            <!-- <div id="container" class="graph-container">
                 <canvas id="graph-new-clients" class="graph-canvas"></canvas>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
