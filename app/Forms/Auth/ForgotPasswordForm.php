@@ -25,7 +25,6 @@ class ForgotPasswordForm extends Form
                 ],
                 "constraints" => [
                     new EmailConstraint(),
-                    new LengthConstraint(6, 100, "Votre adresse mail doit contenir au moins 6 caractères.", "Votre adresse mail doit contenir au plus 100 caractères."),
                     new RequiredConstraint()
                 ]
             ])

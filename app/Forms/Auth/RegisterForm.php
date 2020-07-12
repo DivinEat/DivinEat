@@ -6,6 +6,7 @@ use App\Core\Form;
 use App\Core\Routing\Router;
 use App\Core\Constraints\EmailConstraint;
 use App\Core\Constraints\LengthConstraint;
+use App\Core\Constraints\UniqueConstraint;
 use App\Core\Constraints\PasswordConstraint;
 use App\Core\Constraints\RequiredConstraint;
 
@@ -48,7 +49,7 @@ class RegisterForm extends Form
                 ],
                 "constraints" => [
                     new EmailConstraint(),
-                    new LengthConstraint(6, 100, "Votre adresse mail doit contenir au moins 6 caractères.", "Votre adresse mail doit contenir au plus 100 caractères."),
+                    new UniqueConstraint("users.email", "L'email est déjà utilisé !"),
                     new RequiredConstraint()
                 ]
             ])
@@ -60,7 +61,6 @@ class RegisterForm extends Form
                 ],
                 "constraints" => [
                     new PasswordConstraint(),
-                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre mot de passe doit contenir au plus 16 caractères."),
                     new RequiredConstraint()
                 ]
             ])
@@ -72,7 +72,6 @@ class RegisterForm extends Form
                 ],
                 "constraints" => [
                     new PasswordConstraint(),
-                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre mot de passe doit contenir au plus 16 caractères."),
                     new RequiredConstraint()
                 ]
             ])
