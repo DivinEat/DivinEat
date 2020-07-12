@@ -24,7 +24,6 @@ $router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Rout
 
 $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], function (Router $group) {
     $group->group(['middleware' => ['user.connected']], function (Router $group) {
-        //TODO : transformer en route POST
         $group->post('logout', 'LogoutController@logout', 'logout');
     });
     $group->group(['middleware' => ['user.not.connected']], function (Router $group) {

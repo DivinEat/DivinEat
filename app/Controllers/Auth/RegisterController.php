@@ -28,11 +28,14 @@ class RegisterController extends Controller
         $userManager = new UserManager();
         $request->setInputPrefix('registerForm_');
 
-        $user = $userManager->findBy(['email' => $request->get('email')]);
+        $form = $response->createForm(RegisterForm::class);
 
-        //TODO : Thibault modifie avec le form builder
-        if ([] !== $user || $request->get('pwd') !== $request->get('pwdConfirm'))
-            return Router::redirect('auth.register');
+        if ($request->get('pwd') !== $request->get('pwdConfirm'))
+            $form->addErrors(["confirmPwd" => "Les mots de passe ne correspondent pas"]);
+
+        if (false === $form->handle()) {
+            return $response->render("auth.register", "account", ["registerForm" => $form]);
+        }
 
         $user = $userManager->create([
             'firstname' => $request->get('firstname'),

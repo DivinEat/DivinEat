@@ -23,10 +23,17 @@ class LoginController extends Controller
     {
         $request->setInputPrefix('loginForm_');
         $userManager = new UserManager();
+        
         $user = current($userManager->findBy(['email' => $request->get('email')]));
 
+        $form = $response->createForm(LoginForm::class, $user);
+
         if (false === $user || !password_verify($request->get('pwd'), $user->getPwd()))
-            return Router::redirect('auth.login');
+            $form->addErrors(["login" => "Votre mot de passe est incorrect"]);
+
+        if (false === $form->handle()) {
+            return $response->render("auth.login", "account", ["loginForm" => $form]);
+        }
 
         Auth::saveUser($user);
 

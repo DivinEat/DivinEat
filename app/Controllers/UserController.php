@@ -49,6 +49,5 @@ class UserController extends Controller
         (new UserManager())->save($user);  
 
         return Router::redirect('profile.edit');
-        
     }
 }
