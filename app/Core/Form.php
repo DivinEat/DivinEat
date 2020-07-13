@@ -2,11 +2,9 @@
 
 namespace App\Core;
 
-use Exception;
 use App\Core\Model\Model;
 use App\Core\Builder\FormBuilder;
 use App\Core\Constraints\Validator;
-
 
 class Form
 {
@@ -80,9 +78,7 @@ class Form
 
         foreach($_POST as $key => $value)
         {
-            $elementName = explode("_", $key);
-
-            if ($elementName[0] !== $this->name)
+            if ($key !== 'csrf_token' && explode("_", $key)[0] !== $this->name)
                 return false;
         }
 
@@ -110,11 +106,12 @@ class Form
                 $responseValidator = $this->validator->checkConstraint($constraint, $_POST[$element->getName()], $name);
 
                 if (NULL !== $responseValidator) {
-                    $this->isValid = false;
                     $this->errors[$element->getName()] = $responseValidator;
                 }
             }           
         }
+
+        $this->isValid = empty($this->errors);
 
         return $this->isValid;
     }
@@ -139,6 +136,17 @@ class Form
         }
 
         // $this->associateValue();
+    }
+
+    public function addErrors(array $errors): void
+    {
+        $fieldErrors = [];
+
+        foreach($errors as $key => $value){
+            $fieldErrors[$key] = $value;
+        }
+
+        array_push($this->errors, $fieldErrors);
     }
 
     public function isSubmit(): bool

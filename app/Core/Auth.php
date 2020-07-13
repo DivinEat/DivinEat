@@ -9,6 +9,11 @@ class Auth
 {
     protected static ?User $user = null;
 
+    public static function isAuthenticated(): bool
+    {
+        return null !== self::getUser();
+    }
+
     public static function saveUser(User $user): void
     {
         $_SESSION['logged_in_user_id'] = $user->getId();

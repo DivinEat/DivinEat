@@ -5,6 +5,11 @@ use App\Core\Routing\Router;
 $router->get('', 'HomeController@index', 'home');
 $router->get('menus', 'HomeController@menus', 'menus');
 
+$router->group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => ['user.connected']], function (Router $group) {
+    $group->get('', 'UserController@edit', 'edit');
+    $group->post('update', 'UserController@update', 'update');
+});
+
 $router->group(['prefix' => 'contact', 'as' => 'contact.'], function (Router $group) {
     $group->get('', 'ContactController@index', 'index');
     $group->post('store', 'ContactController@store', 'store');
@@ -19,8 +24,7 @@ $router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Rout
 
 $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], function (Router $group) {
     $group->group(['middleware' => ['user.connected']], function (Router $group) {
-        //TODO : transformer en route POST
-        $group->get('logout', 'LogoutController@logout', 'logout');
+        $group->post('logout', 'LogoutController@logout', 'logout');
     });
     $group->group(['middleware' => ['user.not.connected']], function (Router $group) {
         $group->get('login', 'LoginController@showLoginForm', 'show-login');
@@ -119,3 +123,4 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
 });
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');
+$router->get('unauthorized', 'UnauthorizedController@show', 'unauthorized');

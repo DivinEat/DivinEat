@@ -11,6 +11,8 @@ class Request
 
     protected array $parsedBody;
 
+    protected string $inputPrefix = '';
+
     public function __construct(Route $route)
     {
         $this->route = $route;
@@ -33,7 +35,17 @@ class Request
         if (null === $propertyName)
             return $this->parsedBody;
 
+        if (isset($this->parsedBody[$this->inputPrefix . $propertyName]))
+            return $this->parsedBody[$this->inputPrefix . $propertyName];
+
         return $this->parsedBody[$propertyName] ?? null;
+    }
+
+    public function setInputPrefix(string $inputPrefix): Request
+    {
+        $this->inputPrefix = $inputPrefix;
+
+        return $this;
     }
 
     protected function parseBody(): void

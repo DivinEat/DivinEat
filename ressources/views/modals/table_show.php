@@ -15,6 +15,7 @@
 
         <?php foreach ($elements as $key => $fields): ?>
             <form method="POST" action="<?= (isset($fields['destroy']))?$fields['destroy']->getUrl():'' ?>">
+                <?php csrfInput(); ?>
                 <tr>
                     <td></td>
                     <?php foreach ($fields as $key => $field):

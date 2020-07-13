@@ -19,6 +19,7 @@ $elementMenuManager = new ElementMenuManager();
         </tr>
         <?php foreach ($elements as $key => $fields): ?>
             <form method="POST" action="<?= $fields["destroy"]->getUrl() ?>">
+                <?php csrfInput(); ?>
                 <?php if(strtolower($categorie) == "menu"): ?>
                         <tr>
                             <td><input type="hidden" name="categorie" value="<?= $categorie ?>"/></td>

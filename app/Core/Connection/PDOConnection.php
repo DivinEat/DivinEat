@@ -5,7 +5,7 @@ use App\Core\Connection\PDOSingleton;
 
 class PDOConnection implements BDDInterface
 {
-    protected $pdo;
+    protected \PDO $pdo;
 
     public function __construct()
     {
@@ -22,19 +22,17 @@ class PDOConnection implements BDDInterface
     }
 
 
-    public function query(string $query, array $parameters = null)
+    public function query(string $query, array $parameters = null): PDOResult
     {
-        if ($parameters) {
-            $queryPrepared = $this->pdo->prepare($query);
+        $queryPrepared = $this->pdo->prepare($query);
 
-            $queryPrepared->execute($parameters);
+        $queryPrepared->execute($parameters);
 
-            return new PDOResult($queryPrepared);
-        } else {
-            $queryPrepared = $this->pdo->prepare($query);
-            $queryPrepared->execute();
+        return new PDOResult($queryPrepared);
+    }
 
-            return new PDOResult($queryPrepared);
-        }
+    public function lastInsertId($name = null): string
+    {
+        return $this->pdo->lastInsertId($name = null);
     }
 }

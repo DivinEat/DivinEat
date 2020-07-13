@@ -55,13 +55,14 @@ class UserController extends Controller
         $data["status"] = intval($data["status"]);
         
         $user = (new User())->hydrate($data);
+        $user->setPwd(password_hash($user->getPwd(), PASSWORD_DEFAULT));
         
         $form = $response->createForm(UpdateUserForm::class, $user);
         
         if (false === $form->handle()) {
             $response->render("admin.user.edit", "admin", ["updateUserForm" => $form]);
         } else {
-            (new UserManager())->save($user);       
+            (new UserManager())->save($user);     
             Router::redirect('admin.user.index');
         }
     }

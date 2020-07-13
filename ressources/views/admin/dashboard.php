@@ -24,8 +24,8 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>19</h1>
-                        <h2>En cours</h2>
+                        <h1>?</h1>
+                        <h2>?</h2>
                     </figcaption>
                 </figure>
             </article>
@@ -36,7 +36,7 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>11</h1>
+                        <h1><?= $totalOrdersOnSite ?></h1>
                         <h2>Sur place</h2>
                     </figcaption>
                 </figure>
@@ -48,7 +48,7 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>58</h1>
+                        <h1><?= $totalOrdersTakeOut ?></h1>
                         <h2>A emporter</h2>
                     </figcaption>
                 </figure>
@@ -63,8 +63,8 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>8</h1>
-                        <h2>Sur place</h2>
+                        <h1><?= $totalOrdersInProgress ?></h1>
+                        <h2>En cours</h2>
                     </figcaption>
                 </figure>
             </article>
@@ -75,7 +75,7 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>58</h1>
+                        <h1><?= $totalOrdersCompleted ?></h1>
                         <h2>Terminées</h2>
                     </figcaption>
                 </figure>
@@ -87,7 +87,7 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>77</h1>
+                        <h1><?= $total ?></h1>
                         <h2>Total</h2>
                     </figcaption>
                 </figure>
@@ -102,14 +102,14 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>654, 33 €</h1>
+                        <h1><?= $caTotal ?> €</h1>
                         <h2>Chiffre d'affaires</h2>
                     </figcaption>
                 </figure>
             </article>
-            <div id="container" class="graph-container">
+            <!-- <div id="container" class="graph-container">
                 <canvas id="graph-CA" class="graph-canvas"></canvas>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="col-sm-4">
@@ -117,14 +117,14 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>307</h1>
+                        <h1><?= $visitors ?></h1>
                         <h2>Visiteurs</h2>
                     </figcaption>
                 </figure>
             </article>
-            <div id="container" class="graph-container">
+            <!-- <div id="container" class="graph-container">
                 <canvas id="graph-visiteurs" class="graph-canvas"></canvas>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="col-sm-4">
@@ -132,19 +132,14 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>4</h1>
+                        <h1><?= $newUsers ?></h1>
                         <h2>Nouveaux clients</h2>
                     </figcaption>
                 </figure>
             </article>
-            <div id="container" class="graph-container">
+            <!-- <div id="container" class="graph-container">
                 <canvas id="graph-new-clients" class="graph-canvas"></canvas>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
-<!--         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="<?= helpers::getUrl("user", "login")?>">Logout</a>
-        </div> -->

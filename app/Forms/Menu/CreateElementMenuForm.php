@@ -8,6 +8,7 @@ use App\Core\Routing\Router;
 use App\Models\ElementMenu;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\UniqueConstraint;
 
 class CreateElementMenuForm extends Form
 {
@@ -45,7 +46,8 @@ class CreateElementMenuForm extends Form
                     "class" => "form-control",
                 ],
                 "constraints" => [
-                    new RequiredConstraint()
+                    new RequiredConstraint(),
+                    new UniqueConstraint("elementMenus.nom", "L'élément de menu existe déjà !")
                 ]
             ])
             ->add("description", "input", [

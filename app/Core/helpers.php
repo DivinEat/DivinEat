@@ -1,4 +1,6 @@
 <?php
+use App\Managers\ConfigurationManager;
+use App\Core\Csrf;
 
 function url(string $path): string
 {
@@ -7,4 +9,17 @@ function url(string $path): string
         $url = 'http://' . $url;
 
     return $url;
+}
+
+function getConfig(string $libelle)
+{
+    $configManager = new ConfigurationManager();
+    $config = $configManager->findBy(["libelle" => $libelle]);
+
+    return current($config);
+}
+
+function csrfInput(): void
+{
+    echo "<input type='hidden' name='csrf_token' value='" . Csrf::getCsrfToken() . "'>";
 }

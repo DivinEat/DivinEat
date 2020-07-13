@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Auth;
 use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
@@ -32,11 +33,14 @@ class HomeController extends Controller
             ->getQuery()
             ->getArrayResult(Article::class);
         
-        $articles[0]->setContent(Article::setJsonToHtml($articles[0]->getContent()));
-
+            
         $myView = new View("home", "main");
         $myView->assign("menus", $menus);
-        $myView->assign("article", $articles[0]);
+
+        if(isset($articles[0])){
+            $articles[0]->setContent(Article::setJsonToHtml($articles[0]->getContent()));
+            $myView->assign("article", $articles[0]);
+        }
     }
 
     public function menus(Request $request, Response $response)

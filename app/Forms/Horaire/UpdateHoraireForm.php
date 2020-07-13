@@ -4,8 +4,9 @@ namespace App\Forms\Horaire;
 
 use App\Core\Form;
 use App\Core\Routing\Router;
-use App\Core\Constraints\LengthConstraint;
+use App\Core\Constraints\HoraireConstraint;
 use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\UniqueConstraint;
 use App\Models\Horaire;
 
 class UpdateHoraireForm extends Form
@@ -34,7 +35,8 @@ class UpdateHoraireForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
-                    new LengthConstraint(9, 13, "Mauvais format : HHhMM - HHhMM", "Mauvais format : HHhMM - HHhMM"),
+                    new HoraireConstraint(),
+                    new UniqueConstraint("horaires.horaire", "L'horaire existe déjà !", $horaire->getId()),
                     new RequiredConstraint()
                 ]
             ])

@@ -21,15 +21,22 @@ class LoginController extends Controller
 
     public function login(Request $request, Response $response)
     {
+        $request->setInputPrefix('loginForm_');
         $userManager = new UserManager();
-        $user = current($userManager->findBy(['email' => $request->get('loginForm_email')]));
+        
+        $user = current($userManager->findBy(['email' => $request->get('email')]));
 
-        if (false === $user || !password_verify($request->get('loginForm_pwd'), $user->getPwd()))
-            return Router::redirect('auth.login');
+        $form = $response->createForm(LoginForm::class, $user);
+
+        if (false === $user || !password_verify($request->get('pwd'), $user->getPwd()))
+            $form->addErrors(["login" => "Votre mot de passe est incorrect"]);
+
+        if (false === $form->handle()) {
+            return $response->render("auth.login", "account", ["loginForm" => $form]);
+        }
 
         Auth::saveUser($user);
 
         return Router::redirect('home');
-
     }
 }

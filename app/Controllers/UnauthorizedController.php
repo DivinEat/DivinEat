@@ -2,13 +2,18 @@
 
 namespace App\Controllers;
 
+use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
+use App\Core\View;
 
-class UnauthorizedController
+class UnauthorizedController extends Controller
 {
     public function show(Request $request, Response $response)
     {
-        echo '403 : Vous n\'êtes pas autorisé ici bas';
+        $error = '403 : Vous n\'êtes pas autorisé ici bas';
+
+        $myView = new View("403", "account");
+        $myView->assign("error", $error);
     }
 }

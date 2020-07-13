@@ -25,7 +25,6 @@ class LoginForm extends Form
                 ],
                 "constraints" => [
                     new EmailConstraint(),
-                    new LengthConstraint(6, 100, "Votre adresse mail doit contenir au moins 6 caractères.", "Votre adresse mail doit contenir au plus 100 caractères."),
                     new RequiredConstraint()
                 ]
             ])
@@ -37,7 +36,6 @@ class LoginForm extends Form
                 ],
                 "constraints" => [
                     new PasswordConstraint(),
-                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre mot de passe doit contenir au plus 16 caractères."),
                     new RequiredConstraint()
                 ]
             ])

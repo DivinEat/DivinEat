@@ -11,13 +11,13 @@ use App\Core\Constraints\EmailConstraint;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\PasswordConstraint;
 use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\UniqueConstraint;
 
 class UpdateUserForm extends Form
 {
     public function buildForm()
     {
         $user = $this->model;
-
 
         $this->setName("updateFormUser");
 
@@ -82,14 +82,13 @@ class UpdateUserForm extends Form
                 ],
                 "constraints" => [
                     new EmailConstraint(),
-                    new LengthConstraint(6, 100, "Votre adresse mail doit contenir au moins 6 caractères.", "Votre adresse mail doit contenir au plus 100 caractères.")
+                    new UniqueConstraint("users.email", "L'email est déjà utilisé !", $user->getId()),
                 ]
             ])
             ->add("pwd", "input", [
                 "attr" => [
                     "type" => "password",
                     "class" => "form-control",
-                    "value" => $user->getPwd()
                     ],
                 "label" => [
                     "value" => "Mot de passe",

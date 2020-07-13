@@ -6,6 +6,7 @@ use App\Core\Form;
 use App\Core\Routing\Router;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\UniqueConstraint;
 use App\Models\Article;
 
 class UpdateArticleForm extends Form
@@ -34,7 +35,8 @@ class UpdateArticleForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
-                    new RequiredConstraint()
+                    new RequiredConstraint(),
+                    new UniqueConstraint("articles.title", "Le nom de l'article est déjà utilisé !", $article->getId())
                 ]
             ])
             ->add("slug", "input", [
@@ -48,7 +50,8 @@ class UpdateArticleForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
-                    new RequiredConstraint()
+                    new RequiredConstraint(),
+                    new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !", $article->getId())
                 ]
             ])
             ->add("annuler", "link", [

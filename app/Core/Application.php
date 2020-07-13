@@ -6,6 +6,7 @@ use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Middleware\Middleware;
 use App\Core\Middleware\MiddlewareDispatcher;
+use App\Core\Routing\Route;
 use App\Core\Routing\Router;
 
 class Application
@@ -29,15 +30,30 @@ class Application
     public function run(): void
     {
         try {
-            $route = Router::getRouteByUrlAndType($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']) ?? Router::getRouteByName('not.found');
+            $request = new Request($this->getAdequateRoute(
+                $_SERVER['REQUEST_URI'],
+                $_SERVER['REQUEST_METHOD']
+            ));
 
-            $request = new Request($route);
-
-            $response = new MiddlewareDispatcher($this->container, $request);
+            new MiddlewareDispatcher($this->container, $request);
 
         } catch (\Exception|\RuntimeException $exception) {
             die('Oups something went wrong ! :p');
         }
+    }
+
+    protected function getAdequateRoute(string $requestUri, string $requestMethod): Route
+    {
+        $route = Router::getRouteByUrlAndType($requestUri, $requestMethod);
+
+        if (null === $route)
+            return Router::getRouteByName('not.found');
+
+        if ($route->getType() === 'POST' &&
+            (! isset($_POST['csrf_token']) || ! Csrf::checkUserCsrfToken($_POST['csrf_token'])))
+            return Router::getRouteByName('unauthorized');
+
+        return $route;
     }
 
     protected function addRouteFile(string $fileName): void

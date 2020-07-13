@@ -28,7 +28,7 @@ id="<?= $data["config"]["id"]?>" class="<?= $data["config"]["class"]?>">
 						id="<?= $configField["id"]??'' ?>"
 					>
 						<?php foreach ($configField["values"] as $value): ?>
-							<option value="<?= $value["value"]?>" <?= $value["selected"] ?>><?= $value["text"] ?></option>	
+							<option value="<?= $value["value"]?>" <?= !empty($value["selected"]) ? $value["selected"] : "" ?>><?= !empty($value["text"]) ? $value["text"] : "" ?></option>	
 						<?php endforeach;?>
 					</select>
 				<?php elseif(!empty($configField["type"]) && $configField["type"] == "other"):

@@ -9,6 +9,7 @@ use App\Models\Menu;
 use App\Managers\ElementMenuManager;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\UniqueConstraint;
 
 class UpdateMenuForm extends Form
 {
@@ -56,7 +57,8 @@ class UpdateMenuForm extends Form
                     "value" => $menu->getNom()
                 ],
                 "constraints" => [
-                    new RequiredConstraint()
+                    new RequiredConstraint(),
+                    new UniqueConstraint("menus.nom", "Le menu existe déjà !", $menu->getId())
                 ]
             ])
             ->add("entrees", "select", [
