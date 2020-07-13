@@ -234,9 +234,9 @@ div.ligne {
 .pageBuilder-container-tools-bar-item-hidden:hover,
 .pageBuilder-btn,
 .pageBuilder-container-structure-btn-small,
-.pageBuilder-btn-add,
 .pageBuilder-btn-cancel,
 .pageBuilder-btn-remove,
+.pageBuilder-btn-add,
 .pageBuilder-btn-new-top,
 .pageBuilder-btn-new-bottom,
 .pageBuilder-item,
@@ -1234,9 +1234,9 @@ footer .circle .up {
 
 .pageBuilder-btn,
 .pageBuilder-container-structure-btn-small,
-.pageBuilder-btn-add,
 .pageBuilder-btn-cancel,
 .pageBuilder-btn-remove,
+.pageBuilder-btn-add,
 .pageBuilder-btn-new-top,
 .pageBuilder-btn-new-bottom {
   display: -webkit-box;
@@ -1262,36 +1262,20 @@ footer .circle .up {
 
 .pageBuilder-btn:hover,
 .pageBuilder-container-structure-btn-small:hover,
-.pageBuilder-btn-add:hover,
 .pageBuilder-btn-cancel:hover,
 .pageBuilder-btn-remove:hover,
+.pageBuilder-btn-add:hover,
 .pageBuilder-btn-new-top:hover,
 .pageBuilder-btn-new-bottom:hover {
   cursor: pointer;
 }
 
-.pageBuilder-btn-add,
-.pageBuilder-btn-cancel,
-.pageBuilder-btn-remove,
-.pageBuilder-btn-new-top,
-.pageBuilder-btn-new-bottom {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-          align-items: center;
-  border-radius: 100%;
-  width: 2.1875rem;
-  height: 2.1875rem;
+.pageBuilder-btn-cancel {
+  background-image: url("/img/icones/back.png");
 }
 
-.pageBuilder-btn-add:hover,
-.pageBuilder-btn-cancel:hover,
-.pageBuilder-btn-remove:hover,
-.pageBuilder-btn-new-top:hover,
-.pageBuilder-btn-new-bottom:hover {
-  cursor: pointer;
+.pageBuilder-btn-remove {
+  background-image: url("/img/icones/trash.png");
 }
 
 .pageBuilder-side-bar {

@@ -4,7 +4,7 @@
     width: auto;
     height: auto;
     min-height: calc(100vh - 100px);
-    background-color: rgba($color: #dee5f3, $alpha: 1.0);
+    background-color: rgba($color: #dee5f3, $alpha: 1);
 }
 
 %pageBuilder-container {
@@ -24,17 +24,16 @@
         &-hidden {
             @extend %pageBuilder-container;
         }
-        
+
         &-displayed {
             @extend %pageBuilder-container;
             @extend %shadowed;
             border-radius: rem(8);
             background-color: white;
-
-            
         }
 
-        &-hidden:hover, &-empty {
+        &-hidden:hover,
+        &-empty {
             @extend %pageBuilder-container;
             @extend %shadowed;
             border-radius: rem(8);
@@ -44,7 +43,7 @@
             @extend %pageBuilder-container;
             cursor: pointer;
         }
-        
+
         &-list-structure-bar {
             display: flex;
             flex-flow: row wrap;
@@ -56,15 +55,14 @@
         }
 
         &-structure-btn {
-
             &-small {
                 @extend .pageBuilder-btn;
                 background-repeat: no-repeat;
                 background-position: center;
                 background-size: 50%;
-                background-image: url('/img/icones/structureBtn.png');
+                background-image: url("/img/icones/structureBtn.png");
             }
-            
+
             &-big {
                 display: flex;
                 flex-flow: row wrap;
@@ -74,12 +72,12 @@
                 height: rem(60);
                 @extend %shadowed;
                 border-radius: rem(8);
-                background-color: white;  
+                background-color: white;
                 background-size: 70%;
                 background-repeat: no-repeat;
                 background-position: center;
                 margin: 0 rem(10) 0 rem(10);
-            
+
                 &:hover {
                     cursor: pointer;
                 }
@@ -87,37 +85,37 @@
 
             &-12 {
                 @extend .pageBuilder-container-structure-btn-big;
-                background-image: url('/img/icones/1col.png');
+                background-image: url("/img/icones/1col.png");
             }
 
             &-6_6 {
                 @extend .pageBuilder-container-structure-btn-big;
-                background-image: url('/img/icones/2cols.png');
+                background-image: url("/img/icones/2cols.png");
             }
 
             &-4_4_4 {
                 @extend .pageBuilder-container-structure-btn-big;
-                background-image: url('/img/icones/3cols.png');
+                background-image: url("/img/icones/3cols.png");
             }
 
             &-3_3_3_3 {
                 @extend .pageBuilder-container-structure-btn-big;
-                background-image: url('/img/icones/4cols.png');
+                background-image: url("/img/icones/4cols.png");
             }
 
             &-3_6_3 {
                 @extend .pageBuilder-container-structure-btn-big;
-                background-image: url('/img/icones/3-6-3cols.png');
+                background-image: url("/img/icones/3-6-3cols.png");
             }
 
             &-3_3_6 {
                 @extend .pageBuilder-container-structure-btn-big;
-                background-image: url('/img/icones/3-3-6cols.png');
+                background-image: url("/img/icones/3-3-6cols.png");
             }
 
             &-6_3_3 {
                 @extend .pageBuilder-container-structure-btn-big;
-                background-image: url('/img/icones/6-3-3cols.png');
+                background-image: url("/img/icones/6-3-3cols.png");
             }
         }
 
@@ -135,7 +133,7 @@
         //     background-size: 50%;
         //     background-repeat: no-repeat;
         //     background-position: center;
-            
+
         //     &:hover {
         //         @extend %shadowed;
         //         cursor: pointer;
@@ -175,7 +173,7 @@
             left: rem(5);
             bottom: rem(10);
             margin: 0;
-        
+
             &-item {
                 display: flex;
                 justify-content: center;
@@ -184,7 +182,7 @@
                 height: rem(35);
                 border-radius: 100%;
                 margin: 0 rem(5) 0 rem(5);
-                
+
                 &:hover {
                     @extend %shadowed;
                     cursor: pointer;
@@ -215,23 +213,24 @@
         @extend %shadowed;
         background-color: white;
 
-        
         &:hover {
             cursor: pointer;
         }
 
-        &-add, &-cancel, &-remove, &-new-top, &-new-bottom {
+        &-cancel {
             @extend .pageBuilder-btn;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 100%;
-            width: rem(35);
-            height: rem(35);
+            background-image: url("/img/icones/back.png");
+        }
 
-            &:hover {
-                cursor: pointer;
-            }
+        &-remove {
+            @extend .pageBuilder-btn;
+            background-image: url("/img/icones/trash.png");
+        }
+
+        &-add,
+        &-new-top,
+        &-new-bottom {
+            @extend .pageBuilder-btn;
         }
     }
 
@@ -277,7 +276,7 @@
     left: rem(5);
     bottom: rem(10);
     margin: 0;
-    
+
     &-item {
         display: flex;
         justify-content: center;
@@ -286,7 +285,7 @@
         height: rem(35);
         border-radius: 100%;
         margin: 0 rem(5) 0 rem(5);
-        
+
         &:hover {
             @extend %shadowed;
             cursor: pointer;
@@ -298,4 +297,3 @@
         }
     }
 }
-

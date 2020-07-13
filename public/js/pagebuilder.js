@@ -17,17 +17,63 @@ $(document).ready(function () {
     });
     var pageBuilderHandler = {
         page: null,
-        elements: null,
-        draggedElement: null,
-        dropperRow: null,
-        dropper: null,
-        droppers: null,
         container: null,
-        containerToolBar: null,
-        pageData: {},
-        idEditor: 0,
+        pageData: {
+            page: { previous: null, parent: null, first: null, last: null, next: null },
+        },
+        containerId: 0,
+        rowId: 0,
+        editorId: 0,
+        newTopRowBtn: null,
+        newBottomRowBtn: null,
 
         init: function () {
+            // var tba = {
+            //     row1: {
+            //         previous: null,
+            //         parent: "page",
+            //         first: ,
+            //         last: ,
+            //         next: "row3",
+            //     },
+            //     row2: {
+            //         previous: null,
+            //         parent: "row1",
+            //         child: ["container1", "container2", "container3"],
+            //         next: null,
+            //     },
+            //     container1: {
+            //         previous: null,
+            //         value: "valeur",
+            //         type: "type",
+            //         next: container2,
+            //     },
+            //     container2: {
+            //         previous: "container1",
+            //         value: "valeur",
+            //         type: "type",
+            //         next: container3,
+            //     },
+            //     container3: {
+            //         previous: "container2",
+            //         value: "valeur",
+            //         type: "type",
+            //         next: null,
+            //     },
+            //     row3: {
+            //         previous: "row1",
+            //         parent: "page",
+            //         child: ["container4"],
+            //         next: null,
+            //     },
+            //     container4: {
+            //         previous: null,
+            //         value: "valeur",
+            //         type: "type",
+            //         next: null,
+            //     },
+            // };
+
             pageBuilderHandler.page = document.querySelector(".page");
             var button = document.querySelector(".pageBuilder-btn-add");
 
@@ -51,7 +97,6 @@ $(document).ready(function () {
             structureBtnBar.className = "pageBuilder-container-list-structure-bar";
 
             cancelBtn.className = "pageBuilder-btn-cancel";
-            cancelBtn.innerHTML = "x";
 
             for (let i = 0; i < 7; i++) {
                 var btn = document.createElement("div");
@@ -99,6 +144,7 @@ $(document).ready(function () {
         addEventsToFirstRowStructureBtn: function (structureBtnBar, btnContainer) {
             var pageBuilderHandler = this;
             var page = pageBuilderHandler.page;
+            var pageData = pageBuilderHandler.pageData;
             var containerParent = btnContainer.parentNode;
 
             structureBtnBar.childNodes.forEach((strucureBtn) => {
@@ -111,44 +157,69 @@ $(document).ready(function () {
                     var parentRow = document.createElement("div");
                     parentRow.className = "row padding-0";
                     containerParent.appendChild(parentRow);
+                    pageBuilderHandler.setRowId(parentRow);
+
+                    pageData.page.first = parentRow.id;
+                    pageData.page.last = parentRow.id;
+                    pageData[parentRow.id].parent = "page";
+                    pageData[parentRow.id].node = parentRow;
+
+                    var rowContainerList = [];
 
                     colsSize.forEach((colSize) => {
-                        pageBuilderHandler.createNewContainer(parentRow, colSize);
+                        container = pageBuilderHandler.createNewContainer(parentRow, colSize);
+
+                        rowContainerList.push(container.id);
+                        pageData[parentRow.id].parent = "page";
                     });
+
+                    var container;
+                    pageData[parentRow.id].first = rowContainerList[0];
+                    pageData[parentRow.id].last = rowContainerList[rowContainerList.length - 1];
+                    for (let i = 0; i < rowContainerList.length; i++) {
+                        container = rowContainerList[i];
+
+                        if (rowContainerList[i + 1] !== undefined) {
+                            pageData[container].next = rowContainerList[i + 1];
+                            pageData[rowContainerList[i + 1]].previous = container;
+                        }
+                    }
 
                     newRowBtnBottom = document.createElement("div");
                     newRowBtnBottom.className = "pageBuilder-btn-add";
-                    newRowBtnBottom.innerHTML = "+";
+                    newRowBtnBottom.innerHTML = "b";
                     newRowContainerBottom = pageBuilderHandler.createContainer(newRowBtnBottom);
+                    pageBuilderHandler.newBottomRowBtn = newRowContainerBottom;
                     page.append(newRowContainerBottom);
-                    pageBuilderHandler.addEventToAddRowBtn(newRowBtnBottom, newRowBtnBottom.parentNode, "bottom", true);
+                    pageBuilderHandler.addEventToAddRowBtn(newRowBtnBottom, newRowBtnBottom.parentNode, "before");
 
                     newRowBtnTop = document.createElement("div");
                     newRowBtnTop.className = "pageBuilder-btn-add";
-                    newRowBtnTop.innerHTML = "+";
+                    newRowBtnTop.innerHTML = "t";
                     newRowContainerTop = pageBuilderHandler.createContainer(newRowBtnTop);
+                    pageBuilderHandler.newTopRowBtn = newRowContainerTop;
                     page.prepend(newRowContainerTop);
-                    pageBuilderHandler.addEventToAddRowBtn(newRowBtnTop, newRowBtnTop.parentNode, "top");
+                    pageBuilderHandler.addEventToAddRowBtn(newRowBtnTop, newRowBtnTop.parentNode, "after");
+                    console.log(pageBuilderHandler.pageData);
                 });
             });
         },
 
-        // @container : la div après/avant laquelle sera placée la new Row
-        addEventToAddRowBtn: function (btn, container, param) {
+        // @div : la div après/avant laquelle sera placée la new Row
+        addEventToAddRowBtn: function (btn, div, param) {
             var pageBuilderHandler = this;
+            var pageData = pageBuilderHandler.pageData;
 
             btn.addEventListener("click", function () {
                 var btnContainer = this.parentNode;
                 var containerContent = [];
-                
+
                 btnContainer.childNodes.forEach((node) => {
                     containerContent.push(node);
                 });
-                
+
                 var structureBtnBar = pageBuilderHandler.createStructureBtnBar(btnContainer);
 
-                console.log(containerContent)
-                
                 structureBtnBar.childNodes.forEach((strucureBtn) => {
                     strucureBtn.addEventListener("click", function () {
                         var className = this.className.substring(36);
@@ -156,15 +227,79 @@ $(document).ready(function () {
                         var parentRow = document.createElement("div");
                         parentRow.className = "row padding-0";
 
-                        colsSize.forEach((colSize) => {
-                            pageBuilderHandler.createNewContainer(parentRow, colSize);
+                        pageBuilderHandler.setRowId(parentRow);
 
-                            if (param == "top") {
-                                container.after(parentRow);
+                        var mainRow =
+                            div.parentNode.id == "page"
+                                ? (mainRow = div.parentNode)
+                                : div.parentNode.parentNode.parentNode;
+
+                        pageData[parentRow.id].parent = mainRow.id;
+                        pageData[parentRow.id].node = parentRow;
+                        if (div == pageBuilderHandler.newTopRowBtn || div == pageBuilderHandler.newBottomRowBtn) {
+                            if (param == "after") {
+                                var oldFirstElement = pageData[mainRow.id].first;
+                                if (null !== oldFirstElement) {
+                                    pageData[parentRow.id].previous = null;
+                                    pageData[parentRow.id].next = oldFirstElement;
+                                    pageData[oldFirstElement].previous = parentRow.id;
+                                } else {
+                                    pageData[mainRow.id].last = parentRow.id;
+                                }
+                                pageData[mainRow.id].first = parentRow.id;
+                            }
+                            if (param == "before") {
+                                var oldLastElement = pageData[mainRow.id].last;
+
+                                if (null !== oldLastElement) {
+                                    pageData[parentRow.id].next = null;
+                                    pageData[parentRow.id].previous = oldLastElement;
+                                    pageData[oldLastElement].next = parentRow.id;
+                                } else {
+                                    pageData[mainRow.id].first = parentRow.id;
+                                }
+                                pageData[mainRow.id].last = parentRow.id;
+                            }
+                            console.log(pageData);
+                        } else {
+                            if (param == "after") {
+                                if (null == pageData[div.id].next) {
+                                    pageData[parentRow.id].next = null;
+                                    pageData[mainRow.id].last = parentRow.id;
+                                } else {
+                                    var oldNext = pageData[div.id].next;
+                                    pageData[oldNext].previous = parentRow.id;
+                                    pageData[parentRow.id].next = oldNext;
+                                }
+                                pageData[div.id].next = parentRow.id;
+                                pageData[parentRow.id].previous = div.id;
+                            }
+                            if (param == "before") {
+                                if (null == pageData[div.id].previous) {
+                                    pageData[parentRow.id].previous = null;
+                                    pageData[mainRow.id].first = parentRow.id;
+                                } else {
+                                    var oldPrevious = pageData[div.id].previous;
+                                    pageData[oldPrevious].next = parentRow.id;
+                                    pageData[parentRow.id].previous = oldPrevious;
+                                }
+                                pageData[div.id].previous = parentRow.id;
+                                pageData[parentRow.id].next = div.id;
+                            }
+                        }
+
+                        var rowContainerList = [];
+
+                        colsSize.forEach((colSize) => {
+                            container = pageBuilderHandler.createNewContainer(parentRow, colSize);
+
+                            rowContainerList.push(container.id);
+                            if (param == "after") {
+                                div.after(parentRow);
                             }
 
-                            if (param == "bottom") {
-                                container.before(parentRow);
+                            if (param == "before") {
+                                div.before(parentRow);
                             }
 
                             btnContainer.textContent = "";
@@ -172,88 +307,85 @@ $(document).ready(function () {
                                 btnContainer.appendChild(node);
                             });
                         });
+
+                        var container;
+                        pageData[parentRow.id].first = rowContainerList[0];
+                        pageData[parentRow.id].last = rowContainerList[rowContainerList.length - 1];
+                        console.log(rowContainerList);
+                        for (let i = 0; i < rowContainerList.length; i++) {
+                            container = rowContainerList[i];
+
+                            if (rowContainerList[i + 1] !== undefined) {
+                                pageData[container].next = rowContainerList[i + 1];
+                                pageData[rowContainerList[i + 1]].previous = container;
+                            }
+                        }
                     });
                 });
             });
         },
 
-        addEventsToNewStructureBtn: function (structureBtnBar, container) {
+        addEventsToNewStructureBtn: function (structureBtnBar, oldContainer) {
             var pageBuilderHandler = this;
-            var containerParent = container.parentNode;
+            var containerParent = oldContainer.parentNode;
+            var mainRow = containerParent.parentNode.parentNode;
+            var pageData = pageBuilderHandler.pageData;
+            var firstChild = null;
+            var nextChild = null;
 
             structureBtnBar.childNodes.forEach((btn) => {
                 btn.addEventListener("click", function (e) {
-                    containerParent.removeChild(container);
-
                     var className = this.className.substring(36);
                     var colsSize = className.split("_");
-
                     var parentRow = document.createElement("div");
-                    parentRow.className = "row padding-0";
+
+                    containerParent.removeChild(oldContainer);
                     containerParent.appendChild(parentRow);
+                    parentRow.className = "row padding-0";
+                    pageBuilderHandler.setRowId(parentRow);
+
+                    pageData[parentRow.id].parent = mainRow.id;
+                    pageData[parentRow.id].node = parentRow;
+
+                    firstChild = pageData[mainRow.id].first;
+                    pageData[mainRow.id].first = parentRow.id;
+
+                    if (null === pageData[firstChild].next) {
+                        pageData[mainRow.id].last = parentRow.id;
+                    } else {
+                        nextChild = pageData[firstChild].next;
+                        pageData[nextChild].previous = parentRow.id;
+                        pageData[parentRow.id].next = nextChild;
+                    }
+
+                    delete pageData[firstChild];
+
+                    console.log(pageBuilderHandler.pageData);
+
+                    var rowContainerList = [];
 
                     colsSize.forEach((colSize) => {
-                        let col = document.createElement("div");
-                        let colInner = document.createElement("div");
-                        let container = document.createElement("div");
-                        let addBtn = document.createElement("div");
-                        let removeBtn = document.createElement("div");
-
-                        col.className = "col-sm-" + colSize + " padding-0";
-                        colInner.className = "col-inner padding-top-0";
-                        container.className = "pageBuilder-container-empty";
-                        addBtn.className = "pageBuilder-btn-add";
-                        addBtn.innerHTML = "+";
-                        removeBtn.className = "pageBuilder-btn-remove";
-                        removeBtn.innerHTML = "x";
-
-                        addBtn.addEventListener("click", function (e) {
-                            var addItemBtn = document.createElement("div");
-                            var newStructureBtn = document.createElement("div");
-                            var cancelBtn = document.createElement("div");
-
-                            addItemBtn.className = "pageBuilder-btn-add";
-                            addItemBtn.innerHTML = "+";
-                            newStructureBtn.className = "pageBuilder-container-structure-btn-small";
-
-                            cancelBtn.className = "pageBuilder-btn-cancel";
-                            cancelBtn.innerHTML = "x";
-
-                            container.appendChild(addItemBtn);
-                            container.appendChild(newStructureBtn);
-                            container.appendChild(cancelBtn);
-
-                            newStructureBtn.addEventListener("click", function (e) {
-                                var structureBtnBar = pageBuilderHandler.createStructureBtnBar(container);
-                                pageBuilderHandler.addEventsToNewStructureBtn(structureBtnBar, container);
-                            });
-
-                            var oldAddBtn = this;
-                            cancelBtn.addEventListener("click", function (e) {
-                                container.textContent = "";
-                                container.appendChild(oldAddBtn);
-                            });
-
-                            pageBuilderHandler.addEventToItemBtn(addItemBtn);
-
-                            container.removeChild(this);
-                        });
-
-                        removeBtn.addEventListener("click", function () {
-                            pageBuilderHandler.deleteContainer(container);
-                        });
-
-                        container.appendChild(addBtn);
-                        container.appendChild(removeBtn);
-                        colInner.appendChild(container);
-                        col.appendChild(colInner);
-                        parentRow.appendChild(col);
+                        container = pageBuilderHandler.createNewContainer(parentRow, colSize);
+                        rowContainerList.push(container.id);
                     });
+
+                    var container;
+                    pageData[parentRow.id].first = rowContainerList[0];
+                    pageData[parentRow.id].last = rowContainerList[rowContainerList.length - 1];
+                    for (let i = 0; i < rowContainerList.length; i++) {
+                        container = rowContainerList[i];
+
+                        if (rowContainerList[i + 1] !== undefined) {
+                            pageData[container].next = rowContainerList[i + 1];
+                            pageData[rowContainerList[i + 1]].previous = container;
+                        }
+                    }
                 });
             });
         },
 
         createNewContainer: function (parentRow, colSize) {
+            let pageData = pageBuilderHandler.pageData;
             let col = document.createElement("div");
             let colInner = document.createElement("div");
             let container = document.createElement("div");
@@ -268,26 +400,37 @@ $(document).ready(function () {
             addBtn.className = "pageBuilder-btn-add";
             addBtn.innerHTML = "+";
             removeBtn.className = "pageBuilder-btn-remove";
-            removeBtn.innerHTML = "x";
             newTopContainerBtn.className = "pageBuilder-btn-new-top";
             newTopContainerBtn.innerHTML = "^";
             newBottomContainerBtn.className = "pageBuilder-btn-new-bottom";
             newBottomContainerBtn.innerHTML = "v";
 
-            pageBuilderHandler.addEventToAddRowBtn(newTopContainerBtn, parentRow, "bottom");
-            pageBuilderHandler.addEventToAddRowBtn(newBottomContainerBtn, parentRow, "top");
+            pageBuilderHandler.addEventToAddRowBtn(newBottomContainerBtn, parentRow, "after");
+            pageBuilderHandler.addEventToAddRowBtn(newTopContainerBtn, parentRow, "before");
+
+            pageBuilderHandler.setContainerId(container);
+
+            pageData[container.id].parent = parentRow.id;
+            pageData[container.id].node = container;
 
             addBtn.addEventListener("click", function () {
+                var btnContainer = this.parentNode;
+                var containerContent = [];
                 var addItemBtn = document.createElement("div");
                 var newStructureBtn = document.createElement("div");
                 var cancelBtn = document.createElement("div");
+
+                btnContainer.childNodes.forEach((node) => {
+                    containerContent.push(node);
+                });
+
+                btnContainer.textContent = "";
 
                 addItemBtn.className = "pageBuilder-btn-add";
                 addItemBtn.innerHTML = "+";
                 newStructureBtn.className = "pageBuilder-container-structure-btn-small";
 
                 cancelBtn.className = "pageBuilder-btn-cancel";
-                cancelBtn.innerHTML = "x";
 
                 container.appendChild(addItemBtn);
                 container.appendChild(newStructureBtn);
@@ -298,15 +441,14 @@ $(document).ready(function () {
                     pageBuilderHandler.addEventsToNewStructureBtn(structureBtnBar, container);
                 });
 
-                var oldAddBtn = this;
                 cancelBtn.addEventListener("click", function (e) {
-                    container.textContent = "";
-                    container.appendChild(oldAddBtn);
+                    btnContainer.textContent = "";
+                    containerContent.forEach((node) => {
+                        btnContainer.appendChild(node);
+                    });
                 });
 
                 pageBuilderHandler.addEventToItemBtn(addItemBtn);
-
-                container.removeChild(this);
             });
 
             removeBtn.addEventListener("click", function () {
@@ -320,6 +462,8 @@ $(document).ready(function () {
             colInner.appendChild(container);
             col.appendChild(colInner);
             parentRow.appendChild(col);
+
+            return container;
         },
 
         addEventToItemBtn: function (btn) {
@@ -376,28 +520,66 @@ $(document).ready(function () {
             btn.addEventListener("click", function (event) {
                 container.textContent = "";
 
+                var form = pageBuilderHandler.createForm(container);
+
                 var textArea = document.createElement("textarea");
                 textArea.id = "textearea-test";
 
-                // container.appendChild(textArea);
+                container.appendChild(textArea);
 
-                // tinymce.init({
-                //     selector: "textarea#textearea-test",
-                //     height: 500,
-                //     menubar: true,
-                //     plugins: [
-                //         "advlist autolink lists link image charmap print preview anchor",
-                //         "searchreplace visualblocks code fullscreen",
-                //         "insertdatetime media table paste code help wordcount",
-                //     ],
-                //     toolbar:
-                //         "undo redo | formatselect | " +
-                //         "bold italic backcolor | alignleft aligncenter " +
-                //         "alignright alignjustify | bullist numlist outdent indent | " +
-                //         "removeformat | help",
-                //     content_css: "//www.tiny.cloud/css/codepen.min.css",
-                // });
+                tinymce.init({
+                    selector: "textarea#textearea-test",
+                    height: 500,
+                    menubar: true,
+                    plugins: [
+                        "advlist autolink lists link image charmap print preview anchor",
+                        "searchreplace visualblocks code fullscreen",
+                        "insertdatetime media table paste code help wordcount",
+                    ],
+                    toolbar:
+                        "undo redo | formatselect | " +
+                        "bold italic backcolor | alignleft aligncenter " +
+                        "alignright alignjustify | bullist numlist outdent indent | " +
+                        "removeformat | help",
+                    content_css: "//www.tiny.cloud/css/codepen.min.css",
+                });
             });
+        },
+
+        setContainerId: function (container) {
+            var pageData = pageBuilderHandler.pageData;
+
+            container.id = "container-" + this.containerId;
+            this.containerId++;
+            pageData[container.id] = {};
+            pageData[container.id].previous = null;
+            pageData[container.id].next = null;
+            pageData[container.id].first = null;
+            pageData[container.id].last = null;
+            pageData[container.id].parent = null;
+            pageData[container.id].node = null;
+        },
+
+        setRowId: function (row) {
+            var pageData = pageBuilderHandler.pageData;
+
+            row.id = "row-" + this.rowId;
+            this.rowId++;
+            pageData[row.id] = {};
+            pageData[row.id].previous = null;
+            pageData[row.id].next = null;
+            pageData[row.id].first = null;
+            pageData[row.id].last = null;
+            pageData[row.id].parent = null;
+            pageData[row.id].node = null;
+        },
+
+        createForm: function (container) {
+            var form = document.createElement("form");
+
+            // var token = ;
+
+            return form;
         },
 
         addPositionButtons: function (container) {
@@ -459,10 +641,10 @@ $(document).ready(function () {
             var containerColInner = container.parentNode;
             var containerCol = containerColInner.parentNode;
             var containerRow = containerCol.parentNode;
+            var containerRowParent = containerRow.parentNode;
             var classNameElement = null;
-
-            // delete pageData[container.id];
             var oldColSize = 0;
+
             containerCol.classList.forEach((className) => {
                 if (className.includes("col-sm-")) {
                     classNameElement = className;
@@ -472,25 +654,87 @@ $(document).ready(function () {
 
             containerRow.removeChild(containerCol);
 
-            // Si il ne reste qu'un node, on supprime toute la row et on ajoute le dernier node à son parent
-            if (containerRow.childNodes.length == 1) {
-                var parentRow = containerRow.parentNode;
+            if (containerRow.childNodes.length == 0) {
+                if (containerRowParent.id !== "page") {
+                    console.log("pooo");
+                    console.log(containerRowParent.firstChild);
 
-                if (parentRow != pageBuilderHandler.page) {
-                    var lastNode = containerRow.firstChild.firstChild.firstChild;
-                    parentRow.removeChild(containerRow);
-                    parentRow.appendChild(lastNode);
+                    var mainRow = containerRow.parentNode.parentNode.parentNode;
+                    console.log(mainRow);
+                    if (containerRowParent.childNodes.length == 1) {
+                        mainRow.removeChild(containerRow.parentNode.parentNode);
+
+                        var newContainer = pageBuilderHandler.createNewContainer(mainRow, 12);
+
+                        pageData[mainRow.id].first = newContainer.id;
+                        pageData[mainRow.id].last = newContainer.id;
+                    } else {
+                        var orphanChild = containerRowParent.firstChild.id;
+                        pageData[mainRow.id].first = orphanChild;
+                        pageData[mainRow.id].last = orphanChild;
+                        pageData[orphanChild].previous = null;
+                        pageData[orphanChild].next = null;
+                    }
+
+                    delete pageData[containerRow.id];
+                    delete pageData[container.id];
+
+                    containerRowParent.removeChild(containerRow);
+                    console.log(pageData);
+
                     return;
                 }
-            }
 
-            if (containerRow.childNodes.length == 0) {
-                containerRow.parentNode.removeChild(containerRow);
+                var previous = pageData[containerRowParent.id].previous;
+                var next = pageData[containerRowParent.id].next;
+
+                if (null !== previous && null !== next) {
+                    pageData[previous].next = next;
+                    pageData[next].previous = previous;
+                } else if (null !== next && null === previous) {
+                    pageData[next].previous = null;
+                    pageData["page"].first = next;
+                } else if (null !== previous && null === next) {
+                    pageData[previous].next = null;
+                    pageData["page"].last = previous;
+                } else {
+                    pageData["page"].first = null;
+                    pageData["page"].last = null;
+                }
+
+                page.removeChild(containerRow);
+                delete pageData[container.id];
+                delete pageData[containerRow.id];
+
+                console.log(pageData);
+
                 return;
             }
 
+            var previous = pageData[container.id].previous;
+            var next = pageData[container.id].next;
+
+            if (null !== previous && null !== next) {
+                pageData[previous].next = next;
+                pageData[next].previous = previous;
+            } else if (null !== next && null === previous) {
+                pageData[next].previous = null;
+                pageData[containerRow.id].first = next;
+            } else if (null !== previous && null === next) {
+                pageData[previous].next = null;
+                pageData[containerRow.id].last = previous;
+            } else {
+                pageData[containerRow.id].first = null;
+                pageData[containerRow.id].last = null;
+            }
+
+            delete pageData[container.id];
+
+            console.log(pageData);
+
             var lastSize = 0;
             var nbNode = containerRow.childNodes.length;
+
             containerRow.childNodes.forEach((col) => {
                 col.classList.forEach((className) => {
                     if (className.includes("col-sm-")) {
@@ -506,39 +750,6 @@ $(document).ready(function () {
 
                 col.className = col.className.replace(classNameElement, "col-sm-" + newColSize);
             });
-
-            // if (colSize == 12) {
-            //     containerRow.parentNode.removeChild(containerRow);
-            // } else {
-            //     if (newColSize == 12) {
-            //         orphanContainerRow = containerRow.childNodes[0].childNodes[0].childNodes[0];
-            //         orphanContainer = orphanContainerRow.childNodes[0].childNodes[0].childNodes[0];
-            //         containerMainColInner.removeChild(containerRow);
-            //         containerMainColInner.appendChild(orphanContainerRow);
-
-            //         // var pageDataOrphanContainer = pageData[orphanContainer.id];
-            //         // var newId = orphanContainer.id.substring(0, orphanContainer.id.length - 2);
-            //         // pageData[newId] = pageDataOrphanContainer;
-
-            //         // delete pageData[orphanContainer.id];
-            //         // orphanContainer.id = newId;
-            //     } else {
-            //         containerRow.childNodes.forEach((col) => {
-            //             var oldColSize = 0;
-            //             console.log(col.className);
-            //             containerCol.classList.forEach((className) => {
-            //                 if (className.includes("col-sm-")) {
-            //                     classNameElement = className;
-            //                     oldColSize = className.substring(7);
-            //                 }
-            //             });
-            //             // // console.log(oldColSize);
-            //             // newColSize = oldColSize + oldColSize / 3;
-            //             // console.log(newColSize);
-            //             // col.className = col.className.replace(classNameElement, "col-sm-" + newColSize);
-            //         });
-            //     }
-            // }
         },
 
         addImageItem: function (container) {
