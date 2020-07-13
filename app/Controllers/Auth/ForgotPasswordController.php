@@ -24,7 +24,7 @@ class ForgotPasswordController extends Controller
         
         $form = $response->createForm(ForgotPasswordForm::class);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             return $response->render("auth.forgot_password", "account", ["forgotPasswordForm" => $form]);
         }
 

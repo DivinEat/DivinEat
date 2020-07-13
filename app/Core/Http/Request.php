@@ -50,6 +50,6 @@ class Request
 
     protected function parseBody(): void
     {
-        $this->parsedBody = array_merge($_GET, $_POST);
+        $this->parsedBody = array_merge($_GET, $_POST, $_FILES);
     }
 }

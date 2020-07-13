@@ -49,7 +49,7 @@ class ArticleController extends Controller
 
         $form = $response->createForm(CreateArticleForm::class, $article);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.article.create", "admin", ["createArticleForm" => $form]);
         } else {
             (new ArticleManager())->save($article);       
@@ -90,7 +90,7 @@ class ArticleController extends Controller
 
         $form = $response->createForm(UpdateArticleForm::class, $article);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
         } else {
             (new ArticleManager())->save($article);       

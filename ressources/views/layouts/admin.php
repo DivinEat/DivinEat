@@ -28,6 +28,7 @@
         <div class="col-inner sidebar">
             <nav class="sidebar-nav">
                 <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>" class="sidebar-link">Dashboard<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
+                <a href="<?= Router::getRouteByName('admin.image.index')->getUrl() ?>" class="sidebar-link">Images<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                 <a href="<?= Router::getRouteByName('admin.article.index')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                 <a href="" class="sidebar-link">Pages<img src='<?= url('img/icones/arrow.svg') ?>'></a>

@@ -1,4 +1,4 @@
-<form 
+<form
     method="<?= $form->getConfig()['method'] ?>" 
     action="<?= $form->getConfig()['action'] ?>" 
 

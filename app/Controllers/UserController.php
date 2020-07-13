@@ -42,7 +42,7 @@ class UserController extends Controller
             $user->setPwd(password_hash($request->get('pwd'), PASSWORD_DEFAULT));
         }
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             return $response->render("profile", "main", ["updateUserForm" => $form]);
         }
 
