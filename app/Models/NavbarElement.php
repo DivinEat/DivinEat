@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\Page;
 use App\Core\Model\Model;
 use App\Core\Model\ModelInterface;
 
-class Page extends Model implements ModelInterface
+class NavbarElement extends Model implements ModelInterface
 {
     protected $id;
-    protected $title;
-    protected $data;
+    protected $name;
+    protected $page;
+    protected $slug;
     protected $date_inserted;
     protected $date_updated;
 
@@ -20,7 +22,7 @@ class Page extends Model implements ModelInterface
 
     public function initRelation(): array
     {
-        return [];
+        return ['page' => Page::class,];
     }
 
     public function setId(int $id): self
@@ -28,21 +30,31 @@ class Page extends Model implements ModelInterface
         $this->id = $id;
         return $this;
     }
-    public function setTitle($title): self
+
+    public function setName(int $name): self
     {
-        $this->title = $title;
+        $this->id = $name;
         return $this;
     }
-    public function setData($data): self
+
+    public function setPage(int $page): self
     {
-        $this->data = $data;
+        $this->id = $page;
         return $this;
     }
+
+    public function setSlug(int $slug): self
+    {
+        $this->id = $slug;
+        return $this;
+    }
+
     public function setDate_inserted($date_inserted): self
     {
         $this->date_inserted = $date_inserted;
         return $this;
     }
+
     public function setDate_updated($date_updated): self
     {
         $this->date_updated = $date_updated;
@@ -53,13 +65,17 @@ class Page extends Model implements ModelInterface
     {
         return $this->id;
     }
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
     }
-    public function getData(): ?string
+    public function getPage(): Page
     {
-        return $this->data;
+        return $this->page;
+    }
+    public function getSlug(): ?string
+    {
+        return $this->id;
     }
     public function getDate_inserted()
     {

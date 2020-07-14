@@ -38,7 +38,7 @@ $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], fun
 
 $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected', 'user.is.admin']], function (Router $group) {
     $group->get('', 'DashboardController@index', 'index');
-    
+
     $group->group(['prefix' => 'menu', 'as' => 'menu.'], function (Router $group) {
         $group->get('', 'MenuController@index', 'index');
         $group->get('create', 'MenuController@create', 'create');
@@ -104,10 +104,18 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
 
     $group->group(['prefix' => 'configuration', 'as' => 'configuration.'], function (Router $group) {
         $group->get('', 'ConfigurationController@index', 'index');
-        $group->post('store', 'ConfigurationController@store', 'store');
-        $group->group(['prefix' => '{config_id}'], function (Router $group) {
-            $group->get('edit', 'ConfigurationController@edit', 'edit');
-            $group->post('update', 'ConfigurationController@update', 'update');
+        $group->group(['prefix' =>'parameter', 'as' => 'parameter.'], function (Router $group) {
+            $group->group(['prefix' => '{config_id}'], function (Router $group) {
+                $group->get('edit', 'ConfigurationController@editParams', 'edit');
+                $group->post('update', 'ConfigurationController@updateParams', 'update');
+            });
+        });
+        $group->group(['prefix' =>'navbar', 'as' => 'navbar.'], function (Router $group) {
+            $group->get('', 'ConfigurationController@createNavbar', 'create');
+            $group->group(['prefix' => '{navbar_id}'], function (Router $group) {
+                $group->get('edit', 'NavbarElementController@editNavbar', 'edit');
+                $group->post('update', 'NavbarElementController@updateNavbar', 'update');
+            });
         });
     });
 

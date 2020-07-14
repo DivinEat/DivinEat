@@ -50,37 +50,4 @@ class Configuration extends Model implements ModelInterface
     {
         return $this->info;
     }
-
-    public static function getShowConfigurationTable($configs){
-        $tabConfigs = [];
-        foreach($configs as $config){
-            $tabConfigs[] = [
-                "id" => $config->getId(),
-                "libelle" => ucwords(str_replace("_", " ", $config->getLibelle())),
-                "info" => $config->getInfo(),
-                "edit"=> Router::getRouteByName('admin.configuration.edit', $config->getId())
-            ];
-        }
-
-        $tab = [
-            "config"=>[
-                "class"=>"admin-table"
-            ],
-
-            "colonnes"=>[
-                "Catégorie",
-                "Id",
-                "Libelle",
-                "Informations",
-                "Actions"
-            ],
-
-            "fields"=>[
-                "Configuration"=>[]
-            ]
-        ];
-
-        $tab["fields"]["Configuration"] = $tabConfigs;
-        return $tab;
-    }
 }

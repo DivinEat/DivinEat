@@ -24,7 +24,6 @@ use App\Core\Auth;
                 <a href="<?= Router::getRouteByName('menus')->getUrl() ?>">Menus</a>
                 <a href="#">Réservations</a>
                 <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Actualités</a>
-                </a>
             </nav>
 
             <div id="navbar-front-mobile" class="navbar-front-mobile">
