@@ -9,7 +9,7 @@ use App\Core\Model\ModelInterface;
 class Image extends Model implements ModelInterface
 {
     protected $id;
-    protected $nom;
+    protected $name;
     protected $path;
 
     public function __construct()
@@ -27,9 +27,9 @@ class Image extends Model implements ModelInterface
         $this->id=$id;
         return $this;
     }
-    public function setNom($nom)
+    public function setName($name)
     {
-        $this->nom=$nom;
+        $this->name=$name;
         return $this;
     }
     public function setPath($path)
@@ -42,9 +42,9 @@ class Image extends Model implements ModelInterface
     {
         return $this->id;
     }
-    public function getNom()
+    public function getName()
     {
-        return $this->nom;
+        return $this->name;
     }
     public function getPath()
     {
@@ -56,9 +56,9 @@ class Image extends Model implements ModelInterface
         foreach($images as $image){
             $tabImages[] = [
                 "id" => $image->getId(),
-                "nom" => $image->getNom(),
-                "path" => $image->getPath(),
-                "destroy"=> Router::getRouteByName('admin.image.destroy', $image->getId())
+                "thumbnail" => "",
+                "name" => $image->getName(),
+                "destroy" => Router::getRouteByName('admin.image.destroy', $image->getId())
             ];
         }
 
@@ -70,8 +70,8 @@ class Image extends Model implements ModelInterface
             "colonnes"=>[
                 "Catégorie",
                 "Id",
+                "Thumbnail",
                 "Nom",
-                "Path",
                 "Actions"
             ],
 

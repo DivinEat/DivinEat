@@ -26,7 +26,10 @@
                                 <td><?= $fields[$key] ?></td>
                         <?php endif; endif; endforeach; ?>
                     <td>
-                        <a href="<?= $fields["edit"]->getUrl() ?>" class="btn btn-edit">Modifier</a>
+                        <?php if(isset($fields['edit'])): ?>
+                            <a href="<?= $fields["edit"]->getUrl() ?>" class="btn btn-edit">Modifier</a>
+                        <?php endif; ?>
+                        
                         <?php if(isset($fields['destroy'])): ?>
                             <input type="submit" name="destroy" class="btn btn-remove" value="Supprimer"/>
                         <?php endif; ?>

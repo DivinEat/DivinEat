@@ -12,10 +12,10 @@ class FileConstraint implements ConstraintInterface
 
     public function isValid(string $value, string $elementName): bool
     {
-        $type = explode(".", $value);
-        $type = ucwords(end($type));
+        $ext = pathinfo($value, PATHINFO_EXTENSION);
+        $ext = strtoupper($ext);
 
-        if($type === 'JPG' || $type === 'PNG' || $type === 'JPEG'){
+        if($ext === 'JPG' || $ext === 'PNG' || $ext === 'JPEG'){
             return true;
         }
 

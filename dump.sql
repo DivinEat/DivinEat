@@ -208,8 +208,8 @@ INSERT INTO `dve_configurations` (`libelle`) VALUES
 --
 CREATE TABLE `dve_images` (
   `id` int(11) NOT NULL,
-  `nom` varchar(255) NOT NULL,
-  `path` date NOT NULL
+  `name` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `dve_images`
