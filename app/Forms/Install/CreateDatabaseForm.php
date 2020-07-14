@@ -21,7 +21,7 @@ class CreateDatabaseForm extends Form
                 "attr" => [
                     "type" => "text",
                     "placeholder"=>"Ex : localhost",
-                    "class" => "form-control margin-bottom-25"
+                    "class" => "form-control"
                 ],
                 "constraints" => [
                     new RequiredConstraint()
@@ -34,7 +34,7 @@ class CreateDatabaseForm extends Form
                 "attr" => [
                     "type" => "text",
                     "placeholder"=>"Ex : divineat",
-                    "class" => "form-control margin-bottom-25"
+                    "class" => "form-control"
                 ],
                 "constraints" => [
                     new RequiredConstraint()
@@ -47,20 +47,20 @@ class CreateDatabaseForm extends Form
                 "attr" => [
                     "type" => "text",
                     "placeholder"=>"Ex : u-divineat",
-                    "class" => "form-control margin-bottom-25"
+                    "class" => "form-control"
                 ],
                 "constraints" => [
                     new RequiredConstraint()
                 ]
             ])
-            ->add("password", "input", [
+            ->add("pwd", "input", [
                 "label" => [
                     "value" => "Nom d'utilisateur"
                 ],
                 "attr" => [
                     "type" => "password",
                     "placeholder"=>"Ex : u!-divineat123",
-                    "class" => "form-control margin-bottom-25"
+                    "class" => "form-control"
                 ],
                 "constraints" => [
                     new PasswordConstraint(),

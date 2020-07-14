@@ -6,6 +6,7 @@ $router->group(['prefix' => 'install', 'as' => 'install.', 'middleware' => ['ins
     $group->get('', 'InstallController@showDatabaseForm', 'show-database-form');
     $group->post('', 'InstallController@storeDatabaseForm', 'store-database-form');
     $group->get('informations', 'InstallController@showGeneralForm', 'show-general-form');
+    $group->post('informations', 'InstallController@storeGeneralForm', 'store-general-form');
 });
 
 $router->get('', 'HomeController@index', 'home');
