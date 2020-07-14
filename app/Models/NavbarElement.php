@@ -22,7 +22,7 @@ class NavbarElement extends Model implements ModelInterface
 
     public function initRelation(): array
     {
-        return ['page' => Page::class,];
+        return ['page' => Page::class];
     }
 
     public function setId(int $id): self
@@ -31,21 +31,21 @@ class NavbarElement extends Model implements ModelInterface
         return $this;
     }
 
-    public function setName(int $name): self
+    public function setName(string $name): self
     {
-        $this->id = $name;
+        $this->name = $name;
         return $this;
     }
 
-    public function setPage(int $page): self
+    public function setPage(Model $page): self
     {
-        $this->id = $page;
+        $this->page = $page;
         return $this;
     }
 
-    public function setSlug(int $slug): self
+    public function setSlug(string $slug): self
     {
-        $this->id = $slug;
+        $this->slug = $slug;
         return $this;
     }
 
@@ -75,7 +75,7 @@ class NavbarElement extends Model implements ModelInterface
     }
     public function getSlug(): ?string
     {
-        return $this->id;
+        return $this->slug;
     }
     public function getDate_inserted()
     {

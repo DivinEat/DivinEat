@@ -2,14 +2,17 @@
 
 namespace App\Controllers\Admin;
 
-use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Models\Configuration;
+use App\Models\NavbarElement;
+use App\Core\Controller\Controller;
 use App\Managers\ConfigurationManager;
-use App\Forms\Configuration\UpdateConfigurationForm;
 use App\Managers\NavbarElementManager;
+use App\Forms\Configuration\CreateNavbarElementForm;
+use App\Forms\Configuration\UpdateConfigurationForm;
+use App\Forms\Configuration\UpdateNavbarElementForm;
 
 class ConfigurationController extends Controller
 {
@@ -60,18 +63,72 @@ class ConfigurationController extends Controller
         }
     }
 
-    public function createNavbar()
+    public function createNavbar(Request $request, Response $response, array $args)
     {
+        $form = $response->createForm(CreateNavbarElementForm::class);
 
-        
+        $response->render("admin.configuration.navbar.create", "admin", ["createNavbarElementForm" => $form]);
     }
 
-    public function editNavbar()
+    public function storeNavbar(Request $request, Response $response, array $args)
     {
+        $request->setInputPrefix('createNavbarElementForm_');
+
+        $fields = $request->getParams(["name", "slug", "page"]);
+        $fields["page"] = intval($fields["page"]);
+
+        $object = (new NavbarElement())->hydrate($fields);
+
+        $form = $response->createForm(CreateNavbarElementForm::class, $object);
+
+        if (false === $form->handle())
+            return $response->render("admin.configuration.navbar.create", "admin", ["createNavbarElementForm" => $form]);
+
+        (new NavbarElementManager())->save($object);
+        Router::redirect('admin.configuration.index');
     }
 
-    public function updateNavbar()
+    public function editNavbar(Request $request, Response $response, array $args)
     {
+        $id = $args['navbar_element_id'];
+
+        if (isset($id)) {
+            $navbarElementManager = new NavbarElementManager();
+            $navbarElement = $navbarElementManager->find($id);
+        } else {
+            throw new \Exception("L'id de l'élément n'existe pas.");
+        }
+
+        $form = $response->createForm(UpdateNavbarElementForm::class, $navbarElement);
+
+        return $response->render("admin.configuration.navbar.edit", "admin", ["updateNavbarElementForm" => $form]);
+    }
+
+    public function updateNavbar(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('updateNavbarElementForm_');
+        $fields = $request->getParams(["name", "slug", "page", "data_inserted"]);
+        $fields["page"] = intval($fields["page"]);
+
+        $response->checkFormData([
+            "id" => intval($request->get("id")),
+            "date_inserted" => $request->get("date_inserted"),
+        ]);
+
+        $object = (new NavbarElement())->hydrate($fields);
+        $form = $response->createForm(UpdateNavbarElementForm::class, $object);
+
+        if (false === $form->handle())
+            return $response->render("admin.configuration.navbar.edit", "admin", ["updateNavbarElementForm" => $form]);
+
+        (new NavbarElementManager())->save($object);
+        return Router::redirect('admin.configuration.index');
+    }
+
+    public function destroyNavBar(Request $request, Response $response, array $args)
+    {
+        (new NavbarElementManager())->delete($args["navbar_element_id"]);
+        return Router::redirect('admin.configuration.index');
     }
 
     private function getConfigurationData(): array
@@ -115,12 +172,12 @@ class ConfigurationController extends Controller
 
         $dataConfiguration = [];
         foreach ($datas as $data) {
-            $tabConfigs[] = [
+            $dataConfiguration[] = [
                 "name" => $data->getName(),
                 "slug" => $data->getSlug(),
                 "page" => $data->getPage()->getTitle(),
-                "delete" => Router::getRouteByName('admin.configuration.navbar.destroy', $data->getId()),
-                "edit" => Router::getRouteByName('admin.configuration.navbar.edit', $data->getId())
+                "edit" => Router::getRouteByName('admin.configuration.navbar.edit', $data->getId()),
+                "destroy" => Router::getRouteByName('admin.configuration.navbar.destroy', $data->getId()),
             ];
         }
 

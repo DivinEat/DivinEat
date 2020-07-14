@@ -12,7 +12,6 @@ use App\Managers\MenuManager;
 use App\Managers\RoleManager;
 use App\Managers\UserManager;
 use App\Managers\OrderManager;
-use App\Managers\HoraireManager;
 use App\Managers\MenuOrderManager;
 use App\Core\Controller\Controller;
 use App\Forms\Order\CreateOrderForm;
@@ -97,7 +96,7 @@ class OrderController extends Controller
         $order = $orderManager->find($order_id);
 
         foreach ($menus as $menu) {
-            $menuOrder = (new MenuOrderManager())->create([
+            $menuOrderManager->create([
                 'menu' => $menu,
                 'order' => $order_id
             ]);

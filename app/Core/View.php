@@ -58,8 +58,6 @@ class View
         include $modal;
     }
 
-    //Methode permettant d'afficher un formulaire en lui passant le nom dans data (ici formProfile)
-    //Et affichant la vue
     public function formView(string $formName, string $formDir, string $formTemplate = "base")
     {
         $formPath = ucFirst($formDir) . "/" . $formTemplate;

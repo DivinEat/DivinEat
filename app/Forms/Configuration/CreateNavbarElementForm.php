@@ -4,42 +4,57 @@ namespace App\Forms\Configuration;
 
 use App\Core\Form;
 use App\Core\Routing\Router;
-use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\RequiredConstraint;
-use App\Core\Constraints\EmailConstraint;
+use App\Managers\PageManager;
 use App\Models\Configuration;
 
-class UpdateConfigurationForm extends Form
+class CreateNavbarElementForm extends Form
 {
     public function buildForm()
-    {   
-        $config = $this->model;
+    {
+        $this->setName("createNavbarElementForm");
 
-        $this->setName("updateConfigurationForm");
+        $pageManager = new PageManager();
+        $pages = $pageManager->findAll();
+
 
         $this->setBuilder()
-            ->add("id", "input", [
-                "attr" => [
-                    "type" => "hidden",
-                    "value" => $config->getId()
-                ],
-            ])
-            ->add("libelle", "input", [
-                "attr" => [
-                    "type" => "hidden",
-                    "value" => $config->getLibelle()
-                ],
-            ])
-            ->add("info", "input", [
+            ->add("slug", "input", [
                 "label" => [
-                    "value" => ucwords(str_replace("_", " ", $config->getLibelle())),
+                    "value" => "Slug",
                     "class" => "",
                 ],
                 "attr" => [
                     "type" => "text",
-                    "value" => $config->getInfo(),
                     "class" => "form-control"
                 ],
+                "constraints" => [
+                    new RequiredConstraint()
+                ],
+            ])
+            ->add("name", "input", [
+                "label" => [
+                    "value" => "Nom",
+                    "class" => "",
+                ],
+                "attr" => [
+                    "type" => "text",
+                    "class" => "form-control"
+                ],
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
+            ])
+            ->add("page", "select", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => [
+                    "value" => "Page",
+                    "class" => "",
+                ],
+                "data" => $pages,
+                "getter" => "getTitle",
                 "constraints" => [
                     new RequiredConstraint()
                 ]
@@ -54,7 +69,7 @@ class UpdateConfigurationForm extends Form
             ->add("submit", "input", [
                 "attr" => [
                     "type" => "submit",
-                    "value" => "Mettre à jour",
+                    "value" => "Ajouter",
                     "class" => "btn btn-primary"
                 ]
             ]);
@@ -65,10 +80,9 @@ class UpdateConfigurationForm extends Form
         $this
             ->addConfig("class", Configuration::class)
             ->addConfig("attr", [
-                "id" => "updateConfigurationForm",
+                "id" => "createNavbarElementForm",
                 "class" => "admin-form",
-                "name" => "updateConfigurationForm"
             ])
-            ->addConfig("action", Router::getRouteByName("admin.configuration.navbar.update", $this->model->getId())->getUrl());
+            ->addConfig("action", Router::getRouteByName("admin.configuration.navbar.store")->getUrl());
     }
 }

@@ -111,10 +111,12 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
             });
         });
         $group->group(['prefix' =>'navbar', 'as' => 'navbar.'], function (Router $group) {
-            $group->get('', 'ConfigurationController@createNavbar', 'create');
-            $group->group(['prefix' => '{navbar_id}'], function (Router $group) {
-                $group->get('edit', 'NavbarElementController@editNavbar', 'edit');
-                $group->post('update', 'NavbarElementController@updateNavbar', 'update');
+            $group->get('create', 'ConfigurationController@createNavbar', 'create');
+            $group->post('store', 'ConfigurationController@storeNavbar', 'store');
+            $group->group(['prefix' => '{navbar_element_id}'], function (Router $group) {
+                $group->get('edit', 'ConfigurationController@editNavbar', 'edit');
+                $group->post('update', 'ConfigurationController@updateNavbar', 'update');
+                $group->delete('', 'ConfigurationController@destroyNavbar', 'destroy');
             });
         });
     });
