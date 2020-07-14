@@ -1,13 +1,15 @@
+<?php
+    use App\Core\Routing\Router;
+?>
 
 <div class="row">
     <div class="col-sm-2">
         <div class="col-inner padding-0">
-            <select class="form-select" name="stats-date">
-                <option value="today">Aujourd'hui</option>
-                <option value="month">Mois en cours</option>
-                <option value="3LastMonth">3 derniers mois</option>
-                <option value="year">Cette année</option>
-                <option value="allTime">Toujours</option>
+            <select class="form-select" name="stats-date" onchange="document.location.href=this.value">
+                <option value="<?= Router::getRouteByName('admin.dashboard.index')->getUrl() ?>">Aujourd'hui</option>
+                <option value="<?= Router::getRouteByName('admin.dashboard.month')->getUrl() ?>">Mois en cours</option>
+                <option value="<?= Router::getRouteByName('admin.dashboard.year')->getUrl() ?>">Cette année</option>
+                <option value="<?= Router::getRouteByName('admin.dashboard.all')->getUrl() ?>">Toujours</option>
             </select>
         </div>
     </div>

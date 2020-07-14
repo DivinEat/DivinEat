@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Order;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
+use App\Managers\UserManager;
+use App\Managers\OrderManager;
 use App\Core\Builder\QueryBuilder;
 use App\Core\Controller\Controller;
 
@@ -14,33 +16,28 @@ class DashboardController extends Controller
     public function index(Request $request, Response $response)
     {
         $today = date('Y-m-d', time());
-        $where = "date_inserted = '" . $today . "'";
+        $whereOrder = "date = '" . $today . "'";
+        $whereUser = "dateInserted = '" . $today . "'";
 
-        $this->getDashboardInfos($response, $where);
+        $this->getDashboardInfos($response, $whereOrder, $whereUser);
     }
 
     public function month(Request $request, Response $response)
     {
         $mont = date('m', time());
-        $where = "(date_inserted, '%m') = '" . $mont . "'";
+        $whereOrder = "month(date) = '" . $mont . "'";
+        $whereUser = "month(dateInserted) = '" . $mont . "'";
 
-        $this->getDashboardInfos($response, $where);
-    }
-
-    public function lastThreeMonths(Request $request, Response $response)
-    {
-        $mont = date('m', strtotime('-2 month'));
-        $where = "(date_inserted, '%m') >= '" . $mont . "'";
-
-        $this->getDashboardInfos($response, $where);
+        $this->getDashboardInfos($response, $whereOrder, $whereUser);
     }
 
     public function year(Request $request, Response $response)
     {
         $year = date('Y', time());
-        $where = "(date_inserted, '%Y') = '" . $year . "'";
+        $whereOrder = "year(date) = '" . $year . "'";
+        $whereUser = "year(dateInserted) = '" . $year . "'";
 
-        $this->getDashboardInfos($response, $where);
+        $this->getDashboardInfos($response, $whereOrder, $whereUser);
     }
 
     public function all(Request $request, Response $response)
@@ -48,23 +45,18 @@ class DashboardController extends Controller
         $this->getDashboardInfos($response);
     }
 
-    public function getDashboardInfos(Response $response, string $where = null){
-        $orders = (new QueryBuilder())
-            ->select('*')
-            ->from('orders', 'o');
-        
-        if(null !== $where)
-            $orders->where("date = '". $where . "'");
+    public function getDashboardInfos(Response $response, string $whereOrder = null, string $whereUser = null){
+        if(null != $whereOrder){
+            $orders = (new QueryBuilder())->select('*')->from('orders', 'o')->where($whereOrder)->getQuery()->getArrayResult(Order::class);
+        } else {
+            $orders = (new OrderManager())->findAll();
+        }
 
-        $orders->getQuery()
-            ->getArrayResult(Order::class);
-        
-        $users = (new QueryBuilder())
-            ->select('*')
-            ->from('users', 'u')
-            ->where("dateInserted >= '". $where . "%'")
-            ->getQuery()
-            ->getArrayResult(User::class);
+        if(null != $whereUser){
+            $users = (new QueryBuilder())->select('*')->from('users', 'u')->where($whereUser)->getQuery()->getArrayResult(User::class);
+        } else {
+            $users = (new UserManager())->findAll();
+        }
 
         $total = count($orders);
         

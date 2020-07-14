@@ -42,7 +42,6 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
     $group->group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function (Router $group) {
         $group->get('', 'DashboardController@index', 'index');
         $group->get('month', 'DashboardController@month', 'month');
-        $group->get('last-three-months', 'DashboardController@lastThreeMonths', 'last-three-months');
         $group->get('year', 'DashboardController@year', 'year');
         $group->get('all', 'DashboardController@all', 'all');
     });
