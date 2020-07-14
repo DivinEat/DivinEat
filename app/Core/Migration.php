@@ -2,6 +2,9 @@
 
 namespace App\Core;
 
-class Migration
+abstract class Migration
 {
+    public abstract function getTableName(): string;
+
+    public abstract function up(): void;
 }
