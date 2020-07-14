@@ -165,8 +165,8 @@ class OrderController extends Controller
         }
 
         $index_menus = 0;
-        $prix = ($menuManager->find($data['menu']))->getPrix();
-        $menus = [$data['menu']];
+        $prix = 0;
+        $menus = [];
 
         while(isset($data['menu'.$index_menus])) {
             $menu = $data['menu'.$index_menus]; 

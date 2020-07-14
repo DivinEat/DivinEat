@@ -74,8 +74,8 @@ class UpdateOrderForm extends Form
                     "class" => "form-control"
                 ],
                 "data" => $menus,
-                "getter" => "getNom",
-                "selected" => $menu
+                "selected" => $menu,
+                "getter" => "getNom"
             ]);
             $index_menus++;
         }
