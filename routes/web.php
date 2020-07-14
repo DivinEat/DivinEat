@@ -2,6 +2,12 @@
 
 use App\Core\Routing\Router;
 
+$router->group(['prefix' => 'install', 'as' => 'install.', 'middleware' => ['install']], function (Router $group) {
+    $group->get('', 'InstallController@showDatabaseForm', 'show-database-form');
+    $group->post('', 'InstallController@storeDatabaseForm', 'store-database-form');
+    $group->get('informations', 'InstallController@showGeneralForm', 'show-general-form');
+});
+
 $router->get('', 'HomeController@index', 'home');
 $router->get('menus', 'HomeController@menus', 'menus');
 

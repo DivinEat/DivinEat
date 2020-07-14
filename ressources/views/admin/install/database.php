@@ -4,7 +4,7 @@
 	<h2 class="title color-purple margin-0">Bienvenue</h2>
 	<p class="subtitle">Merci d'avoir choisi notre CMS</p>
 
-    <form method="POST" action="<?= helpers::getUrl("Test", "admin") ?>" class="admin-form width-100">
+    <form method="POST" action="<?= route('install.show-database-form')->getUrl() ?>" class="admin-form width-100">
 	    <div class="form-group row">
             <div class="col-sm-12">
 
