@@ -123,7 +123,10 @@ class OrderController extends Controller
 
         $request->setInputPrefix('updateFormOrder_');
 
-        $order = (new Order())->hydrate($request->getParams(["email", "horaire", "menu", "surPlace"]));
+        $order = (new Order())->hydrate([
+            "horaire" => $request->get("horaire"), 
+            "surPlace" => $request->get("surPlace")
+        ]);
         $order->setId($args['order_id']);
 
         $form = $response->createForm(UpdateOrderForm::class, $order);

@@ -43,7 +43,6 @@ class UpdateOrderForm extends Form
                     "type" => "email",
                     "placeholder" => "Email",
                     "class" => "form-control",
-                    "value" => ""
                 ],
                 "constraints" => [
                     new EmailConstraint(),
