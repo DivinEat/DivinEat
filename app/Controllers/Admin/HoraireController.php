@@ -6,7 +6,6 @@ use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
-use App\Core\View;
 use App\Models\Horaire;
 use App\Managers\HoraireManager;
 use App\Forms\Horaire\CreateHoraireForm;
@@ -67,7 +66,7 @@ class HoraireController extends Controller
     {
         $request->setInputPrefix('updateHoraireForm_');
         
-        $horaire = (new horaire())->hydrate($request->getParams(["id", "horaire"]));
+        $horaire = (new Horaire())->hydrate($request->getParams(["id", "horaire"]));
         
         $form = $response->createForm(UpdateHoraireForm::class, $horaire);
         

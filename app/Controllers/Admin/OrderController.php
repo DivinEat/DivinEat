@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\Order;
+use App\Models\MenuOrder;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
@@ -10,6 +11,7 @@ use App\Managers\MenuManager;
 use App\Managers\RoleManager;
 use App\Managers\UserManager;
 use App\Managers\OrderManager;
+use App\Core\Builder\QueryBuilder;
 use App\Managers\MenuOrderManager;
 use App\Core\Controller\Controller;
 use App\Forms\Order\CreateOrderForm;
@@ -52,7 +54,6 @@ class OrderController extends Controller
         $userManager = new UserManager();
         $menuManager = new MenuManager();
         $orderManager = new OrderManager();
-        $menuOrderManager = new MenuOrderManager();
         
         $email = $request->get('email');
 
@@ -180,8 +181,16 @@ class OrderController extends Controller
 
     public function destroy(Request $request, Response $response, array $args)
     {
+        $orderId = $args['order_id'];
+
+        (new QueryBuilder())
+            ->delete("menu_order")
+            ->where("`order` = $orderId")
+            ->getQuery()
+            ->getArrayResult(MenuOrder::class);
+        
         $manager = new OrderManager();
-        $manager->delete($args["order_id"]);
+        $manager->delete($orderId);
 
         Router::redirect('admin.order.index');
     }
