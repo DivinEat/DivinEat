@@ -33,14 +33,10 @@ class HoraireController extends Controller
 
     public function store(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
+        $request->setInputPrefix('createHoraireForm_');
         
-        $horaire = (new Horaire())->hydrate($data);
+        $horaire = (new horaire())->hydrate($request->getParams(["horaire"]));
+        
         $form = $response->createForm(CreateHoraireForm::class, $horaire);
         
         if (false === $form->handle()) {
@@ -69,14 +65,10 @@ class HoraireController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
+        $request->setInputPrefix('updateHoraireForm_');
         
-        $horaire = (new Horaire())->hydrate($data);
+        $horaire = (new horaire())->hydrate($request->getParams(["id", "horaire"]));
+        
         $form = $response->createForm(UpdateHoraireForm::class, $horaire);
         
         if (false === $form->handle()) {
