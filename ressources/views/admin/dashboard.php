@@ -15,7 +15,7 @@
     </div>
     <div class="col-sm-10">
         <div class="col-inner padding-0">
-            <h1 class="margin-0">Les commandes</h1>
+            <h1 class="margin-0">Statistiques</h1>
         </div>
     </div>
 </div>
@@ -26,8 +26,8 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>?</h1>
-                        <h2>?</h2>
+                        <h1><?= $totalArticles ?></h1>
+                        <h2>Articles</h2>
                     </figcaption>
                 </figure>
             </article>

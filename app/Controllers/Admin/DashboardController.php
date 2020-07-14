@@ -8,6 +8,7 @@ use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Managers\UserManager;
 use App\Managers\OrderManager;
+use App\Managers\ArticleManager;
 use App\Core\Builder\QueryBuilder;
 use App\Core\Controller\Controller;
 
@@ -96,6 +97,9 @@ class DashboardController extends Controller
                 $visitors += 1;
             }
         }
+
+        $articles = (new ArticleManager)->findAll();
+        $totalArticles = count($articles);
         
         $response->render("admin.dashboard", "admin", [
             "total" => $total,
@@ -106,6 +110,7 @@ class DashboardController extends Controller
             "caTotal" => $caTotal,
             "visitors" => $visitors,
             "newUsers" => $newUsers,
+            "totalArticles" => $totalArticles,
         ]);
     }
 }
