@@ -57,7 +57,7 @@ class MigrationRunner
             die('Coucou');
 
         if (! $this->isTableExist($migrationClass->getTableNameWithPrefix()))
-            $migrationClass->run();
+            $this->pdoConnection->query($migrationClass->getCreationQuery());
     }
 
     protected function iniateMigration(): void
