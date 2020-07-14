@@ -1,21 +1,21 @@
 $(document).ready(function () {
-    tinymce.init({
-        selector: "textarea#textearea-test",
-        height: 500,
-        menubar: true,
-        plugins: [
-            "advlist autolink lists link image charmap print preview anchor",
-            "searchreplace visualblocks code fullscreen",
-            "insertdatetime media table paste code help wordcount",
-        ],
-        toolbar:
-            "undo redo | formatselect | " +
-            "bold italic backcolor | alignleft aligncenter " +
-            "alignright alignjustify | bullist numlist outdent indent | " +
-            "removeformat | help",
-        content_css: "//www.tiny.cloud/css/codepen.min.css",
-    });
-    var pageBuilderHandler = {
+    // tinymce.init({
+    //     selector: "textarea#textearea-test",
+    //     height: 500,
+    //     menubar: true,
+    //     plugins: [
+    //         "advlist autolink lists link image charmap print preview anchor",
+    //         "searchreplace visualblocks code fullscreen",
+    //         "insertdatetime media table paste code help wordcount",
+    //     ],
+    //     toolbar:
+    //         "undo redo | formatselect | " +
+    //         "bold italic backcolor | alignleft aligncenter " +
+    //         "alignright alignjustify | bullist numlist outdent indent | " +
+    //         "removeformat | help",
+    //     content_css: "//www.tiny.cloud/css/codepen.min.css",
+    // });
+    var pageBuilder = {
         page: null,
         container: null,
         pageData: {
@@ -28,60 +28,30 @@ $(document).ready(function () {
         newBottomRowBtn: null,
 
         init: function () {
-            // var tba = {
-            //     row1: {
-            //         previous: null,
-            //         parent: "page",
-            //         first: ,
-            //         last: ,
-            //         next: "row3",
-            //     },
-            //     row2: {
-            //         previous: null,
-            //         parent: "row1",
-            //         child: ["container1", "container2", "container3"],
-            //         next: null,
-            //     },
-            //     container1: {
-            //         previous: null,
-            //         value: "valeur",
-            //         type: "type",
-            //         next: container2,
-            //     },
-            //     container2: {
-            //         previous: "container1",
-            //         value: "valeur",
-            //         type: "type",
-            //         next: container3,
-            //     },
-            //     container3: {
-            //         previous: "container2",
-            //         value: "valeur",
-            //         type: "type",
-            //         next: null,
-            //     },
-            //     row3: {
-            //         previous: "row1",
-            //         parent: "page",
-            //         child: ["container4"],
-            //         next: null,
-            //     },
-            //     container4: {
-            //         previous: null,
-            //         value: "valeur",
-            //         type: "type",
-            //         next: null,
-            //     },
-            // };
+            pageBuilder.page = document.querySelector(".page");
+            var newContainerBtn = document.querySelector(".pageBuilder-btn-add");
+            var submit = document.querySelector("#create_page");
+            var inputData = document.querySelector("#page_data");
 
-            pageBuilderHandler.page = document.querySelector(".page");
-            var button = document.querySelector(".pageBuilder-btn-add");
-
-            button.addEventListener("click", function (e) {
-                var container = button.parentNode;
-                var structureBar = pageBuilderHandler.createStructureBtnBar(container);
-                pageBuilderHandler.addEventsToFirstRowStructureBtn(structureBar, container);
+            submit.addEventListener("click", function () {
+                inputData.value = pageBuilder.getDataPage();
             });
+
+            newContainerBtn.addEventListener("click", function (e) {
+                var container = newContainerBtn.parentNode;
+                var structureBar = pageBuilder.createStructureBtnBar(container);
+                pageBuilder.addEventsToFirstRowStructureBtn(structureBar, container);
+            });
+        },
+
+        getDataPage: function () {
+            pageData = pageBuilder.pageData;
+
+            Object.keys(pageData).forEach(function (key) {
+                if (pageData[key].node !== undefined) delete pageData[key].node;
+            });
+
+            return JSON.stringify(this.pageData);
         },
 
         createStructureBtnBar: function (container) {
@@ -142,9 +112,9 @@ $(document).ready(function () {
         },
 
         addEventsToFirstRowStructureBtn: function (structureBtnBar, btnContainer) {
-            var pageBuilderHandler = this;
-            var page = pageBuilderHandler.page;
-            var pageData = pageBuilderHandler.pageData;
+            var pageBuilder = this;
+            var page = pageBuilder.page;
+            var pageData = pageBuilder.pageData;
             var containerParent = btnContainer.parentNode;
 
             structureBtnBar.childNodes.forEach((strucureBtn) => {
@@ -157,7 +127,7 @@ $(document).ready(function () {
                     var parentRow = document.createElement("div");
                     parentRow.className = "row padding-0";
                     containerParent.appendChild(parentRow);
-                    pageBuilderHandler.setRowId(parentRow);
+                    pageBuilder.setRowId(parentRow);
 
                     pageData.page.first = parentRow.id;
                     pageData.page.last = parentRow.id;
@@ -167,7 +137,7 @@ $(document).ready(function () {
                     var rowContainerList = [];
 
                     colsSize.forEach((colSize) => {
-                        container = pageBuilderHandler.createNewContainer(parentRow, colSize);
+                        container = pageBuilder.createNewContainer(parentRow, colSize);
 
                         rowContainerList.push(container.id);
                         pageData[parentRow.id].parent = "page";
@@ -186,29 +156,27 @@ $(document).ready(function () {
                     }
 
                     newRowBtnBottom = document.createElement("div");
-                    newRowBtnBottom.className = "pageBuilder-btn-add";
-                    newRowBtnBottom.innerHTML = "b";
-                    newRowContainerBottom = pageBuilderHandler.createContainer(newRowBtnBottom);
-                    pageBuilderHandler.newBottomRowBtn = newRowContainerBottom;
+                    newRowBtnBottom.className = "pageBuilder-btn-new-top";
+                    newRowContainerBottom = pageBuilder.createContainer(newRowBtnBottom);
+                    pageBuilder.newBottomRowBtn = newRowContainerBottom;
                     page.append(newRowContainerBottom);
-                    pageBuilderHandler.addEventToAddRowBtn(newRowBtnBottom, newRowBtnBottom.parentNode, "before");
+                    pageBuilder.addEventToAddRowBtn(newRowBtnBottom, newRowBtnBottom.parentNode, "before");
 
                     newRowBtnTop = document.createElement("div");
-                    newRowBtnTop.className = "pageBuilder-btn-add";
-                    newRowBtnTop.innerHTML = "t";
-                    newRowContainerTop = pageBuilderHandler.createContainer(newRowBtnTop);
-                    pageBuilderHandler.newTopRowBtn = newRowContainerTop;
+                    newRowBtnTop.className = "pageBuilder-btn-new-bottom";
+                    newRowContainerTop = pageBuilder.createContainer(newRowBtnTop);
+                    pageBuilder.newTopRowBtn = newRowContainerTop;
                     page.prepend(newRowContainerTop);
-                    pageBuilderHandler.addEventToAddRowBtn(newRowBtnTop, newRowBtnTop.parentNode, "after");
-                    console.log(pageBuilderHandler.pageData);
+                    pageBuilder.addEventToAddRowBtn(newRowBtnTop, newRowBtnTop.parentNode, "after");
+                    console.log(pageBuilder.pageData);
                 });
             });
         },
 
         // @div : la div après/avant laquelle sera placée la new Row
         addEventToAddRowBtn: function (btn, div, param) {
-            var pageBuilderHandler = this;
-            var pageData = pageBuilderHandler.pageData;
+            var pageBuilder = this;
+            var pageData = pageBuilder.pageData;
 
             btn.addEventListener("click", function () {
                 var btnContainer = this.parentNode;
@@ -218,7 +186,7 @@ $(document).ready(function () {
                     containerContent.push(node);
                 });
 
-                var structureBtnBar = pageBuilderHandler.createStructureBtnBar(btnContainer);
+                var structureBtnBar = pageBuilder.createStructureBtnBar(btnContainer);
 
                 structureBtnBar.childNodes.forEach((strucureBtn) => {
                     strucureBtn.addEventListener("click", function () {
@@ -227,7 +195,7 @@ $(document).ready(function () {
                         var parentRow = document.createElement("div");
                         parentRow.className = "row padding-0";
 
-                        pageBuilderHandler.setRowId(parentRow);
+                        pageBuilder.setRowId(parentRow);
 
                         var mainRow =
                             div.parentNode.id == "page"
@@ -236,7 +204,7 @@ $(document).ready(function () {
 
                         pageData[parentRow.id].parent = mainRow.id;
                         pageData[parentRow.id].node = parentRow;
-                        if (div == pageBuilderHandler.newTopRowBtn || div == pageBuilderHandler.newBottomRowBtn) {
+                        if (div == pageBuilder.newTopRowBtn || div == pageBuilder.newBottomRowBtn) {
                             if (param == "after") {
                                 var oldFirstElement = pageData[mainRow.id].first;
                                 if (null !== oldFirstElement) {
@@ -291,7 +259,7 @@ $(document).ready(function () {
                         var rowContainerList = [];
 
                         colsSize.forEach((colSize) => {
-                            container = pageBuilderHandler.createNewContainer(parentRow, colSize);
+                            container = pageBuilder.createNewContainer(parentRow, colSize);
 
                             rowContainerList.push(container.id);
                             if (param == "after") {
@@ -326,10 +294,10 @@ $(document).ready(function () {
         },
 
         addEventsToNewStructureBtn: function (structureBtnBar, oldContainer) {
-            var pageBuilderHandler = this;
+            var pageBuilder = this;
             var containerParent = oldContainer.parentNode;
             var mainRow = containerParent.parentNode.parentNode;
-            var pageData = pageBuilderHandler.pageData;
+            var pageData = pageBuilder.pageData;
             var firstChild = null;
             var nextChild = null;
 
@@ -342,10 +310,11 @@ $(document).ready(function () {
                     containerParent.removeChild(oldContainer);
                     containerParent.appendChild(parentRow);
                     parentRow.className = "row padding-0";
-                    pageBuilderHandler.setRowId(parentRow);
+                    pageBuilder.setRowId(parentRow);
 
                     pageData[parentRow.id].parent = mainRow.id;
                     pageData[parentRow.id].node = parentRow;
+                    pageData[parentRow.id].type = 'childRow';
 
                     firstChild = pageData[mainRow.id].first;
                     pageData[mainRow.id].first = parentRow.id;
@@ -360,12 +329,12 @@ $(document).ready(function () {
 
                     delete pageData[firstChild];
 
-                    console.log(pageBuilderHandler.pageData);
+                    console.log(pageBuilder.pageData);
 
                     var rowContainerList = [];
 
                     colsSize.forEach((colSize) => {
-                        container = pageBuilderHandler.createNewContainer(parentRow, colSize);
+                        container = pageBuilder.createNewContainer(parentRow, colSize);
                         rowContainerList.push(container.id);
                     });
 
@@ -385,7 +354,7 @@ $(document).ready(function () {
         },
 
         createNewContainer: function (parentRow, colSize) {
-            let pageData = pageBuilderHandler.pageData;
+            let pageData = pageBuilder.pageData;
             let col = document.createElement("div");
             let colInner = document.createElement("div");
             let container = document.createElement("div");
@@ -398,17 +367,22 @@ $(document).ready(function () {
             colInner.className = "col-inner padding-top-0";
             container.className = "pageBuilder-container-empty";
             addBtn.className = "pageBuilder-btn-add";
-            addBtn.innerHTML = "+";
             removeBtn.className = "pageBuilder-btn-remove";
             newTopContainerBtn.className = "pageBuilder-btn-new-top";
-            newTopContainerBtn.innerHTML = "^";
             newBottomContainerBtn.className = "pageBuilder-btn-new-bottom";
-            newBottomContainerBtn.innerHTML = "v";
 
-            pageBuilderHandler.addEventToAddRowBtn(newBottomContainerBtn, parentRow, "after");
-            pageBuilderHandler.addEventToAddRowBtn(newTopContainerBtn, parentRow, "before");
+            pageBuilder.addEventToAddRowBtn(newBottomContainerBtn, parentRow, "after");
+            pageBuilder.addEventToAddRowBtn(newTopContainerBtn, parentRow, "before");
 
-            pageBuilderHandler.setContainerId(container);
+            container.appendChild(newTopContainerBtn);
+            container.appendChild(newBottomContainerBtn);
+            container.appendChild(addBtn);
+            container.appendChild(removeBtn);
+            colInner.appendChild(container);
+            col.appendChild(colInner);
+            parentRow.appendChild(col);
+
+            pageBuilder.setContainerId(container);
 
             pageData[container.id].parent = parentRow.id;
             pageData[container.id].node = container;
@@ -427,7 +401,6 @@ $(document).ready(function () {
                 btnContainer.textContent = "";
 
                 addItemBtn.className = "pageBuilder-btn-add";
-                addItemBtn.innerHTML = "+";
                 newStructureBtn.className = "pageBuilder-container-structure-btn-small";
 
                 cancelBtn.className = "pageBuilder-btn-cancel";
@@ -437,8 +410,8 @@ $(document).ready(function () {
                 container.appendChild(cancelBtn);
 
                 newStructureBtn.addEventListener("click", function (e) {
-                    var structureBtnBar = pageBuilderHandler.createStructureBtnBar(container);
-                    pageBuilderHandler.addEventsToNewStructureBtn(structureBtnBar, container);
+                    var structureBtnBar = pageBuilder.createStructureBtnBar(container);
+                    pageBuilder.addEventsToNewStructureBtn(structureBtnBar, container);
                 });
 
                 cancelBtn.addEventListener("click", function (e) {
@@ -448,45 +421,52 @@ $(document).ready(function () {
                     });
                 });
 
-                pageBuilderHandler.addEventToItemBtn(addItemBtn);
+                pageBuilder.addEventToItemBtn(addItemBtn);
             });
 
             removeBtn.addEventListener("click", function () {
-                pageBuilderHandler.deleteContainer(container);
+                pageBuilder.deleteContainer(container);
             });
-
-            container.appendChild(newTopContainerBtn);
-            container.appendChild(newBottomContainerBtn);
-            container.appendChild(addBtn);
-            container.appendChild(removeBtn);
-            colInner.appendChild(container);
-            col.appendChild(colInner);
-            parentRow.appendChild(col);
 
             return container;
         },
 
         addEventToItemBtn: function (btn) {
-            pageBuilderHandler = this;
+            pageBuilder = this;
             container = btn.parentNode;
 
             btn.addEventListener("click", function (event) {
-                container.textContent = "";
-
+                var btnContainer = this.parentNode;
+                var containerContent = [];
                 var structureBtnBar = document.createElement("div");
-                structureBtnBar.className = "pageBuilder-container-list-structure-bar";
-
                 var addEditorBtn = document.createElement("div");
-                addEditorBtn.innerHTML = "BUton";
+                var cancelBtn = document.createElement("div");
 
+                btnContainer.childNodes.forEach((node) => {
+                    containerContent.push(node);
+                });
+
+                structureBtnBar.className = "pageBuilder-container-list-structure-bar";
+                addEditorBtn.className = "pageBuilder-container-new-item-btn";
+                cancelBtn.className = "pageBuilder-btn-cancel";
+
+                container.textContent = "";
                 structureBtnBar.appendChild(addEditorBtn);
                 container.appendChild(structureBtnBar);
-                pageBuilderHandler.addEditor(addEditorBtn);
+                container.appendChild(cancelBtn);
+                pageBuilder.addEditor(addEditorBtn);
+
+                cancelBtn.addEventListener("click", function (e) {
+                    btnContainer.textContent = "";
+                    containerContent.forEach((node) => {
+                        btnContainer.appendChild(node);
+                    });
+                });
             });
         },
 
         createContainer: function (content = null) {
-            var pageBuilderHandler = this;
+            var pageBuilder = this;
             var row = document.createElement("div");
             var col = document.createElement("div");
             var colInner = document.createElement("div");
@@ -504,68 +484,132 @@ $(document).ready(function () {
             if (content != null) container.append(content);
 
             container.addEventListener("mouseenter", function (e) {
-                pageBuilderHandler.container = this;
+                pageBuilder.container = this;
             });
             container.addEventListener("mouveleave", function (e) {
-                pageBuilderHandler.container = null;
+                pageBuilder.container = null;
             });
 
             return container;
         },
 
         addEditor: function (btn) {
-            var pageBuilderHandler = this;
+            var pageBuilder = this;
             container = btn.parentNode.parentNode;
 
             btn.addEventListener("click", function (event) {
                 container.textContent = "";
 
-                var form = pageBuilderHandler.createForm(container);
+                var editor = pageBuilder.initEditor(container);
 
-                var textArea = document.createElement("textarea");
-                textArea.id = "textearea-test";
+                pageBuilder.addEditorBtns(editor, container);
+            });
+        },
 
-                container.appendChild(textArea);
+        initEditor: function (container) {
+            var editorId = "editor-" + this.editorId;
+            this.editorId++;
 
-                tinymce.init({
-                    selector: "textarea#textearea-test",
-                    height: 500,
-                    menubar: true,
-                    plugins: [
-                        "advlist autolink lists link image charmap print preview anchor",
-                        "searchreplace visualblocks code fullscreen",
-                        "insertdatetime media table paste code help wordcount",
-                    ],
-                    toolbar:
-                        "undo redo | formatselect | " +
-                        "bold italic backcolor | alignleft aligncenter " +
-                        "alignright alignjustify | bullist numlist outdent indent | " +
-                        "removeformat | help",
-                    content_css: "//www.tiny.cloud/css/codepen.min.css",
+            var textArea = document.createElement("textarea");
+            textArea.id = editorId;
+
+            container.appendChild(textArea);
+
+            tinymce.init({
+                selector: "textarea#" + editorId,
+                height: 500,
+                menubar: true,
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table paste code help wordcount",
+                ],
+                toolbar:
+                    "undo redo | formatselect | " +
+                    "bold italic backcolor | alignleft aligncenter " +
+                    "alignright alignjustify | bullist numlist outdent indent | " +
+                    "removeformat | help",
+                content_css: "//www.tiny.cloud/css/codepen.min.css",
+            });
+
+            return tinymce.get(editorId);
+        },
+
+        addEditorBtns: function (editor, container) {
+            var pageData = pageBuilder.pageData;
+            var getData = document.createElement("div");
+            var remove = document.createElement("div");
+
+            remove.className = "pageBuilder-btn-remove";
+            getData.className = "pageBuilder-btn-validate";
+
+            container.appendChild(remove);
+            container.appendChild(getData);
+
+            getData.addEventListener("click", function () {
+                var editorContent = editor.getContent();
+                var divContent = document.createElement("div");
+
+                editor.destroy();
+
+                divContent.className = "content-editor";
+                divContent.innerHTML = editorContent;
+
+                container.textContent = "";
+                container.appendChild(divContent);
+
+                pageData[container.id].content = editorContent;
+
+                var remove = document.createElement("div");
+                var edit = document.createElement("div");
+
+                remove.className = "pageBuilder-btn-remove";
+                container.appendChild(remove);
+
+                edit.className = "pageBuilder-btn-edit";
+                container.appendChild(edit);
+
+                remove.addEventListener("click", function () {
+                    pageBuilder.deleteContainer(container);
                 });
+
+                edit.addEventListener("click", function () {
+                    container.textContent = "";
+                    editor = pageBuilder.initEditor(container);
+                    editor.setContent(editorContent);
+                    pageBuilder.addEditorBtns(editor, container);
+                });
+            });
+
+            remove.addEventListener("click", function () {
+                pageBuilder.deleteContainer(container);
             });
         },
 
         setContainerId: function (container) {
-            var pageData = pageBuilderHandler.pageData;
-
+            var pageData = pageBuilder.pageData;
             container.id = "container-" + this.containerId;
             this.containerId++;
             pageData[container.id] = {};
+            pageData[container.id].type = "container";
+            pageData[container.id].class = container.parentNode.parentNode.className;
             pageData[container.id].previous = null;
             pageData[container.id].next = null;
             pageData[container.id].first = null;
             pageData[container.id].last = null;
             pageData[container.id].parent = null;
             pageData[container.id].node = null;
+            pageData[container.id].content = null;
         },
 
         setRowId: function (row) {
-            var pageData = pageBuilderHandler.pageData;
+            var pageData = pageBuilder.pageData;
 
             row.id = "row-" + this.rowId;
             this.rowId++;
             pageData[row.id] = {};
+            pageData[row.id].type = "row";
+            pageData[row.id].class = row.className;
             pageData[row.id].previous = null;
             pageData[row.id].next = null;
             pageData[row.id].first = null;
@@ -576,14 +620,17 @@ $(document).ready(function () {
 
         createForm: function (container) {
             var form = document.createElement("form");
+            var token = "<?= csrfInput() ?>";
 
-            // var token = ;
+            form.setAttribute("action", "<?= route('admin.page.store') ?>");
+            form.innerHTML = token;
+            container.appendChild(form);
 
             return form;
         },
 
         addPositionButtons: function (container) {
-            var pageBuilderHandler = this;
+            var pageBuilder = this;
             var containerCol = container.parentNode.parentNode.parentNode.parentNode.parentNode;
             var containerRow = containerCol.parentNode;
             var page = containerRow.parentNode;
@@ -636,8 +683,8 @@ $(document).ready(function () {
         },
 
         deleteContainer: function (container) {
-            var pageBuilderHandler = this;
-            var pageData = pageBuilderHandler.pageData;
+            var pageBuilder = this;
+            var pageData = pageBuilder.pageData;
             var containerColInner = container.parentNode;
             var containerCol = containerColInner.parentNode;
             var containerRow = containerCol.parentNode;
@@ -664,7 +711,7 @@ $(document).ready(function () {
                     if (containerRowParent.childNodes.length == 1) {
                         mainRow.removeChild(containerRow.parentNode.parentNode);
 
-                        var newContainer = pageBuilderHandler.createNewContainer(mainRow, 12);
+                        var newContainer = pageBuilder.createNewContainer(mainRow, 12);
 
                         pageData[mainRow.id].first = newContainer.id;
                         pageData[mainRow.id].last = newContainer.id;
@@ -685,9 +732,8 @@ $(document).ready(function () {
                     return;
                 }
 
-                var previous = pageData[containerRowParent.id].previous;
-                var next = pageData[containerRowParent.id].next;
-
+                var previous = pageData[containerRow.id].previous;
+                var next = pageData[containerRow.id].next;
                 if (null !== previous && null !== next) {
                     pageData[previous].next = next;
                     pageData[next].previous = previous;
@@ -762,5 +808,5 @@ $(document).ready(function () {
         addElementToPageContent: function (element) {},
     };
 
-    pageBuilderHandler.init();
+    pageBuilder.init();
 });

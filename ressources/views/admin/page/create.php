@@ -10,5 +10,7 @@
     </div>
 </div>
 <form method="post" action="<?= route('admin.page.store')->getUrl() ?>">
-    <input type="submit" value="Submit" />
+    <?= csrfInput() ?>
+    <input type="hidden" id="page_data" name="page_data" value="">
+    <input type="submit" value="Submit" id="create_page" />
 </form>

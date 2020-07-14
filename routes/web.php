@@ -118,6 +118,7 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
         $group->group(['prefix' => '{page_id}'], function (Router $group) {
             $group->get('edit', 'PageController@edit', 'edit');
             $group->post('update', 'PageController@update', 'update');
+            $group->delete('', 'PageController@destroy', 'destroy');
         });
     });
 });

@@ -119,6 +119,11 @@
             }
         }
 
+        &-new-item-btn {
+            @extend .pageBuilder-container-structure-btn-big;
+            background-image: url("/img/icones/text-editor/editor-icon.png");
+        }
+
         // &-btn {
         //     display: flex;
         //     position: absolute;
@@ -227,10 +232,27 @@
             background-image: url("/img/icones/trash.png");
         }
 
-        &-add,
-        &-new-top,
+        &-validate {
+            @extend .pageBuilder-btn;
+            background-image: url("/img/icones/check.png");
+        }
+        &-edit {
+            @extend .pageBuilder-btn;
+            background-image: url("/img/icones/edit-tools.png");
+        }
+        &-add {
+            @extend .pageBuilder-btn;
+            background-image: url("/img/icones/plus.png");
+        }
+        &-new-top {
+            @extend .pageBuilder-btn;
+            transform: rotate(180deg);
+            background-image: url("/img/icones/add-down.png");
+        }
+
         &-new-bottom {
             @extend .pageBuilder-btn;
+            background-image: url("/img/icones/add-down.png");
         }
     }
 
@@ -296,4 +318,10 @@
             display: none;
         }
     }
+}
+
+.content-editor {
+    width: 100%;
+    height: 100%;
+    align-self: flex-start;
 }

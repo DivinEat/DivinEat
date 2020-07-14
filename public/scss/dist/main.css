@@ -230,12 +230,15 @@ div.ligne {
 .pageBuilder-container-structure-btn-3_6_3,
 .pageBuilder-container-structure-btn-3_3_6,
 .pageBuilder-container-structure-btn-6_3_3,
+.pageBuilder-container-new-item-btn,
 .pageBuilder-container-tools-bar-item:hover,
 .pageBuilder-container-tools-bar-item-hidden:hover,
 .pageBuilder-btn,
 .pageBuilder-container-structure-btn-small,
 .pageBuilder-btn-cancel,
 .pageBuilder-btn-remove,
+.pageBuilder-btn-validate,
+.pageBuilder-btn-edit,
 .pageBuilder-btn-add,
 .pageBuilder-btn-new-top,
 .pageBuilder-btn-new-bottom,
@@ -1135,7 +1138,8 @@ footer .circle .up {
 .pageBuilder-container-structure-btn-3_3_3_3,
 .pageBuilder-container-structure-btn-3_6_3,
 .pageBuilder-container-structure-btn-3_3_6,
-.pageBuilder-container-structure-btn-6_3_3 {
+.pageBuilder-container-structure-btn-6_3_3,
+.pageBuilder-container-new-item-btn {
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: horizontal;
@@ -1162,7 +1166,8 @@ footer .circle .up {
 .pageBuilder-container-structure-btn-3_3_3_3:hover,
 .pageBuilder-container-structure-btn-3_6_3:hover,
 .pageBuilder-container-structure-btn-3_3_6:hover,
-.pageBuilder-container-structure-btn-6_3_3:hover {
+.pageBuilder-container-structure-btn-6_3_3:hover,
+.pageBuilder-container-new-item-btn:hover {
   cursor: pointer;
 }
 
@@ -1192,6 +1197,10 @@ footer .circle .up {
 
 .pageBuilder-container-structure-btn-6_3_3 {
   background-image: url("/img/icones/6-3-3cols.png");
+}
+
+.pageBuilder-container-new-item-btn {
+  background-image: url("/img/icones/text-editor/editor-icon.png");
 }
 
 .pageBuilder-container-tools-bar {
@@ -1236,6 +1245,8 @@ footer .circle .up {
 .pageBuilder-container-structure-btn-small,
 .pageBuilder-btn-cancel,
 .pageBuilder-btn-remove,
+.pageBuilder-btn-validate,
+.pageBuilder-btn-edit,
 .pageBuilder-btn-add,
 .pageBuilder-btn-new-top,
 .pageBuilder-btn-new-bottom {
@@ -1264,6 +1275,8 @@ footer .circle .up {
 .pageBuilder-container-structure-btn-small:hover,
 .pageBuilder-btn-cancel:hover,
 .pageBuilder-btn-remove:hover,
+.pageBuilder-btn-validate:hover,
+.pageBuilder-btn-edit:hover,
 .pageBuilder-btn-add:hover,
 .pageBuilder-btn-new-top:hover,
 .pageBuilder-btn-new-bottom:hover {
@@ -1276,6 +1289,28 @@ footer .circle .up {
 
 .pageBuilder-btn-remove {
   background-image: url("/img/icones/trash.png");
+}
+
+.pageBuilder-btn-validate {
+  background-image: url("/img/icones/check.png");
+}
+
+.pageBuilder-btn-edit {
+  background-image: url("/img/icones/edit-tools.png");
+}
+
+.pageBuilder-btn-add {
+  background-image: url("/img/icones/plus.png");
+}
+
+.pageBuilder-btn-new-top {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+  background-image: url("/img/icones/add-down.png");
+}
+
+.pageBuilder-btn-new-bottom {
+  background-image: url("/img/icones/add-down.png");
 }
 
 .pageBuilder-side-bar {
@@ -1353,6 +1388,12 @@ footer .circle .up {
 
 .tools-bar-item-hidden {
   display: none;
+}
+
+.content-editor {
+  width: 100%;
+  height: 100%;
+  align-self: flex-start;
 }
 
 .pageBuilder-editor-container {

@@ -32,15 +32,18 @@ class HomeController extends Controller
             ->limit('1')
             ->getQuery()
             ->getArrayResult(Article::class);
-        
-            
-        $myView = new View("home", "main");
-        $myView->assign("menus", $menus);
 
-        if(isset($articles[0])){
-            $articles[0]->setContent(Article::setJsonToHtml($articles[0]->getContent()));
-            $myView->assign("article", $articles[0]);
+        $article = null;
+
+        if (! empty($articles)) {
+            $article = $articles[0];
+            $article->setContent(Article::setJsonToHtml($article->getContent()));
         }
+
+        $response->render('home', 'main', [
+            'menus' => $menus,
+            'article' => $article
+        ]);
     }
 
     public function menus(Request $request, Response $response)
