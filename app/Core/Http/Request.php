@@ -41,6 +41,16 @@ class Request
         return $this->parsedBody[$propertyName] ?? null;
     }
 
+    public function getParams(array $params): array
+    {
+        $toReturn = [];
+
+        foreach ($params as $param)
+            $toReturn[$param] = $this->get($param) ? $this->get($param) : null;
+
+        return $toReturn;
+    }
+
     public function setInputPrefix(string $inputPrefix): Request
     {
         $this->inputPrefix = $inputPrefix;
