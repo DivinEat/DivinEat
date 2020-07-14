@@ -1,6 +1,6 @@
 <?php
 
-use App\Core\Migration;
+use App\Core\Migration\Migration;
 
 class CreateTableMenuElements extends Migration
 {
