@@ -4,7 +4,6 @@ namespace App\Forms\Article;
 
 use App\Core\Form;
 use App\Core\Routing\Router;
-use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\RequiredConstraint;
 use App\Core\Constraints\UniqueConstraint;
 use App\Models\Article;
@@ -15,7 +14,7 @@ class UpdateArticleForm extends Form
     {   
         $article = $this->model;
 
-        $this->setName("createArticleForm");
+        $this->setName("updateArticleForm");
 
         $this->setBuilder()
             ->add("id", "input", [
@@ -75,9 +74,9 @@ class UpdateArticleForm extends Form
         $this
             ->addConfig("class", Article::class)
             ->addConfig("attr", [
-                "id" => "createArticleForm",
+                "id" => "updateArticleForm",
                 "class" => "admin-form",
-                "name" => "createArticleForm"
+                "name" => "updateArticleForm"
             ])
             ->addConfig("action", Router::getRouteByName("admin.article.update", $this->model->getId())->getUrl());
     }
