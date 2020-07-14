@@ -45,7 +45,7 @@ class Manager
         }
 
         if (!is_numeric($objectToSave->getId())) {
-            $sql = "INSERT INTO ".$this->table." (".implode(",", $columns).") VALUES (:".implode(",:", $columns).");";
+            $sql = "INSERT INTO ".$this->table." (`".implode("`,`", $columns)."`) VALUES (:".implode(",:", $columns).");";
         } else {
             foreach ($columns as $column) {
                 $sqlUpdate[] = "`".$column."`=:".$column;
