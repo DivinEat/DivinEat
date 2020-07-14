@@ -2,9 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\User;
 use App\Models\Order;
-use App\Models\MenuOrder;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
@@ -12,7 +10,6 @@ use App\Managers\MenuManager;
 use App\Managers\RoleManager;
 use App\Managers\UserManager;
 use App\Managers\OrderManager;
-use App\Managers\HoraireManager;
 use App\Managers\MenuOrderManager;
 use App\Core\Controller\Controller;
 use App\Forms\Order\CreateOrderForm;
@@ -24,7 +21,6 @@ class OrderController extends Controller
 {
     public function index(Request $request, Response $response)
     {
-        // Test form
         $OrderManager = new OrderManager();
         $orders = $OrderManager->findAll();
 
@@ -43,14 +39,9 @@ class OrderController extends Controller
 
     public function store(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
+        $request->setInputPrefix('createFormOrder_');
 
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
-
-        $order = (new Order())->hydrate($data);
+        $order = (new Order())->hydrate($request->getParams(["email", "horaire", "menu", "surPlace"]));
 
         $form = $response->createForm(CreateOrderForm::class, $order);
 
@@ -63,7 +54,7 @@ class OrderController extends Controller
         $orderManager = new OrderManager();
         $menuOrderManager = new MenuOrderManager();
         
-        $email = $data['email'];
+        $email = $request->get('email');
 
         $user = $userManager->findBy(["email" => $email]);
         
@@ -77,11 +68,11 @@ class OrderController extends Controller
         }
 
         $index_menus = 0;
-        $prix = ($menuManager->find($data['menu']))->getPrix();
-        $menus = [$data['menu']];
+        $prix = ($menuManager->find($request->get('menu')))->getPrix();
+        $menus = [$request->get('menu')];
 
-        while(isset($data['menu'.$index_menus])) {
-            $menu = $data['menu'.$index_menus]; 
+        while(null !== $request->get('menu'.$index_menus)) {
+            $menu = $request->get('menu'.$index_menus); 
             $prix += ($menuManager->find($menu))->getPrix();
             array_push($menus, $menu);
             $index_menus++;
@@ -124,21 +115,15 @@ class OrderController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
         $orderManager = new OrderManager();
         $menuOrderManager = new MenuOrderManager();
         $userManager = new UserManager();
         $menuManager = new MenuManager();
 
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
+        $request->setInputPrefix('updateFormOrder_');
 
-        $data['id'] = $args['order_id'];
-
-        $order = (new Order())->hydrate($data);
+        $order = (new Order())->hydrate($request->getParams(["email", "horaire", "menu", "surPlace"]));
+        $order->setId($args['order_id']);
 
         $form = $response->createForm(UpdateOrderForm::class, $order);
         
@@ -154,7 +139,7 @@ class OrderController extends Controller
             }
         }
         
-        $user = $userManager->findBy(["email" => $data['email']]);
+        $user = $userManager->findBy(["email" => $request->get('email')]);
         if (empty($user)) {
             $user = $userManager->create([
                 'email' => $email,
@@ -168,8 +153,8 @@ class OrderController extends Controller
         $prix = 0;
         $menus = [];
 
-        while(isset($data['menu'.$index_menus])) {
-            $menu = $data['menu'.$index_menus]; 
+        while(null !== $request->get('menu'.$index_menus)) {
+            $menu = $request->get('menu'.$index_menus); 
             $prix += ($menuManager->find($menu))->getPrix();
             array_push($menus, $menu);
             $index_menus++;
