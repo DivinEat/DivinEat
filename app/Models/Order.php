@@ -29,6 +29,71 @@ class Order extends Model implements ModelInterface
         parent::__construct();
     }
 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+    public function setUser(User $user): Order
+    {
+        $this->user=$user;
+        return $this;
+    }
+    public function setHoraire(Horaire $horaire): Order
+    {
+        $this->horaire = $horaire;
+        return $this;
+    }
+    public function setDate($date)
+    {
+        $this->date = $date;
+        return $this;
+    }
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+        return $this;
+    }
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        return $this;
+    }
+    public function setSurPlace($surPlace)
+    {
+        $this->surPlace = $surPlace;
+        return $this;
+    }
+    
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+    public function getHoraire(): Horaire
+    {
+        return $this->horaire;
+    }
+    public function getDate()
+    {
+        return $this->date;
+    }
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    public function getSurPlace()
+    {
+        return $this->surPlace;
+    }
+
     public function initRelation(): array
     {
         return [
@@ -39,8 +104,6 @@ class Order extends Model implements ModelInterface
     public static function getShowOrderTable($orders){
         $menuOrderManager = new MenuOrderManager();
         $menuManager = new MenuManager();
-        
-
 
         $tabOrders = [];
         foreach($orders as $order){
@@ -89,69 +152,5 @@ class Order extends Model implements ModelInterface
 
         $tab["fields"]["Order"] = $tabOrders;
         return $tab;
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
-    public function setUser(User $user): Order
-    {
-        $this->user=$user;
-        return $this;
-    }
-    public function setHoraire(Horaire $horaire): Order
-    {
-        $this->horaire = $horaire;
-        return $this;
-    }
-    public function setDate($date)
-    {
-        $this->date = $date;
-        return $this;
-    }
-    public function setPrix($prix)
-    {
-        $this->prix = $prix;
-        return $this;
-    }
-    public function setStatus($status)
-    {
-        $this->status = $status;
-        return $this;
-    }
-    public function setSurPlace($surPlace)
-    {
-        $this->surPlace = $surPlace;
-        return $this;
-    }
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-    public function getHoraire(): Horaire
-    {
-        return $this->horaire;
-    }
-    public function getDate()
-    {
-        return $this->date;
-    }
-    public function getPrix()
-    {
-        return $this->prix;
-    }
-    public function getStatus()
-    {
-        return $this->status;
-    }
-    public function getSurPlace()
-    {
-        return $this->surPlace;
     }
 }
