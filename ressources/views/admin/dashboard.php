@@ -107,9 +107,6 @@
                     </figcaption>
                 </figure>
             </article>
-            <!-- <div id="container" class="graph-container">
-                <canvas id="graph-CA" class="graph-canvas"></canvas>
-            </div> -->
         </div>
     </div>
     <div class="col-sm-4">
@@ -122,9 +119,6 @@
                     </figcaption>
                 </figure>
             </article>
-            <!-- <div id="container" class="graph-container">
-                <canvas id="graph-visiteurs" class="graph-canvas"></canvas>
-            </div> -->
         </div>
     </div>
     <div class="col-sm-4">
@@ -137,9 +131,6 @@
                     </figcaption>
                 </figure>
             </article>
-            <!-- <div id="container" class="graph-container">
-                <canvas id="graph-new-clients" class="graph-canvas"></canvas>
-            </div> -->
         </div>
     </div>
 </div>
