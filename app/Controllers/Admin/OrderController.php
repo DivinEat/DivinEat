@@ -88,7 +88,7 @@ class OrderController extends Controller
         }
 
         $order->setUser($user);
-        $order->setDate(date("Y-m-d", time()));
+        $order->setDate($data['date']);
         $order->setPrix($prix);
         $order->setStatus("En cours");
         
@@ -176,9 +176,9 @@ class OrderController extends Controller
         }
 
         $order->setUser($user);
-        $order->setDate(date("Y-m-d", time()));
+        $order->setDate($data['date']);
         $order->setPrix($prix);
-        $order->setStatus("En cours");
+        $order->setStatus($data['status']);
 
         $orderManager->save($order);
 

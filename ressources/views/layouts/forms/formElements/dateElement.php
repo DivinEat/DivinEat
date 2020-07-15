@@ -2,6 +2,10 @@
 
 <label for="date"><?= $options['label'] ?></label>
 
-<input type="date" id="date" name="<?= $options['name'] ?>"
-       value="2018-07-22"
-       min="<?= date("Y-m-d", strtotime("+1 month", time())) ?>" max="2018-12-31">
+<input
+    name="<?= $element->getName() ?>"
+    id="<?= $element->getId() ?>"
+    <?= $element->getAttributeHTML($options["attr"]); ?>
+    type="date" id="date" name="<?= $options['name'] ?>"
+    value="<?= $options['value'] ?>"
+    min="<?= date("Y-m-d", strtotime("+1 day", time())) ?>" max="<?= date("Y-m-d", strtotime("+3 month", time())) ?>">
