@@ -32,7 +32,10 @@ abstract class Migration
 
     public function id(): void
     {
-        $this->addColumn('BIGINT UNSIGNED', 'id', ['primary' => true]);
+        $this->addColumn('BIGINT UNSIGNED', 'id', [
+            'primary' => true,
+            'increment' => true,
+        ]);
     }
 
     public function string(string $columnName, int $length = 255, array $params = []): void
@@ -86,6 +89,9 @@ abstract class Migration
             $query .= in_array($params['default'], ['NULL', 'CURRENT_TIMESTAMP']) ?
             $params['default'] : '\''.$params['default'].'\'';
         }
+
+        if (isset($params['increment']) && $params['increment'])
+            $query .= ' AUTO_INCREMENT';
 
         if (isset($params['primary']) && $params['primary'])
             $query .= ' PRIMARY KEY';
