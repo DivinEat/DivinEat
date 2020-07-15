@@ -19,12 +19,6 @@ class MigrationRunner
             return ! (in_array($value, ['.', '..']));
         });
 
-//        if (! in_array('initiate_migration.php', $dirs))
-//            throw new \Exception('Le fichier initiate_migration.php est introuvable.');
-//
-//        $this->iniateMigration();
-//        unset($dirs[array_search('initiate_migration.php', $dirs)]);
-
         array_map([$this, 'loadMigration'], $dirs);
     }
 
