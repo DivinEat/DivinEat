@@ -258,7 +258,7 @@ div.ligne {
   display: flex;
   -webkit-box-pack: justify;
           justify-content: space-between;
-  z-index: 10;
+  z-index: 1;
 }
 
 .slides-container {
