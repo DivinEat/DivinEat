@@ -43,7 +43,10 @@ class OrderController extends Controller
     {
         $request->setInputPrefix('createFormOrder_');
 
-        $order = (new Order())->hydrate($request->getParams(["email", "horaire", "menu", "surPlace"]));
+        $order = (new Order())->hydrate([
+            "horaire" => $request->get("horaire"),
+            "surPlace" => $request->get("surPlace"),
+        ]);
 
         $form = $response->createForm(CreateOrderForm::class, $order);
 
@@ -80,7 +83,7 @@ class OrderController extends Controller
         }
 
         $order->setUser($user);
-        $order->setDate($data['date']);
+        $order->setDate($request->get('date'));
         $order->setPrix($prix);
         $order->setStatus("En cours");
         
@@ -165,9 +168,9 @@ class OrderController extends Controller
         }
 
         $order->setUser($user);
-        $order->setDate($data['date']);
+        $order->setDate($request->get('date'));
         $order->setPrix($prix);
-        $order->setStatus($data['status']);
+        $order->setStatus($request->get('status'));
 
         $orderManager->save($order);
 

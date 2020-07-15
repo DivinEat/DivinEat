@@ -82,7 +82,7 @@ class CreateOrderForm extends Form
                 ],
                 "label" => "Date",
                 "name" => "date",
-                "value" => date("Y-m-d", time())
+                "value" => date("Y-m-d", strtotime("+1 day", time()))
             ])
             ->add("annuler", "link", [
                 "attr" => [
