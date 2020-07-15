@@ -44,9 +44,6 @@ class CreateSMTPForm extends Form
                 "attr" => [
                     "type" => "text",
                     "class" => "form-control"
-                ],
-                "constraints" => [
-                    new RequiredConstraint()
                 ]
             ])
             ->add("smtp_pass", "input", [
@@ -56,9 +53,6 @@ class CreateSMTPForm extends Form
                 "attr" => [
                     "type" => "password",
                     "class" => "form-control"
-                ],
-                "constraints" => [
-                    new RequiredConstraint()
                 ]
             ])
             ->add("submit", "input", [

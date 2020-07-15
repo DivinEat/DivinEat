@@ -11,6 +11,7 @@ use App\Core\Routing\Router;
 use App\Forms\Install\CreateDatabaseForm;
 use App\Forms\Install\CreateInformationsForm;
 use App\Forms\Install\CreateSMTPForm;
+use PHPMailer\PHPMailer\SMTP;
 
 class InstallController extends Controller
 {
@@ -35,7 +36,7 @@ class InstallController extends Controller
         }
 
         if (false === $form->handle($request)) {
-            return $response->render("admin.install.database", "account", ["createDatabaseForm" => $form]);
+            return $response->render("admin.install.smtp", "account", ["createDatabaseForm" => $form]);
         }
 
         EnvCreator::createOrUpdate(array_merge(
@@ -56,31 +57,30 @@ class InstallController extends Controller
     }
 
 
-    public function storSMTPForm(Request $request, Response $response)
+    public function storeSMTPForm(Request $request, Response $response)
     {
-        $request->setInputPrefix('createDatabaseForm_');
+        $request->setInputPrefix('createSMTPForm_');
 
-        $form = $response->createForm(CreateDatabaseForm::class, $user);
+        $form = $response->createForm(CreateSMTPForm::class, $user);
 
-        try {
-            new \PDO('mysql:dbname=' . $request->get('db_name') . ';host='. $request->get('db_host'),
-                $request->get('db_user'),$request->get('db_pwd'));
-        } catch (\Exception $exception) {
-            $form->addErrors(['connection' => 'Impossible de se connecter à la base de données.']);
+        $smtp = new SMTP();
+        if (! $smtp->connect($request->get('smtp_host'), $request->get('smtp_port')))
+            $form->addErrors(['connection' => 'Impossible de se connecter au serveur smtp.']);
+        elseif (! empty($request->get('smtp_user')) && ! empty($request->get('smtp_pass')))
+        {
+            if (! $smtp->authenticate($request->get('smtp_user'), $request->get('smtp_pass')))
+                $form->addErrors(['connection' => 'Impossible de se connecter au serveur smtp.']);
         }
 
         if (false === $form->handle($request)) {
-            return $response->render("admin.install.database", "account", ["createDatabaseForm" => $form]);
+            return $response->render("admin.install.smtp", "account", ["createSMTPForm" => $form]);
         }
 
-        EnvCreator::createOrUpdate(array_merge(
-            $request->getParams(['db_name', 'db_pwd', 'db_host', 'db_user', 'db_prefixe']),
-            ['db_driver' => 'mysql', 'env' => 'production']
-        ));
+        EnvCreator::createOrUpdate(
+            $request->getParams(['smtp_host', 'smtp_port', 'smpt_user', 'smtp_pass'])
+        );
 
-        (new MigrationRunner())->run();
-
-        return Router::redirect('install.show-smtp-form');
+        return Router::redirect('install.show-general-form');
     }
 
     public function showGeneralForm(Request $request, Response $response)
