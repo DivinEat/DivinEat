@@ -200,3 +200,20 @@ INSERT INTO `dve_configurations` (`libelle`) VALUES
 ('facebook'),
 ('instagram'),
 ('linkedin');
+
+
+
+--
+-- Structure de la table `images`
+--
+CREATE TABLE `dve_images` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `dve_images`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `dve_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

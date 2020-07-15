@@ -10,7 +10,6 @@ use App\Core\View;
 use App\Core\Auth;
 use App\Models\Article;
 use App\Managers\ArticleManager;
-use App\Managers\UserManager;
 use App\Forms\Article\CreateArticleForm;
 use App\Forms\Article\UpdateArticleForm;
 
@@ -36,20 +35,18 @@ class ArticleController extends Controller
 
     public function store(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
+        $request->setInputPrefix('createArticleForm_');
         
-        $article = (new Article())->hydrate($data);
-        $article->setDate_inserted(date('Y-m-d H:i:s'));
-        $article->setAuthor(Auth::getUser());
+        $article = (new Article)->hydrate([
+            'content' => $request->get("content"),
+            'title' => $request->get("title"),
+            'slug' => $request->get("slug"),
+            'author' => Auth::getUser()->getId(),
+        ]);
 
         $form = $response->createForm(CreateArticleForm::class, $article);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.article.create", "admin", ["createArticleForm" => $form]);
         } else {
             (new ArticleManager())->save($article);       
@@ -75,22 +72,18 @@ class ArticleController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
+        $request->setInputPrefix('updateArticleForm_');
 
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
-        
-        $articleOld = (new ArticleManager())->find($data["id"]);
-        $article = (new Article())->hydrate($data);
-        $article->setDate_updated(date('Y-m-d H:i:s'));
-        $article->setDate_inserted($articleOld->getDate_inserted());
-        $article->setAuthor($articleOld->getAuthor());
+        $article = (new Article)->hydrate([
+            'id' => $request->get("id"),
+            'content' => $request->get("content"),
+            'title' => $request->get("title"),
+            'slug' => $request->get("slug"),
+        ]);
 
         $form = $response->createForm(UpdateArticleForm::class, $article);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
         } else {
             (new ArticleManager())->save($article);       

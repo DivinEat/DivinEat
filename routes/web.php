@@ -45,7 +45,15 @@ $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], fun
 
 $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected', 'user.is.admin']], function (Router $group) {
     $group->get('', 'DashboardController@index', 'index');
-    
+
+    $group->group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function (Router $group) {
+        $group->get('', 'DashboardController@index', 'index');
+        $group->get('month', 'DashboardController@month', 'month');
+        $group->get('year', 'DashboardController@year', 'year');
+        $group->get('all', 'DashboardController@all', 'all');
+    });
+
+
     $group->group(['prefix' => 'menu', 'as' => 'menu.'], function (Router $group) {
         $group->get('', 'MenuController@index', 'index');
         $group->get('create', 'MenuController@create', 'create');
@@ -54,6 +62,15 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
             $group->get('edit', 'MenuController@edit', 'edit');
             $group->post('update', 'MenuController@update', 'update');
             $group->delete('', 'MenuController@destroy', 'destroy');
+        });
+    });
+
+    $group->group(['prefix' => 'image', 'as' => 'image.'], function (Router $group) {
+        $group->get('', 'ImageController@index', 'index');
+        $group->get('create', 'ImageController@create', 'create');
+        $group->post('store', 'ImageController@store', 'store');
+        $group->group(['prefix' => '{image_id}'], function (Router $group) {
+            $group->delete('', 'ImageController@destroy', 'destroy');
         });
     });
 

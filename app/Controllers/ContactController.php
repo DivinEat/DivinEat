@@ -20,16 +20,11 @@ class ContactController extends Controller
 
     public function store(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
+        $request->setInputPrefix('createContactForm_');
         
         $form = $response->createForm(CreateContactForm::class);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("contact", "main", ["createContactForm" => $form]);
         } else {      
             //PHP MAILER CODE

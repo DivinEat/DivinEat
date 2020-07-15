@@ -33,7 +33,7 @@ class RegisterController extends Controller
         if ($request->get('pwd') !== $request->get('pwdConfirm'))
             $form->addErrors(["confirmPwd" => "Les mots de passe ne correspondent pas"]);
 
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             return $response->render("auth.register", "account", ["registerForm" => $form]);
         }
 

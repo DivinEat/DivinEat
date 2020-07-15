@@ -42,17 +42,13 @@ class ConfigurationController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
+        $request->setInputPrefix('updateConfigurationForm_');
         
-        $configuration = (new Configuration())->hydrate($data);
+        $configuration = (new Configuration())->hydrate($request->getParams(["id", "libelle", "info"]));
+
         $form = $response->createForm(UpdateConfigurationForm::class, $configuration);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.configuration.edit", "admin", ["updateConfigurationForm" => $form]);
         } else {
             (new ConfigurationManager())->save($configuration);       

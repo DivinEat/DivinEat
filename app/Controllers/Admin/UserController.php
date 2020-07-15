@@ -40,26 +40,30 @@ class UserController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
+        $request->setInputPrefix('updateFormUser_');
 
         $response->checkFormData([
-            "id" => intval($data["id"]),
-            "dateInserted" => $data["dateInserted"],
+            "id" => intval($request->get("id")),
+            "dateInserted" => $request->get("dateInserted"),
         ]);
         
-        $data["status"] = intval($data["status"]);
-        
-        $user = (new User())->hydrate($data);
-        $user->setPwd(password_hash($user->getPwd(), PASSWORD_DEFAULT));
+        $user = (new User)->hydrate([
+            'id' => $request->get("id"),
+            'firstname' => $request->get("firstname"),
+            'lastname' => $request->get("lastname"),
+            'email' => $request->get("email"),
+            'status' => intval($request->get("status")),
+            'role' => $request->get("role"),
+            'dateInserted' => $request->get("dateInserted")
+        ]);
+
+        if(! empty($request->get("pwd"))){
+            $user->setPwd(password_hash($request->get("pwd"), PASSWORD_DEFAULT));
+        }
         
         $form = $response->createForm(UpdateUserForm::class, $user);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.user.edit", "admin", ["updateUserForm" => $form]);
         } else {
             (new UserManager())->save($user);     

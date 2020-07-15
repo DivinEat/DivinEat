@@ -8,7 +8,6 @@ use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Core\View;
 use App\Models\Menu;
-use App\Models\ElementMenu;
 use App\Managers\MenuManager;
 use App\Managers\ElementMenuManager;
 use App\Forms\Menu\CreateMenuForm;
@@ -42,32 +41,24 @@ class MenuController extends Controller
 
     public function store(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
+        $request->setInputPrefix('createMenuForm_');
 
         $elementMenuManager = new ElementMenuManager();
 
         $object = new Menu();
-        $object->setNom($data['nom']);
+        $object->setNom($request->get('nom'));
 
-        if($data['entrees'] == 0) $data['entrees'] = NULL;
-        $object->setEntree($elementMenuManager->find($data['entrees']));
+        $object->setEntree($elementMenuManager->find($request->get('entrees')));
 
-        if($data['plats'] == 0) $data['plats'] = NULL;
-        $object->setPlat($elementMenuManager->find($data['plats']));
+        $object->setPlat($elementMenuManager->find($request->get('plats')));
         
-        if($data['desserts'] == 0) $data['desserts'] = NULL;
-        $object->setDessert($elementMenuManager->find($data['desserts']));
+        $object->setDessert($elementMenuManager->find($request->get('desserts')));
 
-        $object->setPrix($this->calculPrixMenu($data));
+        $object->setPrix($this->calculPrixMenu($request));
         
         $form = $response->createForm(CreateMenuForm::class, $object);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.menu.create", "admin", ["createMenuForm" => $form, "name" => "menu"]);
         } else {
             (new MenuManager())->save($object);       
@@ -93,34 +84,26 @@ class MenuController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
+        $request->setInputPrefix('updateMenuForm_');
         
         $elementMenuManager = new ElementMenuManager();
 
         $object = new Menu();
-        $object->setId($data['id']);
+        $object->setId($request->get('id'));
 
-        $object->setNom($data['nom']);
+        $object->setNom($request->get('nom'));
 
-        if($data['entrees'] == 0) $data['entrees'] = NULL;
-        $object->setEntree($elementMenuManager->find($data['entrees']));
+        $object->setEntree($elementMenuManager->find($request->get('entrees')));
 
-        if($data['plats'] == 0) $data['plats'] = NULL;
-        $object->setPlat($elementMenuManager->find($data['plats']));
+        $object->setPlat($elementMenuManager->find($request->get('plats')));
         
-        if($data['desserts'] == 0) $data['desserts'] = NULL;
-        $object->setDessert($elementMenuManager->find($data['desserts']));
+        $object->setDessert($elementMenuManager->find($request->get('desserts')));
 
-        $object->setPrix($this->calculPrixMenu($data));
+        $object->setPrix($this->calculPrixMenu($request));
         
         $form = $response->createForm(UpdateMenuForm::class, $object);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.menu.edit", "admin", ["updateMenuForm" => $form, "name" => "menu"]);
         } else {
             (new MenuManager())->save($object);       
@@ -137,24 +120,24 @@ class MenuController extends Controller
         Router::redirect('admin.menu.index');
     }
 
-    public function calculPrixMenu($data){
+    public function calculPrixMenu(Request $request){
         
         $elementMenuManager = new ElementMenuManager();
 
-        if($data['entrees'] != 0){
-            $entree = $elementMenuManager->find($data['entrees']);
+        if($request->get('entrees') != 0){
+            $entree = $elementMenuManager->find($request->get('entrees'));
             $prixEntree = $entree->getPrix();
         } else {
             $prixEntree = 0;
         }
-        if($data['plats'] != 0){
-            $plat = $elementMenuManager->find($data['plats']);
+        if($request->get('plats') != 0){
+            $plat = $elementMenuManager->find($request->get('plats'));
             $prixPlat = $plat->getPrix();
         } else {
             $prixPlat = 0;
         }
-        if($data['desserts'] != 0){
-            $dessert = $elementMenuManager->find($data['desserts']);
+        if($request->get('desserts') != 0){
+            $dessert = $elementMenuManager->find($request->get('desserts'));
             $prixDessert = $dessert->getPrix();
         } else {
             $prixDessert = 0;

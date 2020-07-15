@@ -95,9 +95,7 @@ class UpdateUserForm extends Form
                     "class" => "",
                 ],
                 "constraints" => [
-                    new PasswordConstraint(),
-                    new LengthConstraint(8, 16, "Votre mot de passe doit contenir au moins 8 caractères.", "Votre mot de passe doit contenir au plus 16 caractères."),
-                    new RequiredConstraint()
+                    new PasswordConstraint()
                 ]
             ])
             ->add("status", "select", [
@@ -109,8 +107,8 @@ class UpdateUserForm extends Form
                     "class" => "",
                 ],
                 "data" => [
-                    new StringValue("Actif", true),
-                    new StringValue("Inactif", false)
+                    new StringValue("Actif", "1"),
+                    new StringValue("Inactif", "0")
                 ],
                 "getter" => "getString",
                 "selected" => $selectedStatus,

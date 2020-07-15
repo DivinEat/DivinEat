@@ -7,7 +7,6 @@ use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Core\Builder\QueryBuilder;
-use App\Core\View;
 use App\Models\Menu;
 use App\Models\ElementMenu;
 use App\Managers\ElementMenuManager;
@@ -25,20 +24,14 @@ class ElementMenuController extends Controller
 
     public function store(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
+        $request->setInputPrefix('createElementMenuForm_');
 
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
-
-        $data["categorie"] = $this->getCategorie($data["categorie"]);
-
-        $elementMenu = (new ElementMenu())->hydrate($data);
+        $elementMenu = (new ElementMenu())->hydrate($request->getParams(["nom", "description", "prix"]));
+        $elementMenu->setCategorie($this->getCategorie($request->get("categorie")));
         
         $form = $response->createForm(CreateElementMenuForm::class, $elementMenu);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.menu.create", "admin", ["createMenuForm" => $form, "name" => "élément de menu"]);
         } else {
             (new ElementMenuManager())->save($elementMenu);       
@@ -65,20 +58,14 @@ class ElementMenuController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
+        $request->setInputPrefix('updateMenuForm_');
 
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
-        }
-        
-        $data["categorie"] = $this->getCategorie($data["categorie"]);
-
-        $elementMenu = (new ElementMenu())->hydrate($data);
+        $elementMenu = (new ElementMenu())->hydrate($request->getParams(["id", "nom", "description", "prix"]));
+        $elementMenu->setCategorie($this->getCategorie($request->get("categorie")));
         
         $form = $response->createForm(UpdateElementMenuForm::class, $elementMenu);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.menu.edit", "admin", ["updateMenuForm" => $form, "name" => "menu"]);
         } else {
             (new ElementMenuManager())->save($elementMenu);       
