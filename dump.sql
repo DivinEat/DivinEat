@@ -204,7 +204,7 @@ INSERT INTO `dve_configurations` (`libelle`) VALUES
 
 
 --
--- Structure de la table `medias`
+-- Structure de la table `images`
 --
 CREATE TABLE `dve_images` (
   `id` int(11) NOT NULL,

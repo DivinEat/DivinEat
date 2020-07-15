@@ -56,7 +56,7 @@ class Image extends Model implements ModelInterface
         foreach($images as $image){
             $tabImages[] = [
                 "id" => $image->getId(),
-                "thumbnail" => "",
+                "thumbnail" => "<img src='" . url("img/uploadedImages/" . $image->getPath()) . "' alt='Forest' class='thumbnail'>",
                 "name" => $image->getName(),
                 "destroy" => Router::getRouteByName('admin.image.destroy', $image->getId())
             ];
