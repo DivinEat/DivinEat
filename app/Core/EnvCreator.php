@@ -31,5 +31,7 @@ class EnvCreator
         ));
 
         file_put_contents(ROOT . '/.env', $mapedData);
+
+        new ConstantLoader();
     }
 }

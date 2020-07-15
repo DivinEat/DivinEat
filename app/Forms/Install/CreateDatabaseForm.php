@@ -66,7 +66,7 @@ class CreateDatabaseForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("db_prefix", "input", [
+            ->add("db_prefixe", "input", [
                 "label" => [
                     "value" => "Préfix"
                 ],
