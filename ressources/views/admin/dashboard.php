@@ -1,19 +1,21 @@
+<?php
+    use App\Core\Routing\Router;
+?>
 
 <div class="row">
     <div class="col-sm-2">
         <div class="col-inner padding-0">
-            <select class="form-select" name="stats-date">
-                <option value="today">Aujourd'hui</option>
-                <option value="month">Mois en cours</option>
-                <option value="3LastMonth">3 derniers mois</option>
-                <option value="year">Cette année</option>
-                <option value="allTime">Toujours</option>
+            <select class="form-select" name="stats-date" onchange="document.location.href=this.value">
+                <option value="<?= Router::getRouteByName('admin.dashboard.index')->getUrl() ?>">Aujourd'hui</option>
+                <option value="<?= Router::getRouteByName('admin.dashboard.month')->getUrl() ?>">Mois en cours</option>
+                <option value="<?= Router::getRouteByName('admin.dashboard.year')->getUrl() ?>">Cette année</option>
+                <option value="<?= Router::getRouteByName('admin.dashboard.all')->getUrl() ?>">Toujours</option>
             </select>
         </div>
     </div>
     <div class="col-sm-10">
         <div class="col-inner padding-0">
-            <h1 class="margin-0">Les commandes</h1>
+            <h1 class="margin-0">Statistiques</h1>
         </div>
     </div>
 </div>
@@ -24,8 +26,8 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>?</h1>
-                        <h2>?</h2>
+                        <h1><?= $totalArticles ?></h1>
+                        <h2>Articles</h2>
                     </figcaption>
                 </figure>
             </article>
@@ -107,9 +109,6 @@
                     </figcaption>
                 </figure>
             </article>
-            <!-- <div id="container" class="graph-container">
-                <canvas id="graph-CA" class="graph-canvas"></canvas>
-            </div> -->
         </div>
     </div>
     <div class="col-sm-4">
@@ -122,9 +121,6 @@
                     </figcaption>
                 </figure>
             </article>
-            <!-- <div id="container" class="graph-container">
-                <canvas id="graph-visiteurs" class="graph-canvas"></canvas>
-            </div> -->
         </div>
     </div>
     <div class="col-sm-4">
@@ -137,9 +133,6 @@
                     </figcaption>
                 </figure>
             </article>
-            <!-- <div id="container" class="graph-container">
-                <canvas id="graph-new-clients" class="graph-canvas"></canvas>
-            </div> -->
         </div>
     </div>
 </div>

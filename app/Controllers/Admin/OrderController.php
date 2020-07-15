@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\User;
 use App\Models\Order;
 use App\Models\MenuOrder;
 use App\Core\Http\Request;
@@ -12,7 +11,7 @@ use App\Managers\MenuManager;
 use App\Managers\RoleManager;
 use App\Managers\UserManager;
 use App\Managers\OrderManager;
-use App\Managers\HoraireManager;
+use App\Core\Builder\QueryBuilder;
 use App\Managers\MenuOrderManager;
 use App\Core\Controller\Controller;
 use App\Forms\Order\CreateOrderForm;
@@ -24,7 +23,6 @@ class OrderController extends Controller
 {
     public function index(Request $request, Response $response)
     {
-        // Test form
         $OrderManager = new OrderManager();
         $orders = $OrderManager->findAll();
 
@@ -35,7 +33,7 @@ class OrderController extends Controller
     }
 
     public function create(Request $request, Response $response, array $args)
-    {   
+    {
         $form = $response->createForm(CreateOrderForm::class);
 
         $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
@@ -43,68 +41,64 @@ class OrderController extends Controller
 
     public function store(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
+        $request->setInputPrefix('createFormOrder_');
 
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
+        $order = (new Order())->hydrate([
+            "horaire" => $request->get("horaire"),
+            "surPlace" => $request->get("surPlace"),
+        ]);
+
+        $form = $response->createForm(CreateOrderForm::class, $order);
+
+        if (false === $form->handle($request)) {
+            return $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
         }
 
         $userManager = new UserManager();
         $menuManager = new MenuManager();
-        $horaireManager = new HoraireManager();
         $orderManager = new OrderManager();
 
-        $order = new Order();
-
-        $email = $data['email'];
+        $email = $request->get('email');
 
         $user = $userManager->findBy(["email" => $email]);
+
         if (empty($user)) {
-            $user = new User();
-            $user->setEmail($email);
-            $user->setRole((new RoleManager())->findBy(['libelle' => 'Membre'])->getId());
-            $user = $userManager->find($userManager->save($user));
+            $user = $userManager->create([
+                'email' => $email,
+                'role' => current((new RoleManager())->findBy(['libelle' => 'Membre']))->getId(),
+            ]);
         } else {
-            $user = $user[0];
+            $user = current($user);
         }
 
         $index_menus = 0;
-        $prix = 0;
-        $menus = [$data['menu']];
+        $prix = ($menuManager->find($request->get('menu')))->getPrix();
+        $menus = [$request->get('menu')];
 
-        while(isset($data['menu'.$index_menus])) {
-            $menu = $data['menu'.$index_menus]; 
+        while(null !== $request->get('menu'.$index_menus)) {
+            $menu = $request->get('menu'.$index_menus);
             $prix += ($menuManager->find($menu))->getPrix();
             array_push($menus, $menu);
             $index_menus++;
         }
 
-        $data['user'] = $user->getId();
-        $data['date'] = date('Y-m-d', time());
-        $data['prix'] = $prix;
-        $data['status'] = "En cours";
-        
-        $order = (new Order())->hydrate($data);
+        $order->setUser($user);
+        $order->setDate($request->get('date'));
+        $order->setPrix($prix);
+        $order->setStatus("En cours");
 
-        $form = $response->createForm(CreateOrderForm::class, $order);
+        $order_id = $orderManager->save($order);
 
-        if (false === $form->handle($request)) {
-            $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
-        } else {
-            
-            $order_id = $orderManager->save($order);
-            $order = $orderManager->find($order_id);
+        $order = $orderManager->find($order_id);
 
-            foreach ($menus as $menu) {
-                $menuOrder = new MenuOrder();
-                $menuOrder->setMenu((new MenuOrderManager())->find($menu));
-                $menuOrder->setOrder($order);
-                (new MenuOrderManager())->save($menuOrder); 
-            }
-            
-            Router::redirect('admin.order.index');
+        foreach ($menus as $menu) {
+            $menuOrder = (new MenuOrderManager())->create([
+                'menu' => $menu,
+                'order' => $order_id
+            ]);
         }
+        return Router::redirect('admin.order.index');
+
     }
 
     public function edit(Request $request, Response $response, array $args)
@@ -117,24 +111,31 @@ class OrderController extends Controller
         } else {
             throw new \Exception("L'id de la commande n'existe pas.");
         }
-        
+
         $form = $response->createForm(UpdateOrderForm::class, $order);
-        
+
         $response->render("admin.order.edit", "admin", ["updateOrderForm" => $form]);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
-        $data = $_POST;
-
         $orderManager = new OrderManager();
         $menuOrderManager = new MenuOrderManager();
         $userManager = new UserManager();
         $menuManager = new MenuManager();
 
-        foreach($data as $elementName => $element) {
-            $data[explode("_", $elementName)[1]] = $data[$elementName];
-            unset($data[$elementName]);
+        $request->setInputPrefix('updateFormOrder_');
+
+        $order = (new Order())->hydrate([
+            "horaire" => $request->get("horaire"),
+            "surPlace" => $request->get("surPlace")
+        ]);
+        $order->setId($args['order_id']);
+
+        $form = $response->createForm(UpdateOrderForm::class, $order);
+
+        if (false === $form->handle($request)) {
+            $response->render("admin.order.edit", "admin", ["updateOrderForm" => $form]);
         }
 
         $oldOrder = $orderManager->find($args['order_id']);
@@ -144,48 +145,59 @@ class OrderController extends Controller
                 $menuOrderManager->delete($menuOrder->getId());
             }
         }
-        
-        $user = $userManager->findBy(["email" => $data['email']]);
+
+        $user = $userManager->findBy(["email" => $request->get('email')]);
         if (empty($user)) {
-            $user = new User();
-            $user->setEmail($data['email']);
-            $user->setRole((new RoleManager())->findBy(['libelle' => 'Membre'])[0]);
-            $user = $userManager->find($userManager->save($user));
+            $user = $userManager->create([
+                'email' => $email,
+                'role' => current((new RoleManager())->findBy(['libelle' => 'Membre']))->getId(),
+            ]);
         } else {
-            $user = $user[0];
+            $user = current($user);
         }
 
-        $menu = $menuManager->find($data['menu']);
+        $index_menus = 0;
+        $prix = 0;
+        $menus = [];
 
-        $data['id'] = $args['order_id'];
-        $data['user'] = $user->getId();
-        $data['prix'] = $menu->getPrix();
-        $data['date'] = date('Y-m-d', time());
-        $data['status'] = $oldOrder->getStatus();
-
-        $order = (new Order())->hydrate($data);
-
-        $form = $response->createForm(UpdateOrderForm::class, $order);
-        
-        if (false === $form->handle($request)) {
-            $response->render("admin.order.edit", "admin", ["updateOrderForm" => $form]);
-        } else {
-            $orderManager->save($order);  
-            $order = $orderManager->find($oldOrder->getId());
-            
-            $menuOrder = new MenuOrder();
-            $menuOrder->setMenu($menu);
-            $menuOrder->setOrder($order);
-            $menuOrderManager->save($menuOrder);
-            
-            Router::redirect('admin.order.index');
+        while(null !== $request->get('menu'.$index_menus)) {
+            $menu = $request->get('menu'.$index_menus);
+            $prix += ($menuManager->find($menu))->getPrix();
+            array_push($menus, $menu);
+            $index_menus++;
         }
+
+        $order->setUser($user);
+        $order->setDate($request->get('date'));
+        $order->setPrix($prix);
+        $order->setStatus($request->get('status'));
+
+        $orderManager->save($order);
+
+
+
+        foreach ($menus as $menu) {
+            $menuOrder = (new MenuOrderManager())->create([
+                'menu' => $menu,
+                'order' => $order->getId()
+            ]);
+        }
+
+        Router::redirect('admin.order.index');
     }
 
     public function destroy(Request $request, Response $response, array $args)
     {
+        $orderId = $args['order_id'];
+
+        (new QueryBuilder())
+            ->delete("menu_order")
+            ->where("`order` = $orderId")
+            ->getQuery()
+            ->getArrayResult(MenuOrder::class);
+
         $manager = new OrderManager();
-        $manager->delete($args["order_id"]);
+        $manager->delete($orderId);
 
         Router::redirect('admin.order.index');
     }

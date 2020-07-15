@@ -39,7 +39,6 @@ class CreateOrderForm extends Form
                 ],
                 "constraints" => [
                     new EmailConstraint(),
-                    new LengthConstraint(6, 100, "Votre adresse mail doit contenir au moins 6 caractères.", "Votre adresse mail doit contenir au plus 100 caractères.")
                 ]
             ])
             ->add("horaire", "select", [
@@ -55,9 +54,7 @@ class CreateOrderForm extends Form
             ])
             ->add("menu", "select", [
                 "attr" => [
-                    "class" => "form-control",
-                    "name" => "order_menu",
-                    "id" => "order_menu"
+                    "class" => "form-control"
                 ],
                 "label" => [
                     "value" => "Menu",
@@ -79,6 +76,14 @@ class CreateOrderForm extends Form
                     new StringValue("Non", 0)
                 ],
                 "getter" => "getString"])
+            ->add("date", "date", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => "Date",
+                "name" => "date",
+                "value" => date("Y-m-d", strtotime("+1 day", time()))
+            ])
             ->add("annuler", "link", [
                 "attr" => [
                     "href" => Router::getRouteByName("admin.order.index")->getUrl(),
