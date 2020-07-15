@@ -1,19 +1,21 @@
+<?php
+    use App\Core\Routing\Router;
+?>
 
 <div class="row">
     <div class="col-sm-2">
         <div class="col-inner padding-0">
-            <select class="form-select" name="stats-date">
-                <option value="today">Aujourd'hui</option>
-                <option value="month">Mois en cours</option>
-                <option value="3LastMonth">3 derniers mois</option>
-                <option value="year">Cette année</option>
-                <option value="allTime">Toujours</option>
+            <select class="form-select" name="stats-date" onchange="document.location.href=this.value">
+                <option value="<?= Router::getRouteByName('admin.dashboard.index')->getUrl() ?>">Aujourd'hui</option>
+                <option value="<?= Router::getRouteByName('admin.dashboard.month')->getUrl() ?>">Mois en cours</option>
+                <option value="<?= Router::getRouteByName('admin.dashboard.year')->getUrl() ?>">Cette année</option>
+                <option value="<?= Router::getRouteByName('admin.dashboard.all')->getUrl() ?>">Toujours</option>
             </select>
         </div>
     </div>
     <div class="col-sm-10">
         <div class="col-inner padding-0">
-            <h1 class="margin-0">Les commandes</h1>
+            <h1 class="margin-0">Statistiques</h1>
         </div>
     </div>
 </div>
@@ -24,8 +26,8 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>19</h1>
-                        <h2>En cours</h2>
+                        <h1><?= $totalArticles ?></h1>
+                        <h2>Articles</h2>
                     </figcaption>
                 </figure>
             </article>
@@ -36,7 +38,7 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>11</h1>
+                        <h1><?= $totalOrdersOnSite ?></h1>
                         <h2>Sur place</h2>
                     </figcaption>
                 </figure>
@@ -48,7 +50,7 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>58</h1>
+                        <h1><?= $totalOrdersTakeOut ?></h1>
                         <h2>A emporter</h2>
                     </figcaption>
                 </figure>
@@ -63,8 +65,8 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>8</h1>
-                        <h2>Sur place</h2>
+                        <h1><?= $totalOrdersInProgress ?></h1>
+                        <h2>En cours</h2>
                     </figcaption>
                 </figure>
             </article>
@@ -75,7 +77,7 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>58</h1>
+                        <h1><?= $totalOrdersCompleted ?></h1>
                         <h2>Terminées</h2>
                     </figcaption>
                 </figure>
@@ -87,7 +89,7 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>77</h1>
+                        <h1><?= $total ?></h1>
                         <h2>Total</h2>
                     </figcaption>
                 </figure>
@@ -102,14 +104,11 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>654, 33 €</h1>
+                        <h1><?= $caTotal ?> €</h1>
                         <h2>Chiffre d'affaires</h2>
                     </figcaption>
                 </figure>
             </article>
-            <div id="container" class="graph-container">
-                <canvas id="graph-CA" class="graph-canvas"></canvas>
-            </div>
         </div>
     </div>
     <div class="col-sm-4">
@@ -117,14 +116,11 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>307</h1>
+                        <h1><?= $visitors ?></h1>
                         <h2>Visiteurs</h2>
                     </figcaption>
                 </figure>
             </article>
-            <div id="container" class="graph-container">
-                <canvas id="graph-visiteurs" class="graph-canvas"></canvas>
-            </div>
         </div>
     </div>
     <div class="col-sm-4">
@@ -132,19 +128,11 @@
             <article>
                 <figure>
                     <figcaption class="stats">
-                        <h1>4</h1>
+                        <h1><?= $newUsers ?></h1>
                         <h2>Nouveaux clients</h2>
                     </figcaption>
                 </figure>
             </article>
-            <div id="container" class="graph-container">
-                <canvas id="graph-new-clients" class="graph-canvas"></canvas>
-            </div>
         </div>
     </div>
 </div>
-<!--         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="<?= helpers::getUrl("user", "login")?>">Logout</a>
-        </div> -->

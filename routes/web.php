@@ -24,7 +24,6 @@ $router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Rout
 
 $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], function (Router $group) {
     $group->group(['middleware' => ['user.connected']], function (Router $group) {
-        //TODO : transformer en route POST
         $group->post('logout', 'LogoutController@logout', 'logout');
     });
     $group->group(['middleware' => ['user.not.connected']], function (Router $group) {
@@ -39,7 +38,15 @@ $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], fun
 
 $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['user.connected', 'user.is.admin']], function (Router $group) {
     $group->get('', 'DashboardController@index', 'index');
-    
+
+    $group->group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function (Router $group) {
+        $group->get('', 'DashboardController@index', 'index');
+        $group->get('month', 'DashboardController@month', 'month');
+        $group->get('year', 'DashboardController@year', 'year');
+        $group->get('all', 'DashboardController@all', 'all');
+    });
+
+
     $group->group(['prefix' => 'menu', 'as' => 'menu.'], function (Router $group) {
         $group->get('', 'MenuController@index', 'index');
         $group->get('create', 'MenuController@create', 'create');
