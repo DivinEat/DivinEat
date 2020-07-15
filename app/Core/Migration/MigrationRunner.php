@@ -19,13 +19,13 @@ class MigrationRunner
             return ! (in_array($value, ['.', '..']));
         });
 
-        if (! in_array('initiate_migration.php', $dirs))
-            throw new \Exception('Le fichier initiate_migration.php est introuvable.');
+//        if (! in_array('initiate_migration.php', $dirs))
+//            throw new \Exception('Le fichier initiate_migration.php est introuvable.');
+//
+//        $this->iniateMigration();
+//        unset($dirs[array_search('initiate_migration.php', $dirs)]);
 
-        $this->iniateMigration();
-        unset($dirs[array_search('initiate_migration.php', $dirs)]);
-
-        array_map($this->loadMigration(), $dirs);
+        array_map([$this, 'loadMigration'], $dirs);
     }
 
     protected function loadMigrationFile(string $migrationFileName): Migration
@@ -52,9 +52,6 @@ class MigrationRunner
     protected function loadMigration(string $migrationFileName): void
     {
         $migrationClass = $this->loadMigrationFile($migrationFileName);
-
-        if ($migrationClass->getTableName() !== 'migrations')
-            die('Coucou');
 
         if (! $this->isTableExist($migrationClass->getTableNameWithPrefix()))
             $this->pdoConnection->query($migrationClass->getCreationQuery());
