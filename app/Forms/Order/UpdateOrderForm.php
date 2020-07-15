@@ -29,8 +29,20 @@ class UpdateOrderForm extends Form
         $menuOrders = $menuOrderManager->findBy(["order" => $order->getId()]);
         $order_menus = [];
         
+        try {
+            $user_email = $order->getUser()->getEmail();
+        } catch (\Throwable $th) {
+            
+        }
+        
         foreach ($menuOrders as $menuOrder) {
             $order_menus[] = $menuManager->find($menuOrder->getMenu()->getId());
+        }
+
+        if ($order->getStatus() == "En cours") {
+            $selectedStatus = new StringValue("En cours", "En cours");
+        } else {
+            $selectedStatus = new StringValue("Terminé", "Terminé");
         }
 
         $builder = $this->setBuilder()
@@ -43,6 +55,7 @@ class UpdateOrderForm extends Form
                     "type" => "email",
                     "placeholder" => "Email",
                     "class" => "form-control",
+                    "value" => $user_email
                 ],
                 "constraints" => [
                     new EmailConstraint(),
@@ -92,6 +105,29 @@ class UpdateOrderForm extends Form
                 new StringValue("Non", 0)
             ],
             "getter" => "getString"])
+            ->add("status", "select", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => [
+                    "value" => "Statut",
+                    "class" => "",
+                ],
+                "data" => [
+                    new StringValue("En cours", "En cours"),
+                    new StringValue("Terminé", "Terminé")
+                ],
+                "getter" => "getString",
+                "selected" => $selectedStatus
+            ])
+            ->add("date", "date", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => "Date",
+                "name" => "date",
+                "value" => $order->getDate()
+            ])
             ->add("annuler", "link", [
                 "attr" => [
                     "href" => Router::getRouteByName("admin.order.index")->getUrl(),

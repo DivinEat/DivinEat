@@ -76,6 +76,14 @@ class CreateOrderForm extends Form
                     new StringValue("Non", 0)
                 ],
                 "getter" => "getString"])
+            ->add("date", "date", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => "Date",
+                "name" => "date",
+                "value" => date("Y-m-d", time())
+            ])
             ->add("annuler", "link", [
                 "attr" => [
                     "href" => Router::getRouteByName("admin.order.index")->getUrl(),
