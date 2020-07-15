@@ -14,7 +14,7 @@ class CreateDatabaseForm extends Form
         $this->setName("createDatabaseForm");
 
         $this->setBuilder()
-            ->add("adress", "input", [
+            ->add("db_host", "input", [
                 "label" => [
                     "value" => "Adresse de la base de données"
                 ],
@@ -27,7 +27,7 @@ class CreateDatabaseForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("name", "input", [
+            ->add("db_name", "input", [
                 "label" => [
                     "value" => "Nom de la base de données"
                 ],
@@ -40,7 +40,7 @@ class CreateDatabaseForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("user", "input", [
+            ->add("db_user", "input", [
                 "label" => [
                     "value" => "Nom d'utilisateur"
                 ],
@@ -53,9 +53,9 @@ class CreateDatabaseForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("pwd", "input", [
+            ->add("db_pwd", "input", [
                 "label" => [
-                    "value" => "Nom d'utilisateur"
+                    "value" => "Mot de passe"
                 ],
                 "attr" => [
                     "type" => "password",
@@ -63,7 +63,19 @@ class CreateDatabaseForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
-                    new PasswordConstraint(),
+                    new RequiredConstraint()
+                ]
+            ])
+            ->add("db_prefix", "input", [
+                "label" => [
+                    "value" => "Préfix"
+                ],
+                "attr" => [
+                    "type" => "text",
+                    "placeholder"=>"dve_",
+                    "class" => "form-control"
+                ],
+                "constraints" => [
                     new RequiredConstraint()
                 ]
             ])

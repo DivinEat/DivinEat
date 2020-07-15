@@ -2,10 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Core\EnvCreator;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Controller\Controller;
 use App\Core\Migration\MigrationRunner;
+use App\Core\Routing\Router;
 use App\Forms\Install\CreateDatabaseForm;
 use App\Forms\Install\CreateInformationsForm;
 
@@ -13,9 +15,6 @@ class InstallController extends Controller
 {
     public function showDatabaseForm(Request $request, Response $response)
     {
-        /*$migrationRunner = new MigrationRunner(DB_PREFIXE);
-        $migrationRunner->run();*/
-
         $form = $response->createForm(CreateDatabaseForm::class);
 
         $response->render("admin.install.database", "account", ["createDatabaseForm" => $form]);
@@ -27,9 +26,20 @@ class InstallController extends Controller
 
         $form = $response->createForm(CreateDatabaseForm::class, $user);
 
-        if (false === $form->handle()) {
+        if (! new \PDO('mysql:dbname=' . $request->get('db_name') . ';host='. $request->get('db_host'),
+            $request->get('db_user'),$request->get('db_pwd')))
+            $form->addErrors(['connection' => 'Impossible de se connecter à la base de données.']);
+
+        if (false === $form->handle($request)) {
             return $response->render("admin.install.database", "account", ["createDatabaseForm" => $form]);
         }
+
+        EnvCreator::createOrUpdate(array_merge(
+            $request->getParams(['db_name', 'db_pwd', 'db_host', 'db_user', 'db_prefix']),
+            ['db_drive' => 'mysql', 'env' => 'production']
+        ));
+
+        return Router::redirect('install.show-mails-form');
     }
 
     public function showGeneralForm(Request $request, Response $response)
@@ -48,7 +58,7 @@ class InstallController extends Controller
         if($request->get('pwd') != $request->get('confirmPwd'))
             $form->addErrors(["confirmPwd" => "Les mots de passe ne correspondent pas"]);
 
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             return $response->render("admin.install.general", "account", ["createInformationsForm" => $form]);
         }
     }

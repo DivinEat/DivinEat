@@ -10,25 +10,34 @@ class ConstantLoader
     public function __construct($extend = "dev")
     {
         $this->extend = $extend;
-        $this->checkFilesEnv();
-        $this->getContentFiles();
-        $this->load();
+        if ($this->checkFilesEnv())
+        {
+            $this->getContentFiles();
+            $this->load();
+        }
     }
 
     public function checkFilesEnv()
     {
-        if (!file_exists($this->path."env")) {
-            die("Le fichier .env n'existe pas");
-        }
-        if (!file_exists($this->path.$this->extend)) {
-            die("Le fichier .".$this->extend." n'existe pas");
-        }
+        return file_exists($this->path."env");
     }
 
     public function getContentFiles()
     {
-        $this->text = file_get_contents($this->path.$this->extend);
         $this->text .= "\n".file_get_contents($this->path."env");
+    }
+
+    public function getConstantAsArray(): array
+    {
+        $toReturns = [];
+        foreach (explode("\n", $this->text) as $line)
+        {
+            $data = explode("=", $line);
+            if (isset($data[0]) && isset($data[1]))
+                $toReturns[$data[0]] = trim($data[1]);
+        }
+
+        return $toReturns;
     }
 
     public function load()
