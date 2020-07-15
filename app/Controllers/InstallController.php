@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Auth;
 use App\Core\EnvCreator;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
@@ -11,6 +12,8 @@ use App\Core\Routing\Router;
 use App\Forms\Install\CreateDatabaseForm;
 use App\Forms\Install\CreateInformationsForm;
 use App\Forms\Install\CreateSMTPForm;
+use App\Managers\RoleManager;
+use App\Managers\UserManager;
 use PHPMailer\PHPMailer\SMTP;
 
 class InstallController extends Controller
@@ -102,5 +105,16 @@ class InstallController extends Controller
         if (false === $form->handle($request)) {
             return $response->render("admin.install.general", "account", ["createInformationsForm" => $form]);
         }
+
+        $user = (new UserManager())->create([
+            'firstname' => $request->get('firstname'),
+            'lastname' => $request->get('lastname'),
+            'email' => $request->get('email'),
+            'pwd' => password_hash($request->get('pwd'), PASSWORD_DEFAULT),
+            'status' => true,
+            'role' => current((new RoleManager())->findBy(['libelle' => 'Administrateur']))->getId(),
+        ]);
+
+        Auth::saveUser($user);
     }
 }
