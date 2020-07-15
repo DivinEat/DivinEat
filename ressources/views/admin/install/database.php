@@ -7,7 +7,7 @@
     <?php $this->formView("createDatabaseForm", "install", "createDatabaseForm"); ?>
 
     <div class="progress">
-        <div class="progress-50"></div> 
+        <div class="progress-25"></div> 
     </div>
 	
 </div>
