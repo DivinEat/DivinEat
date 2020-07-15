@@ -16,6 +16,7 @@ class CreateTableUsers extends Migration
         $this->string('lastname');
         $this->string('email');
         $this->string('pwd');
+        $this->string('token');
         $this->bool('status');
         $this->unsignedBigInteger('role');
         $this->timestamp();
