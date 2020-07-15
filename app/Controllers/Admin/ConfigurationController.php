@@ -48,7 +48,7 @@ class ConfigurationController extends Controller
 
         $form = $response->createForm(UpdateConfigurationForm::class, $configuration);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.configuration.edit", "admin", ["updateConfigurationForm" => $form]);
         } else {
             (new ConfigurationManager())->save($configuration);       

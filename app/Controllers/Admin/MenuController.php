@@ -58,7 +58,7 @@ class MenuController extends Controller
         
         $form = $response->createForm(CreateMenuForm::class, $object);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.menu.create", "admin", ["createMenuForm" => $form, "name" => "menu"]);
         } else {
             (new MenuManager())->save($object);       
@@ -103,7 +103,7 @@ class MenuController extends Controller
         
         $form = $response->createForm(UpdateMenuForm::class, $object);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.menu.edit", "admin", ["updateMenuForm" => $form, "name" => "menu"]);
         } else {
             (new MenuManager())->save($object);       

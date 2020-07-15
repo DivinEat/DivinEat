@@ -1035,6 +1035,12 @@ footer .circle .up {
   height: 6.25rem;
 }
 
+.thumbnail {
+  border-radius: 4px;
+  padding: 5px;
+  width: 80px;
+}
+
 .row {
   display: -webkit-box;
   display: flex;

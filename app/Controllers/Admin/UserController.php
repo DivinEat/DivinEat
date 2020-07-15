@@ -63,7 +63,7 @@ class UserController extends Controller
         
         $form = $response->createForm(UpdateUserForm::class, $user);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.user.edit", "admin", ["updateUserForm" => $form]);
         } else {
             (new UserManager())->save($user);     

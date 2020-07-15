@@ -58,6 +58,15 @@ $router->group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', '
         });
     });
 
+    $group->group(['prefix' => 'image', 'as' => 'image.'], function (Router $group) {
+        $group->get('', 'ImageController@index', 'index');
+        $group->get('create', 'ImageController@create', 'create');
+        $group->post('store', 'ImageController@store', 'store');
+        $group->group(['prefix' => '{image_id}'], function (Router $group) {
+            $group->delete('', 'ImageController@destroy', 'destroy');
+        });
+    });
+
     $group->group(['prefix' => 'elementmenu', 'as' => 'elementmenu.'], function (Router $group) {
         $group->get('create', 'ElementMenuController@create', 'create');
         $group->post('store', 'ElementMenuController@store', 'store');

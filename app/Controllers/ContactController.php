@@ -24,7 +24,7 @@ class ContactController extends Controller
         
         $form = $response->createForm(CreateContactForm::class);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("contact", "main", ["createContactForm" => $form]);
         } else {      
             //PHP MAILER CODE
