@@ -45,7 +45,7 @@ class InstallController extends Controller
 
         (new MigrationRunner())->run();
 
-        return Router::redirect('install.show-mails-form');
+        return Router::redirect('install.show-smtp-form');
     }
 
     public function showSMTPForm(Request $request, Response $response)
@@ -53,6 +53,34 @@ class InstallController extends Controller
         $form = $response->createForm(CreateSMTPForm::class);
 
         $response->render("admin.install.smtp", "account", ["createSMTPForm" => $form]);
+    }
+
+
+    public function storSMTPForm(Request $request, Response $response)
+    {
+        $request->setInputPrefix('createDatabaseForm_');
+
+        $form = $response->createForm(CreateDatabaseForm::class, $user);
+
+        try {
+            new \PDO('mysql:dbname=' . $request->get('db_name') . ';host='. $request->get('db_host'),
+                $request->get('db_user'),$request->get('db_pwd'));
+        } catch (\Exception $exception) {
+            $form->addErrors(['connection' => 'Impossible de se connecter à la base de données.']);
+        }
+
+        if (false === $form->handle($request)) {
+            return $response->render("admin.install.database", "account", ["createDatabaseForm" => $form]);
+        }
+
+        EnvCreator::createOrUpdate(array_merge(
+            $request->getParams(['db_name', 'db_pwd', 'db_host', 'db_user', 'db_prefixe']),
+            ['db_driver' => 'mysql', 'env' => 'production']
+        ));
+
+        (new MigrationRunner())->run();
+
+        return Router::redirect('install.show-smtp-form');
     }
 
     public function showGeneralForm(Request $request, Response $response)
