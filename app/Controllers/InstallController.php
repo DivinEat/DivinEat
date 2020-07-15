@@ -10,6 +10,7 @@ use App\Core\Migration\MigrationRunner;
 use App\Core\Routing\Router;
 use App\Forms\Install\CreateDatabaseForm;
 use App\Forms\Install\CreateInformationsForm;
+use App\Forms\Install\CreateSMTPForm;
 
 class InstallController extends Controller
 {
@@ -45,6 +46,13 @@ class InstallController extends Controller
         (new MigrationRunner())->run();
 
         return Router::redirect('install.show-mails-form');
+    }
+
+    public function showSMTPForm(Request $request, Response $response)
+    {
+        $form = $response->createForm(CreateSMTPForm::class);
+
+        $response->render("admin.install.smtp", "account", ["createSMTPForm" => $form]);
     }
 
     public function showGeneralForm(Request $request, Response $response)
