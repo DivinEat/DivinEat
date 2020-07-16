@@ -88,6 +88,7 @@ class InstallController extends Controller
 
     public function showGeneralForm(Request $request, Response $response)
     {
+        (new MigrationRunner())->run();
         $form = $response->createForm(CreateInformationsForm::class);
 
         $response->render("admin.install.general", "account", ["createInformationsForm" => $form]);
