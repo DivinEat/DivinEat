@@ -85,7 +85,7 @@ abstract class Migration
 
     public function addColumn(string $type, string $columnName, array $params = []): void
     {
-        $query = $columnName . ' ' . $type;
+        $query = '`' . $columnName . '` ' . $type;
         $query .= isset($params['nullable']) && $params['nullable'] ? ' NULL' : ' NOT NULL';
 
         if (! empty($params['default']))

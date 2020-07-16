@@ -14,7 +14,7 @@ class CreateTableConfigurations extends Migration
     {
         $this->id();
         $this->string('libelle');
-        $this->string('info');
+        $this->string('info', 255, ['nullable' => true]);
         $this->timestamp();
     }
 
@@ -23,8 +23,8 @@ class CreateTableConfigurations extends Migration
         $configurationManager = new ConfigurationManager();
         $configurationManager->create(['libelle' => 'nom_du_site', 'info' => 'DivinEat']);
         $configurationManager->create(['libelle' => 'email', 'info' => 'contact@divineat.fr']);
-        $configurationManager->create(['libelle' => 'facebook', 'info' => '#']);
-        $configurationManager->create(['libelle' => 'linkedin', 'info' => '#']);
-        $configurationManager->create(['libelle' => 'instagram', 'info' => '#']);
+        $configurationManager->create(['libelle' => 'facebook']);
+        $configurationManager->create(['libelle' => 'linkedin']);
+        $configurationManager->create(['libelle' => 'instagram']);
     }
 }

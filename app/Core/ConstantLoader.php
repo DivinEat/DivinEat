@@ -42,10 +42,10 @@ class ConstantLoader
 
     public function load()
     {
-        $lines = explode("\n", $this->text);
-        foreach ($lines as $line) {
+        foreach (explode("\n", $this->text) as $line) {
             $data = explode("=", $line);
-            if (!defined($data[0]) && isset($data[1])) {
+            if (isset($data[0]) && isset($data[1]))
+            {
                 define($data[0], trim($data[1]));
             }
         }

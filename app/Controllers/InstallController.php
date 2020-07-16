@@ -22,6 +22,7 @@ class InstallController extends Controller
     {
         $form = $response->createForm(CreateDatabaseForm::class);
 
+        EnvCreator::remove();
         $response->render("admin.install.database", "account", ["createDatabaseForm" => $form]);
     }
 

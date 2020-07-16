@@ -4,6 +4,10 @@ namespace App\Core;
 
 class EnvCreator
 {
+    public static function remove(): void
+    {
+        unlink(ROOT . '/.env');
+    }
 
     protected static function arrayKeyToUpper(array $params): array
     {

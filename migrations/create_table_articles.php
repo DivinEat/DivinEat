@@ -13,7 +13,9 @@ class CreateTableArticles extends Migration
     {
         $this->id();
         $this->string('title');
+        $this->string('slug');
         $this->text('content');
+        $this->unsignedBigInteger('author');
         $this->timestamp();
     }
 }

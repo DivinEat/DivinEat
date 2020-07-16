@@ -22,5 +22,7 @@ class CreateTableRoles extends Migration
         $roleManager = new RoleManager;
         $roleManager->create(['libelle' => 'Administrateur']);
         $roleManager->create(['libelle' => 'Membre']);
+        $roleManager->create(['libelle' => 'Moderateur']);
+        $roleManager->create(['libelle' => 'Editeur']);
     }
 }
