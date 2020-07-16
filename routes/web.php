@@ -23,7 +23,7 @@ $router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Rout
 });
 
 $router->group(['prefix' => 'order', 'as' => 'order.'], function (Router $group) {
-    $group->get('', 'OrderController@index', 'index');
+    $group->get('', 'OrderController@index', 'index')->addMiddleware('user.connected');
     $group->get('create', 'OrderController@create', 'create');
     $group->post('store', 'OrderController@store', 'store');
 });
