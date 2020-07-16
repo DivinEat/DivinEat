@@ -167,7 +167,6 @@ class Order extends Model implements ModelInterface
                 $menus[] = $menuManager->find($menuOrder->getMenu()->getId())->getNom();
             }
             $tabOrders[] = [
-                "id" => $order->getId(),
                 "user" =>  $order->getUser()->getEmail(),
                 "horaire" => $order->getHoraire()->getHoraire(),
                 "date" => $order->getDate(),
@@ -185,7 +184,6 @@ class Order extends Model implements ModelInterface
 
             "colonnes"=>[
                 "",
-                "Id",
                 "Utilisateur",
                 "Horaire",
                 "Date",
