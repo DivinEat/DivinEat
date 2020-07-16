@@ -30,7 +30,7 @@ class InstallController extends Controller
     {
         $request->setInputPrefix('createDatabaseForm_');
 
-        $form = $response->createForm(CreateDatabaseForm::class, $user);
+        $form = $response->createForm(CreateDatabaseForm::class);
 
         try {
             new \PDO('mysql:dbname=' . $request->get('db_name') . ';host='. $request->get('db_host'),
@@ -40,7 +40,7 @@ class InstallController extends Controller
         }
 
         if (false === $form->handle($request)) {
-            return $response->render("admin.install.smtp", "account", ["createDatabaseForm" => $form]);
+            return $response->render("admin.install.database", "account", ["createDatabaseForm" => $form]);
         }
 
         EnvCreator::createOrUpdate(array_merge(
