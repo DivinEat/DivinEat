@@ -37,6 +37,7 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
             $group->post('logout', 'LogoutController@logout', 'logout');
         });
         $group->group(['middleware' => ['user.not.connected']], function (Router $group) {
+            $group->get('token/{token}', 'RegisterController@token', 'register.token');
             $group->get('login', 'LoginController@showLoginForm', 'show-login');
             $group->post('login', 'LoginController@login', 'login');
             $group->get('register', 'RegisterController@showRegisterForm', 'show-register');

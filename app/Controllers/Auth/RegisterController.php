@@ -37,17 +37,26 @@ class RegisterController extends Controller
             return $response->render("auth.register", "account", ["registerForm" => $form]);
         }
 
-        $user = $userManager->create([
+        $token = bin2hex(random_bytes(16));
+
+        $userManager->create([
             'firstname' => $request->get('firstname'),
             'lastname' => $request->get('lastname'),
             'email' => $request->get('email'),
+            'token' => $token,
             'pwd' => password_hash($request->get('pwd'), PASSWORD_DEFAULT),
+            'status' => 0,
             'role' => current((new RoleManager())->findBy(['libelle' => 'Membre']))->getId(),
         ]);
 
-        Auth::saveUser($user);
-        RegisterMail::sendMail($request->get('email'));
+        RegisterMail::sendMail($request->get('email'), '', $token);
 
-        return Router::redirect('home');
-    }   
+        Router::redirect('auth.login');
+    }
+
+    public function token(Request $request, Response $response, array $args)
+    {
+        $user = current((new UserManager())->findBy(['token' => $args['token']]));
+        var_dump($user);
+    }
 }

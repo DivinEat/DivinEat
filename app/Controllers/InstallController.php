@@ -81,7 +81,7 @@ class InstallController extends Controller
         }
 
         EnvCreator::createOrUpdate(
-            $request->getParams(['smtp_host', 'smtp_port', 'smpt_user', 'smtp_pass'])
+            $request->getParams(['smtp_host', 'smtp_port', 'smtp_user', 'smtp_pass'])
         );
 
         return Router::redirect('install.show-general-form');

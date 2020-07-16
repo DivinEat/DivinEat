@@ -3,6 +3,7 @@
 namespace App\Mails;
 
 use App\Core\Mail;
+use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
 
 class RegisterMail extends Mail
@@ -22,6 +23,7 @@ class RegisterMail extends Mail
 
     protected function initiateBody(string $body = null): void
     {
-        $this->htmlTemplate('register');
+        $this->msgHTML('Pour activer votre compte merci de cliquer sur ce <a href="' .
+            Router::getRouteByName('auth.register.token', [$body])->getUrl(). '">lien</a>.');
     }
 }

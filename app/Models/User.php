@@ -17,6 +17,9 @@ class User extends Model implements ModelInterface
     protected $pwd;
     protected $status;
     protected $role;
+    protected ?string $token;
+    protected ?string $token_password;
+    protected ?string $date_token_password;
 
     public function __construct(){
         parent::__construct();
@@ -161,5 +164,53 @@ class User extends Model implements ModelInterface
         $tab["fields"]["User"] = $tabUsers;
 
         return $tab;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(?string $token): void
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTokenPassword(): ?string
+    {
+        return $this->token_password;
+    }
+
+    /**
+     * @param string $token_password
+     */
+    public function setTokenPassword(?string $token_password): void
+    {
+        $this->token_password = $token_password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateTokenPassword(): ?string
+    {
+        return $this->date_token_password;
+    }
+
+    /**
+     * @param string $date_token_password
+     */
+    public function setDateTokenPassword(?string $date_token_password): void
+    {
+        $this->date_token_password = $date_token_password;
     }
 }
