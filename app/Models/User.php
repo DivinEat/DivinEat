@@ -68,13 +68,11 @@ class User extends Model implements ModelInterface
     }
     public function setDateInserted($dateInserted)
     {
-        $this->dateInserted=$dateInserted;
-        return $this;
+        return $this->setCreatedAt($dateInserted);
     }
     public function setDateUpdated($dateUpdated)
     {
-        $this->dateUpdated=$dateUpdated;
-        return $this;
+        return $this->setUpdatedAt($dateUpdated);
     }
 
     public function getId(): ?int
@@ -108,11 +106,11 @@ class User extends Model implements ModelInterface
     }
     public function getDateInserted()
     {
-        return $this->dateInserted;
+        return $this->getCreatedAt();
     }
     public function getDateUpdated()
     {
-        return $this->dateUpdated;
+        return $this->getUpdatedAt();
     }
 
     public function isAdmin(): bool

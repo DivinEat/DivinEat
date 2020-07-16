@@ -46,13 +46,11 @@ class Article extends Model implements ModelInterface
     }
     public function setDate_inserted($date_inserted)
     {
-        $this->date_inserted=$date_inserted;
-        return $this;
+        return $this->setCreatedAt($date_inserted);
     }
     public function setDate_updated($date_updated)
     {
-        $this->date_updated=$date_updated;
-        return $this;
+        return $this->setUpdatedAt($date_updated);
     }
     public function setSlug($slug)
     {
@@ -87,11 +85,11 @@ class Article extends Model implements ModelInterface
     }
     public function getDate_inserted()
     {
-        return $this->date_inserted;
+        return $this->getCreatedAt();
     }
     public function getDate_updated()
     {
-        return $this->date_updated;
+        return $this->getUpdatedAt();
     }
 
     public static function setJsonToHtml($content){
