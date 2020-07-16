@@ -34,8 +34,6 @@ h2 {
   font-size: 1rem;
 }
 
-/* ------------------------------------------------------------------------------------------------- */
-
 .container {
   overflow: hidden;
 }
@@ -130,6 +128,10 @@ div.ligne {
 .subtitle {
   margin-top: 0;
   color: #818181;
+}
+
+.total-height {
+  min-height: calc(100vh - 4em - 8em);
 }
 
 .bg-white {
