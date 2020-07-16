@@ -1,4 +1,7 @@
 <?php
+
+use App\Core\Routing\Route;
+use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
 use App\Core\Csrf;
 
@@ -22,4 +25,9 @@ function getConfig(string $libelle)
 function csrfInput(): void
 {
     echo "<input type='hidden' name='csrf_token' value='" . Csrf::getCsrfToken() . "'>";
+}
+
+function route(string $routeName, array $args = []): ?Route
+{
+    return Router::getRouteByName($routeName, $args);
 }

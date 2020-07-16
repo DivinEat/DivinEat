@@ -16,6 +16,8 @@ class CreateTableOrders extends Migration
         $this->unsignedBigInteger('horaire');
         $this->date('date');
         $this->double('prix');
+        $this->bool('surPlace');
+        $this->string('status', 255, ['default' => 'En cours']);
         $this->timestamp();
     }
 }

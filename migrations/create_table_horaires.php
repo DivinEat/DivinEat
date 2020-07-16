@@ -2,17 +2,17 @@
 
 use App\Core\Migration\Migration;
 
-class InitiateMigration extends Migration
+class CreateTableHoraires extends Migration
 {
     public function getTableName(): string
     {
-        return 'migrations';
+        return 'horaires';
     }
 
     public function up(): void
     {
         $this->id();
-        $this->string('migration_name');
-        $this->date('migrated_at');
+        $this->string('horaire');
+        $this->timestamp();
     }
 }
