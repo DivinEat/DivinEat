@@ -99,7 +99,7 @@
   CREATE TABLE `dve_articles` (
     `id` int(11) NOT NULL,
     `title` varchar(15) NOT NULL,
-    `slug` varchar(15),
+    `slug` varchar(15) NOT NULL,
     `content` text NOT NULL,
     `author` int(11) NOT NULL,
     `date_inserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -56,7 +56,7 @@ abstract class Model implements \JsonSerializable
      */
     public function getCreatedAt(): string
     {
-        return $this->created_at;
+        return $this->formatDate($this->created_at);
     }
 
     /**
@@ -72,9 +72,9 @@ abstract class Model implements \JsonSerializable
     /**
      * @return string
      */
-    public function getUpdatedAt(): string
-    {
-        return $this->updated_at;
+    public function getUpdatedAt(): ?string
+    {   
+        return $this->formatDate($this->updated_at);
     }
 
     /**
@@ -97,5 +97,15 @@ abstract class Model implements \JsonSerializable
         }
 
         return $str;
+    }
+
+    protected function formatDate($date, bool $heure = true)
+    {
+        if(null == $date)
+            return null;
+
+        $format = ($heure) ? 'd/m/Y H\hi' : 'd/m/Y';
+            
+        return date($format, strtotime($date));
     }
 }

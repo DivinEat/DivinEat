@@ -79,7 +79,7 @@ class Order extends Model implements ModelInterface
     }
     public function getDate()
     {
-        return $this->date;
+        return $this->formatDate($this->date, false);
     }
     public function getPrix()
     {
