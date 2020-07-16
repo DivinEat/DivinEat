@@ -48,7 +48,10 @@ class MigrationRunner
         $migrationClass = $this->loadMigrationFile($migrationFileName);
 
         if (! $this->isTableExist($migrationClass->getTableNameWithPrefix()))
+        {
             $this->pdoConnection->query($migrationClass->getCreationQuery());
+            $migrationClass->seeds();
+        }
     }
 
     protected function iniateMigration(): void

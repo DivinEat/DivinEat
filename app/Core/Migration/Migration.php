@@ -23,6 +23,11 @@ abstract class Migration
 
     public abstract function up(): void;
 
+    public function seeds(): void
+    {
+
+    }
+
     public function getCreationQuery(): string
     {
         $this->up();

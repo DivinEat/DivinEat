@@ -116,5 +116,7 @@ class InstallController extends Controller
         ]);
 
         Auth::saveUser($user);
+
+        return Router::redirect('admin.index');
     }
 }
