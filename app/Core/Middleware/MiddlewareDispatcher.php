@@ -7,6 +7,7 @@ use App\Core\Http\Response;
 use App\Middleware\CheckConnectedUser;
 use App\Middleware\CheckInstall;
 use App\Middleware\CheckNotConnectedUser;
+use App\Middleware\CheckNotInstall;
 use App\Middleware\CheckUserAdmin;
 
 class MiddlewareDispatcher
@@ -75,7 +76,8 @@ class MiddlewareDispatcher
             'user.not.connected' => CheckNotConnectedUser::class,
             'user.connected' => CheckConnectedUser::class,
             'user.is.admin' => CheckUserAdmin::class,
-            'install' => CheckInstall::class,
+            'not.installed' => CheckInstall::class,
+            'installed' => CheckNotInstall::class,
         ];
 
         return $middlewares[$middlewareName] ?? null;

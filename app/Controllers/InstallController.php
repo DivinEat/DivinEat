@@ -118,6 +118,7 @@ class InstallController extends Controller
         ]);
 
         Auth::saveUser($user);
+        EnvCreator::createOrUpdate(['installation_success' => true]);
 
         return Router::redirect('admin.index');
     }
