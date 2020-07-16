@@ -4,7 +4,9 @@ namespace App\Controllers\Auth;
 
 use App\Core\Http\Request;
 use App\Core\Http\Response;
+use App\Core\Mail;
 use App\Core\Routing\Router;
+use App\Mails\PasswordMail;
 use App\Managers\UserManager;
 use App\Core\Controller\Controller;
 use App\Forms\Auth\NewPasswordForm;
@@ -32,7 +34,13 @@ class ForgotPasswordController extends Controller
         $user = current((new UserManager())->findBy(['email' => $request->get('email')]));
 
         if (false !== $user)
-            // Envoyer le mail
+        {
+            $token = bin2hex(random_bytes(16));
+            $user->setTokenPassword($token);
+            $user->setDateTokenPassword(date(time()));
+            (new UserManager())->save($user);
+            PasswordMail::sendMail($user->getEmail(), '', $token);
+        }
 
         return Router::redirect('auth.show-forgot-password');
     }
