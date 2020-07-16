@@ -2,15 +2,17 @@
 
 namespace App\Forms\Order;
 
+use App\Core\Auth;
 use App\Core\Form;
 use App\Models\User;
+use App\Models\Order;
 use App\Core\StringValue;
 use App\Core\Routing\Router;
+use App\Managers\MenuManager;
 use App\Managers\RoleManager;
+use App\Managers\HoraireManager;
 use App\Core\Constraints\EmailConstraint;
 use App\Core\Constraints\LengthConstraint;
-use App\Managers\HoraireManager;
-use App\Managers\MenuManager;
 
 class CreateOrderForm extends Form
 {
@@ -86,7 +88,7 @@ class CreateOrderForm extends Form
             ])
             ->add("annuler", "link", [
                 "attr" => [
-                    "href" => Router::getRouteByName("admin.order.index")->getUrl(),
+                    "href" => Auth::getUser()->isAdmin() ? Router::getRouteByName("admin.order.index")->getUrl() : Router::getRouteByName("order.index")->getUrl(),
                     "class" => "btn btn-default",
                 ],
                 "text" => "Annuler",
@@ -109,7 +111,13 @@ class CreateOrderForm extends Form
                 "id" => "createOrderForm",
                 "class" => "admin-form",
                 "name" => "createOrderForm"
-            ])
-            ->addConfig("action", Router::getRouteByName("admin.order.store")->getUrl());
+            ]);
+        
+        if(Auth::getUser()->isAdmin()) {
+            $this->addConfig("action", Router::getRouteByName("admin.order.store")->getUrl());
+        } else {
+            $this->addConfig("action", Router::getRouteByName("order.store")->getUrl());
+        }
+            
     }
 }

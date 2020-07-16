@@ -119,7 +119,7 @@ class Order extends Model implements ModelInterface
                 "horaire" => $order->getHoraire()->getHoraire(),
                 "date" => $order->getDate(),
                 "menus" => implode(", ", $menus),
-                "prix" => $order->getPrix(),
+                "prix" => $order->getPrix() . "€",
                 "status" => $order->getStatus(),
                 "surPlace" => $order->getSurPlace() == 1 ? "Oui" : "Non",
                 "edit"=> Router::getRouteByName('admin.order.edit', $order->getId()),
@@ -143,6 +143,56 @@ class Order extends Model implements ModelInterface
                 "Status",
                 "Sur place",
                 "Actions"
+            ],
+
+            "fields"=>[
+                "Order"=>[]
+            ]
+        ];
+
+        $tab["fields"]["Order"] = $tabOrders;
+        return $tab;
+    }
+
+    public static function getClientShowOrderTable($orders){
+        $menuOrderManager = new MenuOrderManager();
+        $menuManager = new MenuManager();
+
+        $tabOrders = [];
+        foreach($orders as $order){
+            $menuOrders = $menuOrderManager->findBy(["order" => $order->getId()]);
+            $menus = [];
+            
+            foreach ($menuOrders as $menuOrder) {
+                $menus[] = $menuManager->find($menuOrder->getMenu()->getId())->getNom();
+            }
+            $tabOrders[] = [
+                "id" => $order->getId(),
+                "user" =>  $order->getUser()->getEmail(),
+                "horaire" => $order->getHoraire()->getHoraire(),
+                "date" => $order->getDate(),
+                "menus" => implode(", ", $menus),
+                "prix" => $order->getPrix() . "€",
+                "status" => $order->getStatus(),
+                "surPlace" => $order->getSurPlace() == 1 ? "Oui" : "Non"
+            ];
+        }
+
+        $tab = [
+            "config"=>[
+                "class"=>"admin-table"
+            ],
+
+            "colonnes"=>[
+                "",
+                "Id",
+                "Utilisateur",
+                "Horaire",
+                "Date",
+                "Menus",
+                "Prix",
+                "Status",
+                "Sur place"
             ],
 
             "fields"=>[

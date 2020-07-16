@@ -22,7 +22,7 @@ use App\Core\Auth;
 
             <nav class="navbar-front">
                 <a href="<?= Router::getRouteByName('menus')->getUrl() ?>">Menus</a>
-                <a href="#">Réservations</a>
+                <a href="<?= Router::getRouteByName('order.index')->getUrl() ?>">Réservations</a>
                 <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Actualités</a>
                 </a>
             </nav>
