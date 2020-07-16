@@ -17,8 +17,6 @@ class User extends Model implements ModelInterface
     protected $pwd;
     protected $status;
     protected $role;
-    protected $dateInserted;
-    protected $dateUpdated;
 
     public function __construct(){
         parent::__construct();

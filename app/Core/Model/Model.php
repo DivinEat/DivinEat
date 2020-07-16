@@ -6,7 +6,7 @@ abstract class Model implements \JsonSerializable
 {
     protected string $created_at;
 
-    protected string $updated_at;
+    protected ?string $updated_at;
 
     public function __construct() {}
 
@@ -20,7 +20,7 @@ abstract class Model implements \JsonSerializable
         $className = get_class($this);
         $articleObj = new $className();
         foreach ($row as $key => $value) {
-            $method = 'set'.ucFirst($key);
+            $method = 'set'.$this->snakeToCamelCase($key, true);
             if (method_exists($articleObj, $method)) {
                 if($relation = $articleObj->getRelation($key)) {
                     $tmp = new $relation();
@@ -80,10 +80,22 @@ abstract class Model implements \JsonSerializable
     /**
      * @param string $updated_at
      */
-    public function setUpdatedAt(string $updated_at): Model
+    public function setUpdatedAt(?string $updated_at): Model
     {
         $this->updated_at = $updated_at;
 
         return $this;
+    }
+
+    protected function snakeToCamelCase($string, $capitalizeFirstCharacter = false)
+    {
+
+        $str = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
+
+        if (!$capitalizeFirstCharacter) {
+            $str[0] = strtolower($str[0]);
+        }
+
+        return $str;
     }
 }
