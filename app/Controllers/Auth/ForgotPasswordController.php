@@ -7,6 +7,7 @@ use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Managers\UserManager;
 use App\Core\Controller\Controller;
+use App\Forms\Auth\NewPasswordForm;
 use App\Forms\Auth\ForgotPasswordForm;
 
 class ForgotPasswordController extends Controller
@@ -34,5 +35,27 @@ class ForgotPasswordController extends Controller
             // Envoyer le mail
 
         return Router::redirect('auth.show-forgot-password');
+    }
+
+    public function showNewPassword(Request $request, Response $response)
+    {
+        $form = $response->createForm(NewPasswordForm::class);
+
+        $response->render("auth.new_password", "account", ["newPasswordForm" => $form]);
+    }
+
+    public function newPassword(Request $request, Response $response)
+    {
+        $request->setInputPrefix('newPasswordForm_');
+
+        $form = $response->createForm(NewPasswordForm::class, $user);
+
+        if($request->get('pwd') != $request->get('confirmPwd')){
+            $form->addErrors(["confirmPwd" => "Les mots de passe ne correspondent pas"]);
+        } 
+
+        if (false === $form->handle($request)) {
+            return $response->render("auth.new_password", "account", ["newPasswordForm" => $form]);
+        }
     }
 }

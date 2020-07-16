@@ -77,12 +77,11 @@
             <div class="col-sm-12">
                 <div class="col-inner article">
                     <?php if(isset($article)){
-                            echo $article->getContent();
-                        
+                            echo $article->getContent(); 
                     } ?>
                 </div>
             </div>
         </div>
-        <div class="row more"><a href="#">Voir plus</a></div>
+        <div class="row more"><a href="<?= Router::getRouteByName('actualites.show', $article->getId())->getUrl() ?>">Voir plus</a></div>
     </div>
 </div>

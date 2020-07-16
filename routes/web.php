@@ -44,6 +44,8 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
             $group->post('register', 'RegisterController@register', 'register');
             $group->get('forgot-password', 'ForgotPasswordController@showForgotPassword', 'show-forgot-password');
             $group->post('forgot-password', 'ForgotPasswordController@forgotPassword', 'forgot-password');
+            $group->get('new-password', 'ForgotPasswordController@showNewPassword', 'show-new-password');
+            $group->post('new-password', 'ForgotPasswordController@newPassword', 'new-password');
         });
     });
 
