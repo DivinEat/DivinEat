@@ -60,7 +60,8 @@
                                     <?php if(Auth::getUser()->isAdmin()): ?>
                                         <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Administration</a>
                                     <?php endif; ?>
-                                    <a href="<?= Router::getRouteByName('profile.edit')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a><hr/>
+                                    <a href="<?= Router::getRouteByName('profile.edit')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
+                                    <a href="<?= Router::getRouteByName('order.index')->getUrl() ?>"><img src="<?= url('img/icones/orders.png') ?>"> Commandes</a><hr/>
                                     
                                     <a href="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" *
                                         onclick="event.preventDefault(); 

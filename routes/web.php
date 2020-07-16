@@ -19,12 +19,12 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
         $group->get('', 'UserController@edit', 'edit');
         $group->post('update', 'UserController@update', 'update');
     });
-
+  
     $router->group(['prefix' => 'contact', 'as' => 'contact.'], function (Router $group) {
-        $group->get('', 'ContactController@index', 'index');
-        $group->post('store', 'ContactController@store', 'store');
+          $group->get('', 'ContactController@index', 'index');
+          $group->post('store', 'ContactController@store', 'store');
     });
-
+  
     $router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Router $group) {
         $group->get('', 'ArticleController@index', 'index');
         $group->group(['prefix' => '{article_id}'], function (Router $group) {
@@ -32,6 +32,12 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
         });
     });
 
+    $router->group(['prefix' => 'order', 'as' => 'order.'], function (Router $group) {
+        $group->get('', 'OrderController@index', 'index')->addMiddleware('user.connected');
+        $group->get('create', 'OrderController@create', 'create');
+        $group->post('store', 'OrderController@store', 'store');
+    });
+  
     $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], function (Router $group) {
         $group->group(['middleware' => ['user.connected']], function (Router $group) {
             $group->post('logout', 'LogoutController@logout', 'logout');
