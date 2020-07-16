@@ -57,6 +57,15 @@ class RegisterController extends Controller
     public function token(Request $request, Response $response, array $args)
     {
         $user = current((new UserManager())->findBy(['token' => $args['token']]));
-        var_dump($user);
+        if ($args['token'] == '' || false === $user)
+            return Router::redirect('home');
+
+        $user->setToken('');
+        $user->setStatus(1);
+        (new UserManager())->save($user);
+
+        Auth::saveUser($user);
+
+        return Router::redirect('home');
     }
 }
