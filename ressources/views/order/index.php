@@ -1,6 +1,6 @@
 <?php use App\Core\Routing\Router; ?>
 
-<div class="row" style="margin-top: 4em;">
+<div class="row total-height" style="margin-top: 4em;">
     <div class="col-sm-12">
         <div class="col-inner">
             <div class="box">

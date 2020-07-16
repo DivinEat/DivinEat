@@ -9,6 +9,7 @@ use App\Core\Routing\Router;
 use App\Managers\MenuManager;
 use App\Managers\HoraireManager;
 use App\Core\Constraints\EmailConstraint;
+use App\Core\Constraints\RequiredConstraint;
 
 class CreateClientOrderForm extends Form
 {
@@ -37,6 +38,7 @@ class CreateClientOrderForm extends Form
                 ],
                 "constraints" => [
                     new EmailConstraint(),
+                    new RequiredConstraint()
                 ]
             ])
             ->add("horaire", "select", [
@@ -49,6 +51,9 @@ class CreateClientOrderForm extends Form
                 ],
                 "data" => $horaires,
                 "getter" => "getHoraire",
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
             ])
             ->add("menu", "select", [
                 "attr" => [
@@ -60,6 +65,9 @@ class CreateClientOrderForm extends Form
                 ],
                 "data" => $menus,
                 "getter" => "getNom",
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
             ])
             ->add("surPlace", "select", [
                 "attr" => [
@@ -73,14 +81,21 @@ class CreateClientOrderForm extends Form
                     new StringValue("Oui", 1),
                     new StringValue("Non", 0)
                 ],
-                "getter" => "getString"])
+                "getter" => "getString",
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
+                ])
             ->add("date", "date", [
                 "attr" => [
                     "class" => "form-control form-control-user"
                 ],
                 "label" => "Date",
                 "name" => "date",
-                "value" => date("Y-m-d", strtotime("+1 day", time()))
+                "value" => date("Y-m-d", strtotime("+1 day", time())),
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
             ])
             ->add("submit", "input", [
                 "attr" => [
