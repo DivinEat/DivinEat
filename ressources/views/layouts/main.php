@@ -70,13 +70,13 @@ use App\Core\Auth;
             <div class="left">
                 <div>
                     <p><a href="<?= Router::getRouteByName('contact.index')->getUrl() ?>">Nous contacter</a></p>
-                    <?php if(false != getConfig("facebook")): ?>
+                    <?php if(!empty(getConfig("facebook")->getInfo())): ?>
                         <a href="<?= getConfig("facebook")->getInfo(); ?>" target="_blank"><img src="img/icones/facebook.png"></a>
                     <?php endif; ?>
-                    <?php if(false != getConfig("instagram")): ?>
+                    <?php if(!empty(getConfig("instagram")->getInfo())): ?>
                         <a href="<?= getConfig("instagram")->getInfo(); ?>" target="_blank"><img src="img/icones/instagram.png"></a>
                     <?php endif; ?>
-                    <?php if(false != getConfig("linkedin")): ?>
+                    <?php if(!empty(getConfig("linkedin")->getInfo())): ?>
                         <a href="<?= getConfig("linkedin")->getInfo(); ?>" target="_blank"><img src="img/icones/linkedin.png"></a>
                     <?php endif; ?>
                 </div>
