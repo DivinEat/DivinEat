@@ -24,6 +24,6 @@ class PasswordMail extends Mail
     protected function initiateBody(string $body = null): void
     {
         $this->msgHTML('Pour modifier votre mot de passe cliquer <a href="' .
-            Router::getRouteByName('auth.show-new-password').'">ici</a>');
+            Router::getRouteByName('auth.show-new-password', [$body])->getUrl() .'">ici</a>');
     }
 }

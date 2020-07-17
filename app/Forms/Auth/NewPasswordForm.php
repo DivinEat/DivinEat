@@ -58,7 +58,6 @@ class NewPasswordForm extends Form
                 "id" => "newPasswordForm",
                 "class" => "admin-form width-100",
                 "name" => "newPasswordForm"
-            ])
-            ->addConfig("action", Router::getRouteByName("auth.new-password")->getUrl());
+            ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Auth;
 
+use App\Core\Auth;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Mail;
@@ -37,7 +38,7 @@ class ForgotPasswordController extends Controller
         {
             $token = bin2hex(random_bytes(16));
             $user->setTokenPassword($token);
-            $user->setDateTokenPassword(date(time()));
+            $user->setDateTokenPassword(date('Y-m-d', time()));
             (new UserManager())->save($user);
             PasswordMail::sendMail($user->getEmail(), '', $token);
         }
@@ -45,15 +46,29 @@ class ForgotPasswordController extends Controller
         return Router::redirect('auth.show-forgot-password');
     }
 
-    public function showNewPassword(Request $request, Response $response)
+    public function showNewPassword(Request $request, Response $response, array $args)
     {
+        $user = current((new UserManager())->findBy(['token_password' => $args['token']]));
+
+        if (null === $user ||
+            (new \DateTime($user->getDateTokenPassword()))->diff(new \DateTime('now'))->d !== 0)
+            return Router::redirect('home');
+
         $form = $response->createForm(NewPasswordForm::class);
+        $form->addConfig("action", Router::getRouteByName("auth.new-password", [$args['token']])
+            ->getUrl());
 
         $response->render("auth.new_password", "account", ["newPasswordForm" => $form]);
     }
 
-    public function newPassword(Request $request, Response $response)
+    public function newPassword(Request $request, Response $response, array $args)
     {
+        $user = current((new UserManager())->findBy(['token_password' => $args['token']]));
+
+        if (null === $user ||
+            (new \DateTime($user->getDateTokenPassword()))->diff(new \DateTime('now'))->d !== 0)
+            return Router::redirect('home');
+
         $request->setInputPrefix('newPasswordForm_');
 
         $form = $response->createForm(NewPasswordForm::class, $user);
@@ -65,5 +80,13 @@ class ForgotPasswordController extends Controller
         if (false === $form->handle($request)) {
             return $response->render("auth.new_password", "account", ["newPasswordForm" => $form]);
         }
+
+        $user->setPwd(password_hash($request->get('pwd'), PASSWORD_DEFAULT));
+        $user->setTokenPassword('');
+        (new UserManager())->save($user);
+
+        Auth::saveUser($user);
+
+        return Router::redirect('home');
     }
 }
