@@ -17,6 +17,12 @@ class UpdateArticleForm extends Form
 
         $this->setName("updateArticleForm");
 
+        if ($article->getPublish() == true) {
+            $selectedPublish = new StringValue("Oui", "1");
+        } else {
+            $selectedPublish = new StringValue("Non", "0");
+        }
+
         $this->setBuilder()
             ->add("id", "input", [
                 "attr" => [
@@ -67,6 +73,7 @@ class UpdateArticleForm extends Form
                     new StringValue("Non", "0")
                 ],
                 "getter" => "getString",
+                "selected" => $selectedPublish,
                 "constraints" => [
                     new RequiredConstraint()
                 ]
