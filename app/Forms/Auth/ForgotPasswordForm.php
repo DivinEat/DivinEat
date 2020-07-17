@@ -5,8 +5,6 @@ namespace App\Forms\Auth;
 use App\Core\Form;
 use App\Core\Routing\Router;
 use App\Core\Constraints\EmailConstraint;
-use App\Core\Constraints\LengthConstraint;
-use App\Core\Constraints\PasswordConstraint;
 use App\Core\Constraints\RequiredConstraint;
 
 class ForgotPasswordForm extends Form

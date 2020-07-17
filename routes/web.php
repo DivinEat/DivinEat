@@ -19,12 +19,12 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
         $group->get('', 'UserController@edit', 'edit');
         $group->post('update', 'UserController@update', 'update');
     });
-  
+
     $router->group(['prefix' => 'contact', 'as' => 'contact.'], function (Router $group) {
-          $group->get('', 'ContactController@index', 'index');
-          $group->post('store', 'ContactController@store', 'store');
+        $group->get('', 'ContactController@index', 'index');
+        $group->post('store', 'ContactController@store', 'store');
     });
-  
+
     $router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Router $group) {
         $group->get('', 'ArticleController@index', 'index');
         $group->group(['prefix' => '{article_id}'], function (Router $group) {
@@ -37,18 +37,21 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
         $group->get('create', 'OrderController@create', 'create');
         $group->post('store', 'OrderController@store', 'store');
     });
-  
+
     $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], function (Router $group) {
         $group->group(['middleware' => ['user.connected']], function (Router $group) {
             $group->post('logout', 'LogoutController@logout', 'logout');
         });
         $group->group(['middleware' => ['user.not.connected']], function (Router $group) {
+            $group->get('token/{token}', 'RegisterController@token', 'register.token');
             $group->get('login', 'LoginController@showLoginForm', 'show-login');
             $group->post('login', 'LoginController@login', 'login');
             $group->get('register', 'RegisterController@showRegisterForm', 'show-register');
             $group->post('register', 'RegisterController@register', 'register');
             $group->get('forgot-password', 'ForgotPasswordController@showForgotPassword', 'show-forgot-password');
             $group->post('forgot-password', 'ForgotPasswordController@forgotPassword', 'forgot-password');
+            $group->get('new-password/{token}', 'ForgotPasswordController@showNewPassword', 'show-new-password');
+            $group->post('new-password/{token}', 'ForgotPasswordController@newPassword', 'new-password');
         });
     });
 
