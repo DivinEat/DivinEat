@@ -27,7 +27,7 @@ abstract class Mail extends PHPMailer
         $this->Port       = SMTP_PORT;
     }
 
-    protected function htmlTemplate(string $templateName): void
+    protected function htmlTemplate(string $templateName, array $params = []): void
     {
         if (! file_exists(ROOT . '/ressources/mails/' . $templateName . '.php'))
             throw new \Exception('Impossible d\'include le template pour le mail');
