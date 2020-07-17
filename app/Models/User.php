@@ -129,7 +129,7 @@ class User extends Model implements ModelInterface
                 "prenom" => $user->getLastname(),
                 "email" => $user->getEmail(),
                 "dateInserted" => $user->getDateInserted(),
-                "status" => $user->getStatus(),
+                "status" => ($user->getStatus() == true) ? "Actif" : "Inactif",
                 "role" => $role->getLibelle(),
                 "edit"=> Router::getRouteByName('admin.user.edit', $user->getId()),
                 "destroy"=> Router::getRouteByName('admin.user.destroy', $user->getId())

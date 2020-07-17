@@ -17,6 +17,7 @@ class Article extends Model implements ModelInterface
     protected $date_updated;
     protected $slug;
     protected $author;
+    protected $publish;
 
     public function __construct(){
         parent::__construct();
@@ -62,6 +63,11 @@ class Article extends Model implements ModelInterface
         $this->author=$author;
         return $this;
     }
+    public function setPublish($publish)
+    {
+        $this->publish=$publish;
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -82,6 +88,10 @@ class Article extends Model implements ModelInterface
     public function getAuthor(): User
     {
         return $this->author;
+    }
+    public function getPublish()
+    {
+        return $this->publish;
     }
     public function getDate_inserted()
     {
@@ -136,6 +146,7 @@ class Article extends Model implements ModelInterface
                 "id" => $article->getId(),
                 "title" => $article->getTitle(),
                 "slug" => $article->getSlug(),
+                "publish" => ($article->getPublish() == true) ? "Oui" : "Non",
                 "author" => $author->getLastname()." ".$author->getFirstname(),
                 "date_inserted" => $article->getDate_inserted(),
                 "date_updated" => $article->getDate_updated(),
@@ -154,6 +165,7 @@ class Article extends Model implements ModelInterface
                 "Id",
                 "Title",
                 "Slug",
+                "Publié",
                 "Auteur",
                 "Posté le",
                 "Modifié le",

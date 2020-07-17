@@ -41,6 +41,7 @@ class ArticleController extends Controller
             'content' => $request->get("content"),
             'title' => $request->get("title"),
             'slug' => $request->get("slug"),
+            'publish' => intval($request->get("publish")),
             'author' => Auth::getUser()->getId(),
         ]);
 
@@ -79,6 +80,7 @@ class ArticleController extends Controller
             'content' => $request->get("content"),
             'title' => $request->get("title"),
             'slug' => $request->get("slug"),
+            'publish' => intval($request->get("publish")),
         ]);
 
         $form = $response->createForm(UpdateArticleForm::class, $article);

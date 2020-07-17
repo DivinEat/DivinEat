@@ -3,10 +3,11 @@
 namespace App\Forms\Article;
 
 use App\Core\Form;
-use App\Core\Routing\Router;
-use App\Core\Constraints\RequiredConstraint;
-use App\Core\Constraints\UniqueConstraint;
 use App\Models\Article;
+use App\Core\StringValue;
+use App\Core\Routing\Router;
+use App\Core\Constraints\UniqueConstraint;
+use App\Core\Constraints\RequiredConstraint;
 
 class UpdateArticleForm extends Form
 {
@@ -51,6 +52,23 @@ class UpdateArticleForm extends Form
                 "constraints" => [
                     new RequiredConstraint(),
                     new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !", $article->getId())
+                ]
+            ])
+            ->add("publish", "select", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => [
+                    "value" => "Publier",
+                    "class" => "",
+                ],
+                "data" => [
+                    new StringValue("Oui", "1"),
+                    new StringValue("Non", "0")
+                ],
+                "getter" => "getString",
+                "constraints" => [
+                    new RequiredConstraint()
                 ]
             ])
             ->add("annuler", "link", [
