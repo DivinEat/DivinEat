@@ -5,9 +5,6 @@ use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
 use App\Core\Csrf;
 
-use App\Core\Routing\Route;
-use App\Core\Routing\Router;
-
 function url(string $path): string
 {
     $url = $_SERVER['HTTP_HOST'] . '/' . $path;

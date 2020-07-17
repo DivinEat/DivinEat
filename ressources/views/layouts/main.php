@@ -24,6 +24,7 @@ use App\Core\Auth;
         <a href="<?= Router::getRouteByName('menus')->getUrl() ?>">Menus</a>
         <a href="<?= Router::getRouteByName('order.create')->getUrl() ?>">Réservations</a>
         <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Actualités</a>
+        <a href="<?= Router::getRouteByName('custom')->getUrl() ?>">Custom</a>
         </a>
     </nav>
 
@@ -32,6 +33,7 @@ use App\Core\Auth;
         <a href="<?= Router::getRouteByName('menus')->getUrl() ?>">Menus</a>
         <a href="#">Réservations</a>
         <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Actualités</a>
+        <a href="<?= Router::getRouteByName('custom')->getUrl() ?>">Custom</a>
     </div>
 
     <div style="display: flex; flex-direction: row; align-items: center;">
