@@ -4,9 +4,9 @@ namespace App\Core\Model;
 
 abstract class Model implements \JsonSerializable
 {
-    protected string $created_at;
+    protected ?string $created_at = '';
 
-    protected ?string $updated_at;
+    protected ?string $updated_at = '';
 
     public function __construct() {}
 
@@ -54,7 +54,7 @@ abstract class Model implements \JsonSerializable
     /**
      * @return string
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->formatDate($this->created_at);
     }

@@ -134,7 +134,7 @@ class Router
 
     public static function redirect(string $routeName, array $args = []): void
     {
-        $route = self::getRouteByName($routeName);
+        $route = self::getRouteByName($routeName, $args);
         if ($route === null)
             throw new \Exception('La redirection est impossible, la route n\'existe pas');
 

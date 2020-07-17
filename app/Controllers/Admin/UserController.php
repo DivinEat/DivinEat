@@ -24,14 +24,9 @@ class UserController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = $args['user_id'];
-
-        if(isset($id)){
-            $userManager = new UserManager();
-            $user = $userManager->find($id);
-        } else {
-            throw new \Exception("L'id de l'utilisateur n'existe pas.");
-        }
+        $user = (new UserManager())->find($args['user_id']);
+        if (null === $user)
+            return Router::redirect('admin.user.index');
         
         $form = $response->createForm(UpdateUserForm::class, $user);
 
@@ -40,15 +35,14 @@ class UserController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $request->setInputPrefix('updateFormUser_');
+        $user = (new UserManager())->find($args['user_id']);
+        if (null === $user)
+            return Router::redirect('admin.user.index');
 
-        $response->checkFormData([
-            "id" => intval($request->get("id")),
-            "dateInserted" => $request->get("dateInserted"),
-        ]);
+        $request->setInputPrefix('updateFormUser_');
         
-        $user = (new User)->hydrate([
-            'id' => $request->get("id"),
+        $user = $user->hydrate([
+            'id' => $user->getId(),
             'firstname' => $request->get("firstname"),
             'lastname' => $request->get("lastname"),
             'email' => $request->get("email"),
@@ -59,15 +53,15 @@ class UserController extends Controller
         if(! empty($request->get("pwd"))){
             $user->setPwd(password_hash($request->get("pwd"), PASSWORD_DEFAULT));
         }
-        
+
         $form = $response->createForm(UpdateUserForm::class, $user);
         
-        if (false === $form->handle($request)) {
-            $response->render("admin.user.edit", "admin", ["updateUserForm" => $form]);
-        } else {
-            (new UserManager())->save($user);     
-            Router::redirect('admin.user.index');
-        }
+        if (false === $form->handle($request))
+            return $response->render("admin.user.edit", "admin", ["updateUserForm" => $form]);
+
+        (new UserManager())->save($user);
+
+        return Router::redirect('admin.user.edit', [$user->getId()]);
     }
 
     public function destroy(Request $request, Response $response, array $args)
