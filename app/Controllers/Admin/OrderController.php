@@ -180,7 +180,7 @@ class OrderController extends Controller
             ]);
         }
 
-        Router::redirect('admin.order.index');
+        Router::redirect('admin.order.edit', [$order->getId()]);
     }
 
     public function destroy(Request $request, Response $response, array $args)
