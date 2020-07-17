@@ -58,6 +58,13 @@ class View
         include $modal;
     }
 
+    public function getAdditionalJs(): void
+    {
+        if (preg_match('/ressources\/views\/(.*)/', $this->viewPath, $match))
+            if (file_exists(ROOT . '/ressources/views/additional_js/' . $match[1]))
+                include ROOT . '/ressources/views/additional_js/' . $match[1];
+    }
+
     //Methode permettant d'afficher un formulaire en lui passant le nom dans data (ici formProfile)
     //Et affichant la vue
     public function formView(string $formName, string $formDir, string $formTemplate = "base")
