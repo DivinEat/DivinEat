@@ -2,11 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Core\Controller\Controller;
-use App\Core\Routing\Router;
-use App\Core\Http\Request;
-use App\Core\Http\Response;
 use App\Core\View;
+use App\Core\Http\Request;
+use App\Mails\ContactMail;
+use App\Core\Http\Response;
+use App\Core\Routing\Router;
+use App\Core\Controller\Controller;
+use App\Managers\ConfigurationManager;
 use App\Forms\Contact\CreateContactForm;
 
 class ContactController extends Controller
@@ -24,12 +26,19 @@ class ContactController extends Controller
         
         $form = $response->createForm(CreateContactForm::class);
         
-        if (false === $form->handle()) {
-            $response->render("contact", "main", ["createContactForm" => $form]);
-        } else {      
-            //PHP MAILER CODE
-            
-            Router::redirect('home');
-        }
+        if (false === $form->handle($request)) {
+            return $response->render("contact", "main", ["createContactForm" => $form]);
+        } 
+        
+        $configuration = current((new ConfigurationManager)
+        ->findBy(['libelle' => 'email']));
+
+        $body = "Vous avez reçu un mail de la part de : " . $request->get('email');
+        $body .= "<br><br>";
+        $body .= $request->get('body');
+
+        ContactMail::sendMail($configuration->getInfo(), $request->get('object'), $body);
+        
+        Router::redirect('home');
     }
 }

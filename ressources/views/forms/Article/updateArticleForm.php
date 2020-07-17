@@ -10,7 +10,7 @@ $elements = $form->getBuilder()->getElements();
     $options = $element->getOptions();
     include $element->getLayoutPath();
 
-    if (isset($element->getOptions()["label"]) && $element->getOptions()["label"]["value"] == "Slug"): ?>
+    if (isset($element->getOptions()["label"]) && $element->getOptions()["label"]["value"] == "Publier"): ?>
         </div>
         </div>
         <div class="form-group row">

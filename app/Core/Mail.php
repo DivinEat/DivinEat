@@ -27,7 +27,7 @@ abstract class Mail extends PHPMailer
         $this->Port       = SMTP_PORT;
     }
 
-    protected function htmlTemplate(string $templateName): void
+    protected function htmlTemplate(string $templateName, array $params = []): void
     {
         if (! file_exists(ROOT . '/ressources/mails/' . $templateName . '.php'))
             throw new \Exception('Impossible d\'include le template pour le mail');
@@ -39,11 +39,11 @@ abstract class Mail extends PHPMailer
 
     protected abstract function initiateSender(): void;
 
-    protected abstract function initiateSubject(): void;
+    protected abstract function initiateSubject(string $subject = null): void;
 
-    protected abstract function initiateBody(): void;
+    protected abstract function initiateBody(string $body = null): void;
 
-    public static function sendMail(string $email): void
+    public static function sendMail(string $email, string $subject = null, string $body = null): void
     {
         $className = static::class;
         $mail = new $className();
@@ -51,8 +51,8 @@ abstract class Mail extends PHPMailer
         $mail->addAddress($email);
 
         $mail->initiateSender();
-        $mail->initiateSubject();
-        $mail->initiateBody();
+        $mail->initiateSubject($subject);
+        $mail->initiateBody($body);
 
         $mail->send();
     }

@@ -34,8 +34,6 @@ h2 {
   font-size: 1rem;
 }
 
-/* ------------------------------------------------------------------------------------------------- */
-
 .container {
   overflow: hidden;
 }
@@ -130,6 +128,10 @@ div.ligne {
 .subtitle {
   margin-top: 0;
   color: #818181;
+}
+
+.total-height {
+  min-height: calc(100vh - 4em - 8em);
 }
 
 .bg-white {
@@ -294,7 +296,7 @@ div.ligne {
   display: flex;
   -webkit-box-pack: justify;
           justify-content: space-between;
-  z-index: 10;
+  z-index: 1;
 }
 
 .slides-container {
@@ -1549,6 +1551,12 @@ footer .circle .up {
 .article {
   overflow: hidden;
   height: 6.25rem;
+}
+
+.thumbnail {
+  border-radius: 4px;
+  padding: 5px;
+  width: 80px;
 }
 
 .row {

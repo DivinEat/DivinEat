@@ -58,7 +58,7 @@ class MenuController extends Controller
         
         $form = $response->createForm(CreateMenuForm::class, $object);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.menu.create", "admin", ["createMenuForm" => $form, "name" => "menu"]);
         } else {
             (new MenuManager())->save($object);       
@@ -68,14 +68,9 @@ class MenuController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = $args['menu_id'];
-
-        if(isset($id)){
-            $menuManager = new MenuManager();
-            $object = $menuManager->find($id);
-        } else {
-            throw new \Exception("L'id du menu n'existe pas.");
-        }
+        $object = (new MenuManager())->find($args['menu_id']);
+        if (null === $object)
+            return Router::redirect('admin.menu.index');
         
         $form = $response->createForm(UpdateMenuForm::class, $object);
 
@@ -84,26 +79,26 @@ class MenuController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
+        $object = (new MenuManager())->find($args['menu_id']);
+        if (null === $object)
+            return Router::redirect('admin.menu.index');
+
         $request->setInputPrefix('updateMenuForm_');
         
         $elementMenuManager = new ElementMenuManager();
-
-        $object = new Menu();
-        $object->setId($request->get('id'));
-
-        $object->setNom($request->get('nom'));
-
-        $object->setEntree($elementMenuManager->find($request->get('entrees')));
-
-        $object->setPlat($elementMenuManager->find($request->get('plats')));
         
-        $object->setDessert($elementMenuManager->find($request->get('desserts')));
-
-        $object->setPrix($this->calculPrixMenu($request));
+        $object = $object->hydrate([
+            'id' => $object->getId(),
+            'nom' => $request->get("nom"),
+            'entree' => $elementMenuManager->find($request->get('entrees'))->getId(),
+            'plat' => $elementMenuManager->find($request->get('plats'))->getId(),
+            'dessert' => $elementMenuManager->find($request->get('desserts'))->getId(),
+            'prix' => $this->calculPrixMenu($request),
+        ]);
         
         $form = $response->createForm(UpdateMenuForm::class, $object);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.menu.edit", "admin", ["updateMenuForm" => $form, "name" => "menu"]);
         } else {
             (new MenuManager())->save($object);       

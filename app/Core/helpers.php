@@ -1,5 +1,7 @@
 <?php
 
+use App\Core\Routing\Route;
+use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
 use App\Core\Csrf;
 
@@ -44,6 +46,7 @@ function br(): void
 {
     echo '<br>';
 }
+
 function pre(): void
 {
     echo '<pre>';

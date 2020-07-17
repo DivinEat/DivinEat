@@ -37,7 +37,7 @@ class Manager
             if($value instanceof Model)
                 $params[":$key"] = $value->getId();
 
-            if ($value === null)
+            if ($value === null || in_array($key, ['created_at', 'updated_at']))
             {
                 unset($columns[array_search($key, $columns)]);
                 unset($params[":$key"]);

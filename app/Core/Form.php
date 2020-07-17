@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\Model\Model;
+use App\Core\Http\Request;
 use App\Core\Builder\FormBuilder;
 use App\Core\Constraints\Validator;
 
@@ -56,14 +57,14 @@ class Form
      *      Quand on termine, on associe les valeurs des champs du formulaire à notre $model
      * 
      * */ 
-    public function handle(): bool
+    public function handle(Request $request): bool
     {
         if($_SERVER['REQUEST_METHOD'] === $this->config["method"]) {
             if (false === $this->checkIsSubmitted())
                 return false;
         }
 
-        return $this->checkIsValid();
+        return $this->checkIsValid($request);
     }
 
     /**
@@ -90,25 +91,29 @@ class Form
      * Si il y a des contraintes, alors elles les enregistres dans $errors 
      * Elle update $isValid
      */
-    public function checkIsValid(): bool
+    public function checkIsValid(Request $request): bool
     {
         $this->isValid = true;
         
         foreach ($this->builder->getElements() as $elementName => $element)
         {
-            if (!isset($_POST[$element->getName()]) || !isset($element->getOptions()["constraints"])) {
+            if (null === $request->get($element->getName()) || !isset($element->getOptions()["constraints"])) {
                 continue;
             }
 
             $name = isset($element->getOptions()["label"]["value"]) ? $element->getOptions()["label"]["value"] : $element->getName();
 
             foreach ($element->getOptions()['constraints'] as $constraint) {
-                $responseValidator = $this->validator->checkConstraint($constraint, $_POST[$element->getName()], $name);
-
+                if(is_array($request->get($element->getName()))){
+                    $responseValidator = $this->validator->checkConstraint($constraint, $request->get($element->getName())["name"], $name);
+                } else {
+                    $responseValidator = $this->validator->checkConstraint($constraint, $request->get($element->getName()), $name);
+                }
+                
                 if (NULL !== $responseValidator) {
                     $this->errors[$element->getName()] = $responseValidator;
                 }
-            }           
+            }        
         }
 
         $this->isValid = empty($this->errors);

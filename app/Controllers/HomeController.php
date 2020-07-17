@@ -56,14 +56,14 @@ class HomeController extends Controller
 
         $desserts = (new QueryBuilder())
             ->select('*')
-            ->from('elementmenus', 'm')
+            ->from('menu_elements', 'm')
             ->where("categorie = 'dessert'")
             ->getQuery()
             ->getArrayResult(ElementMenu::class);
 
         $plats = (new QueryBuilder())
             ->select('*')
-            ->from('elementmenus', 'm')
+            ->from('menu_elements', 'm')
             ->where("categorie = 'plat'")
             ->getQuery()
             ->getArrayResult(ElementMenu::class);

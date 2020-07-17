@@ -17,6 +17,7 @@ class Article extends Model implements ModelInterface
     protected $date_updated;
     protected $slug;
     protected $author;
+    protected $publish;
 
     public function __construct(){
         parent::__construct();
@@ -46,13 +47,11 @@ class Article extends Model implements ModelInterface
     }
     public function setDate_inserted($date_inserted)
     {
-        $this->date_inserted=$date_inserted;
-        return $this;
+        return $this->setCreatedAt($date_inserted);
     }
     public function setDate_updated($date_updated)
     {
-        $this->date_updated=$date_updated;
-        return $this;
+        return $this->setUpdatedAt($date_updated);
     }
     public function setSlug($slug)
     {
@@ -62,6 +61,11 @@ class Article extends Model implements ModelInterface
     public function setAuthor(User $author): Article
     {
         $this->author=$author;
+        return $this;
+    }
+    public function setPublish($publish)
+    {
+        $this->publish=$publish;
         return $this;
     }
 
@@ -85,13 +89,17 @@ class Article extends Model implements ModelInterface
     {
         return $this->author;
     }
+    public function getPublish()
+    {
+        return $this->publish;
+    }
     public function getDate_inserted()
     {
-        return $this->date_inserted;
+        return $this->getCreatedAt();
     }
     public function getDate_updated()
     {
-        return $this->date_updated;
+        return $this->getUpdatedAt();
     }
 
     public static function setJsonToHtml($content){
@@ -138,6 +146,7 @@ class Article extends Model implements ModelInterface
                 "id" => $article->getId(),
                 "title" => $article->getTitle(),
                 "slug" => $article->getSlug(),
+                "publish" => ($article->getPublish() == true) ? "Oui" : "Non",
                 "author" => $author->getLastname()." ".$author->getFirstname(),
                 "date_inserted" => $article->getDate_inserted(),
                 "date_updated" => $article->getDate_updated(),
@@ -156,6 +165,7 @@ class Article extends Model implements ModelInterface
                 "Id",
                 "Title",
                 "Slug",
+                "Publié",
                 "Auteur",
                 "Posté le",
                 "Modifié le",

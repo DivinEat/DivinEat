@@ -29,14 +29,9 @@ class ConfigurationController extends Controller
 
     public function editParams(Request $request, Response $response, array $args)
     {
-        $id = $args['config_id'];
-
-        if (isset($id)) {
-            $configurationManager = new ConfigurationManager();
-            $object = $configurationManager->find($id);
-        } else {
-            throw new \Exception("L'id de le l'option n'existe pas.");
-        }
+        $object = (new ConfigurationManager())->find($args['config_id']);
+        if (null === $object)
+            return Router::redirect('admin.configuration.index');
 
         $form = $response->createForm(UpdateConfigurationForm::class, $object);
 
@@ -45,13 +40,21 @@ class ConfigurationController extends Controller
 
     public function updateParams(Request $request, Response $response, array $args)
     {
+        $configuration = (new ConfigurationManager())->find($args['config_id']);
+        if (null === $configuration)
+            return Router::redirect('admin.configuration.index');
+
         $request->setInputPrefix('updateConfigurationForm_');
-        
-        $configuration = (new Configuration())->hydrate($request->getParams(["id", "libelle", "info"]));
+
+        $configuration = $configuration->hydrate([
+            'id' => $configuration->getId(),
+            'libelle' => $request->get("libelle"),
+            'info' => $request->get("info"),
+        ]);
 
         $form = $response->createForm(UpdateConfigurationForm::class, $configuration);
 
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.configuration.edit", "admin", ["updateConfigurationForm" => $form]);
         } else {
             (new ConfigurationManager())->save($configuration);
@@ -79,10 +82,10 @@ class ConfigurationController extends Controller
 
         if (false === $form->handle())
             return $response->render("admin.configuration.navbar.create", "admin", ["createNavbarElementForm" => $form]);
-            
+
         $slug = $object->getSlug();
         $route = "\$router->get('$slug', 'CustomPageController@display', '$slug');";
-        
+
         // file_put_contents('customRoutes.php', $route, FILE_APPEND);
 
         (new NavbarElementManager())->save($object);

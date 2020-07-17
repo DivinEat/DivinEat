@@ -3,6 +3,7 @@
 namespace App\Mails;
 
 use App\Core\Mail;
+use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
 
 class RegisterMail extends Mail
@@ -12,7 +13,7 @@ class RegisterMail extends Mail
         $this->setFrom('contact@divineat.fr');
     }
 
-    protected function initiateSubject(): void
+    protected function initiateSubject(string $subject = null): void
     {
         $configuration = current((new ConfigurationManager)
             ->findBy(['libelle' => 'nom_du_site']));
@@ -20,8 +21,9 @@ class RegisterMail extends Mail
         $this->Subject = 'Bienvenue sur ' . $configuration->getInfo();
     }
 
-    protected function initiateBody(): void
+    protected function initiateBody(string $body = null): void
     {
-        $this->htmlTemplate('register');
+        $this->msgHTML('Pour activer votre compte merci de cliquer sur ce <a href="' .
+            Router::getRouteByName('auth.register.token', [$body])->getUrl(). '">lien</a>.');
     }
 }

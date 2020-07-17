@@ -38,7 +38,7 @@ class HoraireController extends Controller
         
         $form = $response->createForm(CreateHoraireForm::class, $horaire);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.horaire.create", "admin", ["createHoraireForm" => $form]);
         } else {
             (new HoraireManager())->save($horaire);       
@@ -48,14 +48,9 @@ class HoraireController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = $args['horaire_id'];
-
-        if(isset($id)){
-            $horaireManager = new HoraireManager();
-            $object = $horaireManager->find($id);
-        } else {
-            throw new \Exception("L'id de l'horaire n'existe pas.");
-        }
+        $object = (new HoraireManager())->find($args['horaire_id']);
+        if (null === $object)
+            return Router::redirect('admin.horaire.index');
         
         $form = $response->createForm(UpdateHoraireForm::class, $object);
 
@@ -64,13 +59,22 @@ class HoraireController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
+        $horaire = (new HoraireManager())->find($args['horaire_id']);
+        if (null === $horaire)
+            return Router::redirect('admin.horaire.index');
+
         $request->setInputPrefix('updateHoraireForm_');
+
+        $horaire = $horaire->hydrate([
+            'id' => $horaire->getId(),
+            'horaire' => $request->get("horaire")
+        ]);
         
         $horaire = (new Horaire())->hydrate($request->getParams(["id", "horaire"]));
         
         $form = $response->createForm(UpdateHoraireForm::class, $horaire);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.horaire.edit", "admin", ["updateHoraireForm" => $form]);
         } else {
             (new HoraireManager())->save($horaire);       

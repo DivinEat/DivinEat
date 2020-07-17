@@ -75,8 +75,7 @@ class UpdateProfileForm extends Form
                     "class" => "",
                 ],
                 "constraints" => [
-                    new PasswordConstraint(),
-                    new RequiredConstraint()
+                    new PasswordConstraint()
                 ]
             ])
             ->add("pwd", "input", [
@@ -89,8 +88,7 @@ class UpdateProfileForm extends Form
                     "class" => "",
                 ],
                 "constraints" => [
-                    new PasswordConstraint(),
-                    new RequiredConstraint()
+                    new PasswordConstraint()
                 ]
             ])
             ->add("confirmPwd", "input", [
@@ -103,8 +101,7 @@ class UpdateProfileForm extends Form
                     "class" => "",
                 ],
                 "constraints" => [
-                    new PasswordConstraint(),
-                    new RequiredConstraint()
+                    new PasswordConstraint()
                 ]
             ])
             ->add("annuler", "link", [

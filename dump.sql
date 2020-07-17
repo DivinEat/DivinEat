@@ -99,7 +99,7 @@
   CREATE TABLE `dve_articles` (
     `id` int(11) NOT NULL,
     `title` varchar(15) NOT NULL,
-    `slug` varchar(15),
+    `slug` varchar(15) NOT NULL,
     `content` text NOT NULL,
     `author` int(11) NOT NULL,
     `date_inserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -200,3 +200,20 @@ INSERT INTO `dve_configurations` (`libelle`) VALUES
 ('facebook'),
 ('instagram'),
 ('linkedin');
+
+
+
+--
+-- Structure de la table `images`
+--
+CREATE TABLE `dve_images` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `dve_images`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `dve_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

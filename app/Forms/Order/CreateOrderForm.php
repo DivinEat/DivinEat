@@ -2,15 +2,17 @@
 
 namespace App\Forms\Order;
 
+use App\Core\Auth;
 use App\Core\Form;
 use App\Models\User;
+use App\Models\Order;
 use App\Core\StringValue;
 use App\Core\Routing\Router;
+use App\Managers\MenuManager;
 use App\Managers\RoleManager;
+use App\Managers\HoraireManager;
 use App\Core\Constraints\EmailConstraint;
 use App\Core\Constraints\LengthConstraint;
-use App\Managers\HoraireManager;
-use App\Managers\MenuManager;
 
 class CreateOrderForm extends Form
 {
@@ -76,6 +78,14 @@ class CreateOrderForm extends Form
                     new StringValue("Non", 0)
                 ],
                 "getter" => "getString"])
+            ->add("date", "date", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => "Date",
+                "name" => "date",
+                "value" => date("Y-m-d", strtotime("+1 day", time()))
+            ])
             ->add("annuler", "link", [
                 "attr" => [
                     "href" => Router::getRouteByName("admin.order.index")->getUrl(),
@@ -103,5 +113,6 @@ class CreateOrderForm extends Form
                 "name" => "createOrderForm"
             ])
             ->addConfig("action", Router::getRouteByName("admin.order.store")->getUrl());
+            
     }
 }

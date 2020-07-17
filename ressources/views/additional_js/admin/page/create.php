@@ -1,0 +1,2 @@
+<script src="<?= url('js/pagebuilder.js') ?>"></script>
+<script src="https://cdn.tiny.cloud/1/n79jkoiji791pd0z4rvytvbc5kb5v7gzhmxiv3y2dh0dm1w3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>

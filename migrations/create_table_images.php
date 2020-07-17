@@ -2,17 +2,18 @@
 
 use App\Core\Migration\Migration;
 
-class InitiateMigration extends Migration
+class CreateTableImages extends Migration
 {
     public function getTableName(): string
     {
-        return 'migrations';
+        return 'images';
     }
 
     public function up(): void
     {
         $this->id();
-        $this->string('migration_name');
-        $this->date('migrated_at');
+        $this->string('name');
+        $this->string('path');
+        $this->timestamp();
     }
 }

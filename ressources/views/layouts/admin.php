@@ -12,17 +12,8 @@ use App\Core\Auth;
     <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script>
-    <script src="<?= url('js/dashboard/dashboard-graphs.js') ?>"></script>
-    <script type="module" src="<?= url('js/article-editor.js') ?>"></script>
     <script src="<?= url('js/navbar.js') ?>"></script>
-    <script src="<?= url('js/pagebuilder.js') ?>"></script>
-    <script src="https://cdn.tiny.cloud/1/n79jkoiji791pd0z4rvytvbc5kb5v7gzhmxiv3y2dh0dm1w3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <?php $this->getAdditionalJs() ?>
 </head>
 
 <body>
@@ -66,7 +57,7 @@ use App\Core\Auth;
                                         <a href="<?= Router::getRouteByName('profile.edit')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
                                         <hr />
 
-                                        <a href="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" * onclick="event.preventDefault(); 
+                                        <a href="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" * onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
                                             <img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter
                                         </a>

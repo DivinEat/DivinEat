@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Managers\HoraireManager;
 use App\Models\Order;
 use App\Models\MenuOrder;
 use App\Core\Http\Request;
@@ -17,8 +18,6 @@ use App\Core\Controller\Controller;
 use App\Forms\Order\CreateOrderForm;
 use App\Forms\Order\UpdateOrderForm;
 
-
-
 class OrderController extends Controller
 {
     public function index(Request $request, Response $response)
@@ -33,7 +32,7 @@ class OrderController extends Controller
     }
 
     public function create(Request $request, Response $response, array $args)
-    {   
+    {
         $form = $response->createForm(CreateOrderForm::class);
 
         $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
@@ -43,22 +42,25 @@ class OrderController extends Controller
     {
         $request->setInputPrefix('createFormOrder_');
 
-        $order = (new Order())->hydrate($request->getParams(["email", "horaire", "menu", "surPlace"]));
+        $order = (new Order())->hydrate([
+            "horaire" => $request->get("horaire"),
+            "surPlace" => $request->get("surPlace"),
+        ]);
 
         $form = $response->createForm(CreateOrderForm::class, $order);
 
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             return $response->render("admin.order.create", "admin", ["createOrderForm" => $form]);
         }
 
         $userManager = new UserManager();
         $menuManager = new MenuManager();
         $orderManager = new OrderManager();
-        
+
         $email = $request->get('email');
 
         $user = $userManager->findBy(["email" => $email]);
-        
+
         if (empty($user)) {
             $user = $userManager->create([
                 'email' => $email,
@@ -73,17 +75,17 @@ class OrderController extends Controller
         $menus = [$request->get('menu')];
 
         while(null !== $request->get('menu'.$index_menus)) {
-            $menu = $request->get('menu'.$index_menus); 
+            $menu = $request->get('menu'.$index_menus);
             $prix += ($menuManager->find($menu))->getPrix();
             array_push($menus, $menu);
             $index_menus++;
         }
 
         $order->setUser($user);
-        $order->setDate(date("Y-m-d", time()));
+        $order->setDate($request->get('date'));
         $order->setPrix($prix);
         $order->setStatus("En cours");
-        
+
         $order_id = $orderManager->save($order);
 
         $order = $orderManager->find($order_id);
@@ -95,22 +97,17 @@ class OrderController extends Controller
             ]);
         }
         return Router::redirect('admin.order.index');
-        
+
     }
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = $args['order_id'];
+        $order = (new OrderManager())->find($args['order_id']);
+        if (null === $order)
+            return Router::redirect('admin.order.index');
 
-        if(isset($id)){
-            $orderManager = new OrderManager();
-            $order = $orderManager->find($id);
-        } else {
-            throw new \Exception("L'id de la commande n'existe pas.");
-        }
-        
         $form = $response->createForm(UpdateOrderForm::class, $order);
-        
+
         $response->render("admin.order.edit", "admin", ["updateOrderForm" => $form]);
     }
 
@@ -121,17 +118,18 @@ class OrderController extends Controller
         $userManager = new UserManager();
         $menuManager = new MenuManager();
 
+        $order = (new OrderManager())->find($args['order_id']);
+        if (null === $order)
+            return Router::redirect('admin.order.index');
+
         $request->setInputPrefix('updateFormOrder_');
 
-        $order = (new Order())->hydrate([
-            "horaire" => $request->get("horaire"), 
-            "surPlace" => $request->get("surPlace")
-        ]);
-        $order->setId($args['order_id']);
+        $order->setHoraire((new HoraireManager())->find($request->get("horaire")));
+        $order->setSurPlace($request->get("surPlace"));
 
         $form = $response->createForm(UpdateOrderForm::class, $order);
-        
-        if (false === $form->handle()) {
+
+        if (false === $form->handle($request)) {
             $response->render("admin.order.edit", "admin", ["updateOrderForm" => $form]);
         }
 
@@ -142,15 +140,14 @@ class OrderController extends Controller
                 $menuOrderManager->delete($menuOrder->getId());
             }
         }
-        
-        $user = $userManager->findBy(["email" => $request->get('email')]);
+
+        $user = current($userManager->findBy(["email" => $request->get('email')]));
+
         if (empty($user)) {
             $user = $userManager->create([
-                'email' => $email,
+                'email' => $request->get('email'),
                 'role' => current((new RoleManager())->findBy(['libelle' => 'Membre']))->getId(),
             ]);
-        } else {
-            $user = current($user);
         }
 
         $index_menus = 0;
@@ -158,28 +155,27 @@ class OrderController extends Controller
         $menus = [];
 
         while(null !== $request->get('menu'.$index_menus)) {
-            $menu = $request->get('menu'.$index_menus); 
+            $menu = $request->get('menu'.$index_menus);
             $prix += ($menuManager->find($menu))->getPrix();
             array_push($menus, $menu);
             $index_menus++;
         }
 
         $order->setUser($user);
-        $order->setDate(date("Y-m-d", time()));
+        $order->setDate($request->get('date'));
         $order->setPrix($prix);
-        $order->setStatus("En cours");
+        $order->setStatus($request->get('status'));
 
         $orderManager->save($order);
 
-        
         foreach ($menus as $menu) {
             $menuOrder = (new MenuOrderManager())->create([
                 'menu' => $menu,
                 'order' => $order->getId()
             ]);
         }
-        
-        Router::redirect('admin.order.index');
+
+        Router::redirect('admin.order.edit', [$order->getId()]);
     }
 
     public function destroy(Request $request, Response $response, array $args)
@@ -191,7 +187,7 @@ class OrderController extends Controller
             ->where("`order` = $orderId")
             ->getQuery()
             ->getArrayResult(MenuOrder::class);
-        
+
         $manager = new OrderManager();
         $manager->delete($orderId);
 

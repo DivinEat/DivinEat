@@ -41,12 +41,13 @@ class ArticleController extends Controller
             'content' => $request->get("content"),
             'title' => $request->get("title"),
             'slug' => $request->get("slug"),
+            'publish' => intval($request->get("publish")),
             'author' => Auth::getUser()->getId(),
         ]);
 
         $form = $response->createForm(CreateArticleForm::class, $article);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.article.create", "admin", ["createArticleForm" => $form]);
         } else {
             (new ArticleManager())->save($article);       
@@ -56,14 +57,9 @@ class ArticleController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = $args["article_id"];
-
-        if(isset($id)){
-            $articleManager = new ArticleManager();
-            $article = $articleManager->find($id);
-        } else {
-            throw new \Exception("L'id de l'article n'existe pas.");
-        }
+        $article = (new ArticleManager())->find($args['article_id']);
+        if (null === $article)
+            return Router::redirect('admin.article.index');
         
         $form = $response->createForm(UpdateArticleForm::class, $article);
 
@@ -72,18 +68,23 @@ class ArticleController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
+        $article = (new ArticleManager())->find($args['article_id']);
+        if (null === $article)
+            return Router::redirect('admin.article.index');
+
         $request->setInputPrefix('updateArticleForm_');
 
         $article = (new Article)->hydrate([
-            'id' => $request->get("id"),
+            'id' => $article->getId(),
             'content' => $request->get("content"),
             'title' => $request->get("title"),
             'slug' => $request->get("slug"),
+            'publish' => intval($request->get("publish")),
         ]);
 
         $form = $response->createForm(UpdateArticleForm::class, $article);
         
-        if (false === $form->handle()) {
+        if (false === $form->handle($request)) {
             $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
         } else {
             (new ArticleManager())->save($article);       

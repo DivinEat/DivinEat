@@ -61,28 +61,21 @@
             </div>
         </div>
     </div>
-
-    <div class="col-md-5">
-        <div class="col-inner">
-            RESERVATION
-        </div>
-    </div>
 </div>
 
-<div class="row frame">
-    <div class="col-sm-12">
-        <div class="row"><span>Dernier article</span></div>
-        <div class="ligne"></div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="col-inner article">
-                    <?php if(isset($article)){
-                            echo $article->getContent();
-                        
-                    } ?>
+<?php if(isset($article)): ?>
+    <div class="row frame">
+        <div class="col-sm-12">
+            <div class="row"><span>Dernier article</span></div>
+            <div class="ligne"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-inner article">
+                        <?= $article->getContent(); ?>
+                    </div>
                 </div>
             </div>
+            <div class="row more"><a href="<?= Router::getRouteByName('actualites.show', $article->getId())->getUrl() ?>">Voir plus</a></div>
         </div>
-        <div class="row more"><a href="#">Voir plus</a></div>
     </div>
-</div>
+<?php endif; ?>

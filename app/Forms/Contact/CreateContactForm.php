@@ -26,7 +26,7 @@ class CreateContactForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("objet", "input", [
+            ->add("object", "input", [
                 "attr" => [
                     "type" => "text",
                     "placeholder"=>"&#xf0e5;  Objet",
@@ -36,7 +36,7 @@ class CreateContactForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("text", "input", [
+            ->add("body", "input", [
                 "attr" => [
                     "type" => "textArea",
                     "placeholder"=>"&#xf0e5;  Ecrire ici",

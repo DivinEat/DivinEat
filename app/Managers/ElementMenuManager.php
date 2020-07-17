@@ -7,6 +7,6 @@ use App\Models\ElementMenu;
 class ElementMenuManager extends Manager {
     
     public function __construct(){
-        parent::__construct(ElementMenu::class, 'elementmenus');
+        parent::__construct(ElementMenu::class, 'menu_elements');
     }
 }

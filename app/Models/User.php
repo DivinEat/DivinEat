@@ -17,8 +17,9 @@ class User extends Model implements ModelInterface
     protected $pwd;
     protected $status;
     protected $role;
-    protected $dateInserted;
-    protected $dateUpdated;
+    protected ?string $token;
+    protected ?string $token_password;
+    protected ?string $date_token_password;
 
     public function __construct(){
         parent::__construct();
@@ -68,13 +69,11 @@ class User extends Model implements ModelInterface
     }
     public function setDateInserted($dateInserted)
     {
-        $this->dateInserted=$dateInserted;
-        return $this;
+        return $this->setCreatedAt($dateInserted);
     }
     public function setDateUpdated($dateUpdated)
     {
-        $this->dateUpdated=$dateUpdated;
-        return $this;
+        return $this->setUpdatedAt($dateUpdated);
     }
 
     public function getId(): ?int
@@ -108,11 +107,11 @@ class User extends Model implements ModelInterface
     }
     public function getDateInserted()
     {
-        return $this->dateInserted;
+        return $this->getCreatedAt();
     }
     public function getDateUpdated()
     {
-        return $this->dateUpdated;
+        return $this->getUpdatedAt();
     }
 
     public function isAdmin(): bool
@@ -133,7 +132,7 @@ class User extends Model implements ModelInterface
                 "prenom" => $user->getLastname(),
                 "email" => $user->getEmail(),
                 "dateInserted" => $user->getDateInserted(),
-                "status" => $user->getStatus(),
+                "status" => ($user->getStatus() == true) ? "Actif" : "Inactif",
                 "role" => $role->getLibelle(),
                 "edit"=> Router::getRouteByName('admin.user.edit', $user->getId()),
                 "destroy"=> Router::getRouteByName('admin.user.destroy', $user->getId())
@@ -165,5 +164,53 @@ class User extends Model implements ModelInterface
         $tab["fields"]["User"] = $tabUsers;
 
         return $tab;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(?string $token): void
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTokenPassword(): ?string
+    {
+        return $this->token_password;
+    }
+
+    /**
+     * @param string $token_password
+     */
+    public function setTokenPassword(?string $token_password): void
+    {
+        $this->token_password = $token_password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateTokenPassword(): ?string
+    {
+        return $this->date_token_password;
+    }
+
+    /**
+     * @param string $date_token_password
+     */
+    public function setDateTokenPassword(?string $date_token_password): void
+    {
+        $this->date_token_password = $date_token_password;
     }
 }
