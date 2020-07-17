@@ -20,6 +20,7 @@
     <script src="<?= url('js/dashboard/dashboard-graphs.js') ?>"></script>
     <script type="module" src="<?= url('js/article-editor.js') ?>"></script>
     <script src="<?= url('js/navbar.js') ?>"></script>
+    <?php $this->getAdditionalJs() ?>
 </head>
 <body>
 <div class="row padding-0">
