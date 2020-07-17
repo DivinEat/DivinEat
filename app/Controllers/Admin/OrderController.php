@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Managers\HoraireManager;
 use App\Models\Order;
 use App\Models\MenuOrder;
 use App\Core\Http\Request;
@@ -123,11 +124,8 @@ class OrderController extends Controller
 
         $request->setInputPrefix('updateFormOrder_');
 
-        $order = (new Order())->hydrate([
-            'id' => $order->getId(),
-            "horaire" => $request->get("horaire"),
-            "surPlace" => $request->get("surPlace")
-        ]);
+        $order->setHoraire((new HoraireManager())->find($request->get("horaire")));
+        $order->setSurPlace($request->get("surPlace"));
 
         $form = $response->createForm(UpdateOrderForm::class, $order);
 
@@ -143,14 +141,13 @@ class OrderController extends Controller
             }
         }
 
-        $user = $userManager->findBy(["email" => $request->get('email')]);
+        $user = current($userManager->findBy(["email" => $request->get('email')]));
+
         if (empty($user)) {
             $user = $userManager->create([
-                'email' => $email,
+                'email' => $request->get('email'),
                 'role' => current((new RoleManager())->findBy(['libelle' => 'Membre']))->getId(),
             ]);
-        } else {
-            $user = current($user);
         }
 
         $index_menus = 0;
@@ -170,8 +167,6 @@ class OrderController extends Controller
         $order->setStatus($request->get('status'));
 
         $orderManager->save($order);
-
-
 
         foreach ($menus as $menu) {
             $menuOrder = (new MenuOrderManager())->create([

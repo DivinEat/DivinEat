@@ -68,6 +68,7 @@ class InstallController extends Controller
         $form = $response->createForm(CreateSMTPForm::class, $user);
 
         $smtp = new SMTP();
+
         if (! $smtp->connect($request->get('smtp_host'), $request->get('smtp_port')))
             $form->addErrors(['connection' => 'Impossible de se connecter au serveur smtp.']);
         elseif (! empty($request->get('smtp_user')) && ! empty($request->get('smtp_pass')))

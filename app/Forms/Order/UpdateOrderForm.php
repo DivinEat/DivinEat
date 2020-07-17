@@ -28,11 +28,11 @@ class UpdateOrderForm extends Form
         $order = $this->model;
         $menuOrders = $menuOrderManager->findBy(["order" => $order->getId()]);
         $order_menus = [];
-        
+
         try {
             $user_email = $order->getUser()->getEmail();
         } catch (\Throwable $th) {
-            
+            $user_email = null;
         }
         
         foreach ($menuOrders as $menuOrder) {
@@ -126,7 +126,7 @@ class UpdateOrderForm extends Form
                 ],
                 "label" => "Date",
                 "name" => "date",
-                "value" => $order->getDate()
+                "value" => (new \DateTime(strtotime($order->getDate())))->format('Y-m-d')
             ])
             ->add("annuler", "link", [
                 "attr" => [

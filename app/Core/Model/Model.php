@@ -24,8 +24,7 @@ abstract class Model implements \JsonSerializable
             if (method_exists($articleObj, $method)) {
                 if($relation = $articleObj->getRelation($key)) {
                     $tmp = new $relation();
-                    preg_match('/.*\\\([a-zA-Z]*)/', get_class($tmp), $modelName);
-                    $managerName = 'App\Managers\\' . $modelName[1] . 'Manager';
+                    $managerName = $this->getManagerName($tmp);
                     $articleObj->$method((new $managerName)->find($value));
                 } else {
                     $articleObj->$method($value);
@@ -85,6 +84,26 @@ abstract class Model implements \JsonSerializable
         $this->updated_at = $updated_at;
 
         return $this;
+    }
+
+    public function update(array $params): Model
+    {
+        foreach ($params as $key => $value)
+        {
+            $functionName = 'set' . $this->snakeToCamelCase($key);
+            $this->$functionName($value);
+        }
+        $managerName = $this->getManagerName($this);
+        (new $managerName)->save($this);
+
+        return $this;
+    }
+
+    protected function getManagerName(Model $model): string
+    {
+        preg_match('/.*\\\([a-zA-Z]*)/', get_class($model), $modelName);
+
+        return 'App\Managers\\' . $modelName[1] . 'Manager';
     }
 
     protected function snakeToCamelCase($string, $capitalizeFirstCharacter = false)
