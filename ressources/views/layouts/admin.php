@@ -9,16 +9,6 @@
     <title>Dashboard</title>
     <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@latest"></script>
-    <script src="<?= url('js/dashboard/dashboard-graphs.js') ?>"></script>
-    <script type="module" src="<?= url('js/article-editor.js') ?>"></script>
     <script src="<?= url('js/navbar.js') ?>"></script>
     <?php $this->getAdditionalJs() ?>
 </head>

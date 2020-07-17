@@ -14,7 +14,7 @@ use App\Core\Auth;
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="<?= url('js/navbar.js') ?>"></script>
         <script src="<?= url('js/top-button.js') ?>"></script>
-        <script src="<?= url('js/slider.js') ?>"></script>
+        <?php $this->getAdditionalJs(); ?>
     </head>
     <body>
         <header id="navbar" class="navbar navbar--fixed bg-white">
