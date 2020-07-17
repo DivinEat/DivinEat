@@ -33,13 +33,21 @@ class UserController extends Controller
         
         $form = $response->createForm(UpdateProfileForm::class, $user);
 
-        if(!password_verify($request->get('currentPwd'), Auth::getUser()->getPwd()))
-            $form->addErrors(["currentPwd" => "Le mot de passe actuel ne correspond pas"]);
+        if(! empty($request->get('currentPwd'))){
+            if(!password_verify($request->get('currentPwd'), Auth::getUser()->getPwd()))
+                $form->addErrors(["currentPwd" => "Le mot de passe actuel ne correspond pas"]);
 
-        if($request->get('pwd') != $request->get('confirmPwd')){
-            $form->addErrors(["confirmPwd" => "Les mots de passe ne correspondent pas"]);
+            if(! empty($request->get('pwd')) && ! empty($request->get('confirmPwd'))){
+                if($request->get('pwd') != $request->get('confirmPwd')){
+                    $form->addErrors(["confirmPwd" => "Les mots de passe ne correspondent pas"]);
+                } else {
+                    $user->setPwd(password_hash($request->get('pwd'), PASSWORD_DEFAULT));
+                }
+            } else {
+                $form->addErrors(["confirmPwd" => "Nouveau mot de passe manquant"]);
+            }
         } else {
-            $user->setPwd(password_hash($request->get('pwd'), PASSWORD_DEFAULT));
+            $user->setPwd(Auth::getUser()->getPwd());
         }
         
         if (false === $form->handle($request)) {
