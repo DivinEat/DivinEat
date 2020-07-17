@@ -156,6 +156,17 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
                 });
             });
         });
+
+        $group->group(['prefix' => 'page', 'as' => 'page.'], function (Router $group) {
+            $group->get('', 'PageController@index', 'index');
+            $group->get('create', 'PageController@create', 'create');
+            $group->post('store', 'PageController@store', 'store');
+            $group->group(['prefix' => '{page_id}'], function (Router $group) {
+                $group->get('edit', 'PageController@edit', 'edit');
+                $group->post('update', 'PageController@update', 'update');
+                $group->delete('', 'PageController@destroy', 'destroy');
+            });
+        });
     });
 });
 

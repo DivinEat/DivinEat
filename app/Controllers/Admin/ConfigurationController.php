@@ -80,7 +80,7 @@ class ConfigurationController extends Controller
 
         $form = $response->createForm(CreateNavbarElementForm::class, $object);
 
-        if (false === $form->handle())
+        if (false === $form->handle($request))
             return $response->render("admin.configuration.navbar.create", "admin", ["createNavbarElementForm" => $form]);
 
         $slug = $object->getSlug();
@@ -122,7 +122,7 @@ class ConfigurationController extends Controller
         $object = (new NavbarElement())->hydrate($fields);
         $form = $response->createForm(UpdateNavbarElementForm::class, $object);
 
-        if (false === $form->handle())
+        if (false === $form->handle($request))
             return $response->render("admin.configuration.navbar.edit", "admin", ["updateNavbarElementForm" => $form]);
 
         (new NavbarElementManager())->save($object);
