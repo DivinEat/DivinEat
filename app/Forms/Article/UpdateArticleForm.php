@@ -88,7 +88,7 @@ class UpdateArticleForm extends Form
             ->add("submit", "input", [
                 "attr" => [
                     "type" => "submit",
-                    "value" => "Ajouter",
+                    "value" => "Mettre à jour",
                     "class" => "btn btn-primary"
                 ]
             ]);

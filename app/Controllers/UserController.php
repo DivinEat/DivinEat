@@ -46,8 +46,6 @@ class UserController extends Controller
             } else {
                 $form->addErrors(["confirmPwd" => "Nouveau mot de passe manquant"]);
             }
-        } else {
-            $user->setPwd(Auth::getUser()->getPwd());
         }
         
         if (false === $form->handle($request)) {
