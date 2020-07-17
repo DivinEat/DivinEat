@@ -41,6 +41,19 @@ class CreateInformationsForm extends Form
                     new RequiredConstraint()
                 ]
             ])
+            ->add("email", "input", [
+                "label" => [
+                    "value" => "Email"
+                ],
+                "attr" => [
+                    "type" => "text",
+                    "placeholder"=>"Entrez votre adresse Email",
+                    "class" => "form-control"
+                ],
+                "constraints" => [
+                    new EmailConstraint()
+                ]
+            ])
             ->add("pwd", "input", [
                 "label" => [
                     "value" => "Mot de passe"
@@ -67,19 +80,6 @@ class CreateInformationsForm extends Form
                 "constraints" => [
                     new PasswordConstraint(),
                     new RequiredConstraint()
-                ]
-            ])
-            ->add("email", "input", [
-                "label" => [
-                    "value" => "Email"
-                ],
-                "attr" => [
-                    "type" => "text",
-                    "placeholder"=>"Entrez votre adresse Email",
-                    "class" => "form-control"
-                ],
-                "constraints" => [
-                    new EmailConstraint()
                 ]
             ])
             ->add("submit", "input", [

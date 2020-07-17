@@ -22,7 +22,7 @@ use App\Core\Auth;
 
             <nav class="navbar-front">
                 <a href="<?= Router::getRouteByName('menus')->getUrl() ?>">Menus</a>
-                <a href="#">Réservations</a>
+                <a href="<?= Router::getRouteByName('order.create')->getUrl() ?>">Réservations</a>
                 <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Actualités</a>
                 </a>
             </nav>
@@ -43,8 +43,8 @@ use App\Core\Auth;
                             <?php if(Auth::getUser()->isAdmin()): ?>
                                 <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Administration</a>
                                 <?php endif; ?>
-                                    <a href="<?= Router::getRouteByName('profile.edit')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a><hr/>
-                                    
+                                    <a href="<?= Router::getRouteByName('profile.edit')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
+                                    <a href="<?= Router::getRouteByName('order.index')->getUrl() ?>"><img src="<?= url('img/icones/orders.png') ?>"> Commandes</a><hr/>
                                     <a href="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" *
                                         onclick="event.preventDefault(); 
                                                 document.getElementById('logout-form').submit();">
@@ -70,13 +70,13 @@ use App\Core\Auth;
             <div class="left">
                 <div>
                     <p><a href="<?= Router::getRouteByName('contact.index')->getUrl() ?>">Nous contacter</a></p>
-                    <?php if(false != getConfig("facebook")): ?>
+                    <?php if(!empty(getConfig("facebook")->getInfo())): ?>
                         <a href="<?= getConfig("facebook")->getInfo(); ?>" target="_blank"><img src="img/icones/facebook.png"></a>
                     <?php endif; ?>
-                    <?php if(false != getConfig("instagram")): ?>
+                    <?php if(!empty(getConfig("instagram")->getInfo())): ?>
                         <a href="<?= getConfig("instagram")->getInfo(); ?>" target="_blank"><img src="img/icones/instagram.png"></a>
                     <?php endif; ?>
-                    <?php if(false != getConfig("linkedin")): ?>
+                    <?php if(!empty(getConfig("linkedin")->getInfo())): ?>
                         <a href="<?= getConfig("linkedin")->getInfo(); ?>" target="_blank"><img src="img/icones/linkedin.png"></a>
                     <?php endif; ?>
                 </div>

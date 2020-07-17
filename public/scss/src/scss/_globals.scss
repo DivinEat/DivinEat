@@ -25,12 +25,7 @@ h2 {
     font-size: rem(16);
 }
 
-
-/* ------------------------------------------------------------------------------------------------- */
-
 .container {
-    // max-width: $container-width;
-    // margin: $container-margin;
     overflow: hidden;
 }
 
@@ -104,4 +99,8 @@ div.ligne {
 .subtitle {
     margin-top: 0;
     color: $grey;
+}
+
+.total-height {
+    min-height: calc(100vh - 4em - 8em);;
 }

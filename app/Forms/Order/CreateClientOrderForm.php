@@ -2,19 +2,16 @@
 
 namespace App\Forms\Order;
 
-use App\Core\Auth;
 use App\Core\Form;
-use App\Models\User;
 use App\Models\Order;
 use App\Core\StringValue;
 use App\Core\Routing\Router;
 use App\Managers\MenuManager;
-use App\Managers\RoleManager;
 use App\Managers\HoraireManager;
 use App\Core\Constraints\EmailConstraint;
-use App\Core\Constraints\LengthConstraint;
+use App\Core\Constraints\RequiredConstraint;
 
-class CreateOrderForm extends Form
+class CreateClientOrderForm extends Form
 {
     public function buildForm()
     {
@@ -36,16 +33,17 @@ class CreateOrderForm extends Form
                 "attr" => [
                     "type" => "email",
                     "placeholder" => "Email",
-                    "class" => "form-control",
+                    "class" => "form-control form-control-user",
                     "value" => ""
                 ],
                 "constraints" => [
                     new EmailConstraint(),
+                    new RequiredConstraint()
                 ]
             ])
             ->add("horaire", "select", [
                 "attr" => [
-                    "class" => "form-control"
+                    "class" => "form-control form-control-user"
                 ],
                 "label" => [
                     "value" => "Horaires",
@@ -53,10 +51,13 @@ class CreateOrderForm extends Form
                 ],
                 "data" => $horaires,
                 "getter" => "getHoraire",
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
             ])
             ->add("menu", "select", [
                 "attr" => [
-                    "class" => "form-control"
+                    "class" => "form-control form-control-user"
                 ],
                 "label" => [
                     "value" => "Menu",
@@ -64,10 +65,13 @@ class CreateOrderForm extends Form
                 ],
                 "data" => $menus,
                 "getter" => "getNom",
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
             ])
             ->add("surPlace", "select", [
                 "attr" => [
-                    "class" => "form-control"
+                    "class" => "form-control form-control-user"
                 ],
                 "label" => [
                     "value" => "Sur place",
@@ -77,27 +81,27 @@ class CreateOrderForm extends Form
                     new StringValue("Oui", 1),
                     new StringValue("Non", 0)
                 ],
-                "getter" => "getString"])
+                "getter" => "getString",
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
+                ])
             ->add("date", "date", [
                 "attr" => [
-                    "class" => "form-control"
+                    "class" => "form-control form-control-user"
                 ],
                 "label" => "Date",
                 "name" => "date",
-                "value" => date("Y-m-d", strtotime("+1 day", time()))
-            ])
-            ->add("annuler", "link", [
-                "attr" => [
-                    "href" => Router::getRouteByName("admin.order.index")->getUrl(),
-                    "class" => "btn btn-default",
-                ],
-                "text" => "Annuler",
+                "value" => date("Y-m-d", strtotime("+1 day", time())),
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
             ])
             ->add("submit", "input", [
                 "attr" => [
                     "type" => "submit",
                     "value" => "Créer",
-                    "class" => "btn btn-primary"
+                    "class" => "btn btn-account btn-account-blue margin-top-50"
                 ]
             ])
             ;
@@ -109,10 +113,9 @@ class CreateOrderForm extends Form
             ->addConfig("class", Order::class)
             ->addConfig("attr", [
                 "id" => "createOrderForm",
-                "class" => "admin-form",
+                "class" => "admin-form width-100",
                 "name" => "createOrderForm"
             ])
-            ->addConfig("action", Router::getRouteByName("admin.order.store")->getUrl());
-            
+            ->addConfig("action", Router::getRouteByName("order.store")->getUrl());
     }
 }
