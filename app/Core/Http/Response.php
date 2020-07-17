@@ -40,7 +40,7 @@ class Response
 
     /**
      * 
-     * lors de l'affectation des variables de sessions, ajouter le suffixe "Model"
+     *
      * $response->checkFormData([
      *     "idModel" => $data["id"],
      *     "dateInsertedModel" => $data["dateInserted"],

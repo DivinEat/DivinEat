@@ -79,6 +79,11 @@ class ConfigurationController extends Controller
 
         if (false === $form->handle())
             return $response->render("admin.configuration.navbar.create", "admin", ["createNavbarElementForm" => $form]);
+            
+        $slug = $object->getSlug();
+        $route = "\$router->get('$slug', 'CustomPageController@display', '$slug');";
+        
+        // file_put_contents('customRoutes.php', $route, FILE_APPEND);
 
         (new NavbarElementManager())->save($object);
         Router::redirect('admin.configuration.index');
