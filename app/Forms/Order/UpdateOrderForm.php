@@ -126,7 +126,7 @@ class UpdateOrderForm extends Form
                 ],
                 "label" => "Date",
                 "name" => "date",
-                "value" => (new \DateTime(strtotime($order->getDate())))->format('Y-m-d')
+                "value" => (new \DateTime(strtotime($order->getDate()), new \DateTimeZone('EUROPE/Paris')))->format('Y-m-d')
             ])
             ->add("annuler", "link", [
                 "attr" => [
