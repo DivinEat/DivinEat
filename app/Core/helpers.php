@@ -4,6 +4,7 @@ use App\Core\Routing\Route;
 use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
 use App\Core\Csrf;
+use App\Managers\NavbarElementManager;
 
 function url(string $path): string
 {
@@ -30,6 +31,11 @@ function csrfInput(): void
 function route(string $routeName, array $args = []): ?Route
 {
     return Router::getRouteByName($routeName, $args);
+}
+
+function getCustomRoutes(): array 
+{
+    return (new NavbarElementManager())->findAll();
 }
 
 function dd($value)

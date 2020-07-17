@@ -16,6 +16,6 @@ require '../app/Core/helpers.php';
 Autoloader::register();
 new ConstantLoader("env");
 
-$app = New Application(['web.php']);
+$app = New Application(['web.php', 'customRoutes.php']);
 
 $app->run();

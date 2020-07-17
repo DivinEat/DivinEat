@@ -9,7 +9,7 @@ use App\Core\Controller\Controller;
 
 class CustomPageController extends Controller
 {
-    public function display(Request $request, Response $response, array $args)
+    public function getDynamicRoute(Request $request, Response $response, array $args)
     {
         $page = (new PageManager())->findAll()[0];
         $content = $page->getData();
