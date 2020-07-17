@@ -13,7 +13,7 @@ use App\Core\Auth;
         
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="<?= url('js/navbar.js') ?>"></script>
-        <script src="<?= url('js/top.js') ?>"></script>
+        <script src="<?= url('js/top-button.js') ?>"></script>
         <script src="<?= url('js/slider.js') ?>"></script>
     </head>
     <body>
@@ -71,13 +71,13 @@ use App\Core\Auth;
                 <div>
                     <p><a href="<?= Router::getRouteByName('contact.index')->getUrl() ?>">Nous contacter</a></p>
                     <?php if(!empty(getConfig("facebook")->getInfo())): ?>
-                        <a href="<?= getConfig("facebook")->getInfo(); ?>" target="_blank"><img src="img/icones/facebook.png"></a>
+                        <a href="<?= getConfig("facebook")->getInfo(); ?>" target="_blank"><img src="<?= url('img/icones/facebook.png'); ?>"></a>
                     <?php endif; ?>
                     <?php if(!empty(getConfig("instagram")->getInfo())): ?>
-                        <a href="<?= getConfig("instagram")->getInfo(); ?>" target="_blank"><img src="img/icones/instagram.png"></a>
+                        <a href="<?= getConfig("instagram")->getInfo(); ?>" target="_blank"><img src="<?= url('img/icones/instagram.png'); ?>"></a>
                     <?php endif; ?>
                     <?php if(!empty(getConfig("linkedin")->getInfo())): ?>
-                        <a href="<?= getConfig("linkedin")->getInfo(); ?>" target="_blank"><img src="img/icones/linkedin.png"></a>
+                        <a href="<?= getConfig("linkedin")->getInfo(); ?>" target="_blank"><img src="<?= url('img/icones/linkedin.png'); ?>"></a>
                     <?php endif; ?>
                 </div>
             </div>
