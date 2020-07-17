@@ -41,14 +41,9 @@ class ElementMenuController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = $args['elementmenu_id'];
-
-        if(isset($id)){
-            $ElementMenuManager = new ElementMenuManager();
-            $object = $ElementMenuManager->find($id);
-        } else {
-            throw new \Exception("L'id de l'élément de menu n'existe pas.");
-        }
+        $object = (new ElementMenuManager())->find($args['elementmenu_id']);
+        if (null === $object)
+            return Router::redirect('admin.menu.index');
         
         $form = $response->createForm(UpdateElementMenuForm::class, $object);
 
@@ -58,10 +53,19 @@ class ElementMenuController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
+        $elementMenu = (new ElementMenuManager())->find($args['elementmenu_id']);
+        if (null === $elementMenu)
+            return Router::redirect('admin.menu.index');
+
         $request->setInputPrefix('updateMenuForm_');
 
-        $elementMenu = (new ElementMenu())->hydrate($request->getParams(["id", "nom", "description", "prix"]));
-        $elementMenu->setCategorie($this->getCategorie($request->get("categorie")));
+        $elementMenu = $elementMenu->hydrate([
+            'id' => $elementMenu->getId(),
+            'nom' => $request->get("nom"),
+            'description' => $request->get("description"),
+            'prix' => $request->get("prix"),
+            'categorie' => $this->getCategorie($request->get("categorie"))
+        ]);
         
         $form = $response->createForm(UpdateElementMenuForm::class, $elementMenu);
         

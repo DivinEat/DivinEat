@@ -17,8 +17,6 @@ use App\Core\Controller\Controller;
 use App\Forms\Order\CreateOrderForm;
 use App\Forms\Order\UpdateOrderForm;
 
-
-
 class OrderController extends Controller
 {
     public function index(Request $request, Response $response)
@@ -103,14 +101,9 @@ class OrderController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {
-        $id = $args['order_id'];
-
-        if(isset($id)){
-            $orderManager = new OrderManager();
-            $order = $orderManager->find($id);
-        } else {
-            throw new \Exception("L'id de la commande n'existe pas.");
-        }
+        $order = (new OrderManager())->find($args['order_id']);
+        if (null === $order)
+            return Router::redirect('admin.order.index');
 
         $form = $response->createForm(UpdateOrderForm::class, $order);
 
@@ -124,13 +117,17 @@ class OrderController extends Controller
         $userManager = new UserManager();
         $menuManager = new MenuManager();
 
+        $order = (new OrderManager())->find($args['order_id']);
+        if (null === $order)
+            return Router::redirect('admin.order.index');
+
         $request->setInputPrefix('updateFormOrder_');
 
         $order = (new Order())->hydrate([
+            'id' => $order->getId(),
             "horaire" => $request->get("horaire"),
             "surPlace" => $request->get("surPlace")
         ]);
-        $order->setId($args['order_id']);
 
         $form = $response->createForm(UpdateOrderForm::class, $order);
 

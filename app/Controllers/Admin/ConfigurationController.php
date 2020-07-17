@@ -26,14 +26,9 @@ class ConfigurationController extends Controller
 
     public function edit(Request $request, Response $response, array $args)
     {   
-        $id = $args['config_id'];
-
-        if(isset($id)){
-            $configurationManager = new ConfigurationManager();
-            $object = $configurationManager->find($id);
-        } else {
-            throw new \Exception("L'id de le l'option n'existe pas.");
-        }
+        $object = (new ConfigurationManager())->find($args['config_id']);
+        if (null === $object)
+            return Router::redirect('admin.configuration.index');
         
         $form = $response->createForm(UpdateConfigurationForm::class, $object);
 
@@ -42,9 +37,17 @@ class ConfigurationController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
+        $configuration = (new ConfigurationManager())->find($args['config_id']);
+        if (null === $configuration)
+            return Router::redirect('admin.configuration.index');
+
         $request->setInputPrefix('updateConfigurationForm_');
         
-        $configuration = (new Configuration())->hydrate($request->getParams(["id", "libelle", "info"]));
+        $configuration = $configuration->hydrate([
+            'id' => $configuration->getId(),
+            'libelle' => $request->get("libelle"),
+            'info' => $request->get("info"),
+        ]);
 
         $form = $response->createForm(UpdateConfigurationForm::class, $configuration);
         
