@@ -38,17 +38,18 @@ class ArticleController extends Controller
     {
         $request->setInputPrefix('createArticleForm_');
 
-        $fields = $request->getParams(["content", "title", "slug", "publish"]);
-        $fields["author"] = Auth::getUser()->getId();
+        $article = $request->getParams(["content", "title", "slug"]);
+        $article["author"] = Auth::getUser()->getId();
+        
+        $article = (new Article())->hydrate($article);
+        $article->setPublish(intval($request->get('publish')));
 
-        $object = (new Article())->hydrate($fields);
-
-        $form = $response->createForm(CreateArticleForm::class, $object);
+        $form = $response->createForm(CreateArticleForm::class, $article);
 
         if (false === $form->handle($request))
             return $response->render("admin.article.create", "admin", ["createArticleForm" => $form]);
 
-        (new ArticleManager())->save($object);
+        (new ArticleManager())->save($article);
         return Router::redirect('admin.article.index');
     }
 

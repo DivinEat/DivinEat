@@ -29,7 +29,7 @@ class CreateArticleForm extends Form
                 "constraints" => [
                     new RequiredConstraint(),
                     new UniqueConstraint("articles.title", "Le nom de l'article est déjà utilisé !"),
-                    new LengthConstraint(2, 15, 'Le titre doit contenir au moins 2 caractères', 'Le titre doit contenir au plus 15 caractères')
+                    new LengthConstraint(2, 255, 'Le titre doit contenir au moins 2 caractères', 'Le titre doit contenir au plus 255 caractères')
                 ]
             ])
             ->add("slug", "input", [
@@ -44,7 +44,7 @@ class CreateArticleForm extends Form
                 "constraints" => [
                     new RequiredConstraint(),
                     new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !"),
-                    new LengthConstraint(2, 15, 'Le slug doit contenir au moins 2 caractères', 'Le slug doit contenir au plus 15 caractères')
+                    new LengthConstraint(2, 255, 'Le slug doit contenir au moins 2 caractères', 'Le slug doit contenir au plus 255 caractères')
                 ]
             ])
             ->add("publish", "select", [
@@ -56,8 +56,8 @@ class CreateArticleForm extends Form
                     "class" => "",
                 ],
                 "data" => [
-                    new StringValue("Oui", "1"),
-                    new StringValue("Non", "0")
+                    new StringValue("Oui", 1),
+                    new StringValue("Non", 0)
                 ],
                 "getter" => "getString",
                 "constraints" => [
