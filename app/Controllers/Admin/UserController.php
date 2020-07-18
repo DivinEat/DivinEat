@@ -47,7 +47,7 @@ class UserController extends Controller
             'lastname' => $request->get("lastname"),
             'email' => $request->get("email"),
             'status' => intval($request->get("status")),
-            'role' => $request->get("role"),
+            'role' => $request->get("role")
         ]);
 
         if(! empty($request->get("pwd"))){

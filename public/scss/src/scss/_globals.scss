@@ -80,6 +80,10 @@ div.ligne {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    &-start {
+        align-items: flex-start;
+    }
 }
 
 .flex-raw {
@@ -87,13 +91,10 @@ div.ligne {
     flex-direction: raw;
     justify-content: space-between;
     width: 100%;
-}
 
-.flex-raw-start {
-    display: flex;
-    flex-direction: raw;
-    justify-content: flex-start;
-    width: 100%;
+    &-start {
+        justify-content: flex-start;
+    }
 }
 
 .title {

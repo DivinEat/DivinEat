@@ -107,6 +107,11 @@ div.ligne {
           align-items: center;
 }
 
+.flex-column-start {
+  -webkit-box-align: start;
+          align-items: flex-start;
+}
+
 .flex-raw {
   display: -webkit-box;
   display: flex;
@@ -119,14 +124,8 @@ div.ligne {
 }
 
 .flex-raw-start {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: raw;
   -webkit-box-pack: start;
           justify-content: flex-start;
-  width: 100%;
 }
 
 .title {

@@ -16,7 +16,10 @@ use App\Core\Routing\Router;
                     </div>
                 </div>
                 <div class="flex-raw">
-                    <label><?= $article->getAuthor()->getFirstname() . " " . $article->getAuthor()->getLastname(); ?></label>
+                    <div class="flex-column flex-column-start"> 
+                        <small>Auteur : <?= $article->getAuthor()->getFirstname() . " " . $article->getAuthor()->getLastname(); ?></small>
+                        <small class="color-grey">Catégorie : <?= $article->getCategorie()->getName() ?></small>
+                    </div>
                     <div class="more">
                         <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Retour</a>
                     </div>
@@ -30,7 +33,7 @@ use App\Core\Routing\Router;
                     <div class="card">
                         <p class="subtitle margin-bottom-50">Commentaires</p>
                         <?php foreach ($comments as $comment):?>
-                            <div class="flex-raw-start">
+                            <div class="flex-raw flex-raw-start">
                             <?php if (null !== getAuth() && getAuth()->isModOrAdmin()): ?>
                                     <form action="<?= route('actualites.comments.hide', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
                                         <?php csrfInput(); ?>

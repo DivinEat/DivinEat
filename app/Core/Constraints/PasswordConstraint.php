@@ -15,7 +15,7 @@ class PasswordConstraint implements ConstraintInterface
     {
         $this->errors = [];
 
-        if(! isset($value)){
+        if(! empty($value)){
             if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@&é\"'(§\\\<>|è!çà)|è_!çà)[\]\-#°^¨$*%ù=+:\/;.,?])([@&é\"'(§\\\<>|è!çà)|è!çà)[\]\-#°^¨$*%ù=+:\/;.,?\w]){8,16}$/", $value) == false)
                 $this->errors[] = "Le format du mot de passe n'est pas bon.";
         }
