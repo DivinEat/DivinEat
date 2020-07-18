@@ -4,6 +4,8 @@ namespace App\Core\Model;
 
 abstract class Model implements \JsonSerializable
 {
+    protected ?int $id = null;
+
     protected ?string $created_at = '';
 
     protected ?string $updated_at = '';
@@ -126,5 +128,25 @@ abstract class Model implements \JsonSerializable
         $format = ($heure) ? 'd/m/Y H\hi' : 'd/m/Y';
             
         return date($format, strtotime($date));
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     *
+     * @return $this
+     */
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 }
