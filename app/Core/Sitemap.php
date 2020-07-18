@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use App\Core\Migration\MigrationRunner;
 use App\Core\Routing\Router;
 
 class Sitemap
