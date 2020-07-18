@@ -28,7 +28,7 @@ use App\Core\Auth;
             <a href="<?= Router::getRouteByName('order.create')->getUrl() ?>">Réservations</a>
             <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Actualités</a>
             <?php foreach (getCustomRoutes() as $route) : ?>
-                <a href="<?= Router::getRouteByName($route->getSlug())->getUrl() ?>"><?= $route->getSlug() ?></a>
+                <a href="<?= Router::getRouteByName('custom.' . $route->getSlug())->getUrl() ?>"><?= $route->getSlug() ?></a>
             <?php endforeach ?>
 
         </nav>
@@ -38,6 +38,9 @@ use App\Core\Auth;
             <a href="<?= Router::getRouteByName('menus')->getUrl() ?>">Menus</a>
             <a href="#">Réservations</a>
             <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Actualités</a>
+            <?php foreach (getCustomRoutes() as $route) : ?>
+                <a href="<?= Router::getRouteByName('custom.' . $route->getSlug())->getUrl() ?>"><?= $route->getSlug() ?></a>
+            <?php endforeach ?>
         </div>
 
         <div style="display: flex; flex-direction: row; align-items: center;">

@@ -5,6 +5,7 @@ namespace App\Forms\Configuration;
 use App\Core\Form;
 use App\Core\Routing\Router;
 use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\UniqueConstraint;
 use App\Managers\PageManager;
 use App\Models\Configuration;
 
@@ -29,7 +30,8 @@ class CreateNavbarElementForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
-                    new RequiredConstraint()
+                    new RequiredConstraint(),
+                    new UniqueConstraint("pages.slug", "Le slug de la page est déjà utilisé !")
                 ],
             ])
             ->add("name", "input", [

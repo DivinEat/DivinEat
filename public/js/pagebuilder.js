@@ -1,20 +1,4 @@
 $(document).ready(function () {
-    // tinymce.init({
-    //     selector: "textarea#textearea-test",
-    //     height: 500,
-    //     menubar: true,
-    //     plugins: [
-    //         "advlist autolink lists link image charmap print preview anchor",
-    //         "searchreplace visualblocks code fullscreen",
-    //         "insertdatetime media table paste code help wordcount",
-    //     ],
-    //     toolbar:
-    //         "undo redo | formatselect | " +
-    //         "bold italic backcolor | alignleft aligncenter " +
-    //         "alignright alignjustify | bullist numlist outdent indent | " +
-    //         "removeformat | help",
-    //     content_css: "//www.tiny.cloud/css/codepen.min.css",
-    // });
     var pageBuilder = {
         page: null,
         container: null,
@@ -30,8 +14,8 @@ $(document).ready(function () {
         init: function () {
             pageBuilder.page = document.querySelector(".page");
             var newContainerBtn = document.querySelector(".pageBuilder-btn-add");
-            var submit = document.querySelector("#create_page");
-            var inputData = document.querySelector("#page_data");
+            var submit = document.querySelector("#createPageForm_submit");
+            var inputData = document.querySelector("#createPageForm_data");
 
             submit.addEventListener("click", function () {
                 inputData.value = pageBuilder.getDataPage();

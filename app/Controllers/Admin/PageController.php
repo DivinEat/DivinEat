@@ -10,18 +10,15 @@ use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Managers\PageManager;
+use App\Core\Builder\QueryBuilder;
+use App\Forms\Page\CreatePageForm;
 use App\Core\Controller\Controller;
+use App\Managers\NavbarElementManager;
 
 class PageController extends Controller
 {
-    private string $_dataString;
     private object $_dataObject;
     private string $_dataHTML;
-
-    public function __construct()
-    {
-        $this->_dataHTML = '';
-    }
 
     public function index(Request $request, Response $response)
     {
@@ -35,45 +32,74 @@ class PageController extends Controller
 
     public function create(Request $request, Response $response)
     {
-        $response->render('admin.page.create', 'admin');
+        $form = $response->createForm(CreatePageForm::class);
+        $response->render('admin.page.create', 'admin', ["createPageForm" => $form]);
     }
 
     public function store(Request $request, Response $response): void
     {
-        if (null === $request->get('page_data'))
-            die("probleme pas de data");
+        $request->setInputPrefix('createPageForm_');
 
-        $this->_dataString = $request->get('page_data');
+        $page = (new Page())->hydrate($request->getParams(["title", "data"]));
 
-        $this->getHTMLPageData();
-        $pageManager = new PageManager();
+        $form = $response->createForm(CreatePageForm::class, $page);
 
-        $page = $pageManager->create([
-            'title' => 'Ma page',
-            'data' => $this->_dataHTML,
-        ]);
-
-        Router::redirect('admin.page.index');
+        if (false === $form->handle($request)) {
+            $response->render('admin.page.create', 'admin', ["createPageForm" => $form]);
+        } else {
+            (new PageManager())->save($page);
+            Router::redirect('admin.page.index');
+        }
     }
 
-    public function getHTMLPageData(): void
+    public function destroy(Request $request, Response $response, array $args)
     {
-        $this->_dataObject = json_decode($this->_dataString);
+        (new QueryBuilder())
+            ->delete("navbar_elements")
+            ->where("`page` = {$args["page_id"]}")
+            ->getQuery();
+
+        (new PageManager())->delete($args["page_id"]);
+
+        return Router::redirect('admin.page.index');
+    }
+
+    public function displayPageContent(Request $request, Response $response)
+    {
+        preg_match('/\/(.*)$/', $request->getCurrentRoute()->getPath(), $match);
+
+        if (empty($match[1]))
+            return Router::redirect('home');
+
+        $navbarElement = current((new NavbarElementManager())->findBy(["slug" => $match[1]]));
+
+        if (false === $navbarElement)
+            return Router::redirect('not.found');
+
+        $page = $navbarElement->getPage();
+        $data = $page->getData();
+        $this->getHTMLPageData($data);
+
+        $response->render('customPage', 'main', ['page' => $this->_dataHTML]);
+    }
+
+    public function getHTMLPageData(string $data): void
+    {
+        $this->_dataObject = json_decode($data);
 
         $page = $this->_dataObject->page;
-
         $first = $page->first;
         $first = $this->_dataObject->$first;
 
-        $this->blou($first);
+        $this->_dataHTML = '';
+        $this->generateHTML($first);
     }
-
 
     /**
      * add HTML content to the html data page (_dataHTML)
      * 
      */
-    private function blou(object $element): void
+    private function generateHTML(object $element): void
     {
         $type = $element->type;
         if ($type === 'row') {
@@ -83,7 +109,7 @@ class PageController extends Controller
             $this->_dataHTML .= $this->getRowHTML();
             $first = $element->first;
 
-            $this->blou($this->_dataObject->$first);
+            $this->generateHTML($this->_dataObject->$first);
 
             $this->_dataHTML .= $this->getEndDivHTML();
         }
@@ -95,7 +121,7 @@ class PageController extends Controller
             $this->_dataHTML .= $this->getChildRowHTML();
             $first = $element->first;
 
-            $this->blou($this->_dataObject->$first);
+            $this->generateHTML($this->_dataObject->$first);
 
             $this->_dataHTML .= $this->getEndDivHTML();
             $this->_dataHTML .= $this->getEndDivHTML();
@@ -109,7 +135,7 @@ class PageController extends Controller
         if (NULL === $next)
             return;
 
-        $this->blou($this->_dataObject->$next);
+        $this->generateHTML($this->_dataObject->$next);
 
         return;
     }

@@ -115,6 +115,11 @@ class Route
         return $this->controllerName;
     }
 
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
     public function getMethod(): string
     {
         return $this->methodName;
