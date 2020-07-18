@@ -25,6 +25,12 @@ abstract class Mail extends PHPMailer
         $this->Username   = SMTP_USER;
         $this->Password   = SMTP_PASS;
         $this->Port       = SMTP_PORT;
+
+        if (! empty(SMTP_PASS) && ! empty(SMTP_USER))
+        {
+            $this->SMTPAuth = true;
+            $this->SMTPSecure = 'tls';
+        }
     }
 
     protected function htmlTemplate(string $templateName, array $params = []): void
