@@ -6,28 +6,22 @@ use App\Core\Model\Model;
 
 class Comment extends Model
 {
-    protected int $id;
-
     protected string $content;
 
-    protected bool $hide;
+    protected bool $hide = false;
 
     protected User $user;
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
+    protected Article $article;
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
+
+
+    public function initRelation(): array
     {
-        $this->id = $id;
+        return [
+            'user' => User::class,
+            'article' => Article::class
+        ];
     }
 
     /**
@@ -78,4 +72,19 @@ class Comment extends Model
         $this->user = $user;
     }
 
+    /**
+     * @return Article
+     */
+    public function getArticle(): Article
+    {
+        return $this->article;
+    }
+
+    /**
+     * @param Article $article
+     */
+    public function setArticle(Article $article): void
+    {
+        $this->article = $article;
+    }
 }

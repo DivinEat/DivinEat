@@ -10,7 +10,6 @@ use App\Managers\UserManager;
 
 class Article extends Model implements ModelInterface
 {
-    protected $id;
     protected $title;
     protected $content;
     protected $date_inserted;
@@ -28,12 +27,6 @@ class Article extends Model implements ModelInterface
         return [
             'author' => User::class
         ];
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id=$id;
-        return $this;
     }
     public function setTitle($title)
     {
@@ -69,10 +62,6 @@ class Article extends Model implements ModelInterface
         return $this;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
     public function getTitle()
     {
         return $this->title;

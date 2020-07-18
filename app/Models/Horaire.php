@@ -8,7 +8,6 @@ use App\Core\Routing\Router;
 
 class Horaire extends Model implements ModelInterface
 {
-    protected $id;
     protected $horaire;
 
     public function __construct()

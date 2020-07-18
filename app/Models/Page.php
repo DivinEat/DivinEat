@@ -7,7 +7,6 @@ use App\Core\Model\ModelInterface;
 
 class Page extends Model implements ModelInterface
 {
-    protected $id;
     protected $title;
     protected $data;
     protected $date_inserted;

@@ -16,7 +16,6 @@ use App\Managers\MenuOrderManager;
 
 class Order extends Model implements ModelInterface
 {
-    protected $id;
     protected $user;
     protected $horaire;
     protected $date;

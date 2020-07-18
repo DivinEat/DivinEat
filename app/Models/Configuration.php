@@ -8,7 +8,6 @@ use App\Core\Routing\Router;
 
 class Configuration extends Model implements ModelInterface
 {
-    protected $id;
     protected $libelle;
     protected $info;
 

@@ -10,7 +10,6 @@ use App\Models\Menu;
 
 class MenuOrder extends Model implements ModelInterface
 {
-    protected $id;
     protected $menu;
     protected $order;
 

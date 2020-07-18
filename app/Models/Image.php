@@ -8,7 +8,6 @@ use App\Core\Model\ModelInterface;
 
 class Image extends Model implements ModelInterface
 {
-    protected $id;
     protected $name;
     protected $path;
 

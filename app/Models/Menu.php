@@ -10,7 +10,6 @@ use App\Managers\ElementMenuManager;
 
 class Menu extends Model implements ModelInterface
 {
-    protected $id;
     protected $nom;
     protected $entree;
     protected $plat;

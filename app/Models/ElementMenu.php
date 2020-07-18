@@ -7,7 +7,6 @@ use App\Core\Model\ModelInterface;
 
 class ElementMenu extends Model implements ModelInterface
 {
-    protected $id;
     protected $categorie;
     protected $nom;
     protected $description;

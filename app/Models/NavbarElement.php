@@ -8,7 +8,6 @@ use App\Core\Model\ModelInterface;
 
 class NavbarElement extends Model implements ModelInterface
 {
-    protected $id;
     protected $name;
     protected $page;
     protected $slug;

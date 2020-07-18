@@ -7,7 +7,6 @@ use App\Core\Model\ModelInterface;
 
 class Role extends Model implements ModelInterface
 {
-    protected $id;
     protected $libelle;
 
     public function __construct()

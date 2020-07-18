@@ -10,7 +10,6 @@ use App\Managers\RoleManager;
 
 class User extends Model implements ModelInterface
 {
-    protected $id;
     protected $firstname;
     protected $lastname;
     protected $email;
