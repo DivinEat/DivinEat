@@ -8,6 +8,7 @@ use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Core\View;
 use App\Core\Auth;
+use App\Managers\UserManager;
 use App\Models\Article;
 use App\Managers\ArticleManager;
 use App\Forms\Article\CreateArticleForm;
@@ -36,23 +37,19 @@ class ArticleController extends Controller
     public function store(Request $request, Response $response, array $args)
     {
         $request->setInputPrefix('createArticleForm_');
-        
-        $article = (new Article)->hydrate([
-            'content' => $request->get("content"),
-            'title' => $request->get("title"),
-            'slug' => $request->get("slug"),
-            'publish' => intval($request->get("publish")),
-            'author' => Auth::getUser()->getId(),
-        ]);
 
-        $form = $response->createForm(CreateArticleForm::class, $article);
-        
+        $fields = $request->getParams(["content", "title", "slug", "publish"]);
+        $fields["author"] = Auth::getUser()->getId();
+
+        $object = (new Article())->hydrate($fields);
+
+        $form = $response->createForm(CreateArticleForm::class, $object);
+
         if (false === $form->handle($request))
             return $response->render("admin.article.create", "admin", ["createArticleForm" => $form]);
 
-            (new ArticleManager())->save($article);
-
-            return Router::redirect('admin.article.index');
+        (new ArticleManager())->save($object);
+        return Router::redirect('admin.article.index');
     }
 
     public function edit(Request $request, Response $response, array $args)
@@ -60,7 +57,7 @@ class ArticleController extends Controller
         $article = (new ArticleManager())->find($args['article_id']);
         if (null === $article)
             return Router::redirect('admin.article.index');
-        
+
         $form = $response->createForm(UpdateArticleForm::class, $article);
 
         $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
@@ -68,28 +65,23 @@ class ArticleController extends Controller
 
     public function update(Request $request, Response $response, array $args)
     {
-        $article = (new ArticleManager())->find($args['article_id']);
-        if (null === $article)
-            return Router::redirect('admin.article.index');
-
         $request->setInputPrefix('updateArticleForm_');
 
-        $article = (new Article)->hydrate([
-            'id' => $article->getId(),
-            'content' => $request->get("content"),
-            'title' => $request->get("title"),
-            'slug' => $request->get("slug"),
-            'publish' => intval($request->get("publish")),
-        ]);
+        if (null === (new ArticleManager())->find($args['article_id']))
+            return Router::redirect('admin.article.index');
+
+        $article = (new Article())->hydrate($request->getParams(['slug', 'title', 'content']));
+        $article->setPublish(intval($request->get('publish')));
+        $article->setId($args['article_id']);
 
         $form = $response->createForm(UpdateArticleForm::class, $article);
-        
+
         if (false === $form->handle($request))
             return $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
 
         (new ArticleManager())->save($article);
 
-        return Router::redirect('admin.article.index');
+        return Router::redirect('admin.article.edit', [$args['article_id']]);
     }
 
     public function destroy(Request $request, Response $response, array $args)

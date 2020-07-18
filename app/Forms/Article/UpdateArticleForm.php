@@ -6,13 +6,14 @@ use App\Core\Form;
 use App\Models\Article;
 use App\Core\StringValue;
 use App\Core\Routing\Router;
+use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\UniqueConstraint;
 use App\Core\Constraints\RequiredConstraint;
 
 class UpdateArticleForm extends Form
 {
     public function buildForm()
-    {   
+    {
         $article = $this->model;
 
         $this->setName("updateArticleForm");
@@ -42,7 +43,8 @@ class UpdateArticleForm extends Form
                 ],
                 "constraints" => [
                     new RequiredConstraint(),
-                    new UniqueConstraint("articles.title", "Le nom de l'article est déjà utilisé !", $article->getId())
+                    new UniqueConstraint("articles.title", "Le nom de l'article est déjà utilisé !", $article->getId()),
+                    new LengthConstraint(2, 255, 'Le titre doit contenir au moins 2 caractères', 'Le titre doit contenir au plus 15 caractères')
                 ]
             ])
             ->add("slug", "input", [
@@ -57,7 +59,8 @@ class UpdateArticleForm extends Form
                 ],
                 "constraints" => [
                     new RequiredConstraint(),
-                    new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !", $article->getId())
+                    new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !", $article->getId()),
+                    new LengthConstraint(2, 255, 'Le slug doit contenir au moins 2 caractères', 'Le slug doit contenir au plus 15 caractères')
                 ]
             ])
             ->add("publish", "select", [
@@ -74,6 +77,15 @@ class UpdateArticleForm extends Form
                 ],
                 "getter" => "getString",
                 "selected" => $selectedPublish,
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
+            ])
+            ->add("content", "input", [
+                "attr" => [
+                    "type" => "hidden",
+                    "value" => $article->getContent()
+                ],
                 "constraints" => [
                     new RequiredConstraint()
                 ]
