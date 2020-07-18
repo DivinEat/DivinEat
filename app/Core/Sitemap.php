@@ -31,7 +31,8 @@ class Sitemap
     protected static function generateRoutesLines(&$xw, array &$addedUrls, array $routeList): void
     {
         array_map(function ($route) use ($xw, $addedUrls) {
-            if (preg_match('/admin|install/', $route['Name']) || in_array($route['Url'], $addedUrls))
+            if (preg_match('/admin|install/', $route['Name']) || $route['Type'] !== 'GET'
+                || in_array($route['Url'], $addedUrls))
                 return;
 
             if (preg_match('/\{([a-z\_]*)\}/', $route['Url']))
@@ -60,7 +61,7 @@ class Sitemap
         $managerName = 'App\\Managers\\' . ucfirst($match[1]) . 'Manager';
         array_map(function (Model $model) use ($xw, $addedUrls, $match, $url) {
             $getterName = 'get' . snakeToCamelCase($match[2], true);
-            $replacedUrl = preg_replace('/\{[a-z]*\_[a-z]*\}/', $model->$getterName(), $url);
+            $replacedUrl = preg_replace('/\{[a-z]*\_[a-z]*\}/', $model->$getterName(), $url, 1);
 
             if (! in_array($replacedUrl, $addedUrls))
             {
