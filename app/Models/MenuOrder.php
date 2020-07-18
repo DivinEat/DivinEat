@@ -26,11 +26,6 @@ class MenuOrder extends Model implements ModelInterface
         ];
     }
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
     public function setMenu(Menu $menu): MenuOrder
     {
         $this->menu=$menu;
@@ -42,10 +37,6 @@ class MenuOrder extends Model implements ModelInterface
         return $this;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
     public function getMenu(): Menu
     {
         return $this->menu;

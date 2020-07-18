@@ -22,11 +22,6 @@ class ElementMenu extends Model implements ModelInterface
         return [];
     }
 
-    public function setId(int $id): self
-    {
-        $this->id=$id;
-        return $this;
-    }
     public function setCategorie($categorie)
     {
         $this->categorie=strtolower(trim($categorie));
@@ -46,11 +41,6 @@ class ElementMenu extends Model implements ModelInterface
     {
         $this->prix= $prix;
         return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getCategorie()

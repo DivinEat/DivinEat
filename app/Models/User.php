@@ -30,12 +30,6 @@ class User extends Model implements ModelInterface
             'role' => Role::class
         ];
     }
-
-    public function setId(int $id): self
-    {
-        $this->id=$id;
-        return $this;
-    }
     public function setFirstname($firstname)
     {
         $this->firstname=ucwords(strtolower(trim($firstname)));
@@ -73,11 +67,6 @@ class User extends Model implements ModelInterface
     public function setDateUpdated($dateUpdated)
     {
         return $this->setUpdatedAt($dateUpdated);
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
     
     public function getFirstname()
