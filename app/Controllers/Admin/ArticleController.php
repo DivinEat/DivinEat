@@ -47,12 +47,12 @@ class ArticleController extends Controller
 
         $form = $response->createForm(CreateArticleForm::class, $article);
         
-        if (false === $form->handle($request)) {
-            $response->render("admin.article.create", "admin", ["createArticleForm" => $form]);
-        } else {
-            (new ArticleManager())->save($article);       
-            Router::redirect('admin.article.index');
-        }
+        if (false === $form->handle($request))
+            return $response->render("admin.article.create", "admin", ["createArticleForm" => $form]);
+
+            (new ArticleManager())->save($article);
+
+            return Router::redirect('admin.article.index');
     }
 
     public function edit(Request $request, Response $response, array $args)

@@ -27,7 +27,7 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
 
     $router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Router $group) {
         $group->get('', 'ArticleController@index', 'index');
-        $group->group(['prefix' => '{article_id}'], function (Router $group) {
+        $group->group(['prefix' => '{article_slug}'], function (Router $group) {
             $group->get('show', 'ArticleController@show', 'show');
         });
     });
