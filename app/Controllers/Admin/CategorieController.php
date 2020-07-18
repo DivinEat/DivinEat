@@ -88,12 +88,20 @@ class CategorieController extends Controller
 
         $dataCategorie = [];
         foreach ($datas as $data) {
-            $dataCategorie[] = [
-                "name" => $data->getName(),
-                "slug" => $data->getSlug(),
-                "destroy" => Router::getRouteByName('admin.categorie.destroy', $data->getId()),
-                "edit" => Router::getRouteByName('admin.categorie.edit', $data->getId())
-            ];
+            if ("default" !== $data->getSlug()) {
+                $dataCategorie[] = [
+                    "name" => $data->getName(),
+                    "slug" => $data->getSlug(),
+                    "edit" => Router::getRouteByName('admin.categorie.edit', $data->getId()),
+                    "destroy" => Router::getRouteByName('admin.article.destroy', $data->getId())
+                ];
+            } else {
+                $dataCategorie[] = [
+                    "name" => $data->getName(),
+                    "slug" => $data->getSlug(),
+                    "edit" => Router::getRouteByName('admin.categorie.edit', $data->getId())
+                ];
+            }
         }
 
         $data = [

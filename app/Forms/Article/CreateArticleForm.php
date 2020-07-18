@@ -9,11 +9,13 @@ use App\Core\Routing\Router;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\UniqueConstraint;
 use App\Core\Constraints\RequiredConstraint;
+use App\Managers\CategorieManager;
 
 class CreateArticleForm extends Form
 {
     public function buildForm()
     {
+        $categories = (new CategorieManager())->findAll();
         $this->setName("createArticleForm");
 
         $this->setBuilder()
@@ -46,6 +48,17 @@ class CreateArticleForm extends Form
                     new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !"),
                     new LengthConstraint(2, 255, 'Le slug doit contenir au moins 2 caractères', 'Le slug doit contenir au plus 255 caractères')
                 ]
+            ])
+            ->add("entrees", "select", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => [
+                    "value" => "Catégorie",
+                    "class" => "",
+                ],
+                "data" => $categories,
+                "getter" => "getName",
             ])
             ->add("publish", "select", [
                 "attr" => [

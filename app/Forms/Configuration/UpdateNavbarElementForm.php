@@ -73,16 +73,6 @@ class UpdateNavbarElementForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("dateInserted", "input", [
-                "attr" => [
-                    "type" => "hidden",
-                    "class" => "form-control",
-                    "value" => $model->getDate_inserted()
-                ],
-                "constraints" => [
-                    new RequiredConstraint()
-                ]
-            ])
             ->add("annuler", "link", [
                 "attr" => [
                     "href" => Router::getRouteByName("admin.configuration.index")->getUrl(),

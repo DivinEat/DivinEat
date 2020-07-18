@@ -21,7 +21,7 @@ class ArticleController extends Controller
         $articleManager = new ArticleManager();
         $articles = $articleManager->findAll();
 
-        $configTableArticle = Article::getShowArticleTable($articles);
+        $configTableArticle = $this->getArticleData($articles);
 
         $myView = new View("admin.article.index", "admin");
         $myView->assign("configTableArticle", $configTableArticle);
@@ -91,5 +91,52 @@ class ArticleController extends Controller
         $manager->delete($args["article_id"]);
 
         Router::redirect('admin.article.index');
+    }
+
+    private function getArticleData($articles)
+    {
+        $tabArticles = [];
+        foreach ($articles as $article) {
+
+            $author = (new UserManager)->find($article->getAuthor()->getId());
+
+            $tabArticles[] = [
+                "title" => $article->getTitle(),
+                "slug" => $article->getSlug(),
+                "publish" => ($article->getPublish() == true) ? "Oui" : "Non",
+                "author" => $author->getLastname() . " " . $author->getFirstname(),
+                "categorie" => $article->getCategorie()->getName(),
+                "created_at" => $article->getCreatedAt(),
+                "updated_at" => $article->getUpdatedAt(),
+                "edit" => Router::getRouteByName('admin.article.edit', $article->getId()),
+                "destroy" => Router::getRouteByName('admin.article.destroy', $article->getId()),
+            ];
+        }
+
+        $tab = [
+            "config" => [
+                "class" => "admin-table"
+            ],
+
+            "colonnes" => [
+                "Catégorie",
+                "Title",
+                "Slug",
+                "Publié",
+                "Auteur",
+                "Catégorie",
+                "Posté le",
+                "Modifié le",
+                "Actions"
+            ],
+
+            "fields" => [
+                "Article" => []
+            ]
+        ];
+
+        $tab["fields"]["Article"] = $tabArticles;
+
+        return $tab;
     }
 }

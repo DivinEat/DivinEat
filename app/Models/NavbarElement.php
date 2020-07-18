@@ -11,8 +11,6 @@ class NavbarElement extends Model implements ModelInterface
     protected $name;
     protected $page;
     protected $slug;
-    protected $date_inserted;
-    protected $date_updated;
 
     public function __construct()
     {
@@ -43,17 +41,6 @@ class NavbarElement extends Model implements ModelInterface
         return $this;
     }
 
-    public function setDate_inserted($date_inserted): self
-    {
-        $this->date_inserted = $date_inserted;
-        return $this;
-    }
-
-    public function setDate_updated($date_updated): self
-    {
-        $this->date_updated = $date_updated;
-        return $this;
-    }
 
     public function getName(): ?string
     {
@@ -66,13 +53,5 @@ class NavbarElement extends Model implements ModelInterface
     public function getSlug(): ?string
     {
         return $this->slug;
-    }
-    public function getDate_inserted()
-    {
-        return $this->date_inserted;
-    }
-    public function getDate_updated()
-    {
-        return $this->date_updated;
     }
 }
