@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
+use App\Managers\RoleManager;
 use App\Managers\UserManager;
 use App\Forms\User\UpdateUserForm;
 use App\Core\Controller\Controller;
@@ -40,15 +41,13 @@ class UserController extends Controller
             return Router::redirect('admin.user.index');
 
         $request->setInputPrefix('updateFormUser_');
-        
-        $user = $user->hydrate([
-            'id' => $user->getId(),
-            'firstname' => $request->get("firstname"),
-            'lastname' => $request->get("lastname"),
-            'email' => $request->get("email"),
-            'status' => intval($request->get("status")),
-            'role' => $request->get("role")
-        ]);
+
+        $user->setId($user->getId());
+        $user->setFirstname($request->get("firstname"));
+        $user->setLastname($request->get("lastname"));
+        $user->setEmail($request->get("email"));
+        $user->setStatus(intval($request->get("status")));
+        $user->setRole((new RoleManager())->find($request->get("role")));
 
         if(! empty($request->get("pwd"))){
             $user->setPwd(password_hash($request->get("pwd"), PASSWORD_DEFAULT));
