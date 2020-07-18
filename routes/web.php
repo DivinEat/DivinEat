@@ -145,6 +145,7 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
                 $group->get('edit', 'ConfigurationController@edit', 'edit');
                 $group->post('update', 'ConfigurationController@update', 'update');
             });
+            $group->post('sitemap-generate', 'ConfigurationController@sitemapGenerate', 'sitemap.generate');
         });
     });
 });
