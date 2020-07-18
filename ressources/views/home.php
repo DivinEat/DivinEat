@@ -63,7 +63,7 @@
     </div>
 </div>
 
-<?php if(isset($article)): ?>
+<?php if(! empty($article)): ?>
     <div class="row frame">
         <div class="col-sm-12">
             <div class="row"><span>Dernier article</span></div>
