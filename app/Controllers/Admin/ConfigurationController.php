@@ -115,13 +115,8 @@ class ConfigurationController extends Controller
     public function updateNavbar(Request $request, Response $response, array $args)
     {
         $request->setInputPrefix('updateNavbarElementForm_');
-        $fields = $request->getParams(["name", "slug", "page", "data_inserted"]);
+        $fields = $request->getParams(["name", "slug", "page"]);
         $fields["page"] = intval($fields["page"]);
-
-        $response->checkFormData([
-            "id" => intval($request->get("id")),
-            "date_inserted" => $request->get("date_inserted"),
-        ]);
 
         $object = (new NavbarElement())->hydrate($fields);
         $form = $response->createForm(UpdateNavbarElementForm::class, $object);

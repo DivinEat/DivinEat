@@ -9,8 +9,6 @@ class Page extends Model implements ModelInterface
 {
     protected $title;
     protected $data;
-    protected $date_inserted;
-    protected $date_updated;
 
     public function __construct()
     {
@@ -31,16 +29,6 @@ class Page extends Model implements ModelInterface
         $this->data = $data;
         return $this;
     }
-    public function setDate_inserted($date_inserted): self
-    {
-        $this->date_inserted = $date_inserted;
-        return $this;
-    }
-    public function setDate_updated($date_updated): self
-    {
-        $this->date_updated = $date_updated;
-        return $this;
-    }
 
     public function getTitle(): ?string
     {
@@ -49,13 +37,5 @@ class Page extends Model implements ModelInterface
     public function getData(): ?string
     {
         return $this->data;
-    }
-    public function getDate_inserted()
-    {
-        return $this->date_inserted;
-    }
-    public function getDate_updated()
-    {
-        return $this->date_updated;
     }
 }

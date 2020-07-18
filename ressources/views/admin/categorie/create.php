@@ -3,10 +3,10 @@
         <div class="col-inner">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Ajouter un élement à la barre de navigation</h3>
+                    <h3 class="box-title">Ajouter une catégorie</h3>
                 </div>
                 <div class="box-body">
-                    <?php $this->formView("createNavbarElementForm", "configuration", "createNavbarElementForm"); ?>
+                    <?php $this->formView("createCategorieForm", "categorie", "createCategorieForm"); ?>
                 </div>
             </div>
         </div>
