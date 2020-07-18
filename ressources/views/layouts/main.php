@@ -10,6 +10,7 @@ use App\Core\Auth;
     <title>
         <?= getConfig("nom_du_site")->getInfo(); ?>
     </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
