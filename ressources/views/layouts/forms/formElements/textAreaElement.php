@@ -4,5 +4,5 @@
     name="<?= $element->getName() ?>"
     id="<?= $element->getId() ?>"
 >
-<?= $options["text"] ?>
+<?= (isset($options["text"])) ? $options["text"] : "" ?>
 </textarea>

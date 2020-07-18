@@ -3,13 +3,14 @@
 namespace App\Controllers;
 
 use App\Core\Auth;
-use App\Core\Controller\Controller;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
-use App\Core\Migration\MigrationRunner;
 use App\Core\Routing\Router;
 use App\Managers\ArticleManager;
 use App\Managers\CommentManager;
+use App\Core\Controller\Controller;
+use App\Core\Migration\MigrationRunner;
+use App\Forms\Comments\CreateCommentForm;
 
 class CommentsController extends Controller
 {
@@ -18,6 +19,19 @@ class CommentsController extends Controller
         $article = current((new ArticleManager())->findBy(['slug' => $args['article_slug']]));
         if (false === $article)
             return Router::redirect('home');
+            
+        $request->setInputPrefix('createCommentForm_');
+
+        $comments = (new CommentManager())->findBy(['article' => $article->getId(), 'hide' => false]);
+
+        $form = $response->createForm(CreateCommentForm::class, $article);
+
+        if (false === $form->handle($request))
+            return $response->render("article.show", "main", [
+                "article" => $article,
+                "comments" => $comments,
+                "createCommentForm" => $form,
+            ]);
 
         $comment = (new CommentManager())->create([
             'article' => $article->getId(),

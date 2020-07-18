@@ -33,7 +33,7 @@ class UniqueConstraint implements ConstraintInterface
         if(substr($tableName, -1) === "s")
             $tableName = rtrim($tableName, "s");
 
-        $managerName = "App\\Managers\\" . snakeToCamelCase($tableName) . "Manager";
+        $managerName = "App\\Managers\\" . ucwords(snakeToCamelCase($tableName)) . "Manager";
 
         $results = (new $managerName())->findBy([$columnName => $value]);
 

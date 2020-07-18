@@ -118,6 +118,17 @@ div.ligne {
   width: 100%;
 }
 
+.flex-raw-start {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: raw;
+  -webkit-box-pack: start;
+          justify-content: flex-start;
+  width: 100%;
+}
+
 .title {
   text-transform: uppercase;
   color: #fff;
@@ -218,6 +229,10 @@ div.ligne {
 
 .color-purple {
   color: #402082 !important;
+}
+
+.color-black {
+  color: #000 !important;
 }
 
 .page,

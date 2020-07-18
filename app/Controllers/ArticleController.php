@@ -2,15 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Core\Controller\Controller;
+use App\Core\View;
+use App\Models\Article;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
-use App\Core\Builder\QueryBuilder;
 use App\Core\Routing\Router;
-use App\Core\View;
-use App\Managers\CommentManager;
-use App\Models\Article;
 use App\Managers\ArticleManager;
+use App\Managers\CommentManager;
+use App\Core\Builder\QueryBuilder;
+use App\Core\Controller\Controller;
+use App\Forms\Comments\CreateCommentForm;
+use App\Forms\Comments\UpdateCommentForm;
 
 class ArticleController extends Controller
 {
@@ -36,8 +38,12 @@ class ArticleController extends Controller
 
         $comments = (new CommentManager())->findBy(['article' => $article->getId(), 'hide' => false]);
 
-        $myView = new View("article.show", "main");
-        $myView->assign("article", $article);
-        $myView->assign("comments", $comments);
+        $formCreate = $response->createForm(CreateCommentForm::class, $article);
+
+        $response->render("article.show", "main", [
+            "article" => $article,
+            "comments" => $comments,
+            "createCommentForm" => $formCreate
+        ]);
     }
 }
