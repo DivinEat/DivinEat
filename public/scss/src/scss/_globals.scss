@@ -89,6 +89,13 @@ div.ligne {
     width: 100%;
 }
 
+.flex-raw-start {
+    display: flex;
+    flex-direction: raw;
+    justify-content: flex-start;
+    width: 100%;
+}
+
 .title {
     text-transform: uppercase;
     color: $white;
