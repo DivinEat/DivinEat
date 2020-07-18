@@ -14,6 +14,7 @@ use App\Forms\Install\CreateInformationsForm;
 use App\Forms\Install\CreateSMTPForm;
 use App\Managers\RoleManager;
 use App\Managers\UserManager;
+use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 
 class InstallController extends Controller
@@ -67,15 +68,22 @@ class InstallController extends Controller
 
         $form = $response->createForm(CreateSMTPForm::class, $user);
 
-        $smtp = new SMTP();
+        $mail = new PHPMailer();
+        $mail->SMTPDebug = 0;
+        $mail->isSMTP();
+        $mail->Host = $request->get('smtp_host');
+        $mail->Port = $request->get('smtp_port');
 
-        if (! $smtp->connect($request->get('smtp_host'), $request->get('smtp_port')))
-            $form->addErrors(['connection' => 'Impossible de se connecter au serveur smtp.']);
-        elseif (! empty($request->get('smtp_user')) && ! empty($request->get('smtp_pass')))
+        if (! empty($request->get('smtp_user')) && ! empty($request->get('smtp_pass')))
         {
-            if (! $smtp->authenticate($request->get('smtp_user'), $request->get('smtp_pass')))
-                $form->addErrors(['connection' => 'Impossible de se connecter au serveur smtp.']);
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'tls';
+            $mail->Username = $request->get('smtp_user');
+            $mail->Password = $request->get('smtp_pass');
         }
+
+        if (! $mail->smtpConnect())
+            $form->addErrors(['connection' => 'Impossible de se connecter au serveur smtp.']);
 
         if (false === $form->handle($request)) {
             return $response->render("admin.install.smtp", "account", ["createSMTPForm" => $form]);
