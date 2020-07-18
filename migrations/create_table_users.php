@@ -19,7 +19,7 @@ class CreateTableUsers extends Migration
         $this->string('token', 255, ['nullable' => true]);
         $this->string('token_password', 255, ['nullable' => true]);
         $this->date('date_token_password', ['nullable' => true]);
-        $this->bool('status', ['default' => false]);
+        $this->bool('status', ['default' => 0]);
         $this->unsignedBigInteger('role');
         $this->timestamp();
     }

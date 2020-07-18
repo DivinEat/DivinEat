@@ -15,7 +15,7 @@ class CreateTableArticles extends Migration
         $this->string('title');
         $this->string('slug');
         $this->text('content');
-        $this->bool('publish', ['default' => true]);
+        $this->bool('publish', ['default' => 1]);
         $this->unsignedBigInteger('author');
         $this->timestamp();
     }

@@ -14,7 +14,7 @@ class CreateTableConfigurations extends Migration
     {
         $this->id();
         $this->string('libelle');
-        $this->string('info', 255, ['nullable' => true]);
+        $this->string('info', 255, ['nullable' => 1]);
         $this->timestamp();
     }
 
