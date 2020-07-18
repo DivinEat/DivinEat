@@ -9,7 +9,7 @@
 
 <body class="bg-main">
 <div class="row">
-    <div class="col-sm-5 center">
+    <div class="col-sm-12 col-md-6 center">
         <div class="col-inner flex-column">
             <?php include $this->viewPath;?>
         </div>

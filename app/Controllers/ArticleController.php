@@ -35,7 +35,7 @@ class ArticleController extends Controller
         $article = current((new ArticleManager())->findBy(['slug' => $args["article_slug"]]));
         if (! $article)
             return Router::redirect('actualites.index');
-
+            
         $comments = (new CommentManager())->findBy(['article' => $article->getId(), 'hide' => false]);
 
         $formCreate = $response->createForm(CreateCommentForm::class, $article);
