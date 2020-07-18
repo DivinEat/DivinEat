@@ -16,7 +16,6 @@ use App\Managers\MenuOrderManager;
 
 class Order extends Model implements ModelInterface
 {
-    protected $id;
     protected $user;
     protected $horaire;
     protected $date;
@@ -29,11 +28,6 @@ class Order extends Model implements ModelInterface
         parent::__construct();
     }
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
     public function setUser(User $user): Order
     {
         $this->user=$user;
@@ -64,11 +58,7 @@ class Order extends Model implements ModelInterface
         $this->surPlace = $surPlace;
         return $this;
     }
-    
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+
     public function getUser(): User
     {
         return $this->user;

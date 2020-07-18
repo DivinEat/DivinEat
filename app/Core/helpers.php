@@ -1,10 +1,12 @@
 <?php
 
+use App\Core\Auth;
 use App\Core\Routing\Route;
 use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
 use App\Core\Csrf;
 use App\Managers\NavbarElementManager;
+use App\Models\User;
 
 function url(string $path): string
 {
@@ -36,6 +38,11 @@ function route(string $routeName, array $args = []): ?Route
 function getCustomRoutes(): array 
 {
     return (new NavbarElementManager())->findAll();
+}
+
+function getAuth(): ?User
+{
+    return Auth::getUser();
 }
 
 function snakeToCamelCase($string, $capitalizeFirstCharacter = false)

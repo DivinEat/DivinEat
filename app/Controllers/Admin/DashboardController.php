@@ -18,7 +18,7 @@ class DashboardController extends Controller
     {
         $today = date('Y-m-d', time());
         $whereOrder = "date = '" . $today . "'";
-        $whereUser = "dateInserted = '" . $today . "'";
+        $whereUser = "created_at = '" . $today . "'";
 
         $this->getDashboardInfos($response, $whereOrder, $whereUser);
     }
@@ -27,7 +27,7 @@ class DashboardController extends Controller
     {
         $mont = date('m', time());
         $whereOrder = "month(date) = '" . $mont . "'";
-        $whereUser = "month(dateInserted) = '" . $mont . "'";
+        $whereUser = "month(created_at) = '" . $mont . "'";
 
         $this->getDashboardInfos($response, $whereOrder, $whereUser);
     }
@@ -36,7 +36,7 @@ class DashboardController extends Controller
     {
         $year = date('Y', time());
         $whereOrder = "year(date) = '" . $year . "'";
-        $whereUser = "year(dateInserted) = '" . $year . "'";
+        $whereUser = "year(created_at) = '" . $year . "'";
 
         $this->getDashboardInfos($response, $whereOrder, $whereUser);
     }

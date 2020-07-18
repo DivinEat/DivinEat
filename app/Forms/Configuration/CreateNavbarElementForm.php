@@ -31,7 +31,7 @@ class CreateNavbarElementForm extends Form
                 ],
                 "constraints" => [
                     new RequiredConstraint(),
-                    new UniqueConstraint("pages.slug", "Le slug de la page est déjà utilisé !")
+                    new UniqueConstraint("navbar_elements.slug", "Le slug de la page est déjà utilisé !")
                 ],
             ])
             ->add("name", "input", [

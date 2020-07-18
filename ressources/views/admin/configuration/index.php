@@ -15,7 +15,6 @@ use App\Core\Routing\Router; ?>
                         <button class="btn btn-primary" type="submit">Générer la sitemap</button>
                     </form>
                     <br>
-                    <?php $this->addModal("table_show", $configTableConfiguration); ?>
                     <?php $this->addModal("table_show", $configurationData); ?>
                 </div>
             </div>
