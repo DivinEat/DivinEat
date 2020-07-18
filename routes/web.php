@@ -175,7 +175,19 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
                 $group->delete('', 'PageController@destroy', 'destroy');
             });
         });
+
+        $group->group(['prefix' => 'categorie', 'as' => 'categorie.'], function (Router $group) {
+            $group->get('', 'CategorieController@index', 'index');
+            $group->get('create', 'CategorieController@create', 'create');
+            $group->post('store', 'CategorieController@store', 'store');
+            $group->group(['prefix' => '{categorie_id}'], function (Router $group) {
+                $group->get('edit', 'CategorieController@edit', 'edit');
+                $group->post('update', 'CategorieController@update', 'update');
+                $group->delete('', 'CategorieController@destroy', 'destroy');
+            });
+        });
     });
+    
 });
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');
