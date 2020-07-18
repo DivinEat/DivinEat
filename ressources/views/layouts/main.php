@@ -10,6 +10,7 @@ use App\Core\Auth;
     <title>
         <?= getConfig("nom_du_site")->getInfo(); ?>
     </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -36,11 +37,31 @@ use App\Core\Auth;
         <div id="navbar-front-mobile" class="navbar-front-mobile">
             <a href="" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="<?= Router::getRouteByName('menus')->getUrl() ?>">Menus</a>
-            <a href="#">Réservations</a>
+            <a href="<?= Router::getRouteByName('order.create')->getUrl() ?>">Réservations</a>
             <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Actualités</a>
             <?php foreach (getCustomRoutes() as $route) : ?>
                 <a href="<?= Router::getRouteByName('custom.' . $route->getSlug())->getUrl() ?>"><?= $route->getName() ?></a>
             <?php endforeach ?>
+            
+            <div style="margin-top: 4em;"></div>
+            <?php if (Auth::isAuthenticated()) : ?>
+                <?php if (Auth::getUser()->isAdmin()) : ?>
+                    <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Administration</a>
+                <?php endif; ?>
+                <a href="<?= Router::getRouteByName('profile.edit')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Profil</a>
+                <a href="<?= Router::getRouteByName('order.index')->getUrl() ?>"><img src="<?= url('img/icones/orders.png') ?>"> Commandes</a>
+                <a href="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" * onclick="event.preventDefault(); 
+                        document.getElementById('logout-form').submit();">
+                    <img src="<?= url('img/icones/logout.png') ?>"> Se déconnecter
+                </a>
+
+                <form id="logout-form" action="<?= Router::getRouteByName('auth.logout')->getUrl() ?>" method="POST" style="display: none;">
+                    <?php csrfInput(); ?>
+                </form>
+            <?php else : ?>
+                <a href="<?= Router::getRouteByName('auth.show-login')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Connexion</a>
+                <a href="<?= Router::getRouteByName('auth.show-register')->getUrl() ?>"><img src="<?= url('img/icones/profil.png') ?>"> Inscription</a>
+            <?php endif; ?>
         </div>
 
         <div style="display: flex; flex-direction: row; align-items: center;">

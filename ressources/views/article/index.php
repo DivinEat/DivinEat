@@ -22,7 +22,12 @@ use App\Core\Routing\Router;
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row more"><a href="<?= Router::getRouteByName('actualites.show', $article->getSlug())->getUrl() ?>">Voir plus</a></div>
+                                <div class="flex-raw">
+                                    <label><?= $article->getAuthor()->getFirstname() . " " . $article->getAuthor()->getLastname(); ?></label>
+                                    <div class="more">
+                                        <a href="<?= Router::getRouteByName('actualites.show', $article->getSlug())->getUrl() ?>">Voir plus</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <?php endforeach; 

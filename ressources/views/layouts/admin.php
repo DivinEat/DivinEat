@@ -24,7 +24,6 @@ use App\Core\Auth;
                     <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>" class="sidebar-link">Dashboard<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.article.index')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.categorie.index')->getUrl() ?>" class="sidebar-link">Catégories<img src='<?= url('img/icones/arrow.svg') ?>'></a>
-                    <a href="" class="sidebar-link">Commentaires<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.page.index')->getUrl() ?>" class="sidebar-link">Pages<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.user.index')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.menu.index')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>

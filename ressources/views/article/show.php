@@ -2,7 +2,7 @@
 use App\Core\Routing\Router;
 ?>
 
-<div class="total-height" style="margin-top: 4em;">
+<div class="total-height" style="margin-top: 12em;">
     <?php if(isset($article)): ?>
         <div class="row frame">
             <div class="col-sm-12">
@@ -15,35 +15,56 @@ use App\Core\Routing\Router;
                         </div>
                     </div>
                 </div>
-                <div class="row more"><a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Retour</a></div>
+                <div class="flex-raw">
+                    <label><?= $article->getAuthor()->getFirstname() . " " . $article->getAuthor()->getLastname(); ?></label>
+                    <div class="more">
+                        <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Retour</a>
+                    </div>
+                </div>
             </div>
         </div>
-        <?php foreach ($comments as $comment):?>
-        <?php if (null !== getAuth() && getAuth()->isModOrAdmin()): ?>
-                <form action="<?= route('actualites.comments.hide', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
-                    <?php csrfInput(); ?>
-                    <button type="submit" class="btn btn-account-red">Masquer le commentaire</button>
-                </form>
-        <?php endif; ?>
 
-        <?php if (null !== getAuth() && getAuth()->getId() === $comment->getUser()->getId()): ?>
-                <form action="<?= route('actualites.comments.destroy', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
-                    <?php csrfInput(); ?>
-                    <button type="submit" class="btn btn-account-red">Supprimer</button>
-                </form>
-                <form action="<?= route('actualites.comments.update', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
-                    <?php csrfInput(); ?>
-                    <textarea name="content" id="" cols="30" rows="10"><?= $comment->getContent() ?></textarea>
-                    <button type="submit" class="btn btn-account-blue">Modifier</button>
-                </form>
-            <?php else:?>
-                <p><?= $comment->getContent() ?></p>
-            <?php endif;?>
-        <?php endforeach;?>
-        <form action="<?= route('actualites.comments.store', [$article->getSlug()])->getUrl() ?>" method="post">
-            <?php csrfInput(); ?>
-            <textarea name="content" id="" cols="30" rows="10" placeholder="Votre commentaire"></textarea>
-            <button type="submit" class="btn btn-account-green">Poster</button>
-        </form>
+        <div class="row">
+            <div class="col-sm-12 center">
+                <div class="col-inner flex-column">
+                    <div class="card">
+                        <p class="subtitle margin-bottom-50">Commentaires</p>
+                        <?php foreach ($comments as $comment):?>
+                            <div class="flex-raw-start">
+                            <?php if (null !== getAuth() && getAuth()->isModOrAdmin()): ?>
+                                    <form action="<?= route('actualites.comments.hide', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
+                                        <?php csrfInput(); ?>
+                                        <button type="submit" class="btn btn-remove">Masquer le commentaire</button>
+                                    </form>
+                            <?php endif; ?>
+
+                            <?php if (null !== getAuth() && getAuth()->getId() === $comment->getUser()->getId()): ?>
+                                <form action="<?= route('actualites.comments.destroy', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
+                                    <?php csrfInput(); ?>
+                                    <button type="submit" class="btn btn-remove">Supprimer</button>
+                                </form>
+                                </div>
+                                
+                                <form class="admin-form width-100" action="<?= route('actualites.comments.update', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
+                                    <?php csrfInput(); ?>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <label class="">Commentaire - <?= $comment->getUser()->getFirstname() . " " . $comment->getUser()->getLastname()?></label>
+                                            <button type="submit" class="btn btn-edit">Modifier</button>
+                                            <textarea class="form-control form-control-textarea" name="content" cols="30" rows="10"><?= $comment->getContent() ?></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            <?php else:?>
+                                </div>
+                                <p><?= $comment->getContent() ?></p>
+                            <?php endif;?>
+                        <?php endforeach;?>
+
+                        <?php $this->formView("createCommentForm", "comments", "commentForm"); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
 </div>

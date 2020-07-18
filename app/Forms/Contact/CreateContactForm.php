@@ -36,9 +36,8 @@ class CreateContactForm extends Form
                     new RequiredConstraint()
                 ]
             ])
-            ->add("body", "input", [
+            ->add("body", "textArea", [
                 "attr" => [
-                    "type" => "textArea",
                     "placeholder"=>"&#xf0e5;  Ecrire ici",
                     "class" => "form-control form-control-textarea form-control-user"
                 ],
