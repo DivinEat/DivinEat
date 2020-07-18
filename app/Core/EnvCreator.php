@@ -7,7 +7,7 @@ class EnvCreator
     public static function remove(): void
     {
         if (file_exists(ROOT . '/.env'))
-            unlink(ROOT . '/.env');
+            file_put_contents(ROOT . '/.env', '');
     }
 
     protected static function arrayKeyToUpper(array $params): array
