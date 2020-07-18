@@ -118,11 +118,12 @@ class PageController extends Controller
             if (NULL === $element->first)
                 return;
 
-            $this->_dataHTML .= $this->getChildRowHTML();
+            $this->_dataHTML .= $this->getChildRowHTML($element);
             $first = $element->first;
 
             $this->generateHTML($this->_dataObject->$first);
 
+            $this->_dataHTML .= $this->getEndDivHTML();
             $this->_dataHTML .= $this->getEndDivHTML();
             $this->_dataHTML .= $this->getEndDivHTML();
         }
@@ -163,11 +164,11 @@ class PageController extends Controller
         return $containerHTML;
     }
 
-    private function getChildRowHTML(): string
+    private function getChildRowHTML(object $element): string
     {
         $containerHTML = '';
 
-        $containerHTML .= "<div class='col-sm-12 padding-0'>";
+        $containerHTML .= "<div class='$element->class'>";
         $containerHTML .= '<div class="col-inner padding-0">';
         $containerHTML .= '<div class="row padding-0">';
 

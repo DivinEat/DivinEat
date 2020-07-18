@@ -280,7 +280,8 @@ $(document).ready(function () {
         addEventsToNewStructureBtn: function (structureBtnBar, oldContainer) {
             var pageBuilder = this;
             var containerParent = oldContainer.parentNode;
-            var mainRow = containerParent.parentNode.parentNode;
+            var mainCol = containerParent.parentNode;
+            var mainRow = mainCol.parentNode;
             var pageData = pageBuilder.pageData;
             var firstChild = null;
             var nextChild = null;
@@ -299,6 +300,7 @@ $(document).ready(function () {
                     pageData[parentRow.id].parent = mainRow.id;
                     pageData[parentRow.id].node = parentRow;
                     pageData[parentRow.id].type = 'childRow';
+                    pageData[parentRow.id].class = mainCol.className;
 
                     firstChild = pageData[mainRow.id].first;
                     pageData[mainRow.id].first = parentRow.id;
