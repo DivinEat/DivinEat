@@ -6,8 +6,8 @@ $elements = $form->getBuilder()->getElements();
     <?php if ($element->getName() !== "id") : ?>
         <div class="form-group row">
             <div class="col-sm-12">
-            <?php endif; ?>
-            <?php
+            <?php 
+            endif;
             $options = $element->getOptions();
             include $element->getLayoutPath();
             ?>

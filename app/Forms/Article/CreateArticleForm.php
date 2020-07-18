@@ -6,13 +6,14 @@ use App\Core\Form;
 use App\Models\Article;
 use App\Core\StringValue;
 use App\Core\Routing\Router;
+use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\UniqueConstraint;
 use App\Core\Constraints\RequiredConstraint;
 
 class CreateArticleForm extends Form
 {
     public function buildForm()
-    {   
+    {
         $this->setName("createArticleForm");
 
         $this->setBuilder()
@@ -27,7 +28,8 @@ class CreateArticleForm extends Form
                 ],
                 "constraints" => [
                     new RequiredConstraint(),
-                    new UniqueConstraint("articles.title", "Le nom de l'article est déjà utilisé !")
+                    new UniqueConstraint("articles.title", "Le nom de l'article est déjà utilisé !"),
+                    new LengthConstraint(2, 15, 'Le titre doit contenir au moins 2 caractères', 'Le titre doit contenir au plus 15 caractères')
                 ]
             ])
             ->add("slug", "input", [
@@ -41,7 +43,8 @@ class CreateArticleForm extends Form
                 ],
                 "constraints" => [
                     new RequiredConstraint(),
-                    new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !")
+                    new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !"),
+                    new LengthConstraint(2, 15, 'Le slug doit contenir au moins 2 caractères', 'Le slug doit contenir au plus 15 caractères')
                 ]
             ])
             ->add("publish", "select", [
@@ -57,6 +60,14 @@ class CreateArticleForm extends Form
                     new StringValue("Non", "0")
                 ],
                 "getter" => "getString",
+                "constraints" => [
+                    new RequiredConstraint()
+                ]
+            ])
+            ->add("content", "input", [
+                "attr" => [
+                    "type" => "hidden",
+                ],
                 "constraints" => [
                     new RequiredConstraint()
                 ]

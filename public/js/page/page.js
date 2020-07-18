@@ -615,59 +615,6 @@ $(document).ready(function () {
             return form;
         },
 
-        addPositionButtons: function (container) {
-            var pageBuilder = this;
-            var containerCol = container.parentNode.parentNode.parentNode.parentNode.parentNode;
-            var containerRow = containerCol.parentNode;
-            var page = containerRow.parentNode;
-
-            var isRightContainer = false;
-            var isLeftContainer = false;
-            var isTopContainer = false;
-            var isBottomContainer = false;
-
-            var rowNodesLength = containerRow.childNodes.length;
-
-            if (containerRow.childNodes[1] == containerCol) {
-                isLeftContainer = true;
-            }
-            if (containerRow.childNodes[rowNodesLength - 2] == containerCol) {
-                isRightContainer = true;
-            }
-
-            if (page.childNodes[1] == containerRow) {
-                isTopContainer = true;
-            }
-
-            if (page.childNodes[page.childNodes.length - 2] == containerRow) {
-                isBottomContainer = true;
-            }
-
-            if (!isLeftContainer) {
-                var leftBtn = document.createElement("div");
-                leftBtn.className = "pageBuilder-container-btn-position-left";
-                container.appendChild(leftBtn);
-            }
-
-            if (!isRightContainer) {
-                var rightBtn = document.createElement("div");
-                rightBtn.className = "pageBuilder-container-btn-position-right";
-                container.appendChild(rightBtn);
-            }
-
-            if (!isTopContainer) {
-                var topBtn = document.createElement("div");
-                topBtn.className = "pageBuilder-container-btn-position-top";
-                container.appendChild(topBtn);
-            }
-
-            if (!isBottomContainer) {
-                var bottomBtn = document.createElement("div");
-                bottomBtn.className = "pageBuilder-container-btn-position-bottom";
-                container.appendChild(bottomBtn);
-            }
-        },
-
         deleteContainer: function (container) {
             var pageBuilder = this;
             var pageData = pageBuilder.pageData;
@@ -790,8 +737,6 @@ $(document).ready(function () {
 
             container.appendChild(input);
         },
-
-        addElementToPageContent: function (element) {},
     };
 
     pageBuilder.init();
