@@ -13,4 +13,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSHKEY }}
         port: ${{ secrets.PORT }}
-        script: git pull origin develop
+        script: cd /kunden/homepages/45/d795031835/htdocs/MySites/DivinEat && git pull origin develop
