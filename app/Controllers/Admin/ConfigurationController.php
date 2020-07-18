@@ -67,6 +67,8 @@ class ConfigurationController extends Controller
     public function sitemapGenerate(Request $request, Response $response)
     {
         Sitemap::generate();
+
+        return Router::redirect('admin.configuration.index');
     }
 
     public function createNavbar(Request $request, Response $response, array $args)
