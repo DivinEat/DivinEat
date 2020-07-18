@@ -77,6 +77,12 @@ class Order extends Model implements ModelInterface
     {
         return $this->horaire;
     }
+
+    public function getClearDate(): string
+    {
+        return $this->date;
+    }
+
     public function getDate()
     {
         return $this->formatDate($this->date, false);

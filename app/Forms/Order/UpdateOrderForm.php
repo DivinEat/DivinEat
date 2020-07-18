@@ -70,6 +70,7 @@ class UpdateOrderForm extends Form
                     "value" => "Horaires",
                     "class" => "",
                 ],
+                'selected' =>  $order->getHoraire(),
                 "data" => $horaires,
                 "getter" => "getHoraire",
             ]);
@@ -100,6 +101,7 @@ class UpdateOrderForm extends Form
                 "value" => "Sur place",
                 "class" => "",
             ],
+            'selected' => new StringValue($order->getSurPlace() ? 'Oui': 'Non', $order->getSurPlace()),
             "data" => [
                 new StringValue("Oui", 1),
                 new StringValue("Non", 0)
@@ -113,6 +115,7 @@ class UpdateOrderForm extends Form
                     "value" => "Statut",
                     "class" => "",
                 ],
+                'selected' => $order->getStatus(),
                 "data" => [
                     new StringValue("En cours", "En cours"),
                     new StringValue("Terminé", "Terminé")
@@ -126,7 +129,7 @@ class UpdateOrderForm extends Form
                 ],
                 "label" => "Date",
                 "name" => "date",
-                "value" => (new \DateTime(strtotime($order->getDate()), new \DateTimeZone('EUROPE/Paris')))->format('Y-m-d')
+                "value" => $order->getClearDate(),
             ])
             ->add("annuler", "link", [
                 "attr" => [
