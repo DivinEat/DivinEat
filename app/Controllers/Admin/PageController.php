@@ -80,7 +80,7 @@ class PageController extends Controller
         $data = $page->getData();
         $this->getHTMLPageData($data);
 
-        $response->render('customPage', 'main', ['page' => $this->_dataHTML]);
+        $response->render('custom_page', 'main', ['page' => $this->_dataHTML]);
     }
 
     public function getHTMLPageData(string $data): void
