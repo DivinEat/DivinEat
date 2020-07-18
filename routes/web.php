@@ -140,10 +140,31 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
 
         $group->group(['prefix' => 'configuration', 'as' => 'configuration.'], function (Router $group) {
             $group->get('', 'ConfigurationController@index', 'index');
-            $group->post('store', 'ConfigurationController@store', 'store');
-            $group->group(['prefix' => '{config_id}'], function (Router $group) {
-                $group->get('edit', 'ConfigurationController@edit', 'edit');
-                $group->post('update', 'ConfigurationController@update', 'update');
+            $group->group(['prefix' =>'parameter', 'as' => 'parameter.'], function (Router $group) {
+                $group->group(['prefix' => '{config_id}'], function (Router $group) {
+                    $group->get('edit', 'ConfigurationController@editParams', 'edit');
+                    $group->post('update', 'ConfigurationController@updateParams', 'update');
+                });
+            });
+            $group->group(['prefix' =>'navbar', 'as' => 'navbar.'], function (Router $group) {
+                $group->get('create', 'ConfigurationController@createNavbar', 'create');
+                $group->post('store', 'ConfigurationController@storeNavbar', 'store');
+                $group->group(['prefix' => '{navbar_element_id}'], function (Router $group) {
+                    $group->get('edit', 'ConfigurationController@editNavbar', 'edit');
+                    $group->post('update', 'ConfigurationController@updateNavbar', 'update');
+                    $group->delete('', 'ConfigurationController@destroyNavbar', 'destroy');
+                });
+            });
+        });
+
+        $group->group(['prefix' => 'page', 'as' => 'page.'], function (Router $group) {
+            $group->get('', 'PageController@index', 'index');
+            $group->get('create', 'PageController@create', 'create');
+            $group->post('store', 'PageController@store', 'store');
+            $group->group(['prefix' => '{page_id}'], function (Router $group) {
+                $group->get('edit', 'PageController@edit', 'edit');
+                $group->post('update', 'PageController@update', 'update');
+                $group->delete('', 'PageController@destroy', 'destroy');
             });
         });
     });
@@ -151,3 +172,5 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');
 $router->get('unauthorized', 'UnauthorizedController@show', 'unauthorized');
+
+$router->get('custom', 'CustomPageController@display', 'custom');

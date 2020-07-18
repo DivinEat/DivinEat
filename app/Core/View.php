@@ -40,7 +40,7 @@ class View
     }
 
 
-    public function assign($key, $value) :void 
+    public function assign($key, $value) :void
     {
         $this->data[$key] = $value;
     }

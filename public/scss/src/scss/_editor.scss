@@ -27,6 +27,12 @@
     &-left-0 {
         padding-left: 0!important;
     }
+    &-top-0 {
+        padding-top: 0!important;
+    }
+    &-bottom-0 {
+        padding-bottom: 0!important;
+    }
 }
 
 .margin {
@@ -70,6 +76,12 @@
     &-purple {
         color: $purple!important;
     }
+}
+
+%shadowed{
+    -webkit-box-shadow: rem(0) rem(0) rem(3) rem(2) rgba($color: #000000, $alpha: 0.1);
+    -moz-box-shadow: rem(0) rem(0) rem(3) rem(2) rgba($color: #000000, $alpha: 0.1);
+    box-shadow: rem(0) rem(0) rem(3) rem(2) rgba($color: #000000, $alpha: 0.1);
     &-black {
         color: $black!important;
     }

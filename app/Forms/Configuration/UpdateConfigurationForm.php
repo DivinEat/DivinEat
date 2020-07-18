@@ -69,6 +69,6 @@ class UpdateConfigurationForm extends Form
                 "class" => "admin-form",
                 "name" => "updateConfigurationForm"
             ])
-            ->addConfig("action", Router::getRouteByName("admin.configuration.update", $this->model->getId())->getUrl());
+            ->addConfig("action", Router::getRouteByName("admin.configuration.parameter.update", $this->model->getId())->getUrl());
     }
 }

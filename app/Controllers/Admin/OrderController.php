@@ -91,7 +91,7 @@ class OrderController extends Controller
         $order = $orderManager->find($order_id);
 
         foreach ($menus as $menu) {
-            $menuOrder = (new MenuOrderManager())->create([
+            $menuOrderManager->create([
                 'menu' => $menu,
                 'order' => $order_id
             ]);
