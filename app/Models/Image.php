@@ -8,7 +8,6 @@ use App\Core\Model\ModelInterface;
 
 class Image extends Model implements ModelInterface
 {
-    protected $id;
     protected $name;
     protected $path;
 
@@ -22,11 +21,6 @@ class Image extends Model implements ModelInterface
         return [];
     }
 
-    public function setId(int $id): self
-    {
-        $this->id=$id;
-        return $this;
-    }
     public function setName($name)
     {
         $this->name=$name;
@@ -38,10 +32,6 @@ class Image extends Model implements ModelInterface
         return $this;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
     public function getName()
     {
         return $this->name;

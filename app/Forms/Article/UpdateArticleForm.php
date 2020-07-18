@@ -44,7 +44,7 @@ class UpdateArticleForm extends Form
                 "constraints" => [
                     new RequiredConstraint(),
                     new UniqueConstraint("articles.title", "Le nom de l'article est déjà utilisé !", $article->getId()),
-                    new LengthConstraint(2, 15, 'Le titre doit contenir au moins 2 caractères', 'Le titre doit contenir au plus 15 caractères')
+                    new LengthConstraint(2, 255, 'Le titre doit contenir au moins 2 caractères', 'Le titre doit contenir au plus 15 caractères')
                 ]
             ])
             ->add("slug", "input", [
@@ -60,7 +60,7 @@ class UpdateArticleForm extends Form
                 "constraints" => [
                     new RequiredConstraint(),
                     new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !", $article->getId()),
-                    new LengthConstraint(2, 15, 'Le slug doit contenir au moins 2 caractères', 'Le slug doit contenir au plus 15 caractères')
+                    new LengthConstraint(2, 255, 'Le slug doit contenir au moins 2 caractères', 'Le slug doit contenir au plus 15 caractères')
                 ]
             ])
             ->add("publish", "select", [

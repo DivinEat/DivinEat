@@ -8,7 +8,6 @@ use App\Core\Routing\Router;
 
 class Horaire extends Model implements ModelInterface
 {
-    protected $id;
     protected $horaire;
 
     public function __construct()
@@ -21,20 +20,10 @@ class Horaire extends Model implements ModelInterface
         return [];
     }
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
     public function setHoraire($horaire)
     {
         $this->horaire = $horaire;
         return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getHoraire()

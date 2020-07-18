@@ -88,10 +88,10 @@ abstract class Migration
         $query = '`' . $columnName . '` ' . $type;
         $query .= isset($params['nullable']) && $params['nullable'] ? ' NULL' : ' NOT NULL';
 
-        if (! empty($params['default']))
+        if (isset($params['default']))
         {
             $query .= ' DEFAULT ';
-            $query .= in_array($params['default'], ['NULL', 'CURRENT_TIMESTAMP']) ?
+            $query .= is_bool($params['default']) || in_array($params['default'], ['NULL', 'CURRENT_TIMESTAMP']) ?
             $params['default'] : '\''.$params['default'].'\'';
         }
 

@@ -8,6 +8,7 @@ use App\Core\Http\Response;
 use App\Core\Builder\QueryBuilder;
 use App\Core\Routing\Router;
 use App\Core\View;
+use App\Managers\CommentManager;
 use App\Models\Article;
 use App\Managers\ArticleManager;
 
@@ -22,9 +23,6 @@ class ArticleController extends Controller
             ->getQuery()
             ->getArrayResult(Article::class);
 
-        foreach($articles as $article){
-            $article->setContent(Article::setJsonToHtml($article->getContent()));
-        }
 
         $myView = new View("article.index", "main");
         $myView->assign("articles", $articles);
@@ -36,9 +34,10 @@ class ArticleController extends Controller
         if (! $article)
             return Router::redirect('actualites.index');
 
-        $article->setContent(Article::setJsonToHtml($article->getContent()));
+        $comments = (new CommentManager())->findBy(['article' => $article->getId(), 'hide' => false]);
 
         $myView = new View("article.show", "main");
         $myView->assign("article", $article);
+        $myView->assign("comments", $comments);
     }
 }

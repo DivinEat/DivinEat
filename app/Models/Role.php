@@ -7,7 +7,6 @@ use App\Core\Model\ModelInterface;
 
 class Role extends Model implements ModelInterface
 {
-    protected $id;
     protected $libelle;
 
     public function __construct()
@@ -20,20 +19,10 @@ class Role extends Model implements ModelInterface
         return [];
     }
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
     public function setLibelle($libelle)
     {
         $this->libelle = $libelle;
         return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getLibelle()

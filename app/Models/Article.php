@@ -10,7 +10,6 @@ use App\Managers\UserManager;
 
 class Article extends Model implements ModelInterface
 {
-    protected $id;
     protected $title;
     protected $content;
     protected $date_inserted;
@@ -28,12 +27,6 @@ class Article extends Model implements ModelInterface
         return [
             'author' => User::class
         ];
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id=$id;
-        return $this;
     }
     public function setTitle($title)
     {
@@ -69,10 +62,6 @@ class Article extends Model implements ModelInterface
         return $this;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
     public function getTitle()
     {
         return $this->title;
@@ -100,40 +89,6 @@ class Article extends Model implements ModelInterface
     public function getDate_updated()
     {
         return $this->getUpdatedAt();
-    }
-
-    public static function setJsonToHtml($content){
-        $content = str_replace("'", "\"", $content);
-        $json = json_decode($content);
-
-        $html = "";
-        foreach($json->blocks as $block){
-            switch($block->type){
-                case "header":
-                    $html .= "<h".$block->data->level.">".$block->data->text."</h".$block->data->level.">";
-                    break;
-                case "paragraph":
-                    $html .= "<p>".$block->data->text."</p>";
-                    break;
-                case "list":
-                    if($block->data->style == "ordered"){
-                        $html .= "<ol>";
-                    } else {
-                        $html .= "<ul>";
-                    }
-                    foreach($block->data->items as $value){
-                        $html .= "<li>$value</li>";
-                    }
-                    if($block->data->style == "ordered"){
-                        $html .= "</ol>";
-                    } else {
-                        $html .= "</ul>";
-                    }
-                    break;
-            }
-        }
-
-        return $html;
     }
 
     public static function getShowArticleTable($articles){

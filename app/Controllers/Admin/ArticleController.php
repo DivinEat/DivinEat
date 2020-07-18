@@ -8,6 +8,7 @@ use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Core\View;
 use App\Core\Auth;
+use App\Managers\UserManager;
 use App\Models\Article;
 use App\Managers\ArticleManager;
 use App\Forms\Article\CreateArticleForm;
@@ -66,25 +67,21 @@ class ArticleController extends Controller
     {
         $request->setInputPrefix('updateArticleForm_');
 
-        $response->checkFormData([
-            "id" => intval($request->get("id")),
-        ]);
-
         if (null === (new ArticleManager())->find($args['article_id']))
             return Router::redirect('admin.article.index');
 
-        $fields = $request->getParams(["id", "content", "title", "slug", "publish"]);
-        $fields["author"] = Auth::getUser()->getId();
+        $article = (new Article())->hydrate($request->getParams(['slug', 'title', 'content']));
+        $article->setPublish(intval($request->get('publish')));
+        $article->setId($args['article_id']);
 
-        $object = (new Article())->hydrate($fields);
-
-        $form = $response->createForm(UpdateArticleForm::class, $object);
+        $form = $response->createForm(UpdateArticleForm::class, $article);
 
         if (false === $form->handle($request))
             return $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
 
-        (new ArticleManager())->save($object);
-        return Router::redirect('admin.article.index');
+        (new ArticleManager())->save($article);
+
+        return Router::redirect('admin.article.edit', [$args['article_id']]);
     }
 
     public function destroy(Request $request, Response $response, array $args)

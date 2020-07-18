@@ -10,7 +10,6 @@ use App\Managers\RoleManager;
 
 class User extends Model implements ModelInterface
 {
-    protected $id;
     protected $firstname;
     protected $lastname;
     protected $email;
@@ -30,12 +29,6 @@ class User extends Model implements ModelInterface
         return [
             'role' => Role::class
         ];
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id=$id;
-        return $this;
     }
     public function setFirstname($firstname)
     {
@@ -75,11 +68,6 @@ class User extends Model implements ModelInterface
     {
         return $this->setUpdatedAt($dateUpdated);
     }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
     
     public function getFirstname()
     {
@@ -118,6 +106,12 @@ class User extends Model implements ModelInterface
     {
         return $this->getRole()->getLibelle() === 'Administrateur';
     }
+
+    public function isModOrAdmin(): bool
+    {
+        return $this->isAdmin() || $this->getRole()->getLibelle() === 'Moderateur';
+    }
+
 
     public static function getShowUserTable($users){
         $roleManager = new RoleManager();

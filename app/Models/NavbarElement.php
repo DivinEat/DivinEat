@@ -8,7 +8,6 @@ use App\Core\Model\ModelInterface;
 
 class NavbarElement extends Model implements ModelInterface
 {
-    protected $id;
     protected $name;
     protected $page;
     protected $slug;
@@ -25,11 +24,6 @@ class NavbarElement extends Model implements ModelInterface
         return ['page' => Page::class];
     }
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
-    }
 
     public function setName(string $name): self
     {
@@ -61,10 +55,6 @@ class NavbarElement extends Model implements ModelInterface
         return $this;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
     public function getName(): ?string
     {
         return $this->name;

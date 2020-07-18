@@ -7,7 +7,6 @@ use App\Core\Model\ModelInterface;
 
 class Page extends Model implements ModelInterface
 {
-    protected $id;
     protected $title;
     protected $data;
     protected $date_inserted;
@@ -21,12 +20,6 @@ class Page extends Model implements ModelInterface
     public function initRelation(): array
     {
         return [];
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
     }
     public function setTitle($title): self
     {
@@ -49,10 +42,6 @@ class Page extends Model implements ModelInterface
         return $this;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
     public function getTitle(): ?string
     {
         return $this->title;

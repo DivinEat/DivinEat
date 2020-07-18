@@ -10,7 +10,6 @@ use App\Managers\ElementMenuManager;
 
 class Menu extends Model implements ModelInterface
 {
-    protected $id;
     protected $nom;
     protected $entree;
     protected $plat;
@@ -31,11 +30,6 @@ class Menu extends Model implements ModelInterface
         ];
     }
 
-    public function setId(int $id): self
-    {
-        $this->id=$id;
-        return $this;
-    }
     public function setNom($nom)
     {
         $this->nom=$nom;
@@ -60,11 +54,6 @@ class Menu extends Model implements ModelInterface
     {
         $this->prix=$prix;
         return $this;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
     public function getNom()
     {
