@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\Migration\MigrationRunner;
+use App\Core\Model\Model;
 use App\Core\Routing\Router;
 
 class Sitemap
@@ -41,7 +42,7 @@ class Sitemap
         }, $routeList);
     }
 
-    protected static function writeRouteLine(&$xw, $url): void
+    protected static function writeRouteLine(&$xw, string $url): void
     {
         xmlwriter_end_attribute($xw);
         xmlwriter_start_element($xw, 'url');
@@ -55,7 +56,17 @@ class Sitemap
     {
         if (! preg_match('/\{([a-z]*)\_([a-z]*)\}/', $url, $match))
             return;
-        var_dump($match);die;
 
+        $managerName = 'App\\Managers\\' . ucfirst($match[1]) . 'Manager';
+        array_map(function (Model $model) use ($xw, $addedUrls, $match, $url) {
+            $getterName = 'get' . snakeToCamelCase($match[2], true);
+            $replacedUrl = preg_replace('/\{[a-z]*\_[a-z]*\}/', $model->$getterName(), $url);
+
+            if (! in_array($replacedUrl, $addedUrls))
+            {
+                self::writeRouteLine($xw, $replacedUrl);
+                $addedUrls[] = $replacedUrl;
+            }
+        }, (new $managerName)->findAll());
     }
 }
