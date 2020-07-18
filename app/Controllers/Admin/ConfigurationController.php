@@ -5,6 +5,9 @@ namespace App\Controllers\Admin;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
+use App\Core\Builder\QueryBuilder;
+use App\Core\Sitemap;
+use App\Core\View;
 use App\Models\Configuration;
 use App\Models\NavbarElement;
 use App\Core\Controller\Controller;
@@ -60,6 +63,12 @@ class ConfigurationController extends Controller
             (new ConfigurationManager())->save($configuration);
             Router::redirect('admin.configuration.index');
         }
+    }
+    public function sitemapGenerate(Request $request, Response $response)
+    {
+        Sitemap::generate();
+
+        return Router::redirect('admin.configuration.index');
     }
 
     public function createNavbar(Request $request, Response $response, array $args)

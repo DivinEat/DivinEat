@@ -10,6 +10,12 @@ use App\Core\Routing\Router; ?>
                     <h3 class="box-title">Préférences générales</h3>
                 </div>
                 <div class="box-body">
+                    <form action="<?= route('admin.configuration.sitemap.generate')->getUrl() ?>" method="post">
+                        <?php csrfInput(); ?>
+                        <button class="btn btn-primary" type="submit">Générer la sitemap</button>
+                    </form>
+                    <br>
+                    <?php $this->addModal("table_show", $configTableConfiguration); ?>
                     <?php $this->addModal("table_show", $configurationData); ?>
                 </div>
             </div>

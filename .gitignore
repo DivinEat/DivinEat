@@ -4,3 +4,4 @@ node_modules
 .idea
 .env
 /www/public/scss/dist/main.css
+public/sitemap.xml

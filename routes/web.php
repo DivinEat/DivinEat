@@ -146,6 +146,8 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
                     $group->post('update', 'ConfigurationController@updateParams', 'update');
                 });
             });
+
+            $group->post('sitemap-generate', 'ConfigurationController@sitemapGenerate', 'sitemap.generate');
             $group->group(['prefix' =>'navbar', 'as' => 'navbar.'], function (Router $group) {
                 $group->get('create', 'ConfigurationController@createNavbar', 'create');
                 $group->post('store', 'ConfigurationController@storeNavbar', 'store');
