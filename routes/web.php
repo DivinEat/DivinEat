@@ -33,7 +33,7 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
                 $group->post('', 'CommentsController@store', 'store');
                 $group->post('{comment_id}/edit', 'CommentsController@update', 'update');
                 $group->post('{comment_id}/destroy', 'CommentsController@destroy', 'destroy');
-                $group->post('{comment_id}/hide', 'CommentsController@hide', 'hide')->addMiddleware('user.is.admin');
+                $group->post('{comment_id}/hide', 'CommentsController@hide', 'hide')->addMiddleware('user.is.mod.or.admin');
             });
         });
     });

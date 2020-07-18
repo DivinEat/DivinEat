@@ -19,7 +19,7 @@ use App\Core\Routing\Router;
             </div>
         </div>
         <?php foreach ($comments as $comment):?>
-        <?php if (null !== getAuth() && getAuth()->isAdmin()): ?>
+        <?php if (null !== getAuth() && getAuth()->isModOrAdmin()): ?>
                 <form action="<?= route('actualites.comments.hide', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
                     <?php csrfInput(); ?>
                     <button type="submit" class="btn btn-account-red">Masquer le commentaire</button>
