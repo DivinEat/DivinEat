@@ -8,6 +8,7 @@ use App\Core\Http\Response;
 use App\Core\Builder\QueryBuilder;
 use App\Core\Routing\Router;
 use App\Core\View;
+use App\Managers\CommentManager;
 use App\Models\Article;
 use App\Managers\ArticleManager;
 
@@ -36,9 +37,11 @@ class ArticleController extends Controller
         if (! $article)
             return Router::redirect('actualites.index');
 
+        $comments = (new CommentManager())->findBy(['article' => $article->getId(), 'hide' => false]);
         $article->setContent(Article::setJsonToHtml($article->getContent()));
 
         $myView = new View("article.show", "main");
         $myView->assign("article", $article);
+        $myView->assign("comments", $comments);
     }
 }

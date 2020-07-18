@@ -14,7 +14,8 @@ class CreateTableComments extends Migration
         $this->id();
         $this->text('content');
         $this->unsignedBigInteger('user');
-        $this->bool('hide', ['default' => false]);
+        $this->unsignedBigInteger('article');
+        $this->bool('hide', ['default' => 0]);
         $this->timestamp();
     }
 }

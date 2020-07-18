@@ -38,6 +38,9 @@ class Application
             new MiddlewareDispatcher($this->container, $request);
 
         } catch (\Exception|\RuntimeException $exception) {
+            pre();
+            var_dump($exception);
+
             die('Oups something went wrong ! :p');
         }
     }

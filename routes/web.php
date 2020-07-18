@@ -29,6 +29,12 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
         $group->get('', 'ArticleController@index', 'index');
         $group->group(['prefix' => '{article_slug}'], function (Router $group) {
             $group->get('show', 'ArticleController@show', 'show');
+            $group->group(['prefix' => 'comments', 'as' => 'comments.', 'middleware' => 'user.connected'], function (Router $group) {
+                $group->post('', 'CommentsController@store', 'store');
+                $group->post('{comment_id}/edit', 'CommentsController@update', 'update');
+                $group->post('{comment_id}/destroy', 'CommentsController@destroy', 'destroy');
+                $group->post('{comment_id}/hide', 'CommentsController@hide', 'hide')->addMiddleware('user.is.admin');
+            });
         });
     });
 

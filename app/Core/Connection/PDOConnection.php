@@ -26,7 +26,20 @@ class PDOConnection implements BDDInterface
     {
         $queryPrepared = $this->pdo->prepare($query);
 
-        $queryPrepared->execute($parameters);
+        if ($parameters !== null)
+        {
+            $type = [
+                'boolean' => \PDO::PARAM_BOOL,
+                'integer' => \PDO::PARAM_INT,
+                'string' => \PDO::PARAM_STR
+            ];
+            foreach ($parameters as $key => $value)
+            {
+                $queryPrepared->bindValue($key, $value, $type[gettype($value)]);
+            }
+        }
+
+        $queryPrepared->execute();
 
         return new PDOResult($queryPrepared);
     }

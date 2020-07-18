@@ -8,12 +8,11 @@ class Comment extends Model
 {
     protected string $content;
 
-    protected bool $hide = false;
+    protected bool $hide;
 
     protected User $user;
 
     protected Article $article;
-
 
 
     public function initRelation(): array

@@ -10,6 +10,8 @@ class PDOSingleton extends PDO
     private function __construct($dsn, $user, $pwd) {
         try {
             $this->PDOInstance = new PDO($dsn, $user, $pwd);
+            if (ENV === 'locale')
+                $this->PDOInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $e) {
             die("Erreur SQL : ".$e->getMessage());
         }

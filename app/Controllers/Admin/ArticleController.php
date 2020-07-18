@@ -84,12 +84,12 @@ class ArticleController extends Controller
 
         $form = $response->createForm(UpdateArticleForm::class, $article);
         
-        if (false === $form->handle($request)) {
-            $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
-        } else {
-            (new ArticleManager())->save($article);       
-            Router::redirect('admin.article.index');
-        }
+        if (false === $form->handle($request))
+            return $response->render("admin.article.edit", "admin", ["updateArticleForm" => $form]);
+
+        (new ArticleManager())->save($article);
+
+        return Router::redirect('admin.article.index');
     }
 
     public function destroy(Request $request, Response $response, array $args)
