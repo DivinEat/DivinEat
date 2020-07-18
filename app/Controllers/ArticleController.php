@@ -23,9 +23,6 @@ class ArticleController extends Controller
             ->getQuery()
             ->getArrayResult(Article::class);
 
-        foreach($articles as $article){
-            $article->setContent(Article::setJsonToHtml($article->getContent()));
-        }
 
         $myView = new View("article.index", "main");
         $myView->assign("articles", $articles);
@@ -38,7 +35,6 @@ class ArticleController extends Controller
             return Router::redirect('actualites.index');
 
         $comments = (new CommentManager())->findBy(['article' => $article->getId(), 'hide' => false]);
-        $article->setContent(Article::setJsonToHtml($article->getContent()));
 
         $myView = new View("article.show", "main");
         $myView->assign("article", $article);

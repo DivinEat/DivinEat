@@ -25,20 +25,13 @@ class HomeController extends Controller
             ->getQuery()
             ->getArrayResult(Menu::class);
 
-        $articles =  (new QueryBuilder())
+        $article =  current((new QueryBuilder())
             ->select('*')
             ->from('articles', 'a')
             ->orderBy('id', 'DESC')
             ->limit('1')
             ->getQuery()
-            ->getArrayResult(Article::class);
-
-        $article = null;
-
-        if (! empty($articles)) {
-            $article = $articles[0];
-            $article->setContent(Article::setJsonToHtml($article->getContent()));
-        }
+            ->getArrayResult(Article::class));
 
         $response->render('home', 'main', [
             'menus' => $menus,
