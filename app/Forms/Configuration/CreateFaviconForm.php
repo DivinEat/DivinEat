@@ -6,6 +6,7 @@ use App\Core\Form;
 use App\Core\Routing\Router;
 use App\Models\Configuration;
 use App\Core\Constraints\FileConstraint;
+use App\Core\Constraints\FaviconConstraint;
 use App\Core\Constraints\RequiredConstraint;
 
 class CreateFaviconForm extends Form
@@ -25,6 +26,7 @@ class CreateFaviconForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
+                    new FaviconConstraint(),
                     new RequiredConstraint()
                 ]
             ])
