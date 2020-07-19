@@ -64,7 +64,7 @@ class Article extends Model implements ModelInterface
     }
     public function getContent()
     {
-        return $this->content;
+        return html_entity_decode($this->content);
     }
     public function getSlug()
     {
