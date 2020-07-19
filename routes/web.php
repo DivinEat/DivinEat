@@ -151,7 +151,16 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
                 });
             });
 
+            $group->group(['prefix' =>'slider', 'as' => 'slider.'], function (Router $group) {
+                $group->get('create', 'ConfigurationController@createSlider', 'create');
+                $group->post('store', 'ConfigurationController@storeSlider', 'store');
+                $group->group(['prefix' => '{slider_element_id}'], function (Router $group) {
+                    $group->delete('', 'ConfigurationController@destroySlider', 'destroy');
+                });
+            });
+
             $group->post('sitemap-generate', 'ConfigurationController@sitemapGenerate', 'sitemap.generate');
+
             $group->group(['prefix' =>'navbar', 'as' => 'navbar.'], function (Router $group) {
                 $group->get('create', 'ConfigurationController@createNavbar', 'create');
                 $group->post('store', 'ConfigurationController@storeNavbar', 'store');

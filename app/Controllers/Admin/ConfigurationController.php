@@ -2,18 +2,19 @@
 
 namespace App\Controllers\Admin;
 
+use App\Core\View;
+use App\Core\Sitemap;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
-use App\Core\Builder\QueryBuilder;
-use App\Core\Sitemap;
-use App\Core\View;
 use App\Models\Configuration;
 use App\Models\Menu;
 use App\Models\NavbarElement;
+use App\Core\Builder\QueryBuilder;
 use App\Core\Controller\Controller;
 use App\Managers\ConfigurationManager;
 use App\Managers\NavbarElementManager;
+use App\Forms\Configuration\CreateImageForm;
 use App\Forms\Configuration\CreateNavbarElementForm;
 use App\Forms\Configuration\UpdateConfigurationForm;
 use App\Forms\Configuration\UpdateNavbarElementForm;
@@ -24,10 +25,12 @@ class ConfigurationController extends Controller
     {
         $configurationData = $this->getConfigurationData();
         $navbarData = $this->getNavbarData();
+        $configurationSlider = $this->getConfigurationSlider();
 
         $response->render("admin.configuration.index", "admin", [
             "configurationData" => $configurationData,
             "navbarData" => $navbarData,
+            "configurationSlider" => $configurationSlider,
         ]);
     }
 
@@ -135,6 +138,51 @@ class ConfigurationController extends Controller
         return Router::redirect('admin.configuration.index');
     }
 
+
+    /* SLIDER */
+    public function createSlider(Request $request, Response $response, array $args)
+    {
+        $form = $response->createForm(CreateImageForm::class);
+
+        $response->render("admin.configuration.slider.create", "admin", ["createConfigurationForm" => $form]);
+    }
+
+    public function storeSlider(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('createConfigurationForm_');
+        
+        $form = $response->createForm(CreateImageForm::class);
+
+        $file = $request->get("file");
+
+        if($file["error"] !== 0) 
+            $form->addErrors(["error" => "Impossible de téléverser le fichier !"]);  
+        
+        if (false === $form->handle($request))
+            return $response->render("admin.configuration.slider.create", "admin", ["createConfigurationForm" => $form]);
+
+        echo "upload";
+        /*$ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+
+        $path = uniqid() . "." . $ext;
+
+        if(move_uploaded_file($file["tmp_name"], "img/uploadedImages/" . $path)){
+            $image = (new ImageManager())->create([
+                'name' => $file["name"],
+                'path' => $path,
+            ]);
+        }
+
+        Router::redirect('admin.configuration.index');*/
+    }
+
+    public function destroySlider(Request $request, Response $response, array $args)
+    {
+        (new ConfigurationManager())->delete($args["slider_element_id"]);
+        return Router::redirect('admin.configuration.index');
+    }
+    /* SLIDER */
+
     private function getConfigurationData(): array
     {
         $datas = (new QueryBuilder())
@@ -162,6 +210,44 @@ class ConfigurationController extends Controller
                 "Catégorie",
                 "Libelle",
                 "Informations",
+                "Actions"
+            ],
+
+            "fields" => [
+                "Configuration" => $dataConfiguration
+            ]
+        ];
+
+        return $data;
+    }
+
+    private function getConfigurationSlider(): array
+    {
+        $datas = (new QueryBuilder())
+            ->select('*')
+            ->from('configurations', 'c')
+            ->where('libelle = \'slider\'')
+            ->getQuery()
+            ->getArrayResult(Menu::class);
+
+        $dataConfiguration = [];
+        foreach ($datas as $data) {
+            $dataConfiguration[] = [
+                "libelle" => ucwords(str_replace("_", " ", $data->getLibelle())),
+                "info" => $data->getInfo(),
+                "destroy" => Router::getRouteByName('admin.configuration.slider.destroy', $data->getId()),
+            ];
+        }
+
+        $data = [
+            "config" => [
+                "class" => "admin-table"
+            ],
+
+            "colonnes" => [
+                "Catégorie",
+                "Libelle",
+                "Image",
                 "Actions"
             ],
 
