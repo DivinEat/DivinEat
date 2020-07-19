@@ -9,6 +9,7 @@ use App\Core\Builder\QueryBuilder;
 use App\Core\Sitemap;
 use App\Core\View;
 use App\Models\Configuration;
+use App\Models\Menu;
 use App\Models\NavbarElement;
 use App\Core\Controller\Controller;
 use App\Managers\ConfigurationManager;
@@ -136,8 +137,12 @@ class ConfigurationController extends Controller
 
     private function getConfigurationData(): array
     {
-        $configurationManager = new ConfigurationManager();
-        $datas = $configurationManager->findAll();
+        $datas = (new QueryBuilder())
+            ->select('*')
+            ->from('configurations', 'c')
+            ->where('libelle IN (\'nom_du_site\', \'email\', \'facebook\', \'linkedin\', \'instagram\')')
+            ->getQuery()
+            ->getArrayResult(Configuration::class);
 
         $dataConfiguration = [];
         foreach ($datas as $data) {
