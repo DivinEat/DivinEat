@@ -100,12 +100,11 @@ class ConfigurationController extends Controller
     {
         $id = $args['navbar_element_id'];
 
-        if (isset($id)) {
-            $navbarElementManager = new NavbarElementManager();
-            $navbarElement = $navbarElementManager->find($id);
-        } else {
+        if (!isset($id))
             throw new \Exception("L'id de l'élément n'existe pas.");
-        }
+
+        $navbarElementManager = new NavbarElementManager();
+        $navbarElement = $navbarElementManager->find($id);
 
         $form = $response->createForm(UpdateNavbarElementForm::class, $navbarElement);
 
