@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row more"><a href="<?= Router::getRouteByName('actualites.show', $article->getId())->getUrl() ?>">Voir plus</a></div>
+            <div class="row more"><a href="<?= Router::getRouteByName('actualites.show', [$article->getCategorie()->getSlug(), $article->getSlug()])->getUrl() ?>">Voir plus</a></div>
         </div>
     </div>
 <?php endif; ?>
