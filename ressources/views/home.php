@@ -48,20 +48,22 @@
     </div>
 </div>
 
+<?php $sliderImages = getSliderImages() ?>
+<?php if ($sliderImages !== []): ?>
 <div class="row">
     <div class="col-md-7">
         <div class="col-inner">
             <div id="slider">
                 <?php 
-                    $files = glob('img/slider/*.{jpg,png,gif}', GLOB_BRACE);
-                    foreach($files as $file) {
-                      echo "<img src='$file'>";
+                    foreach($sliderImages as $sliderImage) {
+                      echo "<img src='$sliderImage'>";
                     }
                 ?>
             </div>
         </div>
     </div>
 </div>
+<?php endif; ?>
 
 <?php if(! empty($article)): ?>
     <div class="row frame">

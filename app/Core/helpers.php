@@ -1,12 +1,14 @@
 <?php
 
 use App\Core\Auth;
+use App\Core\Builder\QueryBuilder;
 use App\Core\Routing\Route;
 use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
 use App\Core\Csrf;
 use App\Managers\ImageManager;
 use App\Managers\NavbarElementManager;
+use App\Models\Configuration;
 use App\Models\User;
 
 function url(string $path): string
@@ -24,6 +26,25 @@ function getConfig(string $libelle)
     $config = $configManager->findBy(["libelle" => $libelle]);
 
     return current($config);
+}
+
+function getSliderImages(): array
+{
+    $toReturn = [];
+    $imageManager = new ImageManager();
+    $sliderConfigurations = (new QueryBuilder())
+        ->select('*')
+        ->from('configurations', 'c')
+        ->where('libelle LIKE \'slider_%\'')
+        ->getQuery()
+        ->getArrayResult(Configuration::class);
+    foreach ($sliderConfigurations as $sliderConfiguration)
+    {
+        $sliderImage = $imageManager->find((int) $sliderConfiguration->getInfo());
+        $toReturn[] = url('img/uploadedImages/' . $sliderImage->getPath());
+    }
+
+    return $toReturn;
 }
 
 function getLogoPath(): string
