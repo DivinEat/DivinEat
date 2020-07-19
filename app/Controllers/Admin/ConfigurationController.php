@@ -2,7 +2,9 @@
 
 namespace App\Controllers\Admin;
 
+use App\Core\Migration\MigrationRunner;
 use App\Core\View;
+use App\Managers\ImageManager;
 use App\Models\Menu;
 use App\Core\Sitemap;
 use App\Core\Http\Request;
@@ -170,24 +172,29 @@ class ConfigurationController extends Controller
         if (false === $form->handle($request))
             return $response->render("admin.configuration.slider.create", "admin", ["createConfigurationForm" => $form]);
 
-        echo "upload";
-        /*$ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
 
         $path = uniqid() . "." . $ext;
 
-        if(move_uploaded_file($file["tmp_name"], "img/uploadedImages/" . $path)){
+        if(move_uploaded_file($file["tmp_name"], ROOT ."/public/img/uploadedImages/" . $path)){
             $image = (new ImageManager())->create([
                 'name' => $file["name"],
                 'path' => $path,
             ]);
         }
 
-        Router::redirect('admin.configuration.index');*/
+        (new ConfigurationManager())->create([
+            'libelle' => uniqid('slider_'),
+            'info' => $image->getId()
+        ]);
+
+        Router::redirect('admin.configuration.index');
     }
 
     public function destroySlider(Request $request, Response $response, array $args)
     {
         (new ConfigurationManager())->delete($args["slider_element_id"]);
+
         return Router::redirect('admin.configuration.index');
     }
     /* SLIDER */
@@ -219,19 +226,22 @@ class ConfigurationController extends Controller
             ]);
         }
 
-        echo "logo";
-        /*$ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
 
         $path = uniqid() . "." . $ext;
 
-        if(move_uploaded_file($file["tmp_name"], "img/uploadedImages/" . $path)){
+        if(move_uploaded_file($file["tmp_name"], ROOT . "/public/img/uploadedImages/" . $path)){
             $image = (new ImageManager())->create([
                 'name' => $file["name"],
                 'path' => $path,
             ]);
         }
 
-        Router::redirect('admin.configuration.index');*/
+        $logo = current((new ConfigurationManager())->findBy(['libelle' => 'logo']));
+        $logo->setInfo($image->getId());
+        (new ConfigurationManager())->save($logo);
+
+        Router::redirect('admin.configuration.index');
     }
 
     /* BANNER */
@@ -261,8 +271,7 @@ class ConfigurationController extends Controller
             ]);
         }
 
-        echo "banner";
-        /*$ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
 
         $path = uniqid() . "." . $ext;
 
@@ -273,7 +282,11 @@ class ConfigurationController extends Controller
             ]);
         }
 
-        Router::redirect('admin.configuration.index');*/
+        $banner = current((new ConfigurationManager())->findBy(['libelle' => 'banner']));
+        $banner->setInfo($image->getId());
+        (new ConfigurationManager())->save($banner);
+
+        Router::redirect('admin.configuration.index');
     }
 
     private function getConfigurationData(): array
@@ -319,7 +332,7 @@ class ConfigurationController extends Controller
         $datas = (new QueryBuilder())
             ->select('*')
             ->from('configurations', 'c')
-            ->where('libelle = \'slider\'')
+            ->where('libelle LIKE \'slider_%\'')
             ->getQuery()
             ->getArrayResult(Configuration::class);
 

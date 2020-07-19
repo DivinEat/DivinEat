@@ -2,6 +2,7 @@
 
 use App\Core\Migration\Migration;
 use App\Managers\ConfigurationManager;
+use App\Managers\ImageManager;
 
 class CreateTableConfigurations extends Migration
 {
@@ -26,5 +27,21 @@ class CreateTableConfigurations extends Migration
         $configurationManager->create(['libelle' => 'facebook']);
         $configurationManager->create(['libelle' => 'linkedin']);
         $configurationManager->create(['libelle' => 'instagram']);
+
+        $imageManager = new ImageManager();
+        $configurationManager->create([
+            'libelle' => 'logo',
+            'info' => ($imageManager->create([
+                'name' => 'logo.png',
+                'path' => 'logo.png'
+            ]))->getId()
+        ]);
+        $configurationManager->create([
+            'libelle' => 'banner',
+            'info' => ($imageManager->create([
+                'name' => 'banner.jpg',
+                'path' => 'banner.jpg'
+            ]))->getId()
+        ]);
     }
 }
