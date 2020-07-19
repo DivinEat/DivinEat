@@ -8,13 +8,10 @@ TODO: Put more badges here.
 
 
 ## Table of Contents
-- [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
-
-## Background
 
 ## Install
 
@@ -33,10 +30,10 @@ monsite.com/install/
 
 ## Maintainers
 
-[@taoberquer](https://github.com/taoberquer)
-[@tdargent1](https://github.com/tdargent1)
-[@LudovicCollignon](https://github.com/LudovicCollignon)
-[@remibrat](https://github.com/remibrat)
+- [@taoberquer](https://github.com/taoberquer)
+- [@tdargent1](https://github.com/tdargent1)
+- [@LudovicCollignon](https://github.com/LudovicCollignon)
+- [@remibrat](https://github.com/remibrat)
 
 ## Contributing
 
