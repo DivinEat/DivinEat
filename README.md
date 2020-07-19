@@ -30,6 +30,7 @@ git clone https://github.com/taoberquer/DivinEat.git
 ## Usage
 
 ```
+monsite.com/install/
 ```
 
 ## API
