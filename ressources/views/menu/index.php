@@ -1,4 +1,4 @@
-<div class="row mt-4">
+<div class="row mt-4 total-height">
     <div class="col-sm-12 frame-menus">
         <div>
             <div class="row"><span>Menus</span></div>
