@@ -8,6 +8,7 @@ use App\Core\Sitemap;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
+use App\Managers\PageManager;
 use App\Models\Configuration;
 use App\Models\NavbarElement;
 use App\Core\Builder\QueryBuilder;
@@ -109,14 +110,9 @@ class ConfigurationController extends Controller
 
     public function editNavbar(Request $request, Response $response, array $args)
     {
-        $id = $args['navbar_element_id'];
-
-        if (isset($id)) {
-            $navbarElementManager = new NavbarElementManager();
-            $navbarElement = $navbarElementManager->find($id);
-        } else {
-            throw new \Exception("L'id de l'élément n'existe pas.");
-        }
+        $navbarElement = (new NavbarElementManager())->find($args['navbar_element_id']);
+        if (null === $navbarElement)
+            return Router::redirect('admin.configuration.index');
 
         $form = $response->createForm(UpdateNavbarElementForm::class, $navbarElement);
 
@@ -125,17 +121,23 @@ class ConfigurationController extends Controller
 
     public function updateNavbar(Request $request, Response $response, array $args)
     {
-        $request->setInputPrefix('updateNavbarElementForm_');
-        $fields = $request->getParams(["name", "slug", "page"]);
-        $fields["page"] = intval($fields["page"]);
+        $navbarElement = (new NavbarElementManager())->find($args['navbar_element_id']);
+        if (null === $navbarElement)
+            return Router::redirect('admin.configuration.index');
 
-        $object = (new NavbarElement())->hydrate($fields);
-        $form = $response->createForm(UpdateNavbarElementForm::class, $object);
+        $request->setInputPrefix('updateNavbarElementForm_');
+
+        $navbarElement->setName($request->get("name"));
+        $navbarElement->setSlug($request->get("slug"));
+        $navbarElement->setPage((new PageManager())->find($request->get("page")));
+
+        $form = $response->createForm(UpdateNavbarElementForm::class, $navbarElement);
 
         if (false === $form->handle($request))
             return $response->render("admin.configuration.navbar.edit", "admin", ["updateNavbarElementForm" => $form]);
 
-        (new NavbarElementManager())->save($object);
+        (new NavbarElementManager())->save($navbarElement);
+        
         return Router::redirect('admin.configuration.index');
     }
 
