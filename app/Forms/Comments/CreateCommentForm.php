@@ -42,6 +42,6 @@ class CreateCommentForm extends Form
                 "class" => "admin-form width-100",
                 "name" => "createCommentForm"
             ])
-            ->addConfig("action", Router::getRouteByName('actualites.comments.store', [$this->model->getSlug()])->getUrl());
+            ->addConfig("action", Router::getRouteByName('actualites.comments.store', [$this->model->getCategorie()->getSlug(), $this->model->getSlug()])->getUrl());
     }
 }

@@ -35,20 +35,20 @@ use App\Core\Routing\Router;
                         <?php foreach ($comments as $comment):?>
                             <div class="flex-raw flex-raw-start">
                             <?php if (null !== getAuth() && getAuth()->isModOrAdmin()): ?>
-                                    <form action="<?= route('actualites.comments.hide', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
+                                    <form action="<?= route('actualites.comments.hide', [$article->getCategorie()->getSlug(), $article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
                                         <?php csrfInput(); ?>
                                         <button type="submit" class="btn btn-remove">Masquer le commentaire</button>
                                     </form>
                             <?php endif; ?>
 
                             <?php if (null !== getAuth() && getAuth()->getId() === $comment->getUser()->getId()): ?>
-                                <form action="<?= route('actualites.comments.destroy', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
+                                <form action="<?= route('actualites.comments.destroy', [$article->getCategorie()->getSlug(), $article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
                                     <?php csrfInput(); ?>
                                     <button type="submit" class="btn btn-remove">Supprimer</button>
                                 </form>
                                 </div>
                                 
-                                <form class="admin-form width-100" action="<?= route('actualites.comments.update', [$article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
+                                <form class="admin-form width-100" action="<?= route('actualites.comments.update', [$article->getCategorie()->getSlug(), $article->getSlug(), $comment->getId()])->getUrl() ?>" method="post">
                                     <?php csrfInput(); ?>
                                     <div class="form-group row">
                                         <div class="col-sm-12">

@@ -28,7 +28,7 @@ use App\Core\Routing\Router;
                                             <small class="color-grey">Catégorie : <?= $article->getCategorie()->getName() ?></small>
                                         </div>
                                         <div class="more">
-                                            <a href="<?= Router::getRouteByName('actualites.show', $article->getSlug())->getUrl() ?>">Voir plus</a>
+                                            <a href="<?= Router::getRouteByName('actualites.show', [$article->getCategorie()->getSlug(), $article->getSlug()])->getUrl() ?>">Voir plus</a>
                                         </div>
                                     </div>
                                 </div>
