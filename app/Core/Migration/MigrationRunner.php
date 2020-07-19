@@ -19,7 +19,8 @@ class MigrationRunner
             return ! (in_array($value, ['.', '..']));
         });
 
-        array_map([$this, 'loadMigration'], $dirs);
+        foreach (array_map([$this, 'loadMigration'], $dirs) as $seeder)
+            $seeder();
     }
 
     protected function loadMigrationFile(string $migrationFileName): Migration
@@ -43,15 +44,18 @@ class MigrationRunner
         ")->getValueResult();
     }
 
-    protected function loadMigration(string $migrationFileName): void
+    protected function loadMigration(string $migrationFileName): ?callable
     {
         $migrationClass = $this->loadMigrationFile($migrationFileName);
 
         if (! $this->isTableExist($migrationClass->getTableNameWithPrefix()))
         {
             $this->pdoConnection->query($migrationClass->getCreationQuery());
-            $migrationClass->seeds();
+
+            return [$migrationClass, 'seeds'];
         }
+
+        return null;
     }
 
     protected function iniateMigration(): void
