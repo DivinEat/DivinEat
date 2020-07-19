@@ -4,6 +4,7 @@
 TODO: Put more badges here.
 
 > CMS destiné aux restaurateurs cherchant à moderniser leur outils. 
+> Permet la gestion des menus de son restaurant et des réservations
 
 
 
