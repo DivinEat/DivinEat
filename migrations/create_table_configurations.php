@@ -22,7 +22,7 @@ class CreateTableConfigurations extends Migration
     {
         $configurationManager = new ConfigurationManager();
         $configurationManager->create(['libelle' => 'nom_du_site', 'info' => 'DivinEat']);
-        $configurationManager->create(['libelle' => 'email', 'info' => 'contact@divineat.fr']);
+        $configurationManager->create(['libelle' => 'email', 'info' => 'contact@delta-mc.fr']);
         $configurationManager->create(['libelle' => 'facebook']);
         $configurationManager->create(['libelle' => 'linkedin']);
         $configurationManager->create(['libelle' => 'instagram']);

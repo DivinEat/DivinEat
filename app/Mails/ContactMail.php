@@ -10,7 +10,7 @@ class ContactMail extends Mail
     protected function initiateSender(): void
     {
         $this->setFrom(current((new ConfigurationManager)
-            ->findBy(['libelle' => 'email'])));
+            ->findBy(['libelle' => 'email']))->getInfo());
     }
 
     protected function initiateSubject(string $subject = null): void
