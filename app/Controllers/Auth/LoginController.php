@@ -26,12 +26,12 @@ class LoginController extends Controller
         
         $user = current($userManager->findBy(['email' => $request->get('email')]));
 
-        $form = $response->createForm(LoginForm::class, $user);
+        $form = $response->createForm(LoginForm::class);
 
         if (false === $user || !password_verify($request->get('pwd'), $user->getPwd()))
             $form->addErrors(["login" => "Votre mot de passe est incorrect"]);
 
-        if ($user->getStatus() === 0)
+        if (! empty($user) && $user->getStatus() === 0)
             $form->addErrors(["login" => "Vous devez vérifier votre email."]);
 
         if (false === $form->handle($request)) {
