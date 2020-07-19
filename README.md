@@ -11,10 +11,8 @@ TODO: Put more badges here.
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
-- [API](#api)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Background
 
@@ -40,8 +38,6 @@ monsite.com/install/
 [@Y](https://github.com/Y)
 
 ## Contributing
-
-See [the contributing file](contributing.md)!
 
 PRs accepted.
 
