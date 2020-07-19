@@ -167,6 +167,10 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
                 $group->post('update', 'ConfigurationController@updateBanner', 'update');
             });
 
+            $group->group(['prefix' =>'favicon', 'as' => 'favicon.'], function (Router $group) {
+                $group->post('update', 'ConfigurationController@updateFavicon', 'update');
+            });
+
             $group->post('sitemap-generate', 'ConfigurationController@sitemapGenerate', 'sitemap.generate');
 
             $group->group(['prefix' =>'navbar', 'as' => 'navbar.'], function (Router $group) {

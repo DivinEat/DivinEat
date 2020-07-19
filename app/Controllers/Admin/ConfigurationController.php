@@ -2,9 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use App\Core\Migration\MigrationRunner;
 use App\Core\View;
-use App\Managers\ImageManager;
 use App\Models\Menu;
 use App\Core\Sitemap;
 use App\Core\Http\Request;
@@ -13,13 +11,16 @@ use App\Core\Routing\Router;
 use App\Managers\PageManager;
 use App\Models\Configuration;
 use App\Models\NavbarElement;
+use App\Managers\ImageManager;
 use App\Core\Builder\QueryBuilder;
 use App\Core\Controller\Controller;
 use App\Managers\ConfigurationManager;
 use App\Managers\NavbarElementManager;
+use App\Core\Migration\MigrationRunner;
 use App\Forms\Configuration\CreateLogoForm;
 use App\Forms\Configuration\CreateImageForm;
 use App\Forms\Configuration\CreateBannerForm;
+use App\Forms\Configuration\CreateFaviconForm;
 use App\Forms\Configuration\CreateNavbarElementForm;
 use App\Forms\Configuration\UpdateConfigurationForm;
 use App\Forms\Configuration\UpdateNavbarElementForm;
@@ -34,13 +35,15 @@ class ConfigurationController extends Controller
 
         $createLogoForm = $response->createForm(CreateLogoForm::class);
         $createBannerForm = $response->createForm(CreateBannerForm::class);
+        $createFaviconForm = $response->createForm(CreateFaviconForm::class);
 
         $response->render("admin.configuration.index", "admin", [
             "configurationData" => $configurationData,
             "navbarData" => $navbarData,
             "configurationSlider" => $configurationSlider,
             "createLogoForm" => $createLogoForm,
-            "createBannerForm" => $createBannerForm
+            "createBannerForm" => $createBannerForm,
+            "createFaviconForm" => $createFaviconForm
         ]);
     }
 
@@ -216,13 +219,15 @@ class ConfigurationController extends Controller
             $navbarData = $this->getNavbarData();
             $configurationSlider = $this->getConfigurationSlider();
             $createBannerForm = $response->createForm(CreateBannerForm::class);
+            $createFaviconForm = $response->createForm(CreateFaviconForm::class);
 
             return $response->render("admin.configuration.index", "admin", [
                 "configurationData" => $configurationData,
                 "navbarData" => $navbarData,
                 "configurationSlider" => $configurationSlider,
                 "createLogoForm" => $form,
-                "createBannerForm" => $createBannerForm
+                "createBannerForm" => $createBannerForm,
+                "createFaviconForm" => $createFaviconForm
             ]);
         }
 
@@ -261,13 +266,15 @@ class ConfigurationController extends Controller
             $navbarData = $this->getNavbarData();
             $configurationSlider = $this->getConfigurationSlider();
             $createLogoForm = $response->createForm(CreateLogoForm::class);
+            $createFaviconForm = $response->createForm(CreateFaviconForm::class);
 
             return $response->render("admin.configuration.index", "admin", [
                 "configurationData" => $configurationData,
                 "navbarData" => $navbarData,
                 "configurationSlider" => $configurationSlider,
                 "createBannerForm" => $form,
-                "createLogoForm" => $createLogoForm
+                "createLogoForm" => $createLogoForm,
+                "createFaviconForm" => $createFaviconForm
             ]);
         }
 
@@ -287,6 +294,51 @@ class ConfigurationController extends Controller
         (new ConfigurationManager())->save($banner);
 
         Router::redirect('admin.configuration.index');
+    }
+
+    /* BANNER */
+    public function updateFavicon(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('createBannerForm_');
+        
+        $form = $response->createForm(CreateFaviconForm::class);
+
+        $file = $request->get("file");
+
+        if($file["error"] !== 0) 
+            $form->addErrors(["error" => "Impossible de téléverser le fichier !"]);  
+        
+        if (false === $form->handle($request)){
+            $configurationData = $this->getConfigurationData();
+            $navbarData = $this->getNavbarData();
+            $configurationSlider = $this->getConfigurationSlider();
+            $createLogoForm = $response->createForm(CreateLogoForm::class);
+            $createBannerForm = $response->createForm(CreateBannerForm::class);
+
+            return $response->render("admin.configuration.index", "admin", [
+                "configurationData" => $configurationData,
+                "navbarData" => $navbarData,
+                "configurationSlider" => $configurationSlider,
+                "createBannerForm" => $createBannerForm,
+                "createLogoForm" => $createLogoForm,
+                "createFaviconForm" => $form
+            ]);
+        }
+
+        echo "favicon";
+
+        /*$ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+
+        $path = uniqid() . "." . $ext;
+
+        if(move_uploaded_file($file["tmp_name"], "img/uploadedImages/" . $path)){
+            $image = (new ImageManager())->create([
+                'name' => $file["name"],
+                'path' => $path,
+            ]);
+        }
+
+        Router::redirect('admin.configuration.index');*/
     }
 
     private function getConfigurationData(): array
