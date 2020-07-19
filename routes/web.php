@@ -159,6 +159,14 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
                 });
             });
 
+            $group->group(['prefix' =>'logo', 'as' => 'logo.'], function (Router $group) {
+                $group->post('update', 'ConfigurationController@updateLogo', 'update');
+            });
+
+            $group->group(['prefix' =>'banner', 'as' => 'banner.'], function (Router $group) {
+                $group->post('update', 'ConfigurationController@updateBanner', 'update');
+            });
+
             $group->post('sitemap-generate', 'ConfigurationController@sitemapGenerate', 'sitemap.generate');
 
             $group->group(['prefix' =>'navbar', 'as' => 'navbar.'], function (Router $group) {

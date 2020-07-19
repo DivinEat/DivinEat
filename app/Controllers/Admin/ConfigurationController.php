@@ -3,18 +3,20 @@
 namespace App\Controllers\Admin;
 
 use App\Core\View;
+use App\Models\Menu;
 use App\Core\Sitemap;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
 use App\Models\Configuration;
-use App\Models\Menu;
 use App\Models\NavbarElement;
 use App\Core\Builder\QueryBuilder;
 use App\Core\Controller\Controller;
 use App\Managers\ConfigurationManager;
 use App\Managers\NavbarElementManager;
+use App\Forms\Configuration\CreateLogoForm;
 use App\Forms\Configuration\CreateImageForm;
+use App\Forms\Configuration\CreateBannerForm;
 use App\Forms\Configuration\CreateNavbarElementForm;
 use App\Forms\Configuration\UpdateConfigurationForm;
 use App\Forms\Configuration\UpdateNavbarElementForm;
@@ -27,10 +29,15 @@ class ConfigurationController extends Controller
         $navbarData = $this->getNavbarData();
         $configurationSlider = $this->getConfigurationSlider();
 
+        $createLogoForm = $response->createForm(CreateLogoForm::class);
+        $createBannerForm = $response->createForm(CreateBannerForm::class);
+
         $response->render("admin.configuration.index", "admin", [
             "configurationData" => $configurationData,
             "navbarData" => $navbarData,
             "configurationSlider" => $configurationSlider,
+            "createLogoForm" => $createLogoForm,
+            "createBannerForm" => $createBannerForm
         ]);
     }
 
@@ -183,6 +190,90 @@ class ConfigurationController extends Controller
     }
     /* SLIDER */
 
+    /* LOGO */
+    public function updateLogo(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('createLogoForm_');
+        
+        $form = $response->createForm(CreateLogoForm::class);
+
+        $file = $request->get("file");
+
+        if($file["error"] !== 0) 
+            $form->addErrors(["error" => "Impossible de téléverser le fichier !"]);  
+        
+        if (false === $form->handle($request)){
+            $configurationData = $this->getConfigurationData();
+            $navbarData = $this->getNavbarData();
+            $configurationSlider = $this->getConfigurationSlider();
+            $createBannerForm = $response->createForm(CreateBannerForm::class);
+
+            return $response->render("admin.configuration.index", "admin", [
+                "configurationData" => $configurationData,
+                "navbarData" => $navbarData,
+                "configurationSlider" => $configurationSlider,
+                "createLogoForm" => $form,
+                "createBannerForm" => $createBannerForm
+            ]);
+        }
+
+        echo "logo";
+        /*$ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+
+        $path = uniqid() . "." . $ext;
+
+        if(move_uploaded_file($file["tmp_name"], "img/uploadedImages/" . $path)){
+            $image = (new ImageManager())->create([
+                'name' => $file["name"],
+                'path' => $path,
+            ]);
+        }
+
+        Router::redirect('admin.configuration.index');*/
+    }
+
+    /* BANNER */
+    public function updateBanner(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('createBannerForm_');
+        
+        $form = $response->createForm(CreateBannerForm::class);
+
+        $file = $request->get("file");
+
+        if($file["error"] !== 0) 
+            $form->addErrors(["error" => "Impossible de téléverser le fichier !"]);  
+        
+        if (false === $form->handle($request)){
+            $configurationData = $this->getConfigurationData();
+            $navbarData = $this->getNavbarData();
+            $configurationSlider = $this->getConfigurationSlider();
+            $createLogoForm = $response->createForm(CreateLogoForm::class);
+
+            return $response->render("admin.configuration.index", "admin", [
+                "configurationData" => $configurationData,
+                "navbarData" => $navbarData,
+                "configurationSlider" => $configurationSlider,
+                "createBannerForm" => $form,
+                "createLogoForm" => $createLogoForm
+            ]);
+        }
+
+        echo "banner";
+        /*$ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+
+        $path = uniqid() . "." . $ext;
+
+        if(move_uploaded_file($file["tmp_name"], "img/uploadedImages/" . $path)){
+            $image = (new ImageManager())->create([
+                'name' => $file["name"],
+                'path' => $path,
+            ]);
+        }
+
+        Router::redirect('admin.configuration.index');*/
+    }
+
     private function getConfigurationData(): array
     {
         $datas = (new QueryBuilder())
@@ -228,7 +319,7 @@ class ConfigurationController extends Controller
             ->from('configurations', 'c')
             ->where('libelle = \'slider\'')
             ->getQuery()
-            ->getArrayResult(Menu::class);
+            ->getArrayResult(Configuration::class);
 
         $dataConfiguration = [];
         foreach ($datas as $data) {
