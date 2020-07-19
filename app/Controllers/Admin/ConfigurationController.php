@@ -83,7 +83,7 @@ class ConfigurationController extends Controller
     }
     public function sitemapGenerate(Request $request, Response $response)
     {
-        Sitemap::generate();die;
+        Sitemap::generate();
 
         return Router::redirect('admin.configuration.index');
     }
