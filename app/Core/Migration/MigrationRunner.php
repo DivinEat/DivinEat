@@ -20,7 +20,8 @@ class MigrationRunner
         });
 
         foreach (array_map([$this, 'loadMigration'], $dirs) as $seeder)
-            $seeder();
+            if (! empty($seeder))
+                $seeder();
     }
 
     protected function loadMigrationFile(string $migrationFileName): Migration

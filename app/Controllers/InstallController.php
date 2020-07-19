@@ -98,7 +98,6 @@ class InstallController extends Controller
 
     public function showGeneralForm(Request $request, Response $response)
     {
-        (new MigrationRunner())->run();
         $form = $response->createForm(CreateInformationsForm::class);
 
         $response->render("admin.install.general", "account", ["createInformationsForm" => $form]);
@@ -109,7 +108,7 @@ class InstallController extends Controller
         $request->setInputPrefix('createInformationsForm_');
 
         $form = $response->createForm(CreateInformationsForm::class, $user);
-        
+
         if($request->get('pwd') != $request->get('confirmPwd'))
             $form->addErrors(["confirmPwd" => "Les mots de passe ne correspondent pas"]);
 
