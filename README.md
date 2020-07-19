@@ -3,12 +3,11 @@
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 TODO: Put more badges here.
 
-> Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qui l'attendra.
+> CMS destiné aux restaurateurs cherchant à moderniser leur outils. 
 
 
 
 ## Table of Contents
-- [Security](#security)
 - [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
@@ -17,13 +16,12 @@ TODO: Put more badges here.
 - [Contributing](#contributing)
 - [License](#license)
 
-## Security
-
 ## Background
 
 ## Install
 
 ```
+git clone https://github.com/taoberquer/DivinEat.git
 ```
 
 ## Usage
