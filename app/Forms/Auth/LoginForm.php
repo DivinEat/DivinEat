@@ -3,6 +3,7 @@
 namespace App\Forms\Auth;
 
 use App\Core\Form;
+use App\Models\User;
 use App\Core\Routing\Router;
 use App\Core\Constraints\EmailConstraint;
 use App\Core\Constraints\LengthConstraint;
