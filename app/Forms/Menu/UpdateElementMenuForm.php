@@ -70,19 +70,18 @@ class UpdateElementMenuForm extends Form
                     new UniqueConstraint("elementMenus.nom", "L'élément de menu existe déjà !", $elementMenu->getId())
                 ]
             ])
-            ->add("description", "input", [
+            ->add("description", "textArea", [
                 "label" => [
                     "value" => "Description",
                     "class" => "",
                 ],
                 "attr" => [
-                    "type" => "textArea",
                     "class" => "form-control form-control-textarea",
-                    "value" => $elementMenu->getDescription()
                 ],
                 "constraints" => [
                     new RequiredConstraint()
-                ]
+                ],
+                "text" => $elementMenu->getDescription()
             ])
             ->add("prix", "input", [
                 "label" => [
