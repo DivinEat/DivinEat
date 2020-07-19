@@ -1,6 +1,6 @@
 <?php use App\Core\Routing\Router; ?>
 
-<div class="image-banner image-banner--text" style="background-image: url('img/banner.jpg')">
+<div class="image-banner image-banner--text" style="background-image: url('<?= getBannerPath() ?>')">
     <section>
         <h1>
             <?= getConfig("nom_du_site")->getInfo(); ?>

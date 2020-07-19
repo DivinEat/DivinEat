@@ -5,6 +5,7 @@ use App\Core\Routing\Route;
 use App\Core\Routing\Router;
 use App\Managers\ConfigurationManager;
 use App\Core\Csrf;
+use App\Managers\ImageManager;
 use App\Managers\NavbarElementManager;
 use App\Models\User;
 
@@ -23,6 +24,24 @@ function getConfig(string $libelle)
     $config = $configManager->findBy(["libelle" => $libelle]);
 
     return current($config);
+}
+
+function getLogoPath(): string
+{
+    return getImagePathFromConfiguration('logo');
+}
+
+function getBannerPath(): string
+{
+    return getImagePathFromConfiguration('banner');
+}
+
+function getImagePathFromConfiguration(string $libelle): string
+{
+    $configuration = current((new ConfigurationManager())->findBy(['libelle' => $libelle]));
+    $image = (new ImageManager())->find((int) $configuration->getInfo());
+
+    return url('img/uploadedImages/' . $image->getPath());
 }
 
 function csrfInput(): void
