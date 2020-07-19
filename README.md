@@ -3,7 +3,7 @@
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 TODO: Put more badges here.
 
-> CMS destiné aux restaurateurs cherchant à moderniser leur outils. 
+> CMS destiné aux restaurateurs cherchant à moderniser leur outils.<br/> 
 > Permet la gestion des menus de son restaurant et des réservations
 
 
