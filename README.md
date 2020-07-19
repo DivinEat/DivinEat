@@ -22,6 +22,9 @@ TODO: Put more badges here.
 
 ```
 git clone https://github.com/taoberquer/DivinEat.git
+- database connection
+- smtp connection
+- administrator profile
 ```
 
 ## Usage
