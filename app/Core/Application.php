@@ -38,7 +38,7 @@ class Application
             new MiddlewareDispatcher($this->container, $request);
 
         } catch (\Exception|\RuntimeException $exception) {
-            if (defined('ENV') && ENV === 'locale') {
+            if (defined('ENV') && ENV === 'local') {
                 pre();
                 var_dump($exception);
             }
