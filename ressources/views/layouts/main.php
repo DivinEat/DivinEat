@@ -21,7 +21,7 @@ use App\Core\Auth;
 
     <body>
         <header id="navbar" class="navbar navbar--fixed bg-white">
-            <a href="<?= Router::getRouteByName('home')->getUrl() ?>"><img src="<?= url('img/logo.png') ?>" style="height:60px"></img></a>
+            <a href="<?= Router::getRouteByName('home')->getUrl() ?>"><img src="<?= getLogoPath() ?>" style="height:60px"></img></a>
 
             <nav class="navbar-front">
                 <a href="<?= Router::getRouteByName('menus')->getUrl() ?>">Menus</a>
