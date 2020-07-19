@@ -299,7 +299,7 @@ class ConfigurationController extends Controller
     /* BANNER */
     public function updateFavicon(Request $request, Response $response, array $args)
     {
-        $request->setInputPrefix('createBannerForm_');
+        $request->setInputPrefix('createFaviconForm_');
         
         $form = $response->createForm(CreateFaviconForm::class);
 
@@ -325,9 +325,7 @@ class ConfigurationController extends Controller
             ]);
         }
 
-        echo "favicon";
-
-        /*$ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
 
         $path = uniqid() . "." . $ext;
 
@@ -338,7 +336,11 @@ class ConfigurationController extends Controller
             ]);
         }
 
-        Router::redirect('admin.configuration.index');*/
+        $favicon = current((new ConfigurationManager())->findBy(['libelle' => 'favicon']));
+        $favicon->setInfo($image->getId());
+        (new ConfigurationManager())->save($favicon);
+
+        Router::redirect('admin.configuration.index');
     }
 
     private function getConfigurationData(): array

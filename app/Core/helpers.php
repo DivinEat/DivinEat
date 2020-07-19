@@ -52,6 +52,11 @@ function getLogoPath(): string
     return getImagePathFromConfiguration('logo');
 }
 
+function getFaviconPath(): string
+{
+    return getImagePathFromConfiguration('favicon');
+}
+
 function getBannerPath(): string
 {
     return getImagePathFromConfiguration('banner');

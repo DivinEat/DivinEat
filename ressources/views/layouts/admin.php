@@ -9,6 +9,7 @@ use App\Core\Auth;
 
 <head>
     <title>Dashboard</title>
+    <link rel="icon" href="<?= getFaviconPath() ?>>" />
     <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

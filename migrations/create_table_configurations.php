@@ -43,5 +43,12 @@ class CreateTableConfigurations extends Migration
                 'path' => 'banner.jpg'
             ]))->getId()
         ]);
+        $configurationManager->create([
+            'libelle' => 'favicon',
+            'info' => ($imageManager->create([
+                'name' => 'favicon.ico',
+                'path' => 'favicon.ico'
+            ]))->getId()
+        ]);
     }
 }
