@@ -50,7 +50,7 @@ function getSliderImages(): array
 function getLogoPath(): string
 {
     if (! defined('INSTALLATION_SUCCESS') || INSTALLATION_SUCCESS !== 1)
-        return url('img/uplodedImages/logo.png');
+        return url('img/uploadedImages/logo.png');
 
     return getImagePathFromConfiguration('logo');
 }
@@ -58,7 +58,7 @@ function getLogoPath(): string
 function getFaviconPath(): string
 {
     if (! defined('INSTALLATION_SUCCESS') || INSTALLATION_SUCCESS !== 1)
-        return url('img/uplodedImages/favicon.ico');
+        return url('img/uploadedImages/favicon.ico');
 
     return getImagePathFromConfiguration('favicon');
 }
@@ -66,7 +66,7 @@ function getFaviconPath(): string
 function getBannerPath(): string
 {
     if (! defined('INSTALLATION_SUCCESS') || INSTALLATION_SUCCESS !== 1)
-        return url('img/uplodedImages/banner.jpg');
+        return url('img/uploadedImages/banner.jpg');
 
     return getImagePathFromConfiguration('banner');
 }
