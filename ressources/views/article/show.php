@@ -2,7 +2,7 @@
 use App\Core\Routing\Router;
 ?>
 
-<div class="total-height" style="margin-top: 12em;">
+<div class="total-height" style="margin-top: 8em;">
     <?php if(isset($article)): ?>
         <div class="row frame">
             <div class="col-sm-12">
