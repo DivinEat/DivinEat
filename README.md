@@ -31,11 +31,12 @@ git clone https://github.com/taoberquer/DivinEat.git
 monsite.com/install/
 ```
 
-## API
-
 ## Maintainers
 
-[@Y](https://github.com/Y)
+[@taoberquer](https://github.com/taoberquer)
+[@tdargent1](https://github.com/tdargent1)
+[@LudovicCollignon](https://github.com/LudovicCollignon)
+[@remibrat](https://github.com/remibrat)
 
 ## Contributing
 
