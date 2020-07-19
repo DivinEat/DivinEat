@@ -38,10 +38,12 @@ class Application
             new MiddlewareDispatcher($this->container, $request);
 
         } catch (\Exception|\RuntimeException $exception) {
-            pre();
-            var_dump($exception);
-
-            die('Oups something went wrong ! :p');
+            if (defined('ENV') && ENV === 'local') {
+                pre();
+                var_dump($exception);
+            }
+            else
+                die('Oups something went wrong ! :p');
         }
     }
 

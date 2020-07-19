@@ -39,7 +39,7 @@ class CommentsController extends Controller
             'content' => $request->get('content'),
         ]);
 
-        return Router::redirect('actualites.show', [$args['article_slug']]);
+        return Router::redirect('actualites.show', [$comment->getArticle()->getCategorie()->getSlug(), $args['article_slug']]);
     }
 
     public function update(Request $request, Response $response, array $args)
@@ -50,7 +50,7 @@ class CommentsController extends Controller
 
         $comment->update(['content' => $request->get('content')]);
 
-        Router::redirect('actualites.show', [$comment->getArticle()->getSlug()]);
+        Router::redirect('actualites.show', [$comment->getArticle()->getCategorie()->getSlug(), $comment->getArticle()->getSlug()]);
     }
 
     public function destroy(Request $request, Response $response, array $args)
@@ -61,7 +61,7 @@ class CommentsController extends Controller
 
         (new CommentManager())->delete($comment->getId());
 
-        Router::redirect('actualites.show', [$comment->getArticle()->getSlug()]);
+        Router::redirect('actualites.show', [$comment->getArticle()->getCategorie()->getSlug(), $comment->getArticle()->getSlug()]);
     }
 
     public function hide(Request $request, Response $response, array $args)
@@ -72,6 +72,6 @@ class CommentsController extends Controller
 
         $comment->update(['hide' => true]);
 
-        Router::redirect('actualites.show', [$comment->getArticle()->getSlug()]);
+        Router::redirect('actualites.show', [$comment->getArticle()->getCategorie()->getSlug(), $comment->getArticle()->getSlug()]);
     }
 }

@@ -25,16 +25,14 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
         $group->post('store', 'ContactController@store', 'store');
     });
 
-    $router->group(['prefix' => 'actualites', 'as' => 'actualites.'], function (Router $group) {
-        $group->get('', 'ArticleController@index', 'index');
-        $group->group(['prefix' => '{article_slug}'], function (Router $group) {
-            $group->get('show', 'ArticleController@show', 'show');
-            $group->group(['prefix' => 'comments', 'as' => 'comments.', 'middleware' => 'user.connected'], function (Router $group) {
-                $group->post('', 'CommentsController@store', 'store');
-                $group->post('{comment_id}/edit', 'CommentsController@update', 'update');
-                $group->post('{comment_id}/destroy', 'CommentsController@destroy', 'destroy');
-                $group->post('{comment_id}/hide', 'CommentsController@hide', 'hide')->addMiddleware('user.is.mod.or.admin');
-            });
+    $router->get('actualites', 'ArticleController@index', 'actualites.index');
+    $router->group(['prefix' => 'categories/{categorie_slug}/actualites/{article_slug}', 'as' => 'actualites.'], function (Router $group) {
+        $group->get('show', 'ArticleController@show', 'show');
+        $group->group(['prefix' => 'comments', 'as' => 'comments.', 'middleware' => 'user.connected'], function (Router $group) {
+            $group->post('', 'CommentsController@store', 'store');
+            $group->post('{comment_id}/edit', 'CommentsController@update', 'update');
+            $group->post('{comment_id}/destroy', 'CommentsController@destroy', 'destroy');
+            $group->post('{comment_id}/hide', 'CommentsController@hide', 'hide')->addMiddleware('user.is.mod.or.admin');
         });
     });
 
@@ -153,7 +151,28 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
                 });
             });
 
+            $group->group(['prefix' =>'slider', 'as' => 'slider.'], function (Router $group) {
+                $group->get('create', 'ConfigurationController@createSlider', 'create');
+                $group->post('store', 'ConfigurationController@storeSlider', 'store');
+                $group->group(['prefix' => '{slider_element_id}'], function (Router $group) {
+                    $group->delete('', 'ConfigurationController@destroySlider', 'destroy');
+                });
+            });
+
+            $group->group(['prefix' =>'logo', 'as' => 'logo.'], function (Router $group) {
+                $group->post('update', 'ConfigurationController@updateLogo', 'update');
+            });
+
+            $group->group(['prefix' =>'banner', 'as' => 'banner.'], function (Router $group) {
+                $group->post('update', 'ConfigurationController@updateBanner', 'update');
+            });
+
+            $group->group(['prefix' =>'favicon', 'as' => 'favicon.'], function (Router $group) {
+                $group->post('update', 'ConfigurationController@updateFavicon', 'update');
+            });
+
             $group->post('sitemap-generate', 'ConfigurationController@sitemapGenerate', 'sitemap.generate');
+
             $group->group(['prefix' =>'navbar', 'as' => 'navbar.'], function (Router $group) {
                 $group->get('create', 'ConfigurationController@createNavbar', 'create');
                 $group->post('store', 'ConfigurationController@storeNavbar', 'store');
@@ -192,5 +211,3 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');
 $router->get('unauthorized', 'UnauthorizedController@show', 'unauthorized');
-
-$router->get('custom', 'CustomPageController@display', 'custom');

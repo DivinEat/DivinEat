@@ -9,6 +9,7 @@ use App\Core\Auth;
 
 <head>
     <title>Dashboard</title>
+    <link rel="icon" href="<?= getFaviconPath() ?>" />
     <link href="<?= url('scss/dist/main.css') ?>" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -24,6 +25,7 @@ use App\Core\Auth;
                     <a href="<?= Router::getRouteByName('admin.index')->getUrl() ?>" class="sidebar-link">Dashboard<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.article.index')->getUrl() ?>" class="sidebar-link">Articles<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.categorie.index')->getUrl() ?>" class="sidebar-link">Catégories<img src='<?= url('img/icones/arrow.svg') ?>'></a>
+                    <a href="<?= Router::getRouteByName('admin.image.index')->getUrl() ?>" class="sidebar-link">Images<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.page.index')->getUrl() ?>" class="sidebar-link">Pages<img src='<?= url('img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.user.index')->getUrl() ?>" class="sidebar-link">Utilisateurs<img src='<?= url('/img/icones/arrow.svg') ?>'></a>
                     <a href="<?= Router::getRouteByName('admin.menu.index')->getUrl() ?>" class="sidebar-link">Menus<img src='<?= url('/img/icones/arrow.svg') ?>'></a>

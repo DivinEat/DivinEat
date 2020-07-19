@@ -5,3 +5,8 @@ node_modules
 .env
 /www/public/scss/dist/main.css
 public/sitemap.xml
+public/img/uploadedImages/*
+!public/img/uploadedImages
+!/public/img/uploadedImages/banner.jpg
+!/public/img/uploadedImages/logo.png
+!/public/img/uploadedImages/favicon.ico

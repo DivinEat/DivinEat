@@ -6,6 +6,7 @@ use App\Core\Form;
 use App\Core\Routing\Router;
 use App\Managers\PageManager;
 use App\Models\Configuration;
+use App\Core\Constraints\SlugConstraint;
 use App\Core\Constraints\RequiredConstraint;
 
 class UpdateNavbarElementForm extends Form
@@ -55,7 +56,8 @@ class UpdateNavbarElementForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
-                    new RequiredConstraint()
+                    new RequiredConstraint(),
+                    new SlugConstraint()
                 ]
             ])
             ->add("page", "select", [

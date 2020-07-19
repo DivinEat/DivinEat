@@ -50,13 +50,12 @@ class CreateElementMenuForm extends Form
                     new UniqueConstraint("elementMenus.nom", "L'élément de menu existe déjà !")
                 ]
             ])
-            ->add("description", "input", [
+            ->add("description", "textArea", [
                 "label" => [
                     "value" => "Description",
                     "class" => "",
                 ],
                 "attr" => [
-                    "type" => "textArea",
                     "class" => "form-control form-control-textarea"
                 ],
                 "constraints" => [

@@ -36,6 +36,6 @@ class Page extends Model implements ModelInterface
     }
     public function getData(): ?string
     {
-        return $this->data;
+        return htmlspecialchars_decode($this->data);
     }
 }

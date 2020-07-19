@@ -4,10 +4,11 @@ namespace App\Forms\Configuration;
 
 use App\Core\Form;
 use App\Core\Routing\Router;
-use App\Core\Constraints\RequiredConstraint;
-use App\Core\Constraints\UniqueConstraint;
 use App\Managers\PageManager;
 use App\Models\Configuration;
+use App\Core\Constraints\SlugConstraint;
+use App\Core\Constraints\UniqueConstraint;
+use App\Core\Constraints\RequiredConstraint;
 
 class CreateNavbarElementForm extends Form
 {
@@ -31,6 +32,7 @@ class CreateNavbarElementForm extends Form
                 ],
                 "constraints" => [
                     new RequiredConstraint(),
+                    new SlugConstraint(),
                     new UniqueConstraint("navbar_elements.slug", "Le slug de la page est déjà utilisé !")
                 ],
             ])

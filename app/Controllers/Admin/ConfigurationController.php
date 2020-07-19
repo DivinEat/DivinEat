@@ -2,17 +2,25 @@
 
 namespace App\Controllers\Admin;
 
+use App\Core\View;
+use App\Models\Menu;
+use App\Core\Sitemap;
 use App\Core\Http\Request;
 use App\Core\Http\Response;
 use App\Core\Routing\Router;
-use App\Core\Builder\QueryBuilder;
-use App\Core\Sitemap;
-use App\Core\View;
+use App\Managers\PageManager;
 use App\Models\Configuration;
 use App\Models\NavbarElement;
+use App\Managers\ImageManager;
+use App\Core\Builder\QueryBuilder;
 use App\Core\Controller\Controller;
 use App\Managers\ConfigurationManager;
 use App\Managers\NavbarElementManager;
+use App\Core\Migration\MigrationRunner;
+use App\Forms\Configuration\CreateLogoForm;
+use App\Forms\Configuration\CreateImageForm;
+use App\Forms\Configuration\CreateBannerForm;
+use App\Forms\Configuration\CreateFaviconForm;
 use App\Forms\Configuration\CreateNavbarElementForm;
 use App\Forms\Configuration\UpdateConfigurationForm;
 use App\Forms\Configuration\UpdateNavbarElementForm;
@@ -23,10 +31,19 @@ class ConfigurationController extends Controller
     {
         $configurationData = $this->getConfigurationData();
         $navbarData = $this->getNavbarData();
+        $configurationSlider = $this->getConfigurationSlider();
+
+        $createLogoForm = $response->createForm(CreateLogoForm::class);
+        $createBannerForm = $response->createForm(CreateBannerForm::class);
+        $createFaviconForm = $response->createForm(CreateFaviconForm::class);
 
         $response->render("admin.configuration.index", "admin", [
             "configurationData" => $configurationData,
             "navbarData" => $navbarData,
+            "configurationSlider" => $configurationSlider,
+            "createLogoForm" => $createLogoForm,
+            "createBannerForm" => $createBannerForm,
+            "createFaviconForm" => $createFaviconForm
         ]);
     }
 
@@ -98,13 +115,9 @@ class ConfigurationController extends Controller
 
     public function editNavbar(Request $request, Response $response, array $args)
     {
-        $id = $args['navbar_element_id'];
-
-        if (!isset($id))
-            throw new \Exception("L'id de l'élément n'existe pas.");
-
-        $navbarElementManager = new NavbarElementManager();
-        $navbarElement = $navbarElementManager->find($id);
+        $navbarElement = (new NavbarElementManager())->find($args['navbar_element_id']);
+        if (null === $navbarElement)
+            return Router::redirect('admin.configuration.index');
 
         $form = $response->createForm(UpdateNavbarElementForm::class, $navbarElement);
 
@@ -113,17 +126,23 @@ class ConfigurationController extends Controller
 
     public function updateNavbar(Request $request, Response $response, array $args)
     {
-        $request->setInputPrefix('updateNavbarElementForm_');
-        $fields = $request->getParams(["name", "slug", "page"]);
-        $fields["page"] = intval($fields["page"]);
+        $navbarElement = (new NavbarElementManager())->find($args['navbar_element_id']);
+        if (null === $navbarElement)
+            return Router::redirect('admin.configuration.index');
 
-        $object = (new NavbarElement())->hydrate($fields);
-        $form = $response->createForm(UpdateNavbarElementForm::class, $object);
+        $request->setInputPrefix('updateNavbarElementForm_');
+
+        $navbarElement->setName($request->get("name"));
+        $navbarElement->setSlug($request->get("slug"));
+        $navbarElement->setPage((new PageManager())->find($request->get("page")));
+
+        $form = $response->createForm(UpdateNavbarElementForm::class, $navbarElement);
 
         if (false === $form->handle($request))
             return $response->render("admin.configuration.navbar.edit", "admin", ["updateNavbarElementForm" => $form]);
 
-        (new NavbarElementManager())->save($object);
+        (new NavbarElementManager())->save($navbarElement);
+        
         return Router::redirect('admin.configuration.index');
     }
 
@@ -133,10 +152,205 @@ class ConfigurationController extends Controller
         return Router::redirect('admin.configuration.index');
     }
 
+
+    /* SLIDER */
+    public function createSlider(Request $request, Response $response, array $args)
+    {
+        $form = $response->createForm(CreateImageForm::class);
+
+        $response->render("admin.configuration.slider.create", "admin", ["createConfigurationForm" => $form]);
+    }
+
+    public function storeSlider(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('createConfigurationForm_');
+        
+        $form = $response->createForm(CreateImageForm::class);
+
+        $file = $request->get("file");
+
+        if($file["error"] !== 0) 
+            $form->addErrors(["error" => "Impossible de téléverser le fichier !"]);  
+        
+        if (false === $form->handle($request))
+            return $response->render("admin.configuration.slider.create", "admin", ["createConfigurationForm" => $form]);
+
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+
+        $path = uniqid() . "." . $ext;
+
+        if(move_uploaded_file($file["tmp_name"], ROOT ."/public/img/uploadedImages/" . $path)){
+            $image = (new ImageManager())->create([
+                'name' => $file["name"],
+                'path' => $path,
+            ]);
+        }
+
+        (new ConfigurationManager())->create([
+            'libelle' => uniqid('slider_'),
+            'info' => $image->getId()
+        ]);
+
+        Router::redirect('admin.configuration.index');
+    }
+
+    public function destroySlider(Request $request, Response $response, array $args)
+    {
+        (new ConfigurationManager())->delete($args["slider_element_id"]);
+
+        return Router::redirect('admin.configuration.index');
+    }
+    /* SLIDER */
+
+    /* LOGO */
+    public function updateLogo(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('createLogoForm_');
+        
+        $form = $response->createForm(CreateLogoForm::class);
+
+        $file = $request->get("file");
+
+        if($file["error"] !== 0) 
+            $form->addErrors(["error" => "Impossible de téléverser le fichier !"]);  
+        
+        if (false === $form->handle($request)){
+            $configurationData = $this->getConfigurationData();
+            $navbarData = $this->getNavbarData();
+            $configurationSlider = $this->getConfigurationSlider();
+            $createBannerForm = $response->createForm(CreateBannerForm::class);
+            $createFaviconForm = $response->createForm(CreateFaviconForm::class);
+
+            return $response->render("admin.configuration.index", "admin", [
+                "configurationData" => $configurationData,
+                "navbarData" => $navbarData,
+                "configurationSlider" => $configurationSlider,
+                "createLogoForm" => $form,
+                "createBannerForm" => $createBannerForm,
+                "createFaviconForm" => $createFaviconForm
+            ]);
+        }
+
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+
+        $path = uniqid() . "." . $ext;
+
+        if(move_uploaded_file($file["tmp_name"], ROOT . "/public/img/uploadedImages/" . $path)){
+            $image = (new ImageManager())->create([
+                'name' => $file["name"],
+                'path' => $path,
+            ]);
+        }
+
+        $logo = current((new ConfigurationManager())->findBy(['libelle' => 'logo']));
+        $logo->setInfo($image->getId());
+        (new ConfigurationManager())->save($logo);
+
+        Router::redirect('admin.configuration.index');
+    }
+
+    /* BANNER */
+    public function updateBanner(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('createBannerForm_');
+        
+        $form = $response->createForm(CreateBannerForm::class);
+
+        $file = $request->get("file");
+
+        if($file["error"] !== 0) 
+            $form->addErrors(["error" => "Impossible de téléverser le fichier !"]);  
+        
+        if (false === $form->handle($request)){
+            $configurationData = $this->getConfigurationData();
+            $navbarData = $this->getNavbarData();
+            $configurationSlider = $this->getConfigurationSlider();
+            $createLogoForm = $response->createForm(CreateLogoForm::class);
+            $createFaviconForm = $response->createForm(CreateFaviconForm::class);
+
+            return $response->render("admin.configuration.index", "admin", [
+                "configurationData" => $configurationData,
+                "navbarData" => $navbarData,
+                "configurationSlider" => $configurationSlider,
+                "createBannerForm" => $form,
+                "createLogoForm" => $createLogoForm,
+                "createFaviconForm" => $createFaviconForm
+            ]);
+        }
+
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+
+        $path = uniqid() . "." . $ext;
+
+        if(move_uploaded_file($file["tmp_name"], "img/uploadedImages/" . $path)){
+            $image = (new ImageManager())->create([
+                'name' => $file["name"],
+                'path' => $path,
+            ]);
+        }
+
+        $banner = current((new ConfigurationManager())->findBy(['libelle' => 'banner']));
+        $banner->setInfo($image->getId());
+        (new ConfigurationManager())->save($banner);
+
+        Router::redirect('admin.configuration.index');
+    }
+
+    /* BANNER */
+    public function updateFavicon(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('createFaviconForm_');
+        
+        $form = $response->createForm(CreateFaviconForm::class);
+
+        $file = $request->get("file");
+
+        if($file["error"] !== 0) 
+            $form->addErrors(["error" => "Impossible de téléverser le fichier !"]);  
+        
+        if (false === $form->handle($request)){
+            $configurationData = $this->getConfigurationData();
+            $navbarData = $this->getNavbarData();
+            $configurationSlider = $this->getConfigurationSlider();
+            $createLogoForm = $response->createForm(CreateLogoForm::class);
+            $createBannerForm = $response->createForm(CreateBannerForm::class);
+
+            return $response->render("admin.configuration.index", "admin", [
+                "configurationData" => $configurationData,
+                "navbarData" => $navbarData,
+                "configurationSlider" => $configurationSlider,
+                "createBannerForm" => $createBannerForm,
+                "createLogoForm" => $createLogoForm,
+                "createFaviconForm" => $form
+            ]);
+        }
+
+        $ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+
+        $path = uniqid() . "." . $ext;
+
+        if(move_uploaded_file($file["tmp_name"], "img/uploadedImages/" . $path)){
+            $image = (new ImageManager())->create([
+                'name' => $file["name"],
+                'path' => $path,
+            ]);
+        }
+
+        $favicon = current((new ConfigurationManager())->findBy(['libelle' => 'favicon']));
+        $favicon->setInfo($image->getId());
+        (new ConfigurationManager())->save($favicon);
+
+        Router::redirect('admin.configuration.index');
+    }
+
     private function getConfigurationData(): array
     {
-        $configurationManager = new ConfigurationManager();
-        $datas = $configurationManager->findAll();
+        $datas = (new QueryBuilder())
+            ->select('*')
+            ->from('configurations', 'c')
+            ->where('libelle IN (\'nom_du_site\', \'email\', \'facebook\', \'linkedin\', \'instagram\')')
+            ->getQuery()
+            ->getArrayResult(Configuration::class);
 
         $dataConfiguration = [];
         foreach ($datas as $data) {
@@ -156,6 +370,44 @@ class ConfigurationController extends Controller
                 "Catégorie",
                 "Libelle",
                 "Informations",
+                "Actions"
+            ],
+
+            "fields" => [
+                "Configuration" => $dataConfiguration
+            ]
+        ];
+
+        return $data;
+    }
+
+    private function getConfigurationSlider(): array
+    {
+        $datas = (new QueryBuilder())
+            ->select('*')
+            ->from('configurations', 'c')
+            ->where('libelle LIKE \'slider_%\'')
+            ->getQuery()
+            ->getArrayResult(Configuration::class);
+
+        $dataConfiguration = [];
+        foreach ($datas as $data) {
+            $dataConfiguration[] = [
+                "libelle" => ucwords(str_replace("_", " ", $data->getLibelle())),
+                "info" => $data->getInfo(),
+                "destroy" => Router::getRouteByName('admin.configuration.slider.destroy', $data->getId()),
+            ];
+        }
+
+        $data = [
+            "config" => [
+                "class" => "admin-table"
+            ],
+
+            "colonnes" => [
+                "Catégorie",
+                "Libelle",
+                "Image",
                 "Actions"
             ],
 

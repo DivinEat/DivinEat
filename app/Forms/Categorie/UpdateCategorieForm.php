@@ -4,8 +4,9 @@ namespace App\Forms\Categorie;
 
 use App\Core\Form;
 use App\Core\Routing\Router;
-use App\Core\Constraints\RequiredConstraint;
+use App\Core\Constraints\SlugConstraint;
 use App\Core\Constraints\UniqueConstraint;
+use App\Core\Constraints\RequiredConstraint;
 
 class UpdateCategorieForm extends Form
 {
@@ -42,6 +43,7 @@ class UpdateCategorieForm extends Form
                 ],
                 "constraints" => [
                     new RequiredConstraint(),
+                    new SlugConstraint(),
                     new UniqueConstraint("categorie.slug", "Le slug de la catégorie est déjà utilisé !")
                 ],
             ])

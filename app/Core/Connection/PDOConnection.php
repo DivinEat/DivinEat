@@ -35,6 +35,7 @@ class PDOConnection implements BDDInterface
             ];
             foreach ($parameters as $key => $value)
             {
+                $value = gettype($value) === 'string' ? htmlspecialchars($value, ENT_QUOTES) : $value;
                 $queryPrepared->bindValue($key, $value, $type[gettype($value)]);
             }
         }

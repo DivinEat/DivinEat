@@ -47,6 +47,6 @@ class UpdateCommentForm extends Form
                 "class" => "admin-form width-100",
                 "name" => "updateCommentForm"
             ]);
-            //->addConfig("action", Router::getRouteByName('actualites.comments.update', [$this->model->getSlug(), $comments->getId()])->getUrl());
+            //->addConfig("action", Router::getRouteByName('actualites.comments.update', [$this->model->getCategorie()->getSlug(), $this->model->getSlug(), $comments->getId()])->getUrl());
     }
 }

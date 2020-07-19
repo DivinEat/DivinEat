@@ -6,10 +6,11 @@ use App\Core\Form;
 use App\Models\Article;
 use App\Core\StringValue;
 use App\Core\Routing\Router;
+use App\Managers\CategorieManager;
+use App\Core\Constraints\SlugConstraint;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\UniqueConstraint;
 use App\Core\Constraints\RequiredConstraint;
-use App\Managers\CategorieManager;
 
 class CreateArticleForm extends Form
 {
@@ -44,6 +45,7 @@ class CreateArticleForm extends Form
                     "class" => "form-control"
                 ],
                 "constraints" => [
+                    new SlugConstraint(),
                     new RequiredConstraint(),
                     new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !"),
                     new LengthConstraint(2, 255, 'Le slug doit contenir au moins 2 caractères', 'Le slug doit contenir au plus 255 caractères')
