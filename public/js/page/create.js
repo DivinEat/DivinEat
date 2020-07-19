@@ -141,14 +141,18 @@ $(document).ready(function () {
 
                     newRowBtnBottom = document.createElement("div");
                     newRowBtnBottom.className = "pageBuilder-btn-new-top";
-                    newRowContainerBottom = pageBuilder.createContainer(newRowBtnBottom);
+                    newRowContainerBottom = document.createElement("div");
+                    newRowContainerBottom.className = "pageBuilder-container-hidden";
+                    newRowContainerBottom.append(newRowBtnBottom);
                     pageBuilder.newBottomRowBtn = newRowContainerBottom;
                     page.append(newRowContainerBottom);
                     pageBuilder.addEventToAddRowBtn(newRowBtnBottom, newRowBtnBottom.parentNode, "before");
 
                     newRowBtnTop = document.createElement("div");
                     newRowBtnTop.className = "pageBuilder-btn-new-bottom";
-                    newRowContainerTop = pageBuilder.createContainer(newRowBtnTop);
+                    newRowContainerTop = document.createElement("div");
+                    newRowContainerTop.className = "pageBuilder-container-hidden";
+                    newRowContainerTop.append(newRowBtnTop);
                     pageBuilder.newTopRowBtn = newRowContainerTop;
                     page.prepend(newRowContainerTop);
                     pageBuilder.addEventToAddRowBtn(newRowBtnTop, newRowBtnTop.parentNode, "after");
@@ -188,9 +192,11 @@ $(document).ready(function () {
 
                         pageData[parentRow.id].parent = mainRow.id;
                         pageData[parentRow.id].node = parentRow;
+
                         if (div == pageBuilder.newTopRowBtn || div == pageBuilder.newBottomRowBtn) {
                             if (param == "after") {
                                 var oldFirstElement = pageData[mainRow.id].first;
+                                console.log(pageData[oldFirstElement])
                                 if (null !== oldFirstElement) {
                                     pageData[parentRow.id].previous = null;
                                     pageData[parentRow.id].next = oldFirstElement;
@@ -299,7 +305,7 @@ $(document).ready(function () {
 
                     pageData[parentRow.id].parent = mainRow.id;
                     pageData[parentRow.id].node = parentRow;
-                    pageData[parentRow.id].type = 'childRow';
+                    pageData[parentRow.id].type = "childRow";
                     pageData[parentRow.id].class = mainCol.className;
 
                     firstChild = pageData[mainRow.id].first;
@@ -449,34 +455,6 @@ $(document).ready(function () {
                     });
                 });
             });
-        },
-
-        createContainer: function (content = null) {
-            var pageBuilder = this;
-            var row = document.createElement("div");
-            var col = document.createElement("div");
-            var colInner = document.createElement("div");
-            var container = document.createElement("div");
-
-            row.className = "row padding-0";
-            col.className = "col-sm-12 padding-0";
-            colInner.className = "col-inner";
-            container.className = "pageBuilder-container-hidden";
-
-            row.appendChild(col);
-            col.appendChild(colInner);
-            colInner.appendChild(container);
-
-            if (content != null) container.append(content);
-
-            container.addEventListener("mouseenter", function (e) {
-                pageBuilder.container = this;
-            });
-            container.addEventListener("mouveleave", function (e) {
-                pageBuilder.container = null;
-            });
-
-            return container;
         },
 
         addEditor: function (btn) {

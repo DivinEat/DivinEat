@@ -12,6 +12,7 @@ use App\Core\Routing\Router;
 use App\Managers\PageManager;
 use App\Core\Builder\QueryBuilder;
 use App\Forms\Page\CreatePageForm;
+use App\Forms\Page\UpdatePageForm;
 use App\Core\Controller\Controller;
 use App\Managers\NavbarElementManager;
 
@@ -50,6 +51,34 @@ class PageController extends Controller
             (new PageManager())->save($page);
             Router::redirect('admin.page.index');
         }
+    }
+
+    public function edit(Request $request, Response $response, array $args)
+    {
+        $page = (new PageManager())->find($args['page_id']);
+
+        if (NULL === $page)
+            return Router::redirect('admin.article.index');
+        
+        $form = $response->createForm(UpdatePageForm::class, $page);
+        $response->render('admin.page.edit', 'admin', ["updatePageForm" => $form]);
+    }
+
+    public function update(Request $request, Response $response, array $args)
+    {
+        $request->setInputPrefix('updatePageForm_');
+        $fields = $request->getParams(["title", "data"]);
+
+        $page = (new Page())->hydrate($fields);
+        $page->setId($args['page_id']);
+
+        $form = $response->createForm(UpdatePageForm::class, $page);
+
+        if (false === $form->handle($request))
+            return $response->render("admin.page.edit", "admin", ["updatePageForm" => $form]);
+
+        (new PageManager())->save($page);
+        return Router::redirect('admin.page.edit', [$page->getId()]);
     }
 
     public function destroy(Request $request, Response $response, array $args)
