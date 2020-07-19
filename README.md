@@ -3,43 +3,40 @@
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 TODO: Put more badges here.
 
-> Le client peut réserver une table depuis le site et si il le souhaite choisir un menu qui l'attendra.
+> CMS destiné aux restaurateurs cherchant à moderniser leur outils.<br/> 
+> Permet la gestion des menus de son restaurant et des réservations
 
 
 
 ## Table of Contents
-- [Security](#security)
-- [Background](#background)
 - [Install](#install)
 - [Usage](#usage)
-- [API](#api)
 - [Maintainers](#maintainers)
 - [Contributing](#contributing)
-- [License](#license)
-
-## Security
-
-## Background
 
 ## Install
 
 ```
+git clone https://github.com/taoberquer/DivinEat.git
+- database connection
+- smtp connection
+- administrator profile
 ```
 
 ## Usage
 
 ```
+monsite.com/install/
 ```
-
-## API
 
 ## Maintainers
 
-[@Y](https://github.com/Y)
+- [@taoberquer](https://github.com/taoberquer)
+- [@tdargent1](https://github.com/tdargent1)
+- [@LudovicCollignon](https://github.com/LudovicCollignon)
+- [@remibrat](https://github.com/remibrat)
 
 ## Contributing
-
-See [the contributing file](contributing.md)!
 
 PRs accepted.
 
@@ -47,4 +44,4 @@ Small note: If editing the README, please conform to the [standard-readme](https
 
 ## License
 
-MIT © 2020 divinEaTeam
+MIT © 2020 DivinEat-Team
