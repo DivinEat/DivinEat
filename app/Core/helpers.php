@@ -49,16 +49,25 @@ function getSliderImages(): array
 
 function getLogoPath(): string
 {
+    if (! defined('INSTALLATION_SUCCESS') || INSTALLATION_SUCCESS !== 1)
+        return url('img/uplodedImages/logo.png');
+
     return getImagePathFromConfiguration('logo');
 }
 
 function getFaviconPath(): string
 {
+    if (! defined('INSTALLATION_SUCCESS') || INSTALLATION_SUCCESS !== 1)
+        return url('img/uplodedImages/favicon.ico');
+
     return getImagePathFromConfiguration('favicon');
 }
 
 function getBannerPath(): string
 {
+    if (! defined('INSTALLATION_SUCCESS') || INSTALLATION_SUCCESS !== 1)
+        return url('img/uplodedImages/banner.jpg');
+
     return getImagePathFromConfiguration('banner');
 }
 
