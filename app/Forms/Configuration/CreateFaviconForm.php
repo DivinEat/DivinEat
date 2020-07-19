@@ -5,7 +5,6 @@ namespace App\Forms\Configuration;
 use App\Core\Form;
 use App\Core\Routing\Router;
 use App\Models\Configuration;
-use App\Core\Constraints\FileConstraint;
 use App\Core\Constraints\FaviconConstraint;
 use App\Core\Constraints\RequiredConstraint;
 
