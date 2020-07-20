@@ -56,6 +56,7 @@ class OrderController extends Controller
         $userManager = new UserManager();
         $menuManager = new MenuManager();
         $orderManager = new OrderManager();
+        $menuOrderManager = new MenuOrderManager();
 
         $email = $request->get('email');
 

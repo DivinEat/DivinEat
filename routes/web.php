@@ -20,6 +20,16 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
         $group->post('update', 'UserController@update', 'update');
     });
 
+    $router->group(['prefix' => 'editor', 'as' => 'editor.actualites.', 'middleware' => ['user.connected', 'user.is.editor']], function (Router $router) {
+        $router->get('actualites', 'ArticleController@create', 'create');
+        $router->post('actualites', 'ArticleController@store', 'store');
+        $router->group(['prefix' => 'categories/{categorie_slug}/actualites/{article_slug}'], function (Router $group) {
+            $group->get('', 'ArticleController@edit', 'edit');
+            $group->post('', 'ArticleController@update', 'update');
+        });
+    });
+
+
     $router->group(['prefix' => 'contact', 'as' => 'contact.'], function (Router $group) {
         $group->get('', 'ContactController@index', 'index');
         $group->post('store', 'ContactController@store', 'store');
