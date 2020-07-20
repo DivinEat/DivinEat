@@ -1,4 +1,6 @@
 <?php
+
+use App\Core\Auth;
 use App\Core\Routing\Router;
 ?>
 
@@ -8,6 +10,9 @@ use App\Core\Routing\Router;
             <div class="col-inner flex-column">
                 <div class="card">
                     <h2 class="title color-black margin-50">Actualités</h2>
+                    <?php if (Auth::getUser() !== null && Auth::getUser()->isEditor()): ?>
+                        <a href="<?= route('editor.actualites.create')->getUrl() ?>">Créer un article</a>
+                    <?php endif; ?>
 
                     <?php if(isset($articles) && $articles != false):
                         foreach($articles as $article): ?>

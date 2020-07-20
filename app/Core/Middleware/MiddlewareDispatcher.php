@@ -9,6 +9,7 @@ use App\Middleware\CheckInstall;
 use App\Middleware\CheckNotConnectedUser;
 use App\Middleware\CheckNotInstall;
 use App\Middleware\CheckUserAdmin;
+use App\Middleware\CheckUserEditor;
 use App\Middleware\CheckUserModOrAdmin;
 
 class MiddlewareDispatcher
@@ -78,6 +79,7 @@ class MiddlewareDispatcher
             'user.connected' => CheckConnectedUser::class,
             'user.is.admin' => CheckUserAdmin::class,
             'user.is.mod.or.admin' => CheckUserModOrAdmin::class,
+            'user.is.editor' => CheckUserEditor::class,
             'not.installed' => CheckInstall::class,
             'installed' => CheckNotInstall::class,
         ];
