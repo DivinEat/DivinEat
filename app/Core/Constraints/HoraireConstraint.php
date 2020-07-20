@@ -15,7 +15,7 @@ class HoraireConstraint implements ConstraintInterface
     {
         $this->errors = [];
 
-        if (preg_match("/^([0-1][0-9]|2[0-3])H[0-5][0-9] - ([0-1][0-9]|2[0-3])H[0-5][0-9]$/", $value) == false)
+        if (preg_match("/^([0-1][0-9]|2[0-3])[Hh][0-5][0-9] - ([0-1][0-9]|2[0-3])[Hh][0-5][0-9]$/", $value) == false)
             $this->errors[] = "Le format de l'horaire n'est pas bon : hhHmm - hhHmm";
 
         return (0 == count($this->errors));
