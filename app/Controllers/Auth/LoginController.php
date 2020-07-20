@@ -31,7 +31,7 @@ class LoginController extends Controller
         if (false === $user || !password_verify($request->get('pwd'), $user->getPwd()))
             $form->addErrors(["login" => "Votre mot de passe est incorrect"]);
 
-        if (! empty($user) || (empty($user) && $user->getStatus() === 0))
+        if (! empty($user) && $user->getStatus() === 0)
             $form->addErrors(["login" => "Vous devez vérifier votre email."]);
 
         if (false === $form->handle($request)) {
