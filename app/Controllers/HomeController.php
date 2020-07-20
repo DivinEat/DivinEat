@@ -28,6 +28,7 @@ class HomeController extends Controller
         $article =  current((new QueryBuilder())
             ->select('*')
             ->from('articles', 'a')
+            ->where('publish = 1')
             ->orderBy('id', 'DESC')
             ->limit('1')
             ->getQuery()

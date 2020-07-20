@@ -24,6 +24,7 @@ class ArticleController extends Controller
         $articles =  (new QueryBuilder())
             ->select('*')
             ->from('articles', 'a')
+            ->where("publish = 1")
             ->orderBy('id', 'DESC')
             ->getQuery()
             ->getArrayResult(Article::class);
@@ -36,7 +37,7 @@ class ArticleController extends Controller
     public function show(Request $request, Response $response, array $args)
     {
         $article = current((new ArticleManager())->findBy(['slug' => $args["article_slug"]]));
-        if (! $article)
+        if (! $article || ! $article->getPublish())
             return Router::redirect('actualites.index');
 
         $comments = (new CommentManager())->findBy(['article' => $article->getId(), 'hide' => false]);
