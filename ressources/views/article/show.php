@@ -22,7 +22,9 @@ use App\Core\Routing\Router;
                     </div>
                     <div class="more">
                         <a href="<?= Router::getRouteByName('actualites.index')->getUrl() ?>">Retour</a>
+                        <?php if (getAuth() !== null && getAuth()->isEditor()) ?>
                         <a href="<?= Router::getRouteByName('editor.actualites.edit', [$article->getCategorie()->getSlug(), $article->getSlug()])->getUrl() ?>">Modifier</a>
+                        <?php endif;?>
                     </div>
                 </div>
             </div>
