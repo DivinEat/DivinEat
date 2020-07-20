@@ -7,16 +7,19 @@ use App\Models\Page;
 use App\Core\Routing\Router;
 use App\Core\Constraints\RequiredConstraint;
 
-class CreatePageForm extends Form
+class UpdatePageForm extends Form
 {
     public function buildForm()
     {
-        $this->setName("createPageForm");
+        $page = $this->model;
+
+        $this->setName("updatePageForm");
 
         $this->setBuilder()
             ->add("data", "input", [
                 "attr" => [
                     "type" => "hidden",
+                    "value" => $page->getData()
                 ],
                 "constraints" => [
                     new RequiredConstraint()
@@ -26,6 +29,7 @@ class CreatePageForm extends Form
                 "attr" => [
                     "type" => "text",
                     "class" => "form-control",
+                    "value" => $page->getTitle(),
                 ],
                 "label" => [
                     "value" => "Titre",
@@ -44,7 +48,7 @@ class CreatePageForm extends Form
             ->add("submit", "input", [
                 "attr" => [
                     "type" => "submit",
-                    "value" => "Nouvelle page",
+                    "value" => "Mettre à jour",
                     "class" => "btn btn-primary",
                 ]
             ]);
@@ -55,10 +59,10 @@ class CreatePageForm extends Form
         $this
             ->addConfig("class", Page::class)
             ->addConfig("attr", [
-                "id" => "createPageForm",
+                "id" => "updatePageForm",
                 "class" => "admin-form width-100",
-                "name" => "createPageForm"
+                "name" => "updatePageForm"
             ])
-            ->addConfig("action", Router::getRouteByName('admin.page.store')->getUrl());
+            ->addConfig("action", Router::getRouteByName("admin.page.update", $this->model->getId())->getUrl());
     }
 }

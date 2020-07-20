@@ -211,5 +211,3 @@ $router->group(['middleware' => ['installed']], function (Router $router) {
 
 $router->get('not-found', 'NotFoundController@show', 'not.found');
 $router->get('unauthorized', 'UnauthorizedController@show', 'unauthorized');
-
-$router->get('custom', 'CustomPageController@display', 'custom');

@@ -55,14 +55,19 @@ class Sitemap
 
     protected static function generateRoutesLinesWithPatern(&$xw, array &$addedUrls, string $url): void
     {
-        if (! preg_match('/\{([a-z]*)\_([a-z]*)\}/', $url, $match))
+        if (! preg_match_all('/\{([a-z]*)\_([a-z]*)\}/', $url, $match))
             return;
 
-        $managerName = 'App\\Managers\\' . ucfirst($match[1]) . 'Manager';
+        $managerName = 'App\\Managers\\' . ucfirst(end($match[1])) . 'Manager';
         array_map(function (Model $model) use ($xw, $addedUrls, $match, $url) {
-            $getterName = 'get' . snakeToCamelCase($match[2], true);
-            $replacedUrl = preg_replace('/\{[a-z]*\_[a-z]*\}/', $model->$getterName(), $url, 1);
-
+            $getterName = 'get' . snakeToCamelCase(end($match[2]), true);
+            $replacedUrl = preg_replace('/\{'.end($match[1]).'\_'.end($match[2]).'\}/', $model->$getterName(), $url, 1);
+            if (prev($match[2]))
+            {
+                $getterName = 'get' . snakeToCamelCase(current($match[2]), true);
+                $getterModelName = 'get' . snakeToCamelCase(prev($match[1]), true);
+                $replacedUrl = preg_replace('/\{'.current($match[1]).'\_'.current($match[2]).'\}/', $model->$getterModelName()->$getterName(), $replacedUrl, 1);
+            }
             if (! in_array($replacedUrl, $addedUrls))
             {
                 self::writeRouteLine($xw, $replacedUrl);
