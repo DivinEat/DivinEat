@@ -48,6 +48,7 @@ class RegisterForm extends Form
                     "placeholder"=>"&#xf2be;  Adresse Email"
                 ],
                 "constraints" => [
+                    new EmailConstraint(),
                     new UniqueConstraint("users.email", "L'email est déjà utilisé !"),
                     new RequiredConstraint()
                 ]
