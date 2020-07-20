@@ -71,7 +71,7 @@ class ArticleController extends Controller
         if (null === (new ArticleManager())->find($args['article_id']))
             return Router::redirect('admin.article.index');
 
-        $article = (new Article())->hydrate($request->getParams(['slug', 'title', 'content']));
+        $article = (new Article())->hydrate($request->getParams(['slug', 'title', 'content', 'categorie']));
         $article->setPublish(intval($request->get('publish')));
         $article->setId($args['article_id']);
 

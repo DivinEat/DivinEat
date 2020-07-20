@@ -6,6 +6,7 @@ use App\Core\Form;
 use App\Models\Article;
 use App\Core\StringValue;
 use App\Core\Routing\Router;
+use App\Managers\CategorieManager;
 use App\Core\Constraints\SlugConstraint;
 use App\Core\Constraints\LengthConstraint;
 use App\Core\Constraints\UniqueConstraint;
@@ -18,6 +19,8 @@ class UpdateArticleForm extends Form
         $article = $this->model;
 
         $this->setName("updateArticleForm");
+        $categories = (new CategorieManager())->findAll();
+        $selectedCategorie = $article->getCategorie();
 
         if ($article->getPublish() == true) {
             $selectedPublish = new StringValue("Oui", "1");
@@ -64,6 +67,18 @@ class UpdateArticleForm extends Form
                     new UniqueConstraint("articles.slug", "Le slug de l'article est déjà utilisé !", $article->getId()),
                     new LengthConstraint(2, 255, 'Le slug doit contenir au moins 2 caractères', 'Le slug doit contenir au plus 255 caractères')
                 ]
+            ])
+            ->add("categorie", "select", [
+                "attr" => [
+                    "class" => "form-control"
+                ],
+                "label" => [
+                    "value" => "Catégorie",
+                    "class" => "",
+                ],
+                "data" => $categories,
+                "selected" => $selectedCategorie,
+                "getter" => "getName",
             ])
             ->add("publish", "select", [
                 "attr" => [
